@@ -5,7 +5,7 @@ plugins {
 
 group = 'edu.upc.prop.scrabble'
 version = '1.0-SNAPSHOT'
-buildDir = '../EXE'
+buildDir = 'EXE'
 
 ext {
     javaMainClass = 'edu.upc.prop.scrabble.Main'
@@ -37,4 +37,20 @@ dependencies {
     // this is just an example of importing an external library, you do not need to use it in your project
     implementation 'com.google.code.gson:gson:2.8.9'
     testImplementation('junit:junit:4.13.1')
+}
+
+sourceSets {
+    main {
+        java {
+            // Include FONTS/main as the main source directory
+            srcDir 'FONTS/main'
+        }
+    }
+
+    test {
+        java {
+            // Include FONTS/test as the test source directory
+            srcDir 'FONTS/test'
+        }
+    }
 }
