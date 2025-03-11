@@ -1,0 +1,40 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group = 'edu.upc.prop.scrabble'
+version = '1.0-SNAPSHOT'
+buildDir = '../EXE'
+
+ext {
+    javaMainClass = 'edu.upc.prop.scrabble.Main'
+}
+
+application {
+    mainClassName = javaMainClass
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': javaMainClass
+    }
+}
+
+// Apply a specific Java toolchain to ease working on different environments.
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(22)
+    }
+}
+
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // this is just an example of importing an external library, you do not need to use it in your project
+    implementation 'com.google.code.gson:gson:2.8.9'
+    testImplementation('junit:junit:4.13.1')
+}
