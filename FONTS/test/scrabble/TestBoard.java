@@ -1,7 +1,7 @@
 package scrabble;
 
 import edu.upc.prop.scrabble.data.Board;
-import edu.upc.prop.scrabble.domain.CtrlBoard;
+import edu.upc.prop.scrabble.domain.PiecePlacer;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -51,25 +51,27 @@ public class TestBoard {
 
     @Test
     public void placeWordVerticalPlacesWord() {
-        CtrlBoard sut = new CtrlBoard(4);
+        Board board = new Board(4);
+        PiecePlacer sut = new PiecePlacer(board);
 
         sut.placeWordVertical("TEST", 0, 0);
 
-        assertEquals("T", sut.getCell(0, 0));
-        assertEquals("E", sut.getCell(0, 1));
-        assertEquals("S", sut.getCell(0, 2));
-        assertEquals("T", sut.getCell(0, 3));
+        assertEquals("T", board.getCell(0, 0));
+        assertEquals("E", board.getCell(0, 1));
+        assertEquals("S", board.getCell(0, 2));
+        assertEquals("T", board.getCell(0, 3));
     }
 
     @Test
     public void placeWordHorizontalPlacesWord() {
-        CtrlBoard sut = new CtrlBoard(4);
+        Board board = new Board(4);
+        PiecePlacer sut = new PiecePlacer(board);
 
         sut.placeWordHorizontal("TEST", 0, 0);
 
-        assertEquals("T", sut.getCell(0, 0));
-        assertEquals("E", sut.getCell(1, 0));
-        assertEquals("S", sut.getCell(2, 0));
-        assertEquals("T", sut.getCell(3, 0));
+        assertEquals("T", board.getCell(0, 0));
+        assertEquals("E", board.getCell(1, 0));
+        assertEquals("S", board.getCell(2, 0));
+        assertEquals("T", board.getCell(3, 0));
     }
 }
