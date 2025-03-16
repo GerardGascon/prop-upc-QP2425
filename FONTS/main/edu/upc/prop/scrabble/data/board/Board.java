@@ -30,4 +30,28 @@ public abstract class Board {
     protected void setTileType(int x, int y, TileType type) {
         tiles[x][y] = type;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder ret = new StringBuilder();
+
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+                if (board[i][j] != null) {
+                    ret.append(board[i][j]).append("  ");
+                    continue;
+                }
+
+                if (tiles[i][j] != null) {
+                    ret.append(TileConverter.convert(tiles[i][j])).append(" ");
+                    continue;
+                }
+
+                ret.append(".  ");
+            }
+            ret.append("\n");
+        }
+
+        return ret.toString();
+    }
 }

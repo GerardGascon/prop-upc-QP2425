@@ -7,3 +7,4 @@ public enum TileType {
     TripleLetter,
     DoubleLetter,
 }
+
