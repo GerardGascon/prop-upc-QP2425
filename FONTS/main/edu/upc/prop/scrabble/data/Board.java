@@ -10,4 +10,12 @@ public class Board {
     public int getSize() {
         return 4;
     }
+
+    public void placePiece(String piece, int x, int y) {
+
+    }
+
+    public String getCell(int x, int y) {
+        return "C";
+    }
 }

@@ -12,4 +12,13 @@ public class TestBoard {
 
         assertEquals(4, sut.getSize());
     }
+
+    @Test
+    public void placePieceAddsItToBoard() {
+        Board sut = new Board(4);
+
+        sut.placePiece("C", 0, 0);
+
+        assertEquals("C", sut.getCell(0, 0));
+    }
 }
