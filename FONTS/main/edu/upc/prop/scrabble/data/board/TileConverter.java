@@ -1,9 +1,8 @@
 package edu.upc.prop.scrabble.data.board;
 
 public class TileConverter {
-    public static String convert(TileType tile) {
+    public static String convert(PremiumTileType tile) {
         return switch (tile) {
-            case Blank -> ". ";
             case QuadrupleWord -> "4W";
             case TripleWord -> "3W";
             case DoubleWord -> "2W";

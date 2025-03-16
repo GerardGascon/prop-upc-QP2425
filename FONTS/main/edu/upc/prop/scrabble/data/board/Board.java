@@ -1,49 +1,49 @@
 package edu.upc.prop.scrabble.data.board;
 
 public abstract class Board {
-    private final String[][] board;
-    private final TileType[][] tiles;
+    private final String[][] placedTiles;
+    private final PremiumTileType[][] premiumTiles;
 
     public Board(int size) {
-        board = new String[size][size];
-        tiles = new TileType[size][size];
+        placedTiles = new String[size][size];
+        premiumTiles = new PremiumTileType[size][size];
     }
 
     public int getSize() {
-        return board.length;
+        return placedTiles.length;
     }
 
     public void placePiece(String piece, int x, int y) {
-        if (board[x][y] != null) return;
+        if (placedTiles[x][y] != null) return;
 
-        board[x][y] = piece;
+        placedTiles[x][y] = piece;
     }
 
     public String getCell(int x, int y) {
-        return board[x][y];
+        return placedTiles[x][y];
     }
 
-    public TileType getTileType(int x, int y) {
-        return tiles[x][y];
+    public PremiumTileType getTileType(int x, int y) {
+        return premiumTiles[x][y];
     }
 
-    protected void setTileType(int x, int y, TileType type) {
-        tiles[x][y] = type;
+    protected void setPremiumTile(int x, int y, PremiumTileType type) {
+        premiumTiles[x][y] = type;
     }
 
     @Override
     public String toString() {
         StringBuilder ret = new StringBuilder();
 
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[i].length; j++) {
-                if (board[j][i] != null) {
-                    ret.append(board[j][i]).append("  ");
+        for (int i = 0; i < placedTiles.length; i++) {
+            for (int j = 0; j < placedTiles[i].length; j++) {
+                if (placedTiles[j][i] != null) {
+                    ret.append(placedTiles[j][i]).append("  ");
                     continue;
                 }
 
-                if (tiles[j][i] != null) {
-                    ret.append(TileConverter.convert(tiles[j][i])).append(" ");
+                if (premiumTiles[j][i] != null) {
+                    ret.append(TileConverter.convert(premiumTiles[j][i])).append(" ");
                     continue;
                 }
 

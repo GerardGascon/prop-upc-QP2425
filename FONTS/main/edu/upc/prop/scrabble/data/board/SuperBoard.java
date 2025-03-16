@@ -13,183 +13,183 @@ public class SuperBoard extends Board {
     }
 
     private void setDoubleWordTiles() {
-        super.setTileType(1, 1, TileType.DoubleWord);
-        super.setTileType(8, 1, TileType.DoubleWord);
-        super.setTileType(12, 1, TileType.DoubleWord);
-        super.setTileType(19, 1, TileType.DoubleWord);
+        super.setPremiumTile(1, 1, PremiumTileType.DoubleWord);
+        super.setPremiumTile(8, 1, PremiumTileType.DoubleWord);
+        super.setPremiumTile(12, 1, PremiumTileType.DoubleWord);
+        super.setPremiumTile(19, 1, PremiumTileType.DoubleWord);
 
-        super.setTileType(2, 2, TileType.DoubleWord);
-        super.setTileType(9, 2, TileType.DoubleWord);
-        super.setTileType(11, 2, TileType.DoubleWord);
-        super.setTileType(18, 2, TileType.DoubleWord);
+        super.setPremiumTile(2, 2, PremiumTileType.DoubleWord);
+        super.setPremiumTile(9, 2, PremiumTileType.DoubleWord);
+        super.setPremiumTile(11, 2, PremiumTileType.DoubleWord);
+        super.setPremiumTile(18, 2, PremiumTileType.DoubleWord);
 
-        super.setTileType(4, 4, TileType.DoubleWord);
-        super.setTileType(16, 4, TileType.DoubleWord);
+        super.setPremiumTile(4, 4, PremiumTileType.DoubleWord);
+        super.setPremiumTile(16, 4, PremiumTileType.DoubleWord);
 
-        super.setTileType(5, 5, TileType.DoubleWord);
-        super.setTileType(15, 5, TileType.DoubleWord);
+        super.setPremiumTile(5, 5, PremiumTileType.DoubleWord);
+        super.setPremiumTile(15, 5, PremiumTileType.DoubleWord);
 
-        super.setTileType(6, 6, TileType.DoubleWord);
-        super.setTileType(14, 6, TileType.DoubleWord);
+        super.setPremiumTile(6, 6, PremiumTileType.DoubleWord);
+        super.setPremiumTile(14, 6, PremiumTileType.DoubleWord);
 
-        super.setTileType(7, 7, TileType.DoubleWord);
-        super.setTileType(13, 7, TileType.DoubleWord);
+        super.setPremiumTile(7, 7, PremiumTileType.DoubleWord);
+        super.setPremiumTile(13, 7, PremiumTileType.DoubleWord);
 
-        super.setTileType(1, 8, TileType.DoubleWord);
-        super.setTileType(19, 8, TileType.DoubleWord);
+        super.setPremiumTile(1, 8, PremiumTileType.DoubleWord);
+        super.setPremiumTile(19, 8, PremiumTileType.DoubleWord);
 
-        super.setTileType(2, 9, TileType.DoubleWord);
-        super.setTileType(18, 9, TileType.DoubleWord);
+        super.setPremiumTile(2, 9, PremiumTileType.DoubleWord);
+        super.setPremiumTile(18, 9, PremiumTileType.DoubleWord);
 
-        super.setTileType(2, 11, TileType.DoubleWord);
-        super.setTileType(18, 11, TileType.DoubleWord);
+        super.setPremiumTile(2, 11, PremiumTileType.DoubleWord);
+        super.setPremiumTile(18, 11, PremiumTileType.DoubleWord);
 
-        super.setTileType(1, 12, TileType.DoubleWord);
-        super.setTileType(19, 12, TileType.DoubleWord);
+        super.setPremiumTile(1, 12, PremiumTileType.DoubleWord);
+        super.setPremiumTile(19, 12, PremiumTileType.DoubleWord);
 
-        super.setTileType(7, 13, TileType.DoubleWord);
-        super.setTileType(13, 13, TileType.DoubleWord);
+        super.setPremiumTile(7, 13, PremiumTileType.DoubleWord);
+        super.setPremiumTile(13, 13, PremiumTileType.DoubleWord);
 
-        super.setTileType(6, 14, TileType.DoubleWord);
-        super.setTileType(14, 14, TileType.DoubleWord);
+        super.setPremiumTile(6, 14, PremiumTileType.DoubleWord);
+        super.setPremiumTile(14, 14, PremiumTileType.DoubleWord);
 
-        super.setTileType(5, 15, TileType.DoubleWord);
-        super.setTileType(15, 15, TileType.DoubleWord);
+        super.setPremiumTile(5, 15, PremiumTileType.DoubleWord);
+        super.setPremiumTile(15, 15, PremiumTileType.DoubleWord);
 
-        super.setTileType(4, 16, TileType.DoubleWord);
-        super.setTileType(16, 16, TileType.DoubleWord);
+        super.setPremiumTile(4, 16, PremiumTileType.DoubleWord);
+        super.setPremiumTile(16, 16, PremiumTileType.DoubleWord);
 
-        super.setTileType(2, 18, TileType.DoubleWord);
-        super.setTileType(9, 18, TileType.DoubleWord);
-        super.setTileType(11, 18, TileType.DoubleWord);
-        super.setTileType(18, 18, TileType.DoubleWord);
+        super.setPremiumTile(2, 18, PremiumTileType.DoubleWord);
+        super.setPremiumTile(9, 18, PremiumTileType.DoubleWord);
+        super.setPremiumTile(11, 18, PremiumTileType.DoubleWord);
+        super.setPremiumTile(18, 18, PremiumTileType.DoubleWord);
 
-        super.setTileType(1, 19, TileType.DoubleWord);
-        super.setTileType(8, 19, TileType.DoubleWord);
-        super.setTileType(12, 19, TileType.DoubleWord);
-        super.setTileType(19, 19, TileType.DoubleWord);
+        super.setPremiumTile(1, 19, PremiumTileType.DoubleWord);
+        super.setPremiumTile(8, 19, PremiumTileType.DoubleWord);
+        super.setPremiumTile(12, 19, PremiumTileType.DoubleWord);
+        super.setPremiumTile(19, 19, PremiumTileType.DoubleWord);
     }
 
     private void setTripleWordTiles() {
-        super.setTileType(7, 0, TileType.TripleWord);
-        super.setTileType(13, 0, TileType.TripleWord);
+        super.setPremiumTile(7, 0, PremiumTileType.TripleWord);
+        super.setPremiumTile(13, 0, PremiumTileType.TripleWord);
 
-        super.setTileType(3, 3, TileType.TripleWord);
-        super.setTileType(10, 3, TileType.TripleWord);
-        super.setTileType(17, 3, TileType.TripleWord);
+        super.setPremiumTile(3, 3, PremiumTileType.TripleWord);
+        super.setPremiumTile(10, 3, PremiumTileType.TripleWord);
+        super.setPremiumTile(17, 3, PremiumTileType.TripleWord);
 
-        super.setTileType(0, 7, TileType.TripleWord);
-        super.setTileType(20, 7, TileType.TripleWord);
+        super.setPremiumTile(0, 7, PremiumTileType.TripleWord);
+        super.setPremiumTile(20, 7, PremiumTileType.TripleWord);
 
-        super.setTileType(3, 10, TileType.TripleWord);
-        super.setTileType(17, 10, TileType.TripleWord);
+        super.setPremiumTile(3, 10, PremiumTileType.TripleWord);
+        super.setPremiumTile(17, 10, PremiumTileType.TripleWord);
 
-        super.setTileType(0, 13, TileType.TripleWord);
-        super.setTileType(20, 13, TileType.TripleWord);
+        super.setPremiumTile(0, 13, PremiumTileType.TripleWord);
+        super.setPremiumTile(20, 13, PremiumTileType.TripleWord);
 
-        super.setTileType(3, 17, TileType.TripleWord);
-        super.setTileType(10, 17, TileType.TripleWord);
-        super.setTileType(17, 17, TileType.TripleWord);
+        super.setPremiumTile(3, 17, PremiumTileType.TripleWord);
+        super.setPremiumTile(10, 17, PremiumTileType.TripleWord);
+        super.setPremiumTile(17, 17, PremiumTileType.TripleWord);
 
-        super.setTileType(7, 20, TileType.TripleWord);
-        super.setTileType(13, 20, TileType.TripleWord);
+        super.setPremiumTile(7, 20, PremiumTileType.TripleWord);
+        super.setPremiumTile(13, 20, PremiumTileType.TripleWord);
     }
 
     private void setQuadrupleWordTiles() {
-        super.setTileType(0, 0, TileType.QuadrupleWord);
-        super.setTileType(0, 20, TileType.QuadrupleWord);
-        super.setTileType(20, 0, TileType.QuadrupleWord);
-        super.setTileType(20, 20, TileType.QuadrupleWord);
+        super.setPremiumTile(0, 0, PremiumTileType.QuadrupleWord);
+        super.setPremiumTile(0, 20, PremiumTileType.QuadrupleWord);
+        super.setPremiumTile(20, 0, PremiumTileType.QuadrupleWord);
+        super.setPremiumTile(20, 20, PremiumTileType.QuadrupleWord);
     }
 
     private void setDoubleLetterTiles() {
-        super.setTileType(3, 0, TileType.DoubleLetter);
-        super.setTileType(10, 0, TileType.DoubleLetter);
-        super.setTileType(17, 0, TileType.DoubleLetter);
+        super.setPremiumTile(3, 0, PremiumTileType.DoubleLetter);
+        super.setPremiumTile(10, 0, PremiumTileType.DoubleLetter);
+        super.setPremiumTile(17, 0, PremiumTileType.DoubleLetter);
 
-        super.setTileType(0, 3, TileType.DoubleLetter);
-        super.setTileType(6, 3, TileType.DoubleLetter);
-        super.setTileType(14, 3, TileType.DoubleLetter);
-        super.setTileType(20, 3, TileType.DoubleLetter);
+        super.setPremiumTile(0, 3, PremiumTileType.DoubleLetter);
+        super.setPremiumTile(6, 3, PremiumTileType.DoubleLetter);
+        super.setPremiumTile(14, 3, PremiumTileType.DoubleLetter);
+        super.setPremiumTile(20, 3, PremiumTileType.DoubleLetter);
 
-        super.setTileType(9, 5, TileType.DoubleLetter);
-        super.setTileType(11, 5, TileType.DoubleLetter);
+        super.setPremiumTile(9, 5, PremiumTileType.DoubleLetter);
+        super.setPremiumTile(11, 5, PremiumTileType.DoubleLetter);
 
-        super.setTileType(3, 6, TileType.DoubleLetter);
-        super.setTileType(10, 6, TileType.DoubleLetter);
-        super.setTileType(17, 6, TileType.DoubleLetter);
+        super.setPremiumTile(3, 6, PremiumTileType.DoubleLetter);
+        super.setPremiumTile(10, 6, PremiumTileType.DoubleLetter);
+        super.setPremiumTile(17, 6, PremiumTileType.DoubleLetter);
 
-        super.setTileType(5, 9, TileType.DoubleLetter);
-        super.setTileType(9, 9, TileType.DoubleLetter);
-        super.setTileType(11, 9, TileType.DoubleLetter);
-        super.setTileType(15, 9, TileType.DoubleLetter);
+        super.setPremiumTile(5, 9, PremiumTileType.DoubleLetter);
+        super.setPremiumTile(9, 9, PremiumTileType.DoubleLetter);
+        super.setPremiumTile(11, 9, PremiumTileType.DoubleLetter);
+        super.setPremiumTile(15, 9, PremiumTileType.DoubleLetter);
 
-        super.setTileType(0, 10, TileType.DoubleLetter);
-        super.setTileType(6, 10, TileType.DoubleLetter);
-        super.setTileType(14, 10, TileType.DoubleLetter);
-        super.setTileType(20, 10, TileType.DoubleLetter);
+        super.setPremiumTile(0, 10, PremiumTileType.DoubleLetter);
+        super.setPremiumTile(6, 10, PremiumTileType.DoubleLetter);
+        super.setPremiumTile(14, 10, PremiumTileType.DoubleLetter);
+        super.setPremiumTile(20, 10, PremiumTileType.DoubleLetter);
 
-        super.setTileType(5, 11, TileType.DoubleLetter);
-        super.setTileType(9, 11, TileType.DoubleLetter);
-        super.setTileType(11, 11, TileType.DoubleLetter);
-        super.setTileType(15, 11, TileType.DoubleLetter);
+        super.setPremiumTile(5, 11, PremiumTileType.DoubleLetter);
+        super.setPremiumTile(9, 11, PremiumTileType.DoubleLetter);
+        super.setPremiumTile(11, 11, PremiumTileType.DoubleLetter);
+        super.setPremiumTile(15, 11, PremiumTileType.DoubleLetter);
 
-        super.setTileType(3, 14, TileType.DoubleLetter);
-        super.setTileType(10, 14, TileType.DoubleLetter);
-        super.setTileType(17, 14, TileType.DoubleLetter);
+        super.setPremiumTile(3, 14, PremiumTileType.DoubleLetter);
+        super.setPremiumTile(10, 14, PremiumTileType.DoubleLetter);
+        super.setPremiumTile(17, 14, PremiumTileType.DoubleLetter);
 
-        super.setTileType(9, 15, TileType.DoubleLetter);
-        super.setTileType(11, 15, TileType.DoubleLetter);
+        super.setPremiumTile(9, 15, PremiumTileType.DoubleLetter);
+        super.setPremiumTile(11, 15, PremiumTileType.DoubleLetter);
 
-        super.setTileType(0, 17, TileType.DoubleLetter);
-        super.setTileType(6, 17, TileType.DoubleLetter);
-        super.setTileType(14, 17, TileType.DoubleLetter);
-        super.setTileType(20, 17, TileType.DoubleLetter);
+        super.setPremiumTile(0, 17, PremiumTileType.DoubleLetter);
+        super.setPremiumTile(6, 17, PremiumTileType.DoubleLetter);
+        super.setPremiumTile(14, 17, PremiumTileType.DoubleLetter);
+        super.setPremiumTile(20, 17, PremiumTileType.DoubleLetter);
 
-        super.setTileType(3, 20, TileType.DoubleLetter);
-        super.setTileType(10, 20, TileType.DoubleLetter);
-        super.setTileType(17, 20, TileType.DoubleLetter);
+        super.setPremiumTile(3, 20, PremiumTileType.DoubleLetter);
+        super.setPremiumTile(10, 20, PremiumTileType.DoubleLetter);
+        super.setPremiumTile(17, 20, PremiumTileType.DoubleLetter);
     }
 
     private void setTripleLetterTiles() {
-        super.setTileType(4, 1, TileType.TripleLetter);
-        super.setTileType(16, 1, TileType.TripleLetter);
+        super.setPremiumTile(4, 1, PremiumTileType.TripleLetter);
+        super.setPremiumTile(16, 1, PremiumTileType.TripleLetter);
 
-        super.setTileType(1, 4, TileType.TripleLetter);
-        super.setTileType(8, 4, TileType.TripleLetter);
-        super.setTileType(12, 4, TileType.TripleLetter);
-        super.setTileType(19, 4, TileType.TripleLetter);
+        super.setPremiumTile(1, 4, PremiumTileType.TripleLetter);
+        super.setPremiumTile(8, 4, PremiumTileType.TripleLetter);
+        super.setPremiumTile(12, 4, PremiumTileType.TripleLetter);
+        super.setPremiumTile(19, 4, PremiumTileType.TripleLetter);
 
-        super.setTileType(4, 8, TileType.TripleLetter);
-        super.setTileType(8, 8, TileType.TripleLetter);
-        super.setTileType(12, 8, TileType.TripleLetter);
-        super.setTileType(16, 8, TileType.TripleLetter);
+        super.setPremiumTile(4, 8, PremiumTileType.TripleLetter);
+        super.setPremiumTile(8, 8, PremiumTileType.TripleLetter);
+        super.setPremiumTile(12, 8, PremiumTileType.TripleLetter);
+        super.setPremiumTile(16, 8, PremiumTileType.TripleLetter);
 
-        super.setTileType(4, 12, TileType.TripleLetter);
-        super.setTileType(8, 12, TileType.TripleLetter);
-        super.setTileType(12, 12, TileType.TripleLetter);
-        super.setTileType(16, 12, TileType.TripleLetter);
+        super.setPremiumTile(4, 12, PremiumTileType.TripleLetter);
+        super.setPremiumTile(8, 12, PremiumTileType.TripleLetter);
+        super.setPremiumTile(12, 12, PremiumTileType.TripleLetter);
+        super.setPremiumTile(16, 12, PremiumTileType.TripleLetter);
 
-        super.setTileType(1, 16, TileType.TripleLetter);
-        super.setTileType(8, 16, TileType.TripleLetter);
-        super.setTileType(12, 16, TileType.TripleLetter);
-        super.setTileType(19, 16, TileType.TripleLetter);
+        super.setPremiumTile(1, 16, PremiumTileType.TripleLetter);
+        super.setPremiumTile(8, 16, PremiumTileType.TripleLetter);
+        super.setPremiumTile(12, 16, PremiumTileType.TripleLetter);
+        super.setPremiumTile(19, 16, PremiumTileType.TripleLetter);
 
-        super.setTileType(4, 19, TileType.TripleLetter);
-        super.setTileType(16, 19, TileType.TripleLetter);
+        super.setPremiumTile(4, 19, PremiumTileType.TripleLetter);
+        super.setPremiumTile(16, 19, PremiumTileType.TripleLetter);
     }
 
     private void setQuadrupleLetterTiles() {
-        super.setTileType(5, 2, TileType.QuadrupleLetter);
-        super.setTileType(15, 2, TileType.QuadrupleLetter);
+        super.setPremiumTile(5, 2, PremiumTileType.QuadrupleLetter);
+        super.setPremiumTile(15, 2, PremiumTileType.QuadrupleLetter);
 
-        super.setTileType(2, 5, TileType.QuadrupleLetter);
-        super.setTileType(18, 5, TileType.QuadrupleLetter);
+        super.setPremiumTile(2, 5, PremiumTileType.QuadrupleLetter);
+        super.setPremiumTile(18, 5, PremiumTileType.QuadrupleLetter);
 
-        super.setTileType(2, 15, TileType.QuadrupleLetter);
-        super.setTileType(18, 15, TileType.QuadrupleLetter);
+        super.setPremiumTile(2, 15, PremiumTileType.QuadrupleLetter);
+        super.setPremiumTile(18, 15, PremiumTileType.QuadrupleLetter);
 
-        super.setTileType(5, 18, TileType.QuadrupleLetter);
-        super.setTileType(15, 18, TileType.QuadrupleLetter);
+        super.setPremiumTile(5, 18, PremiumTileType.QuadrupleLetter);
+        super.setPremiumTile(15, 18, PremiumTileType.QuadrupleLetter);
     }
 }
