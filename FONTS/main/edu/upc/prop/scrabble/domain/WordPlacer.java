@@ -1,6 +1,6 @@
 package edu.upc.prop.scrabble.domain;
 
-import edu.upc.prop.scrabble.data.Board;
+import edu.upc.prop.scrabble.data.board.Board;
 import edu.upc.prop.scrabble.utils.Direction;
 
 public class WordPlacer {

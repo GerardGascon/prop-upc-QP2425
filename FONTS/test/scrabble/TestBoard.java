@@ -1,6 +1,9 @@
 package scrabble;
 
-import edu.upc.prop.scrabble.data.Board;
+import edu.upc.prop.scrabble.data.board.Board;
+import edu.upc.prop.scrabble.data.board.JuniorBoard;
+import edu.upc.prop.scrabble.data.board.StandardBoard;
+import edu.upc.prop.scrabble.data.board.SuperBoard;
 import edu.upc.prop.scrabble.domain.WordPlacer;
 import edu.upc.prop.scrabble.utils.Direction;
 import org.junit.Test;
@@ -9,15 +12,27 @@ import static org.junit.Assert.*;
 
 public class TestBoard {
     @Test
-    public void createBoardSetsProperSize() {
-        Board sut = new Board(4);
+    public void standardBoardHasSize15() {
+        Board sut = new StandardBoard();
 
-        assertEquals(4, sut.getSize());
+        assertEquals(15, sut.getSize());
+    }
+    @Test
+    public void superBoardHasSize21() {
+        Board sut = new SuperBoard();
+
+        assertEquals(21, sut.getSize());
+    }
+    @Test
+    public void jrBoardHasSize11() {
+        Board sut = new JuniorBoard();
+
+        assertEquals(11, sut.getSize());
     }
 
     @Test
     public void placePieceAddsItToBoard() {
-        Board sut = new Board(4);
+        Board sut = new StandardBoard();
 
         sut.placePiece("C", 0, 0);
 
@@ -26,7 +41,7 @@ public class TestBoard {
 
     @Test
     public void placePiecePlacesCorrectPiece() {
-        Board sut = new Board(4);
+        Board sut = new StandardBoard();
 
         sut.placePiece("D", 0, 0);
 
@@ -35,14 +50,14 @@ public class TestBoard {
 
     @Test
     public void readEmptyCellFromBoardReturnsNull() {
-        Board sut = new Board(4);
+        Board sut = new StandardBoard();
 
         assertNull(sut.getCell(1, 1));
     }
 
     @Test
     public void tryPlacingToAlreadyPlacedCellReturnsFalse() {
-        Board sut = new Board(4);
+        Board sut = new StandardBoard();
 
         sut.placePiece("C", 0, 0);
         sut.placePiece("D", 0, 0);
@@ -52,7 +67,7 @@ public class TestBoard {
 
     @Test
     public void placeWordVerticalPlacesWord() {
-        Board board = new Board(4);
+        Board board = new StandardBoard();
         WordPlacer sut = new WordPlacer(board);
 
         sut.run("TEST", 0, 0, Direction.Vertical);
@@ -65,7 +80,7 @@ public class TestBoard {
 
     @Test
     public void placeWordHorizontalPlacesWord() {
-        Board board = new Board(4);
+        Board board = new StandardBoard();
         WordPlacer sut = new WordPlacer(board);
 
         sut.run("TEST", 0, 0, Direction.Horizontal);

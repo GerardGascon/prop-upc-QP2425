@@ -1,6 +1,6 @@
-package edu.upc.prop.scrabble.data;
+package edu.upc.prop.scrabble.data.board;
 
-public class Board {
+public abstract class Board {
     private final String[][] board;
 
     public Board(int size) {
