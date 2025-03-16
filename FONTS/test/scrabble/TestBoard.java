@@ -4,6 +4,7 @@ import edu.upc.prop.scrabble.data.Board;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 public class TestBoard {
     @Test
@@ -29,5 +30,12 @@ public class TestBoard {
         sut.placePiece("D", 0, 0);
 
         assertEquals("D", sut.getCell(0, 0));
+    }
+
+    @Test
+    public void readEmptyCellFromBoardReturnsNull() {
+        Board sut = new Board(4);
+
+        assertNull(sut.getCell(1, 1));
     }
 }
