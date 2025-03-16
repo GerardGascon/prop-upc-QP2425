@@ -1,4 +1,4 @@
-package java.scrabble;
+package scrabble;
 
 import static org.junit.Assert.assertEquals;
 
