@@ -1,0 +1,47 @@
+@startuml
+skin rose
+left to right direction
+
+package UI {
+	usecase SeeRanking
+	usecase PauseGame
+}
+
+package Settings {
+	usecase SetGameMode
+	usecase SetBoardSize
+	usecase SetLanguage
+	usecase SetNumPlayers
+}
+
+package Gameplay {
+	usecase PutPiece
+	usecase SaveScore
+	usecase RemovePiece
+	usecase DrawPiece
+}
+
+package Repository {
+	usecase SaveGame
+	usecase LoadGame
+}
+
+actor Player
+
+SeeRanking -- Player
+PauseGame -- Player
+
+SetGameMode -- Player
+SetBoardSize -- Player
+SetLanguage -- Player
+SetNumPlayers -- Player
+
+Player -- PutPiece
+Player -- SaveScore
+Player -- RemovePiece
+Player -- DrawPiece
+
+Player -- SaveGame
+Player -- LoadGame
+
+@enduml
