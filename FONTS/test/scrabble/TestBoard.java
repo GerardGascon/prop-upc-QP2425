@@ -1,7 +1,8 @@
 package scrabble;
 
 import edu.upc.prop.scrabble.data.Board;
-import edu.upc.prop.scrabble.domain.PiecePlacer;
+import edu.upc.prop.scrabble.domain.WordPlacer;
+import edu.upc.prop.scrabble.utils.Direction;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -52,9 +53,9 @@ public class TestBoard {
     @Test
     public void placeWordVerticalPlacesWord() {
         Board board = new Board(4);
-        PiecePlacer sut = new PiecePlacer(board);
+        WordPlacer sut = new WordPlacer(board);
 
-        sut.placeWordVertical("TEST", 0, 0);
+        sut.run("TEST", 0, 0, Direction.Vertical);
 
         assertEquals("T", board.getCell(0, 0));
         assertEquals("E", board.getCell(0, 1));
@@ -65,9 +66,9 @@ public class TestBoard {
     @Test
     public void placeWordHorizontalPlacesWord() {
         Board board = new Board(4);
-        PiecePlacer sut = new PiecePlacer(board);
+        WordPlacer sut = new WordPlacer(board);
 
-        sut.placeWordHorizontal("TEST", 0, 0);
+        sut.run("TEST", 0, 0, Direction.Horizontal);
 
         assertEquals("T", board.getCell(0, 0));
         assertEquals("E", board.getCell(1, 0));
