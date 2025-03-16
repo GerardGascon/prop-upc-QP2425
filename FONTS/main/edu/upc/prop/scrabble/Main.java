@@ -1,11 +1,13 @@
 package edu.upc.prop.scrabble;
 
 import com.google.gson.Gson;
+import edu.upc.prop.scrabble.data.board.Board;
+import edu.upc.prop.scrabble.data.board.JuniorBoard;
 import edu.upc.prop.scrabble.data.board.StandardBoard;
 
 public class Main {
   public static void main(String[] args) {
-    StandardBoard board = new StandardBoard();
+    Board board = new JuniorBoard();
     System.out.println(board);
   }
 
