@@ -1,14 +1,15 @@
 package edu.upc.prop.scrabble;
 
 import com.google.gson.Gson;
+import edu.upc.prop.scrabble.data.board.Board;
+import edu.upc.prop.scrabble.data.board.JuniorBoard;
+import edu.upc.prop.scrabble.data.board.StandardBoard;
+import edu.upc.prop.scrabble.data.board.SuperBoard;
 
 public class Main {
   public static void main(String[] args) {
-    System.out.println("Hello world!");
-    new Gson();
-
-    Main divisioner = new Main();
-    System.out.println("Dividing 10 by 2 is " + divisioner.division(10,2));
+    Board board = new SuperBoard();
+    System.out.println(board);
   }
 
   public float division(int a, int b) throws ArithmeticException {
