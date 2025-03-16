@@ -39,7 +39,7 @@ public class TestBoard {
     }
 
     @Test
-    public void throwExceptionIfCellIsAlreadyPlaced() {
+    public void tryPlacingToAlreadyPlacedCellReturnsFalse() {
         Board sut = new Board(4);
 
         assertTrue(sut.placePiece("C", 0, 0));
