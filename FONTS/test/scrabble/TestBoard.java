@@ -43,8 +43,8 @@ public class TestBoard {
     public void tryPlacingToAlreadyPlacedCellReturnsFalse() {
         Board sut = new Board(4);
 
-        assertTrue(sut.placePiece("C", 0, 0));
-        assertFalse(sut.placePiece("D", 0, 0));
+        sut.placePiece("C", 0, 0);
+        sut.placePiece("D", 0, 0);
 
         assertEquals("C", sut.getCell(0, 0));
     }

@@ -11,11 +11,10 @@ public class Board {
         return board.length;
     }
 
-    public boolean placePiece(String piece, int x, int y) {
-        if (board[x][y] != null) return false;
+    public void placePiece(String piece, int x, int y) {
+        if (board[x][y] != null) return;
 
         board[x][y] = piece;
-        return true;
     }
 
     public String getCell(int x, int y) {
