@@ -14,7 +14,7 @@ public class Bag {
     }
 
     //per carregar el .txt del llenguatge seleccionat
-    public loadLanguangeBag() {}
+    //public loadLanguangeBag() {}
 
     public boolean isEmpty() {
         return bag.isEmpty();
