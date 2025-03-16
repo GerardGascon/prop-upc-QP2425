@@ -16,17 +16,16 @@ public class Bag {
     //per carregar el .txt del llenguatge seleccionat
     //public loadLanguangeBag() {}
 
+    // Booleà per comprovar si la bossa está buida
     public boolean isEmpty() {
         return bag.isEmpty();
     }
 
     // pre: s'ha eliminat la piece del taulell
     // post: s'afegeix de nou la fitxa a la bossa
-    public void addPiece(Piece piece, int quanitity) {
-        quantities.put(piece, quantities.getOrDefault(piece, 0) + quanitity);
-        for (int i = 0; i < quanitity; i++) {
-            bag.add(piece);
-        }
+    public void addPiece(Piece piece) {
+        quantities.put(piece, quantities.getOrDefault(piece, 0) + 1);
+        bag.add(piece);
     }
 
     // pre: es vol posar una fitxa al taulell
@@ -43,5 +42,23 @@ public class Bag {
         return piece;
     }
 
+    // pre: es vol guardar l'estat de la bossa
+    // post: es retornen les peces que queden i les seves quantitats
+    public Map<Piece, Integer> getAllPieces() {
+        return this.quantities;
+    }
 
+    // pre: es vol carregar una bossa
+    // post: es carrega la llista de les peces segons les seves quantitats
+    public void fillTheBag(Map<Piece, Integer> quantities) {
+        this.quantities = quantities;
+        this.bag.clear();
+        for (Map.Entry<Piece, Integer> entry : quantities.entrySet()) {
+            Piece piece = entry.getKey();
+            int n = entry.getValue();
+            for (int i = 0; i < n; ++i) {
+                this.bag.add(piece);
+            }
+        }
+    }
 }
