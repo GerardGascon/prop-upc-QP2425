@@ -16,6 +16,13 @@ public class CtrlBoard {
         }
     }
 
+    public void placeWordHorizontal(String word, int x, int y) {
+        for (int i = 0; i < word.length(); i++) {
+            String s = word.substring(i, i + 1);
+            board.placePiece(s, x + i, y);
+        }
+    }
+
     public String getCell(int x, int y) {
         return board.getCell(x, y);
     }

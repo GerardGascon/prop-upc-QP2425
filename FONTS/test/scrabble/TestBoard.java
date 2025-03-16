@@ -60,4 +60,16 @@ public class TestBoard {
         assertEquals("S", sut.getCell(0, 2));
         assertEquals("T", sut.getCell(0, 3));
     }
+
+    @Test
+    public void placeWordHorizontalPlacesWord() {
+        CtrlBoard sut = new CtrlBoard(4);
+
+        sut.placeWordHorizontal("TEST", 0, 0);
+
+        assertEquals("T", sut.getCell(0, 0));
+        assertEquals("E", sut.getCell(1, 0));
+        assertEquals("S", sut.getCell(2, 0));
+        assertEquals("T", sut.getCell(3, 0));
+    }
 }
