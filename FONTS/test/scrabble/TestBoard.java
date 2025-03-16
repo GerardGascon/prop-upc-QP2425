@@ -21,4 +21,13 @@ public class TestBoard {
 
         assertEquals("C", sut.getCell(0, 0));
     }
+
+    @Test
+    public void placePiecePlacesCorrectPiece() {
+        Board sut = new Board(4);
+
+        sut.placePiece("D", 0, 0);
+
+        assertEquals("D", sut.getCell(0, 0));
+    }
 }
