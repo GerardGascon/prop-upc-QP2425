@@ -35,7 +35,18 @@ public abstract class Board {
     public String toString() {
         StringBuilder ret = new StringBuilder();
 
+        ret.append("     ");
+        for (int j = 0; j < placedTiles[0].length; j++) {
+            ret.append((char) (j + (int) 'A')).append("  ");
+        }
+        ret.append("\n\n");
+
         for (int i = 0; i < placedTiles.length; i++) {
+            if (i + 1 < 10)
+                ret.append(" ").append(i + 1).append("   ");
+            else
+                ret.append(i + 1).append("   ");
+
             for (int j = 0; j < placedTiles[i].length; j++) {
                 if (placedTiles[j][i] != null) {
                     ret.append(placedTiles[j][i]).append("  ");
@@ -44,6 +55,11 @@ public abstract class Board {
 
                 if (premiumTiles[j][i] != null) {
                     ret.append(TileConverter.convert(premiumTiles[j][i])).append(" ");
+                    continue;
+                }
+
+                if (i == j && i == placedTiles.length / 2){
+                    ret.append("*  ");
                     continue;
                 }
 
