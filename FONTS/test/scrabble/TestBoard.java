@@ -3,8 +3,7 @@ package scrabble;
 import edu.upc.prop.scrabble.data.Board;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 public class TestBoard {
     @Test
@@ -37,5 +36,15 @@ public class TestBoard {
         Board sut = new Board(4);
 
         assertNull(sut.getCell(1, 1));
+    }
+
+    @Test
+    public void throwExceptionIfCellIsAlreadyPlaced() {
+        Board sut = new Board(4);
+
+        assertTrue(sut.placePiece("C", 0, 0));
+        assertFalse(sut.placePiece("D", 0, 0));
+
+        assertEquals("C", sut.getCell(0, 0));
     }
 }
