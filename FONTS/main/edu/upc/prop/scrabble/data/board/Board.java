@@ -37,13 +37,13 @@ public abstract class Board {
 
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
-                if (board[i][j] != null) {
-                    ret.append(board[i][j]).append("  ");
+                if (board[j][i] != null) {
+                    ret.append(board[j][i]).append("  ");
                     continue;
                 }
 
-                if (tiles[i][j] != null) {
-                    ret.append(TileConverter.convert(tiles[i][j])).append(" ");
+                if (tiles[j][i] != null) {
+                    ret.append(TileConverter.convert(tiles[j][i])).append(" ");
                     continue;
                 }
 
