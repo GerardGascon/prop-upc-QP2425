@@ -1,6 +1,7 @@
 package scrabble;
 
 import edu.upc.prop.scrabble.data.Board;
+import edu.upc.prop.scrabble.domain.CtrlBoard;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -46,5 +47,17 @@ public class TestBoard {
         assertFalse(sut.placePiece("D", 0, 0));
 
         assertEquals("C", sut.getCell(0, 0));
+    }
+
+    @Test
+    public void placeWordVerticalPlacesWord() {
+        CtrlBoard sut = new CtrlBoard(4);
+
+        sut.placeWordVertical("TEST", 0, 0);
+
+        assertEquals("T", sut.getCell(0, 0));
+        assertEquals("E", sut.getCell(0, 1));
+        assertEquals("S", sut.getCell(0, 2));
+        assertEquals("T", sut.getCell(0, 3));
     }
 }
