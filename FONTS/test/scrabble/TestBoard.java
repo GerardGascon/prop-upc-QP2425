@@ -92,4 +92,24 @@ public class TestBoard {
         assertEquals("S", board.getCell(2, 0));
         assertEquals("T", board.getCell(3, 0));
     }
+
+    @Test
+    public void noPlaceActionDoesntUpdateBoard(){
+        Board board = new StandardBoard();
+        BoardViewMock mock = new BoardViewMock();
+        WordPlacer _ = new WordPlacer(board, mock);
+
+        assertFalse(mock.getUpdateCallReceived());
+    }
+
+    @Test
+    public void placeActionUpdatesBoard(){
+        Board board = new StandardBoard();
+        BoardViewMock mock = new BoardViewMock();
+        WordPlacer sut = new WordPlacer(board, mock);
+
+        sut.run("TEST", 0, 0, Direction.Horizontal);
+
+        assertTrue(mock.getUpdateCallReceived());
+    }
 }
