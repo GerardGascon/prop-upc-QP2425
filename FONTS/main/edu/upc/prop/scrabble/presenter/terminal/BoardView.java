@@ -26,17 +26,17 @@ public class BoardView implements IBoard {
             ret.append(getBoardNumberCoord(i));
 
             for (int j = 0; j < board.getSize(); j++) {
-                if (board.getCell(j, i) != null) {
-                    ret.append(board.getCell(j, i)).append("  ");
+                if (!board.isCellEmpty(j, i)) {
+                    ret.append(board.getCellPiece(j, i)).append("  ");
                     continue;
                 }
 
-                if (board.getTileType(j, i) != null) {
-                    ret.append(TileConverter.convert(board.getTileType(j, i))).append(" ");
+                if (board.isPremiumTile(j, i)) {
+                    ret.append(TileConverter.convert(board.getPremiumTileType(j, i))).append(" ");
                     continue;
                 }
 
-                if (i == j && i == board.getSize() / 2){
+                if (board.isCenter(j, i)){
                     ret.append("*  ");
                     continue;
                 }
