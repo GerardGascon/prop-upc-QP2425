@@ -20,17 +20,10 @@ public class BoardView implements IBoard {
     private String buildBoardString() {
         StringBuilder ret = new StringBuilder();
 
-        ret.append("     ");
-        for (int j = 0; j < board.getSize(); j++) {
-            ret.append((char) (j + (int) 'A')).append("  ");
-        }
-        ret.append("\n\n");
+        ret.append(printBoardLetterCoord());
 
         for (int i = 0; i < board.getSize(); i++) {
-            if (i + 1 < 10)
-                ret.append(" ").append(i + 1).append("   ");
-            else
-                ret.append(i + 1).append("   ");
+            ret.append(getBoardNumberCoord(i));
 
             for (int j = 0; j < board.getSize(); j++) {
                 if (board.getCell(j, i) != null) {
@@ -53,6 +46,25 @@ public class BoardView implements IBoard {
             ret.append("\n");
         }
 
+        return ret.toString();
+    }
+
+    private static String getBoardNumberCoord(int index) {
+        StringBuilder ret = new StringBuilder();
+        if (index + 1 < 10)
+            ret.append(" ").append(index + 1).append("   ");
+        else
+            ret.append(index + 1).append("   ");
+        return ret.toString();
+    }
+
+    private String printBoardLetterCoord() {
+        StringBuilder ret = new StringBuilder();
+        ret.append("     ");
+        for (int j = 0; j < board.getSize(); j++) {
+            ret.append((char) (j + (int) 'A')).append("  ");
+        }
+        ret.append("\n\n");
         return ret.toString();
     }
 }
