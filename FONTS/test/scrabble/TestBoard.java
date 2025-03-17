@@ -68,7 +68,8 @@ public class TestBoard {
     @Test
     public void placeWordVerticalPlacesWord() {
         Board board = new StandardBoard();
-        WordPlacer sut = new WordPlacer(board);
+        BoardViewMock mock = new BoardViewMock();
+        WordPlacer sut = new WordPlacer(board, mock);
 
         sut.run("TEST", 0, 0, Direction.Vertical);
 
@@ -81,7 +82,8 @@ public class TestBoard {
     @Test
     public void placeWordHorizontalPlacesWord() {
         Board board = new StandardBoard();
-        WordPlacer sut = new WordPlacer(board);
+        BoardViewMock mock = new BoardViewMock();
+        WordPlacer sut = new WordPlacer(board, mock);
 
         sut.run("TEST", 0, 0, Direction.Horizontal);
 

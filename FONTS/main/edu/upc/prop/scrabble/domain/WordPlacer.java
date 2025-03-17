@@ -5,9 +5,11 @@ import edu.upc.prop.scrabble.utils.Direction;
 
 public class WordPlacer {
     private final Board board;
+    private final IBoard view;
 
-    public WordPlacer(Board board) {
+    public WordPlacer(Board board, IBoard view) {
         this.board = board;
+        this.view = view;
     }
 
     public void run(String word, int x, int y, Direction direction) {
@@ -15,6 +17,8 @@ public class WordPlacer {
             placeWordVertical(word, x, y);
         else
             placeWordHorizontal(word, x, y);
+
+        view.UpdateBoard();
     }
 
     private void placeWordVertical(String word, int x, int y) {
