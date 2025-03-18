@@ -16,11 +16,11 @@ public class PieceGenerator {
     }
 
     private Pair<Piece, Integer> generatePiece(String piece) {
-        char c = parseCharacter(piece);
+        String character = parseCharacter(piece);
         int value = parseValue(piece);
         int count = parseCount(piece);
 
-        return new Pair<>(new Piece(c, value), count);
+        return new Pair<>(new Piece(character, value), count);
     }
 
     private int parseCount(String piece) {
@@ -33,7 +33,8 @@ public class PieceGenerator {
         return Integer.parseInt(values[2]);
     }
 
-    private char parseCharacter(String piece) {
-        return piece.charAt(0);
+    private String parseCharacter(String piece) {
+        String[] values = piece.split("\\s+");
+        return values[0];
     }
 }
