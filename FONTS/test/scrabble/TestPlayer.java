@@ -6,27 +6,29 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class TestPlayer {
-   @Test
-   public void addScoreUpdatesPlayerScore() {
-       Player player = new Player("Adri", false);
+    @Test
+    public void addScoreUpdatesPlayerScore() {
+        Player player = new Player("Adri", false);
 
-       player.addScore(5);
+        player.addScore(5);
 
-       assertEquals(5, player.getScore());
-   }
-   @Test
-    public void playerScoreEqualsZero (){
-       Player player = new Player("Adri", false);
+        assertEquals(5, player.getScore());
+    }
 
-       assertEquals(0, player.getScore());
-   }
-   @Test
+    @Test
+    public void playerScoreEqualsZero() {
+        Player player = new Player("Adri", false);
+
+        assertEquals(0, player.getScore());
+    }
+
+    @Test
     public void scoreAddsProperly() {
-       Player player = new Player("Adri", false);
+        Player player = new Player("Adri", false);
 
-       player.addScore(5);
-       player.addScore(5);
+        player.addScore(5);
+        player.addScore(5);
 
-       assertEquals(10, player.getScore());
-   }
+        assertEquals(10, player.getScore());
+    }
 }

@@ -16,22 +16,19 @@ public class Bag {
         return bag.isEmpty();
     }
 
-    // pre: s'ha eliminat la piece del taulell
-    // post: s'afegeix de nou la fitxa a la bossa
-    public void addPiece(Piece piece) {
-        bag.add(piece);
+    //funcions getter
+    public Piece getPiece(int i) {
+        Piece p = bag.get(i);
+        this.bag.remove(i);
+        return p;
     }
 
-    // pre: es vol posar una fitxa al taulell
-    // post: agafar una fitxa random de la bossa
-    public Piece drawPiece() {
-        if (bag.isEmpty()) {
-            throw new InaccessibleObjectException("Bag is empty.");
-        }
-        Random rand = new Random();
-        int i = rand.nextInt(bag.size());
-        Piece piece = bag.get(i);
-        bag.remove(i);
-        return piece;
+    public int getSize() {
+        return bag.size();
+    }
+
+    // s'afegeix la fitxa a la bossa
+    public void addPiece(Piece piece) {
+        bag.add(piece);
     }
 }
