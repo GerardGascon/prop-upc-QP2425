@@ -5,7 +5,6 @@ import edu.upc.prop.scrabble.data.Piece;
 import edu.upc.prop.scrabble.domain.PieceDrawer;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class TestPieceDrawer {
