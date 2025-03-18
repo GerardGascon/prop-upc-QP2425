@@ -15,7 +15,7 @@ public class TestPieceGenerator {
 
         Pair<Piece, Integer>[] p = sut.run(dPiece);
 
-        assertEquals('D', p[0].first().getLetter());
+        assertEquals('D', p[0].first().letter());
     }
 
     @Test
@@ -25,7 +25,7 @@ public class TestPieceGenerator {
 
         Pair<Piece, Integer>[] p = sut.run(dPiece);
 
-        assertEquals('C', p[0].first().getLetter());
+        assertEquals('C', p[0].first().letter());
     }
 
     @Test
@@ -35,7 +35,7 @@ public class TestPieceGenerator {
 
         Pair<Piece, Integer>[] p = sut.run(dPiece);
 
-        assertEquals(2, p[0].first().getValue());
+        assertEquals(2, p[0].first().value());
     }
 
     @Test
@@ -45,7 +45,7 @@ public class TestPieceGenerator {
 
         Pair<Piece, Integer>[] p = sut.run(dPiece);
 
-        assertEquals(1, p[0].first().getValue());
+        assertEquals(1, p[0].first().value());
     }
 
     @Test
@@ -76,7 +76,7 @@ public class TestPieceGenerator {
         Pair<Piece, Integer>[] p = sut.run(pieces);
 
         assertEquals(2, p.length);
-        assertEquals('E', p[0].first().getLetter());
-        assertEquals('D', p[1].first().getLetter());
+        assertEquals('E', p[0].first().letter());
+        assertEquals('D', p[1].first().letter());
     }
 }
