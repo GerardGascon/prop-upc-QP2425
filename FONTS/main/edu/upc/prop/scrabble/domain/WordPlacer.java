@@ -1,5 +1,6 @@
 package edu.upc.prop.scrabble.domain;
 
+import edu.upc.prop.scrabble.data.Piece;
 import edu.upc.prop.scrabble.data.board.Board;
 import edu.upc.prop.scrabble.utils.Direction;
 
@@ -12,26 +13,24 @@ public class WordPlacer {
         this.view = view;
     }
 
-    public void run(String word, int x, int y, Direction direction) {
+    public void run(Piece[] pieces, int x, int y, Direction direction) {
         if (direction == Direction.Vertical)
-            placeWordVertical(word, x, y);
+            placeWordVertical(pieces, x, y);
         else
-            placeWordHorizontal(word, x, y);
+            placeWordHorizontal(pieces, x, y);
 
         view.UpdateBoard();
     }
 
-    private void placeWordVertical(String word, int x, int y) {
-        for (int i = 0; i < word.length(); i++) {
-            String s = word.substring(i, i + 1);
-            board.placePiece(s, x, y + i);
+    private void placeWordVertical(Piece[] pieces, int x, int y) {
+        for (int i = 0; i < pieces.length; i++) {
+            board.placePiece(pieces[i], x, y + i);
         }
     }
 
-    private void placeWordHorizontal(String word, int x, int y) {
-        for (int i = 0; i < word.length(); i++) {
-            String s = word.substring(i, i + 1);
-            board.placePiece(s, x + i, y);
+    private void placeWordHorizontal(Piece[] pieces, int x, int y) {
+        for (int i = 0; i < pieces.length; i++) {
+            board.placePiece(pieces[i], x + i, y);
         }
     }
 }

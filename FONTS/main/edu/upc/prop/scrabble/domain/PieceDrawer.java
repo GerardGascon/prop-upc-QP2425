@@ -18,7 +18,7 @@ public class PieceDrawer {
             throw new InaccessibleObjectException("Bag is empty.");
         }
         Random rand = new Random();
-        int i = rand.nextInt(bag.getSize());
-        return bag.getPiece(i);
+        int r = rand.nextInt(bag.getSize());
+        return bag.getPiece(r);
     }
 }
