@@ -1,6 +1,7 @@
 package edu.upc.prop.scrabble;
 
 import com.google.gson.Gson;
+import edu.upc.prop.scrabble.data.Piece;
 import edu.upc.prop.scrabble.data.board.Board;
 import edu.upc.prop.scrabble.data.board.JuniorBoard;
 import edu.upc.prop.scrabble.data.board.StandardBoard;
@@ -13,8 +14,16 @@ public class Main {
     public static void main(String[] args) {
         Board board = new SuperBoard();
         BoardView boardView = new BoardView(board);
+        Piece[] rack = new Piece[]{
+                new Piece("P", 1),
+                new Piece("O", 1),
+                new Piece("T", 1),
+                new Piece("A", 1),
+                new Piece("T", 1),
+                new Piece("O", 1)
+        };
         WordPlacer placer = new WordPlacer(board, boardView);
-        placer.run("POTATO", 1, 2, Direction.Horizontal);
+        placer.run("POTATO", rack, 1, 2, Direction.Horizontal);
     }
 
     public float division(int a, int b) throws ArithmeticException {

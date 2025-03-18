@@ -13,7 +13,7 @@ public class WordPlacer {
         this.view = view;
     }
 
-    public void run(String word, int x, int y, Direction direction) {
+    public void run(String word, Piece[] pieces, int x, int y, Direction direction) {
         if (direction == Direction.Vertical)
             placeWordVertical(word, x, y);
         else

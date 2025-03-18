@@ -14,9 +14,15 @@ public class TestWordPlacer {
     public void placeWordVerticalPlacesWord() {
         Board board = new StandardBoard();
         BoardViewMock mock = new BoardViewMock();
+        Piece[] rack = new Piece[]{
+                new Piece("T", 1),
+                new Piece("E", 1),
+                new Piece("S", 1),
+                new Piece("T", 1)
+        };
         WordPlacer sut = new WordPlacer(board, mock);
 
-        sut.run("TEST", 0, 0, Direction.Vertical);
+        sut.run("TEST", rack, 0, 0, Direction.Vertical);
 
         assertEquals(new Piece("T", 0), board.getCellPiece(0, 0));
         assertEquals(new Piece("E", 0), board.getCellPiece(0, 1));
@@ -28,9 +34,15 @@ public class TestWordPlacer {
     public void placeWordHorizontalPlacesWord() {
         Board board = new StandardBoard();
         BoardViewMock mock = new BoardViewMock();
+        Piece[] rack = new Piece[]{
+                new Piece("T", 1),
+                new Piece("E", 1),
+                new Piece("S", 1),
+                new Piece("T", 1)
+        };
         WordPlacer sut = new WordPlacer(board, mock);
 
-        sut.run("TEST", 0, 0, Direction.Horizontal);
+        sut.run("TEST", rack, 0, 0, Direction.Horizontal);
 
         assertEquals(new Piece("T", 0), board.getCellPiece(0, 0));
         assertEquals(new Piece("E", 0), board.getCellPiece(1, 0));
@@ -39,7 +51,7 @@ public class TestWordPlacer {
     }
 
     @Test
-    public void noPlaceActionDoesntUpdateBoard(){
+    public void noPlaceActionDoesntUpdateBoard() {
         Board board = new StandardBoard();
         BoardViewMock mock = new BoardViewMock();
         WordPlacer _ = new WordPlacer(board, mock);
@@ -48,12 +60,18 @@ public class TestWordPlacer {
     }
 
     @Test
-    public void placeActionUpdatesBoard(){
+    public void placeActionUpdatesBoard() {
         Board board = new StandardBoard();
         BoardViewMock mock = new BoardViewMock();
+        Piece[] rack = new Piece[]{
+                new Piece("T", 1),
+                new Piece("E", 1),
+                new Piece("S", 1),
+                new Piece("T", 1)
+        };
         WordPlacer sut = new WordPlacer(board, mock);
 
-        sut.run("TEST", 0, 0, Direction.Horizontal);
+        sut.run("TEST", rack, 0, 0, Direction.Horizontal);
 
         assertTrue(mock.getUpdateCallReceived());
     }
