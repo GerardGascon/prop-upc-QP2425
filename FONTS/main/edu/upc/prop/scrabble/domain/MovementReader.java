@@ -19,26 +19,46 @@ public class MovementReader {
 
         String movementWord = parseMovementWord(movementRaw);
         Pair<Integer, Integer> position = parseMovementPosition(movementRaw);
+        Direction direction = parseMovementDirection(movementRaw);
 
-        return new Movement(movementWord, 3, 2, Direction.Horizontal);
+        return new Movement(movementWord, position.first(), position.second(), direction);
+    }
+
+    private Direction parseMovementDirection(String movement) {
+        if (isCoordinateForHorizontal(movement))
+            return Direction.Horizontal;
+
+        return Direction.Vertical;
+    }
+
+    private static boolean isCoordinateForHorizontal(String movement) {
+        String direction = movement.split("\\s+")[1];
+        return getCoordinate(movement).letter().charAt(0) == direction.charAt(0);
     }
 
     private Pair<Integer, Integer> parseMovementPosition(String movement) {
+        Coordinate coordinate = getCoordinate(movement);
+
+        int x = coordinate.letter().charAt(0) - (int) 'A';
+        int y = Integer.parseInt(coordinate.number());
+
+        return new Pair<>(x, y);
+    }
+
+    private static Coordinate getCoordinate(String movement) {
         String direction = movement.split("\\s+")[1];
 
         Pattern letterPattern = Pattern.compile("[A-Za-z]+");
         Matcher letterMatcher = letterPattern.matcher(direction);
+        boolean _ = letterMatcher.find();
 
         Pattern numberPattern = Pattern.compile("\\d+");
         Matcher numberMatcher = numberPattern.matcher(direction);
+        boolean _ = numberMatcher.find();
+        return new Coordinate(letterMatcher.group(), numberMatcher.group());
+    }
 
-        String letter = letterMatcher.group();
-        String number = numberMatcher.group();
-
-        int x = letter.charAt(0) - (int)'A';
-        int y = Integer.parseInt(number);
-
-        return new Pair<>(x, y);
+    private record Coordinate(String letter, String number) {
     }
 
     private String parseMovementWord(String movement) {
