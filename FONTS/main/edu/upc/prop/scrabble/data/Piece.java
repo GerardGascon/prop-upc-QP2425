@@ -22,14 +22,6 @@ public class Piece {
     }
 
     // funcions setter
-    public void setLetter(char letter) {
-        this.letter = letter;
-    }
-
-    public void setValue(int value) {
-        this.value = value;
-    }
-
     // Sortida
     public void printPiece(Piece piece) {
         System.out.println("Letter: " + piece.getLetter() + " and Value: " + piece.getValue());
