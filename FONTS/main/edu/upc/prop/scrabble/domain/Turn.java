@@ -31,10 +31,14 @@ public class Turn {
             currentPlayer.getHand().add(actualPiece);
         }
 
+        
+        // TO BE DEVELOPED
+
         //El jugador posa peça
         // DESPRES : if (existeix alguna paraula que puguis posar)
+        // DESPRES : decidir si vol fer skip
 
-        //  Geri Working on it
+        // Geri Working on it
         // DecideWord ----> Piece[] Word, int startX, int startY, Direction direccio
         Piece[] Word ={new Piece("a",8)};
         int StartX = 0; int StartY = 0;
