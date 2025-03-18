@@ -19,11 +19,23 @@ public abstract class Board {
         placedTiles[x][y] = piece;
     }
 
-    public String getCell(int x, int y) {
+    public boolean isCenter(int x, int y) {
+        return x == y && x == getSize() / 2;
+    }
+
+    public boolean isCellEmpty(int x, int y) {
+        return placedTiles[x][y] == null;
+    }
+
+    public String getCellPiece(int x, int y) {
         return placedTiles[x][y];
     }
 
-    public PremiumTileType getTileType(int x, int y) {
+    public boolean isPremiumTile(int x, int y) {
+        return premiumTiles[x][y] != null;
+    }
+
+    public PremiumTileType getPremiumTileType(int x, int y) {
         return premiumTiles[x][y];
     }
 

@@ -1,4 +1,6 @@
-package edu.upc.prop.scrabble.data.board;
+package edu.upc.prop.scrabble.presenter.terminal;
+
+import edu.upc.prop.scrabble.data.board.PremiumTileType;
 
 public class TileConverter {
     public static String convert(PremiumTileType tile) {

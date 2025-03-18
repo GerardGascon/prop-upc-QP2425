@@ -36,7 +36,7 @@ public class TestBoard {
 
         sut.placePiece("C", 0, 0);
 
-        assertEquals("C", sut.getCell(0, 0));
+        assertEquals("C", sut.getCellPiece(0, 0));
     }
 
     @Test
@@ -45,14 +45,72 @@ public class TestBoard {
 
         sut.placePiece("D", 0, 0);
 
-        assertEquals("D", sut.getCell(0, 0));
+        assertEquals("D", sut.getCellPiece(0, 0));
     }
 
     @Test
     public void readEmptyCellFromBoardReturnsNull() {
         Board sut = new StandardBoard();
 
-        assertNull(sut.getCell(1, 1));
+        assertNull(sut.getCellPiece(1, 1));
+    }
+
+    @Test
+    public void centerTileIsNotCorrectWhenNotCenter() {
+        Board sut = new StandardBoard();
+
+        assertFalse(sut.isCenter(7, 0));
+    }
+
+    @Test
+    public void centerTileIsCorrectInStandardBoard() {
+        Board sut = new StandardBoard();
+
+        assertTrue(sut.isCenter(7, 7));
+    }
+
+    @Test
+    public void centerTileIsCorrectInSuperBoard() {
+        Board sut = new SuperBoard();
+
+        assertTrue(sut.isCenter(10, 10));
+    }
+
+    @Test
+    public void centerTileIsCorrectInJuniorBoard() {
+        Board sut = new JuniorBoard();
+
+        assertTrue(sut.isCenter(5, 5));
+    }
+
+    @Test
+    public void emptyCellReturnsTrueWhenCellIsEmpty() {
+        Board sut = new StandardBoard();
+
+        assertTrue(sut.isCellEmpty(1, 1));
+    }
+
+    @Test
+    public void emptyCellReturnsFalseWhenCellIsNotEmpty() {
+        Board sut = new StandardBoard();
+
+        sut.placePiece("C", 1, 1);
+
+        assertFalse(sut.isCellEmpty(1, 1));
+    }
+
+    @Test
+    public void isPremiumTileReturnsTrueWhenCellIsPremium() {
+        Board sut = new StandardBoard();
+
+        assertTrue(sut.isPremiumTile(0, 0));
+    }
+
+    @Test
+    public void isPremiumTileReturnsFalseWhenCellIsNotPremium() {
+        Board sut = new StandardBoard();
+
+        assertFalse(sut.isPremiumTile(1, 0));
     }
 
     @Test
@@ -62,34 +120,6 @@ public class TestBoard {
         sut.placePiece("C", 0, 0);
         sut.placePiece("D", 0, 0);
 
-        assertEquals("C", sut.getCell(0, 0));
-    }
-
-    @Test
-    public void placeWordVerticalPlacesWord() {
-        Board board = new StandardBoard();
-        BoardViewMock mock = new BoardViewMock();
-        WordPlacer sut = new WordPlacer(board, mock);
-
-        sut.run("TEST", 0, 0, Direction.Vertical);
-
-        assertEquals("T", board.getCell(0, 0));
-        assertEquals("E", board.getCell(0, 1));
-        assertEquals("S", board.getCell(0, 2));
-        assertEquals("T", board.getCell(0, 3));
-    }
-
-    @Test
-    public void placeWordHorizontalPlacesWord() {
-        Board board = new StandardBoard();
-        BoardViewMock mock = new BoardViewMock();
-        WordPlacer sut = new WordPlacer(board, mock);
-
-        sut.run("TEST", 0, 0, Direction.Horizontal);
-
-        assertEquals("T", board.getCell(0, 0));
-        assertEquals("E", board.getCell(1, 0));
-        assertEquals("S", board.getCell(2, 0));
-        assertEquals("T", board.getCell(3, 0));
+        assertEquals("C", sut.getCellPiece(0, 0));
     }
 }
