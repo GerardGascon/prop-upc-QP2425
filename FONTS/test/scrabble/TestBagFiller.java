@@ -1,7 +1,6 @@
 package scrabble;
 
 import edu.upc.prop.scrabble.data.Bag;
-import edu.upc.prop.scrabble.data.Piece;
 import edu.upc.prop.scrabble.domain.BagFiller;
 import edu.upc.prop.scrabble.domain.PieceGenerator;
 import org.junit.Test;

@@ -1,5 +1,4 @@
 package edu.upc.prop.scrabble.data;
-import java.lang.reflect.InaccessibleObjectException;
 import java.util.*;
 
 public class Bag {
