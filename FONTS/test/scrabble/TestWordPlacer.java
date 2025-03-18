@@ -1,5 +1,6 @@
 package scrabble;
 
+import edu.upc.prop.scrabble.data.Piece;
 import edu.upc.prop.scrabble.data.board.Board;
 import edu.upc.prop.scrabble.data.board.StandardBoard;
 import edu.upc.prop.scrabble.domain.WordPlacer;
@@ -17,10 +18,10 @@ public class TestWordPlacer {
 
         sut.run("TEST", 0, 0, Direction.Vertical);
 
-        assertEquals("T", board.getCellPiece(0, 0));
-        assertEquals("E", board.getCellPiece(0, 1));
-        assertEquals("S", board.getCellPiece(0, 2));
-        assertEquals("T", board.getCellPiece(0, 3));
+        assertEquals(new Piece("T", 0), board.getCellPiece(0, 0));
+        assertEquals(new Piece("E", 0), board.getCellPiece(0, 1));
+        assertEquals(new Piece("S", 0), board.getCellPiece(0, 2));
+        assertEquals(new Piece("T", 0), board.getCellPiece(0, 3));
     }
 
     @Test
@@ -31,10 +32,10 @@ public class TestWordPlacer {
 
         sut.run("TEST", 0, 0, Direction.Horizontal);
 
-        assertEquals("T", board.getCellPiece(0, 0));
-        assertEquals("E", board.getCellPiece(1, 0));
-        assertEquals("S", board.getCellPiece(2, 0));
-        assertEquals("T", board.getCellPiece(3, 0));
+        assertEquals(new Piece("T", 0), board.getCellPiece(0, 0));
+        assertEquals(new Piece("E", 0), board.getCellPiece(1, 0));
+        assertEquals(new Piece("S", 0), board.getCellPiece(2, 0));
+        assertEquals(new Piece("T", 0), board.getCellPiece(3, 0));
     }
 
     @Test

@@ -1,5 +1,6 @@
 package scrabble;
 
+import edu.upc.prop.scrabble.data.Piece;
 import edu.upc.prop.scrabble.data.board.Board;
 import edu.upc.prop.scrabble.data.board.JuniorBoard;
 import edu.upc.prop.scrabble.data.board.StandardBoard;
@@ -34,18 +35,18 @@ public class TestBoard {
     public void placePieceAddsItToBoard() {
         Board sut = new StandardBoard();
 
-        sut.placePiece("C", 0, 0);
+        sut.placePiece(new Piece("C", 0), 0, 0);
 
-        assertEquals("C", sut.getCellPiece(0, 0));
+        assertEquals(new Piece("C", 0), sut.getCellPiece(0, 0));
     }
 
     @Test
     public void placePiecePlacesCorrectPiece() {
         Board sut = new StandardBoard();
 
-        sut.placePiece("D", 0, 0);
+        sut.placePiece(new Piece("D", 0), 0, 0);
 
-        assertEquals("D", sut.getCellPiece(0, 0));
+        assertEquals(new Piece("D", 0), sut.getCellPiece(0, 0));
     }
 
     @Test
@@ -94,7 +95,7 @@ public class TestBoard {
     public void emptyCellReturnsFalseWhenCellIsNotEmpty() {
         Board sut = new StandardBoard();
 
-        sut.placePiece("C", 1, 1);
+        sut.placePiece(new Piece("C", 0), 1, 1);
 
         assertFalse(sut.isCellEmpty(1, 1));
     }
@@ -117,9 +118,9 @@ public class TestBoard {
     public void tryPlacingToAlreadyPlacedCellReturnsFalse() {
         Board sut = new StandardBoard();
 
-        sut.placePiece("C", 0, 0);
-        sut.placePiece("D", 0, 0);
+        sut.placePiece(new Piece("C", 0), 0, 0);
+        sut.placePiece(new Piece("D", 0), 0, 0);
 
-        assertEquals("C", sut.getCellPiece(0, 0));
+        assertEquals(new Piece("C", 0), sut.getCellPiece(0, 0));
     }
 }

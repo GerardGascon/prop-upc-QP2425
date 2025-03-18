@@ -1,11 +1,13 @@
 package edu.upc.prop.scrabble.data.board;
 
+import edu.upc.prop.scrabble.data.Piece;
+
 public abstract class Board {
-    private final String[][] placedTiles;
+    private final Piece[][] placedTiles;
     private final PremiumTileType[][] premiumTiles;
 
     public Board(int size) {
-        placedTiles = new String[size][size];
+        placedTiles = new Piece[size][size];
         premiumTiles = new PremiumTileType[size][size];
     }
 
@@ -13,7 +15,7 @@ public abstract class Board {
         return placedTiles.length;
     }
 
-    public void placePiece(String piece, int x, int y) {
+    public void placePiece(Piece piece, int x, int y) {
         if (placedTiles[x][y] != null) return;
 
         placedTiles[x][y] = piece;
@@ -27,7 +29,7 @@ public abstract class Board {
         return placedTiles[x][y] == null;
     }
 
-    public String getCellPiece(int x, int y) {
+    public Piece getCellPiece(int x, int y) {
         return placedTiles[x][y];
     }
 
