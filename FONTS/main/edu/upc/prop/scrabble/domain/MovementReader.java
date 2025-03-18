@@ -10,7 +10,9 @@ public class MovementReader {
         this.reader = reader;
     }
 
-    public Movement run(String movement) {
+    public Movement run() {
+        String movementRaw = reader.readMove();
+
         return new Movement("a", 3, 2, Direction.Horizontal);
     }
 }
