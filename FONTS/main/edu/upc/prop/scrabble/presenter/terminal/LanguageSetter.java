@@ -41,7 +41,7 @@ public class LanguageSetter {
 
 
     //Fer algo de que segons el selected llegeix English | Catalan | Castellan
-    // Carrego arxiu y enviar lo que hem demani BackFiller
+    // Carrego arxiu y enviar lo que hem demani BagFiller
 
     public void load_language(){
 

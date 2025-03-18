@@ -31,7 +31,7 @@ public class Turn {
             currentPlayer.getHand().add(actualPiece);
         }
 
-        
+
         // TO BE DEVELOPED
 
         //El jugador posa peça
