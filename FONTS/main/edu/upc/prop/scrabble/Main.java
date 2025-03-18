@@ -14,7 +14,7 @@ public class Main {
     public static void main(String[] args) {
         Board board = new SuperBoard();
         BoardView boardView = new BoardView(board);
-        Piece[] rack = new Piece[]{
+        Piece[] pieces = new Piece[]{
                 new Piece("P", 1),
                 new Piece("O", 1),
                 new Piece("T", 1),
@@ -23,7 +23,7 @@ public class Main {
                 new Piece("O", 1)
         };
         WordPlacer placer = new WordPlacer(board, boardView);
-        placer.run("POTATO", rack, 1, 2, Direction.Horizontal);
+        placer.run(pieces, 1, 2, Direction.Horizontal);
     }
 
     public float division(int a, int b) throws ArithmeticException {
