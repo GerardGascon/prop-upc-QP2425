@@ -26,12 +26,12 @@ public class BoardView implements IBoard {
 
             for (int j = 0; j < board.getSize(); j++) {
                 if (!board.isCellEmpty(j, i)) {
-                    ret.append(board.getCellPiece(j, i)).append("  ");
+                    ret.append(getCellPiece(j, i)).append("  ");
                     continue;
                 }
 
                 if (board.isPremiumTile(j, i)) {
-                    ret.append(TileConverter.convert(board.getPremiumTileType(j, i))).append(" ");
+                    ret.append(getPremiumTile(j, i)).append(" ");
                     continue;
                 }
 
@@ -46,6 +46,14 @@ public class BoardView implements IBoard {
         }
 
         return ret.toString();
+    }
+
+    private String getCellPiece(int j, int i) {
+        return TileConverter.convert(board.getCellPiece(j, i));
+    }
+
+    private String getPremiumTile(int j, int i) {
+        return TileConverter.convert(board.getPremiumTileType(j, i));
     }
 
     private static String getBoardNumberCoord(int index) {

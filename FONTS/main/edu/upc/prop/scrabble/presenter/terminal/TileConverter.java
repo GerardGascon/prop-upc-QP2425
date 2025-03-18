@@ -1,5 +1,6 @@
 package edu.upc.prop.scrabble.presenter.terminal;
 
+import edu.upc.prop.scrabble.data.Piece;
 import edu.upc.prop.scrabble.data.board.PremiumTileType;
 
 public class TileConverter {
@@ -12,5 +13,9 @@ public class TileConverter {
             case TripleLetter -> "3L";
             case DoubleLetter -> "2L";
         };
+    }
+
+    public static String convert(Piece piece) {
+        return piece.letter();
     }
 }
