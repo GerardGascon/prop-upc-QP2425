@@ -17,14 +17,14 @@ public class Bag {
     }
 
     //funcions getter
-    public Piece getPiece(int i) {
-        Piece p = bag.get(i);
-        this.bag.remove(i);
-        return p;
-    }
-
     public int getSize() {
         return bag.size();
+    }
+
+    public Piece getPiece(int index) {
+        Piece piece = bag.get(index);
+        this.bag.remove(index);
+        return piece;
     }
 
     // s'afegeix la fitxa a la bossa
