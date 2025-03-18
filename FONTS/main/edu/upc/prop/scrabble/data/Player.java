@@ -7,7 +7,7 @@ import java.util.Vector;
 
 public class Player {
     private String name;
-    private Integer score;
+    private int score;
     public Player(String name, boolean CPU) {
         this.name = name;
         this.CPU = CPU;
@@ -24,16 +24,18 @@ public class Player {
 
     private void setCPU(boolean CPU) {this.CPU = CPU;}
 
-    public Integer getScore() {return score;}
+    public int getScore() {return score;}
 
-    private void setScore(Integer score) {this.score = score;}
+    public void addScore(int scoretoadd) {this.score += scoretoadd;}
 
     private Vector<Piece> hand = new Vector <Piece>(7);
 
     public Vector<Piece> getHand() {return hand;}
 
     public void drawPiece(Bag bag){
-        if(hand.size() < 7) hand.add(bag.drawPiece());
+        while(hand.size() < 7){
+            hand.add(bag.drawPiece());
+        }
         //posar throw si
     }
 }
