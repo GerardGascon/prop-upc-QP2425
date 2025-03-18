@@ -1,0 +1,13 @@
+stages:
+  - test
+
+test:
+  image: openjdk:22-jdk-slim
+  stage: test
+  script:
+    - java -version
+    - ./gradlew test > result.log 2>&1
+  artifacts:
+    paths:
+      - result.log
+    expire_in: 1 week
