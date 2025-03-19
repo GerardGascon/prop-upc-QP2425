@@ -29,7 +29,11 @@ public class PointCalculator {
         //TODO: Check here for existing words
         int multiplier = getWordMultiplier(positions);
 
-        return points * multiplier;
+        int bonus = 0;
+        if (positions.length == 7)
+            bonus += 50; // Bingo
+
+        return points * multiplier + bonus;
     }
 
     private int getWordMultiplier(Vector2[] positions) {

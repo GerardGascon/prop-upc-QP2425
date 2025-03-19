@@ -66,4 +66,32 @@ public class TestPointCalculator {
 
         assertEquals(12, points);
     }
+
+    @Test
+    public void calculateBingoBonus() {
+        Board board = new StandardBoard();
+        board.placePiece(new Piece("D", 3), 7, 1);
+        board.placePiece(new Piece("E", 1), 7, 2);
+        board.placePiece(new Piece("S", 1), 7, 3); // x2 letter
+        board.placePiece(new Piece("S", 2), 7, 4);
+        board.placePiece(new Piece("E", 1), 7, 5);
+        board.placePiece(new Piece("R", 2), 7, 6);
+        board.placePiece(new Piece("T", 2), 7, 7); // x2 word
+
+        Vector2[] positions = new Vector2[]{
+                new Vector2(7, 1),
+                new Vector2(7, 2),
+                new Vector2(7, 3),
+                new Vector2(7, 4),
+                new Vector2(7, 5),
+                new Vector2(7, 6),
+                new Vector2(7, 7),
+        };
+
+        PointCalculator sut = new PointCalculator(board);
+
+        int points = sut.run(positions);
+
+        assertEquals(76, points);
+    }
 }
