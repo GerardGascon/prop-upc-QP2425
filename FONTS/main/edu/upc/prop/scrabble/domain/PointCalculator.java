@@ -26,16 +26,27 @@ public class PointCalculator {
         for (Vector2 position : positions) {
             points += getPiecePoints(position);
         }
+        //TODO: Check here for existing words
+        int multiplier = getWordMultiplier(positions);
 
-        return points;
+        return points * multiplier;
+    }
+
+    private int getWordMultiplier(Vector2[] positions) {
+        int multiplier = 1;
+        for (Vector2 position : positions) {
+            multiplier *= getWordMultiplier(position);
+        }
+
+        return multiplier;
     }
 
     private int getPiecePoints(Vector2 position) {
-        int letterMultiplier = getMultiplier(position);
+        int letterMultiplier = getLetterMultiplier(position);
         return board.getCellPiece(position.x, position.y).value() * letterMultiplier;
     }
 
-    private int getMultiplier(Vector2 position) {
+    private int getLetterMultiplier(Vector2 position) {
         PremiumTileType tileType = board.getPremiumTileType(position.x, position.y);
         if (tileType == null)
             return 1;
@@ -44,6 +55,22 @@ public class PointCalculator {
             case QuadrupleLetter -> 4;
             case TripleLetter -> 3;
             case DoubleLetter -> 2;
+            default -> 1;
+        };
+    }
+
+    private int getWordMultiplier(Vector2 position) {
+        if (board.isCenter(position.x, position.y))
+            return 2;
+
+        PremiumTileType tileType = board.getPremiumTileType(position.x, position.y);
+        if (tileType == null)
+            return 1;
+
+        return switch (tileType) {
+            case QuadrupleWord -> 4;
+            case TripleWord -> 3;
+            case DoubleWord -> 2;
             default -> 1;
         };
     }

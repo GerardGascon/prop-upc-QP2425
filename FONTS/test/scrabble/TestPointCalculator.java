@@ -47,4 +47,23 @@ public class TestPointCalculator {
 
         assertEquals(10, points);
     }
+
+    @Test
+    public void calculateStandardPointsWithPremiumWord() {
+        Board board = new StandardBoard();
+        board.placePiece(new Piece("T", 2), 4, 4); // This is on a x2 word cell
+        board.placePiece(new Piece("E", 1), 5, 4);
+        board.placePiece(new Piece("S", 1), 6, 4);
+        board.placePiece(new Piece("T", 2), 7, 4);
+
+        Vector2[] positions = new Vector2[]{
+                new Vector2(4, 4), new Vector2(5, 4), new Vector2(6, 4), new Vector2(7, 4)
+        };
+
+        PointCalculator sut = new PointCalculator(board);
+
+        int points = sut.run(positions);
+
+        assertEquals(12, points);
+    }
 }
