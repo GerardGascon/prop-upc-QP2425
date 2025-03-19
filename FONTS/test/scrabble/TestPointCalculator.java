@@ -193,12 +193,12 @@ public class TestPointCalculator {
         board.placePiece(new Piece("T", 1), 0, 0);
         board.placePiece(new Piece("E", 1), 1, 0);
         board.placePiece(new Piece("S", 1), 2, 0);
-        board.placePiece(new Piece("S", 1), 4, 0);
+        board.placePiece(new Piece("T", 1), 3, 0);
 
-        board.placePiece(new Piece("A", 1), 1, 3);
-        board.placePiece(new Piece("N", 1), 2, 3);
-        board.placePiece(new Piece("T", 1), 3, 3);
-        board.placePiece(new Piece("S", 1), 4, 3);
+        board.placePiece(new Piece("A", 1), 2, 3);
+        board.placePiece(new Piece("N", 1), 3, 3);
+        board.placePiece(new Piece("T", 1), 4, 3);
+        board.placePiece(new Piece("S", 1), 5, 3);
 
         board.placePiece(new Piece("L", 1), 1, 1);
         board.placePiece(new Piece("E", 1), 1, 2);
