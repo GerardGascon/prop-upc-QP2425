@@ -3,6 +3,7 @@ package scrabble;
 import edu.upc.prop.scrabble.data.Piece;
 import edu.upc.prop.scrabble.data.board.Board;
 import edu.upc.prop.scrabble.data.board.StandardBoard;
+import edu.upc.prop.scrabble.domain.PointCalculator;
 import edu.upc.prop.scrabble.domain.WordPlacer;
 import edu.upc.prop.scrabble.utils.Direction;
 import org.junit.Test;
@@ -20,7 +21,8 @@ public class TestWordPlacer {
                 new Piece("S", 1),
                 new Piece("T", 1)
         };
-        WordPlacer sut = new WordPlacer(board, mock);
+        PointCalculator pointCalculator = new PointCalculator(board);
+        WordPlacer sut = new WordPlacer(board, mock, pointCalculator);
 
         sut.run(pieces, 0, 0, Direction.Vertical);
 
@@ -40,7 +42,8 @@ public class TestWordPlacer {
                 new Piece("S", 1),
                 new Piece("T", 1)
         };
-        WordPlacer sut = new WordPlacer(board, mock);
+        PointCalculator pointCalculator = new PointCalculator(board);
+        WordPlacer sut = new WordPlacer(board, mock, pointCalculator);
 
         sut.run(pieces, 0, 0, Direction.Horizontal);
 
@@ -54,7 +57,8 @@ public class TestWordPlacer {
     public void noPlaceActionDoesntUpdateBoard() {
         Board board = new StandardBoard();
         BoardViewMock mock = new BoardViewMock();
-        WordPlacer _ = new WordPlacer(board, mock);
+        PointCalculator pointCalculator = new PointCalculator(board);
+        WordPlacer _ = new WordPlacer(board, mock, pointCalculator);
 
         assertFalse(mock.getUpdateCallReceived());
     }
@@ -69,7 +73,8 @@ public class TestWordPlacer {
                 new Piece("S", 1),
                 new Piece("T", 1)
         };
-        WordPlacer sut = new WordPlacer(board, mock);
+        PointCalculator pointCalculator = new PointCalculator(board);
+        WordPlacer sut = new WordPlacer(board, mock, pointCalculator);
 
         sut.run(pieces, 0, 0, Direction.Horizontal);
 

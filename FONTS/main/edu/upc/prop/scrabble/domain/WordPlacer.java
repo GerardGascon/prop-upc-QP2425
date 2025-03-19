@@ -8,10 +8,12 @@ import edu.upc.prop.scrabble.utils.Vector2;
 public class WordPlacer {
     private final Board board;
     private final IBoard view;
+    private final PointCalculator pointCalculator;
 
-    public WordPlacer(Board board, IBoard view) {
+    public WordPlacer(Board board, IBoard view, PointCalculator pointCalculator) {
         this.board = board;
         this.view = view;
+        this.pointCalculator = pointCalculator;
     }
 
     public int run(Piece[] pieces, int x, int y, Direction direction) {
@@ -21,14 +23,10 @@ public class WordPlacer {
         else
             positions = placeWordHorizontal(pieces, x, y);
 
-        int points = calculatePoints(positions);
+        int points = pointCalculator.run(positions);
 
         view.UpdateBoard();
         return points;
-    }
-
-    private int calculatePoints(Vector2[] positions) {
-        return 0;
     }
 
     private Vector2[] placeWordVertical(Piece[] pieces, int x, int y) {
