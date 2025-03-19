@@ -3,6 +3,7 @@ package edu.upc.prop.scrabble.domain;
 import edu.upc.prop.scrabble.data.Movement;
 import edu.upc.prop.scrabble.utils.Direction;
 import edu.upc.prop.scrabble.utils.Pair;
+import edu.upc.prop.scrabble.utils.Vector2;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -18,10 +19,10 @@ public class MovementReader {
         String movementRaw = reader.readMove();
 
         String movementWord = parseMovementWord(movementRaw);
-        Pair<Integer, Integer> position = parseMovementPosition(movementRaw);
+        Vector2 position = parseMovementPosition(movementRaw);
         Direction direction = parseMovementDirection(movementRaw);
 
-        return new Movement(movementWord, position.first(), position.second(), direction);
+        return new Movement(movementWord, position.x, position.y, direction);
     }
 
     private Direction parseMovementDirection(String movement) {
@@ -36,13 +37,13 @@ public class MovementReader {
         return getCoordinate(movement).letter().charAt(0) == direction.charAt(0);
     }
 
-    private Pair<Integer, Integer> parseMovementPosition(String movement) {
+    private Vector2 parseMovementPosition(String movement) {
         Coordinate coordinate = getCoordinate(movement);
 
         int x = coordinate.letter().charAt(0) - (int) 'A';
         int y = Integer.parseInt(coordinate.number());
 
-        return new Pair<>(x, y);
+        return new Vector2(x, y);
     }
 
     private static Coordinate getCoordinate(String movement) {
