@@ -1,6 +1,7 @@
 package edu.upc.prop.scrabble.domain;
 
 import edu.upc.prop.scrabble.data.board.Board;
+import edu.upc.prop.scrabble.data.board.PremiumTileType;
 import edu.upc.prop.scrabble.utils.Vector2;
 
 public class PointCalculator {
@@ -30,6 +31,20 @@ public class PointCalculator {
     }
 
     private int getPiecePoints(Vector2 position) {
-        return board.getCellPiece(position.x, position.y).value();
+        int letterMultiplier = getMultiplier(position);
+        return board.getCellPiece(position.x, position.y).value() * letterMultiplier;
+    }
+
+    private int getMultiplier(Vector2 position) {
+        PremiumTileType tileType = board.getPremiumTileType(position.x, position.y);
+        if (tileType == null)
+            return 1;
+
+        return switch (tileType) {
+            case QuadrupleLetter -> 4;
+            case TripleLetter -> 3;
+            case DoubleLetter -> 2;
+            default -> 1;
+        };
     }
 }

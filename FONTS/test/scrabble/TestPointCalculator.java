@@ -28,4 +28,23 @@ public class TestPointCalculator {
 
         assertEquals(6, points);
     }
+
+    @Test
+    public void calculateStandardPointsWithPremiumLetter() {
+        Board board = new StandardBoard();
+        board.placePiece(new Piece("T", 2), 5, 5); // This is on a x3 cell
+        board.placePiece(new Piece("E", 1), 6, 5);
+        board.placePiece(new Piece("S", 1), 7, 5);
+        board.placePiece(new Piece("T", 2), 8, 5);
+
+        Vector2[] positions = new Vector2[]{
+                new Vector2(5, 5), new Vector2(6, 5), new Vector2(7, 5), new Vector2(8, 5)
+        };
+
+        PointCalculator sut = new PointCalculator(board);
+
+        int points = sut.run(positions);
+
+        assertEquals(10, points);
+    }
 }
