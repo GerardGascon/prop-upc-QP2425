@@ -21,6 +21,15 @@ public class PointCalculator {
          * 5. (Aquestes caselles prèmium no compten si han estat tapades anteriorment)
          * 6. Si juga 7 peces de cop, es considera bingo i suma 50 punts extres.
          */
-        return 0;
+        int points = 0;
+        for (Vector2 position : positions) {
+            points += getPiecePoints(position);
+        }
+
+        return points;
+    }
+
+    private int getPiecePoints(Vector2 position) {
+        return board.getCellPiece(position.x, position.y).value();
     }
 }
