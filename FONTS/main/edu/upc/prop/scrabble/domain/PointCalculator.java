@@ -22,18 +22,27 @@ public class PointCalculator {
          * 5. (Aquestes caselles prèmium no compten si han estat tapades anteriorment)
          * 6. Si juga 7 peces de cop, es considera bingo i suma 50 punts extres.
          */
+        int points = getPiecePoints(positions);
+        //TODO: Check here for existing words
+        int multiplier = getWordMultiplier(positions);
+
+        int bonus = getBonus(positions);
+
+        return points * multiplier + bonus;
+    }
+
+    private int getPiecePoints(Vector2[] positions) {
         int points = 0;
         for (Vector2 position : positions) {
             points += getPiecePoints(position);
         }
-        //TODO: Check here for existing words
-        int multiplier = getWordMultiplier(positions);
+        return points;
+    }
 
-        int bonus = 0;
+    private static int getBonus(Vector2[] positions) {
         if (positions.length == 7)
-            bonus += 50; // Bingo
-
-        return points * multiplier + bonus;
+            return 50; // Bingo
+        return 0;
     }
 
     private int getWordMultiplier(Vector2[] positions) {
