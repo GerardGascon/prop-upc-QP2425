@@ -92,4 +92,46 @@ public class TestWordGetter {
         assertEquals(new Piece("T", 1), pieces[3]);
         assertEquals(new Piece("S", 1), pieces[4]);
     }
+
+    @Test
+    public void getHorizontalWordThatWasAlreadyPlaced(){
+        Board board = new StandardBoard();
+        board.placePiece(new Piece("N", 1), 0, 0);
+        board.placePiece(new Piece("O", 1), 1, 0);
+
+        board.placePiece(new Piece("T", 1), 6, 0);
+        board.placePiece(new Piece("E", 1), 7, 0);
+        board.placePiece(new Piece("S", 1), 8, 0);
+        board.placePiece(new Piece("T", 1), 9, 0);
+        WordGetter sut = new WordGetter(board);
+
+        Piece[] pieces = sut.run(new Piece("O", 1), new Vector2(1, 0), Direction.Horizontal);
+
+        assertEquals(2, pieces.length);
+        assertEquals(new Piece("N", 1), pieces[0]);
+        assertEquals(new Piece("O", 1), pieces[1]);
+    }
+
+    @Test
+    public void getHorizontalWordWithPreviousWordHavingSameCharacter(){
+        Board board = new StandardBoard();
+        board.placePiece(new Piece("N", 1), 0, 0);
+        board.placePiece(new Piece("O", 1), 1, 0);
+
+        board.placePiece(new Piece("T", 1), 6, 0);
+        board.placePiece(new Piece("O", 1), 7, 0);
+        board.placePiece(new Piece("A", 1), 8, 0);
+        board.placePiece(new Piece("S", 1), 9, 0);
+        board.placePiece(new Piece("T", 1), 10, 0);
+        WordGetter sut = new WordGetter(board);
+
+        Piece[] pieces = sut.run(new Piece("O", 1), new Vector2(7, 0), Direction.Horizontal);
+
+        assertEquals(5, pieces.length);
+        assertEquals(new Piece("T", 1), pieces[0]);
+        assertEquals(new Piece("O", 1), pieces[1]);
+        assertEquals(new Piece("A", 1), pieces[2]);
+        assertEquals(new Piece("S", 1), pieces[3]);
+        assertEquals(new Piece("T", 1), pieces[4]);
+    }
 }

@@ -17,20 +17,24 @@ public class WordGetter {
 
     public Piece[] run(Piece newPiece, Vector2 position, Direction direction) {
         List<Piece> pieces = new ArrayList<>();
+        List<Vector2> positions = new ArrayList<>();
 
         for (int i = 0; i < board.getSize(); i++) {
             int x = getX(position, direction, i);
             int y = getY(position, direction, i);
 
             if (!board.isCellEmpty(x, y)) {
+                positions.add(new Vector2(x, y));
                 pieces.add(board.getCellPiece(x, y));
                 continue;
             }
 
-            if (new Vector2(x, y).equals(position))
+            if (new Vector2(x, y).equals(position)){
+                positions.add(new Vector2(x, y));
                 pieces.add(newPiece);
+            }
 
-            if (pieces.contains(newPiece))
+            if (positions.contains(position))
                 return pieces.toArray(new Piece[0]);
 
             pieces.clear();
