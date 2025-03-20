@@ -42,6 +42,58 @@ public class TestPointCalculator {
     }
 
     @Test
+    public void calculatePointsWhenPlacingSinglePiece() {
+        Board board = new StandardBoard();
+        board.placePiece(new Piece("A", 1), 1, 0);
+        board.placePiece(new Piece("T", 1), 2, 0);
+
+        board.placePiece(new Piece("I", 1), 0, 1);
+        board.placePiece(new Piece("T", 1), 0, 2);
+
+        Piece[] piecesArray = new Piece[]{
+                new Piece("B", 3),
+        };
+
+        Vector2[] positions = new Vector2[]{
+                new Vector2(0, 0),
+        };
+
+        WordGetter wordGetter = new WordGetter(board);
+        PointCalculator sut = new PointCalculator(board, wordGetter);
+
+        int points = sut.run(positions, piecesArray);
+
+        assertEquals(30, points);
+    }
+
+    @Test
+    public void calculatePointsWhenPlacingSinglePieceAlreadyOnBoard() {
+        Board board = new StandardBoard();
+        board.placePiece(new Piece("A", 1), 1, 0);
+        board.placePiece(new Piece("T", 1), 2, 0);
+
+        board.placePiece(new Piece("I", 1), 0, 1);
+        board.placePiece(new Piece("T", 1), 0, 2);
+
+        board.placePiece(new Piece("B", 3), 0, 0);
+
+        Piece[] piecesArray = new Piece[]{
+                new Piece("B", 3),
+        };
+
+        Vector2[] positions = new Vector2[]{
+                new Vector2(0, 0),
+        };
+
+        WordGetter wordGetter = new WordGetter(board);
+        PointCalculator sut = new PointCalculator(board, wordGetter);
+
+        int points = sut.run(positions, piecesArray);
+
+        assertEquals(30, points);
+    }
+
+    @Test
     public void calculateStandardPointsWithPremiumLetter() {
         Board board = new StandardBoard();
         board.placePiece(new Piece("T", 2), 5, 5);
