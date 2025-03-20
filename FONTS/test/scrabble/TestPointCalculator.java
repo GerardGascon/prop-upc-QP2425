@@ -215,7 +215,6 @@ public class TestPointCalculator {
         board.placePiece(new Piece("A", 1), 1, 5);
         board.placePiece(new Piece("N", 1), 1, 6);
         board.placePiece(new Piece("T", 1), 1, 7);
-        board.placePiece(new Piece("S", 1), 1, 8);
 
         Vector2[] positions = new Vector2[]{
                 new Vector2(1, 1),
