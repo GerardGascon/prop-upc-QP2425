@@ -56,18 +56,19 @@ public class PointCalculator {
     private int getPresentWordPoints(Vector2[] positions, Piece[] pieces, Direction direction) {
         int points = 0;
         for (int i = 0; i < positions.length; i++) {
-            Vector2 position = positions[i];
-            Piece piece = pieces[i];
-            Direction directionToCheck = direction == Direction.Horizontal ? Direction.Vertical : Direction.Horizontal;
-
-            Piece[] presentPieces = wordGetter.run(piece, position, directionToCheck);
+            Piece[] presentPieces = getPresentPieces(positions[i], pieces[i], direction);
             if (presentPieces.length <= 1)
                 continue;
 
-            points += getPresentPoints(position, presentPieces);
+            points += getPresentPoints(positions[i], presentPieces);
         }
 
         return points;
+    }
+
+    private Piece[] getPresentPieces(Vector2 position, Piece piece, Direction direction) {
+        Direction directionToCheck = direction == Direction.Horizontal ? Direction.Vertical : Direction.Horizontal;
+        return wordGetter.run(piece, position, directionToCheck);
     }
 
     private int getPresentPoints(Vector2 position, Piece[] pieces) {
@@ -96,11 +97,7 @@ public class PointCalculator {
     }
 
     private int getPiecePoints(Piece[] pieces) {
-        int points = 0;
-        for (Piece piece : pieces) {
-            points += piece.value();
-        }
-        return points;
+        return Arrays.stream(pieces).mapToInt(Piece::value).sum();
     }
 
     private static int getBonus(Vector2[] positions) {
