@@ -19,14 +19,24 @@ public class TestPointCalculator {
         board.placePiece(new Piece("S", 1), 7, 4);
         board.placePiece(new Piece("T", 2), 8, 4);
 
+        Piece[] piecesArray = new Piece[]{
+                new Piece("T", 2),
+                new Piece("E", 1),
+                new Piece("S", 1),
+                new Piece("T", 2),
+        };
+
         Vector2[] positions = new Vector2[]{
-                new Vector2(5, 4), new Vector2(6, 4), new Vector2(7, 4), new Vector2(8, 4)
+                new Vector2(5, 4),
+                new Vector2(6, 4),
+                new Vector2(7, 4),
+                new Vector2(8, 4)
         };
 
         WordGetter wordGetter = new WordGetter(board);
         PointCalculator sut = new PointCalculator(board, wordGetter);
 
-        int points = sut.run(positions);
+        int points = sut.run(positions, piecesArray);
 
         assertEquals(6, points);
     }
@@ -34,19 +44,29 @@ public class TestPointCalculator {
     @Test
     public void calculateStandardPointsWithPremiumLetter() {
         Board board = new StandardBoard();
-        board.placePiece(new Piece("T", 2), 5, 5); // This is on a x3 cell
+        board.placePiece(new Piece("T", 2), 5, 5);
         board.placePiece(new Piece("E", 1), 6, 5);
         board.placePiece(new Piece("S", 1), 7, 5);
         board.placePiece(new Piece("T", 2), 8, 5);
 
+        Piece[] piecesArray = new Piece[]{
+                new Piece("T", 2), // 3L
+                new Piece("E", 1),
+                new Piece("S", 1),
+                new Piece("T", 2),
+        };
+
         Vector2[] positions = new Vector2[]{
-                new Vector2(5, 5), new Vector2(6, 5), new Vector2(7, 5), new Vector2(8, 5)
+                new Vector2(5, 5),
+                new Vector2(6, 5),
+                new Vector2(7, 5),
+                new Vector2(8, 5)
         };
 
         WordGetter wordGetter = new WordGetter(board);
         PointCalculator sut = new PointCalculator(board, wordGetter);
 
-        int points = sut.run(positions);
+        int points = sut.run(positions, piecesArray);
 
         assertEquals(10, points);
     }
@@ -54,19 +74,29 @@ public class TestPointCalculator {
     @Test
     public void calculateStandardPointsWithPremiumWord() {
         Board board = new StandardBoard();
-        board.placePiece(new Piece("T", 2), 4, 4); // This is on a x2 word cell
+        board.placePiece(new Piece("T", 2), 4, 4);
         board.placePiece(new Piece("E", 1), 5, 4);
         board.placePiece(new Piece("S", 1), 6, 4);
         board.placePiece(new Piece("T", 2), 7, 4);
 
+        Piece[] piecesArray = new Piece[]{
+                new Piece("T", 2), // 2W
+                new Piece("E", 1),
+                new Piece("S", 1),
+                new Piece("T", 2),
+        };
+
         Vector2[] positions = new Vector2[]{
-                new Vector2(4, 4), new Vector2(5, 4), new Vector2(6, 4), new Vector2(7, 4)
+                new Vector2(4, 4),
+                new Vector2(5, 4),
+                new Vector2(6, 4),
+                new Vector2(7, 4)
         };
 
         WordGetter wordGetter = new WordGetter(board);
         PointCalculator sut = new PointCalculator(board, wordGetter);
 
-        int points = sut.run(positions);
+        int points = sut.run(positions, piecesArray);
 
         assertEquals(12, points);
     }
@@ -76,11 +106,21 @@ public class TestPointCalculator {
         Board board = new StandardBoard();
         board.placePiece(new Piece("D", 3), 7, 1);
         board.placePiece(new Piece("E", 1), 7, 2);
-        board.placePiece(new Piece("S", 1), 7, 3); // x2 letter
+        board.placePiece(new Piece("S", 1), 7, 3);
         board.placePiece(new Piece("S", 2), 7, 4);
         board.placePiece(new Piece("E", 1), 7, 5);
         board.placePiece(new Piece("R", 2), 7, 6);
-        board.placePiece(new Piece("T", 2), 7, 7); // x2 word
+        board.placePiece(new Piece("T", 2), 7, 7);
+
+        Piece[] piecesArray = new Piece[]{
+                new Piece("D", 3),
+                new Piece("E", 1),
+                new Piece("S", 1), // 2L
+                new Piece("S", 2),
+                new Piece("E", 1),
+                new Piece("R", 2),
+                new Piece("T", 2), // 2W
+        };
 
         Vector2[] positions = new Vector2[]{
                 new Vector2(7, 1),
@@ -95,7 +135,7 @@ public class TestPointCalculator {
         WordGetter wordGetter = new WordGetter(board);
         PointCalculator sut = new PointCalculator(board, wordGetter);
 
-        int points = sut.run(positions);
+        int points = sut.run(positions, piecesArray);
 
         assertEquals(76, points);
     }
@@ -107,10 +147,17 @@ public class TestPointCalculator {
         board.placePiece(new Piece("N", 1), 0, 2);
         board.placePiece(new Piece("E", 1), 0, 3);
 
-        board.placePiece(new Piece("T", 1), 0, 0); // 3W
+        board.placePiece(new Piece("T", 1), 0, 0);
         board.placePiece(new Piece("E", 1), 1, 0);
         board.placePiece(new Piece("S", 1), 2, 0);
-        board.placePiece(new Piece("T", 1), 3, 0); // 2L
+        board.placePiece(new Piece("T", 1), 3, 0);
+
+        Piece[] piecesArray = new Piece[]{
+                new Piece("T", 1), // 3W
+                new Piece("E", 1),
+                new Piece("S", 1),
+                new Piece("T", 1), // 2L
+        };
 
         Vector2[] positions = new Vector2[]{
                 new Vector2(0, 0),
@@ -122,7 +169,7 @@ public class TestPointCalculator {
         WordGetter wordGetter = new WordGetter(board);
         PointCalculator sut = new PointCalculator(board, wordGetter);
 
-        int points = sut.run(positions);
+        int points = sut.run(positions, piecesArray);
 
         assertEquals(27, points);
     }
@@ -167,13 +214,23 @@ public class TestPointCalculator {
         board.placePiece(new Piece("E", 1), 3, 1);
         board.placePiece(new Piece("A", 1), 3, 2);
 
-        board.placePiece(new Piece("T", 1), 0, 0); // 3W
+        board.placePiece(new Piece("T", 1), 0, 0);
         board.placePiece(new Piece("I", 1), 1, 0);
         board.placePiece(new Piece("T", 1), 2, 0);
         board.placePiece(new Piece("E", 1), 4, 0);
         board.placePiece(new Piece("R", 1), 5, 0);
         board.placePiece(new Piece("E", 1), 6, 0);
-        board.placePiece(new Piece("D", 2), 7, 0); // 3W
+        board.placePiece(new Piece("D", 2), 7, 0);
+
+        Piece[] piecesArray = new Piece[]{
+                new Piece("T", 1), // 3W
+                new Piece("I", 1),
+                new Piece("T", 1),
+                new Piece("E", 1),
+                new Piece("R", 1),
+                new Piece("E", 1),
+                new Piece("D", 2), // 3W
+        };
 
         Vector2[] positions = new Vector2[]{
                 new Vector2(0, 0),
@@ -188,7 +245,7 @@ public class TestPointCalculator {
         WordGetter wordGetter = new WordGetter(board);
         PointCalculator sut = new PointCalculator(board, wordGetter);
 
-        int points = sut.run(positions);
+        int points = sut.run(positions, piecesArray);
 
         assertEquals(143, points);
     }
@@ -243,10 +300,17 @@ public class TestPointCalculator {
         board.placePiece(new Piece("E", 1), 3, 1);
         board.placePiece(new Piece("A", 1), 3, 2);
 
-        board.placePiece(new Piece("T", 1), 0, 0); // 3W
+        board.placePiece(new Piece("T", 1), 0, 0);
         board.placePiece(new Piece("E", 1), 1, 0);
         board.placePiece(new Piece("S", 1), 2, 0);
         board.placePiece(new Piece("S", 1), 4, 0);
+
+        Piece[] piecesArray = new Piece[]{
+                new Piece("T", 1), // 3W
+                new Piece("E", 1),
+                new Piece("S", 1),
+                new Piece("S", 1),
+        };
 
         Vector2[] positions = new Vector2[]{
                 new Vector2(0, 0),
@@ -258,7 +322,7 @@ public class TestPointCalculator {
         WordGetter wordGetter = new WordGetter(board);
         PointCalculator sut = new PointCalculator(board, wordGetter);
 
-        int points = sut.run(positions);
+        int points = sut.run(positions, piecesArray);
 
         assertEquals(27, points);
     }
@@ -317,6 +381,16 @@ public class TestPointCalculator {
         board.placePiece(new Piece("N", 1), 1, 6);
         board.placePiece(new Piece("T", 1), 1, 7);
 
+        Piece[] piecesArray = new Piece[]{
+                new Piece("L", 1),
+                new Piece("E", 1),
+                new Piece("P", 3),
+                new Piece("H", 4),
+                new Piece("A", 1),
+                new Piece("N", 1),
+                new Piece("T", 1),
+        };
+
         Vector2[] positions = new Vector2[]{
                 new Vector2(1, 1),
                 new Vector2(1, 2),
@@ -330,7 +404,7 @@ public class TestPointCalculator {
         WordGetter wordGetter = new WordGetter(board);
         PointCalculator sut = new PointCalculator(board, wordGetter);
 
-        int points = sut.run(positions);
+        int points = sut.run(positions, piecesArray);
 
         assertEquals(87, points);
     }

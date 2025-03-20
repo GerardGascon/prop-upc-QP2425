@@ -19,16 +19,6 @@ public class PointCalculator {
         this.wordGetter = wordGetter;
     }
 
-    public int run(Vector2[] positions) {
-        List<Piece> pieces = new ArrayList<>();
-        for (Vector2 position : positions) {
-            pieces.add(board.getCellPiece(position.x, position.y));
-        }
-        Piece[] piecesArray = pieces.toArray(new Piece[0]);
-
-        return run(positions, piecesArray);
-    }
-
     public int run(Vector2[] positions, Piece[] pieces) {
         Direction direction = getWordDirection(positions);
 
