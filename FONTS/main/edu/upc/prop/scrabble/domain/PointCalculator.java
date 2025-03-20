@@ -34,7 +34,7 @@ public class PointCalculator {
 
         int bonus = getBonus(positions);
 
-        return points * multiplier + bonus;
+        return points * multiplier + presentWordsPoints + bonus;
     }
 
     private Direction getWordDirection(Vector2[] positions) {
@@ -47,18 +47,35 @@ public class PointCalculator {
     }
 
     private int getPresentWordPoints(Vector2[] positions, Direction direction) {
+        int points = 0;
         for (Vector2 position : positions) {
             Piece p = board.getCellPiece(position.x, position.y);
+            Direction directionToCheck = direction == Direction.Horizontal ? Direction.Vertical : Direction.Horizontal;
 
+            Piece[] pieces = wordGetter.run(p, position, directionToCheck);
+            if (pieces.length <= 1)
+                continue;
+
+            int wordPoints = getPiecePoints(pieces);
+            int multiplier = getWordMultiplier(position);
+            points += wordPoints * multiplier;
         }
 
-        return 0;
+        return points;
     }
 
     private int getPiecePoints(Vector2[] positions) {
         int points = 0;
         for (Vector2 position : positions) {
-            points += getPiecePoints(position, positions);
+            points += getPiecePoints(position);
+        }
+        return points;
+    }
+
+    private int getPiecePoints(Piece[] pieces) {
+        int points = 0;
+        for (Piece piece : pieces) {
+            points += piece.value();
         }
         return points;
     }
@@ -78,11 +95,9 @@ public class PointCalculator {
         return multiplier;
     }
 
-    private int getPiecePoints(Vector2 position, Vector2[] insertedPositions) {
+    private int getPiecePoints(Vector2 position) {
         int letterMultiplier = getLetterMultiplier(position);
-        int cellPoints = board.getCellPiece(position.x, position.y).value() * letterMultiplier;
-
-        return cellPoints;
+        return board.getCellPiece(position.x, position.y).value() * letterMultiplier;
     }
 
     private int getLetterMultiplier(Vector2 position) {
