@@ -58,7 +58,10 @@ public class PointCalculator {
 
     private Piece[] getPresentPieces(Vector2 position, Piece piece, Direction direction) {
         Direction directionToCheck = direction == Direction.Horizontal ? Direction.Vertical : Direction.Horizontal;
-        return wordGetter.run(piece, position, directionToCheck);
+
+        return wordGetter.run(
+                new Piece[]{piece}, new Vector2[]{position}, directionToCheck
+        );
     }
 
     private int getPresentPoints(Vector2 position, Piece[] pieces) {

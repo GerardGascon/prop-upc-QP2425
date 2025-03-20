@@ -17,10 +17,6 @@ public class WordGetter {
         this.board = board;
     }
 
-    public Piece[] run(Piece newPiece, Vector2 position, Direction direction) {
-        return run(new Piece[]{newPiece}, new Vector2[]{position}, direction);
-    }
-
     public Piece[] run(Piece[] newPieces, Vector2[] newPositions, Direction direction) {
         List<Piece> pieces = new ArrayList<>();
         List<Vector2> positions = new ArrayList<>();
