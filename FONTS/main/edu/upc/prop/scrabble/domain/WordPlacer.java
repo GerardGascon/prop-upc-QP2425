@@ -23,7 +23,7 @@ public class WordPlacer {
         else
             positions = placeWordHorizontal(pieces, x, y);
 
-        int points = pointCalculator.run(positions);
+        int points = pointCalculator.run(positions, pieces);
 
         view.UpdateBoard();
         return points;

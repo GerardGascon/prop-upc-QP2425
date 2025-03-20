@@ -128,6 +128,35 @@ public class TestPointCalculator {
     }
 
     @Test
+    public void calculatePointsForTwoWordsSharingOnePieceNotPlaced() {
+        Board board = new StandardBoard();
+        board.placePiece(new Piece("O", 1), 0, 1);
+        board.placePiece(new Piece("N", 1), 0, 2);
+        board.placePiece(new Piece("E", 1), 0, 3);
+
+        Vector2[] positions = new Vector2[]{
+                new Vector2(0, 0),
+                new Vector2(1, 0),
+                new Vector2(2, 0),
+                new Vector2(3, 0)
+        };
+
+        Piece[] piecesArray = new Piece[]{
+                new Piece("T", 1), // 3W
+                new Piece("E", 1),
+                new Piece("S", 1),
+                new Piece("T", 1), // 2L
+        };
+
+        WordGetter wordGetter = new WordGetter(board);
+        PointCalculator sut = new PointCalculator(board, wordGetter);
+
+        int points = sut.run(positions, piecesArray);
+
+        assertEquals(27, points);
+    }
+
+    @Test
     public void calculatePointsForThreeWordsWithDifferentMultipliers() {
         Board board = new StandardBoard();
         board.placePiece(new Piece("O", 1), 0, 1);

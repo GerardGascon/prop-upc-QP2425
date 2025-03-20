@@ -20,14 +20,24 @@ public class PointCalculator {
     }
 
     public int run(Vector2[] positions) {
+        List<Piece> pieces = new ArrayList<>();
+        for (Vector2 position : positions) {
+            pieces.add(board.getCellPiece(position.x, position.y));
+        }
+        Piece[] piecesArray = pieces.toArray(new Piece[0]);
+
+        return run(positions, piecesArray);
+    }
+
+    public int run(Vector2[] positions, Piece[] pieces) {
         Direction direction = getWordDirection(positions);
 
-        int points = getPiecePoints(positions);
+        int points = getPiecePoints(positions, pieces);
         int multiplier = getWordMultiplier(positions);
-        int alreadyPresentWordPiecesPoints = getAlreadyPresentWordPiecesPoints(positions, direction);
+        int alreadyPresentWordPiecesPoints = getAlreadyPresentWordPiecesPoints(positions, pieces, direction);
         int newWordPoints = (points + alreadyPresentWordPiecesPoints) * multiplier;
 
-        int presentWordsPoints = getPresentWordPoints(positions, direction);
+        int presentWordsPoints = getPresentWordPoints(positions, pieces, direction);
 
         int bonus = getBonus(positions);
 
@@ -43,17 +53,18 @@ public class PointCalculator {
         return Direction.Horizontal;
     }
 
-    private int getPresentWordPoints(Vector2[] positions, Direction direction) {
+    private int getPresentWordPoints(Vector2[] positions, Piece[] pieces, Direction direction) {
         int points = 0;
-        for (Vector2 position : positions) {
-            Piece p = board.getCellPiece(position.x, position.y);
+        for (int i = 0; i < positions.length; i++) {
+            Vector2 position = positions[i];
+            Piece piece = pieces[i];
             Direction directionToCheck = direction == Direction.Horizontal ? Direction.Vertical : Direction.Horizontal;
 
-            Piece[] pieces = wordGetter.run(p, position, directionToCheck);
-            if (pieces.length <= 1)
+            Piece[] presentPieces = wordGetter.run(piece, position, directionToCheck);
+            if (presentPieces.length <= 1)
                 continue;
 
-            points += getPresentPoints(position, pieces);
+            points += getPresentPoints(position, presentPieces);
         }
 
         return points;
@@ -65,22 +76,22 @@ public class PointCalculator {
         return wordPoints * multiplier;
     }
 
-    private int getAlreadyPresentWordPiecesPoints(Vector2[] positions, Direction direction) {
-        Piece p = board.getCellPiece(positions[0].x, positions[0].y);
-        List<Piece> pieces = new ArrayList<>(Arrays.stream(wordGetter.run(p, positions[0], direction)).toList());
+    private int getAlreadyPresentWordPiecesPoints(Vector2[] positions, Piece[] pieces, Direction direction) {
+        Piece firstPiece = pieces[0];
+        List<Piece> presentPieces = new ArrayList<>(Arrays.stream(wordGetter.run(firstPiece, positions[0], direction)).toList());
 
-        for (Vector2 position : positions) {
-            Piece piece = board.getCellPiece(position.x, position.y);
-            pieces.remove(piece);
-        }
+        for (Piece position : pieces)
+            presentPieces.remove(position);
 
-        return getPiecePoints(pieces.toArray(new Piece[0]));
+        return getPiecePoints(presentPieces.toArray(new Piece[0]));
     }
 
-    private int getPiecePoints(Vector2[] positions) {
+    private int getPiecePoints(Vector2[] positions, Piece[] pieces) {
         int points = 0;
-        for (Vector2 position : positions) {
-            points += getPiecePoints(position);
+        for (int i = 0; i < positions.length; i++) {
+            Vector2 position = positions[i];
+            Piece piece = pieces[i];
+            points += getPiecePoints(position, piece);
         }
         return points;
     }
@@ -108,9 +119,9 @@ public class PointCalculator {
         return multiplier;
     }
 
-    private int getPiecePoints(Vector2 position) {
+    private int getPiecePoints(Vector2 position, Piece piece) {
         int letterMultiplier = getLetterMultiplier(position);
-        return board.getCellPiece(position.x, position.y).value() * letterMultiplier;
+        return piece.value() * letterMultiplier;
     }
 
     private int getLetterMultiplier(Vector2 position) {
