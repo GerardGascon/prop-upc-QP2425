@@ -26,8 +26,8 @@ public class WordGetter {
         List<Vector2> positions = new ArrayList<>();
 
         for (int i = 0; i < board.getSize(); i++) {
-            int x = getX(newPositions[0], direction, i);
-            int y = getY(newPositions[0], direction, i);
+            int x = getXPosition(newPositions[0], direction, i);
+            int y = getYPosition(newPositions[0], direction, i);
 
             if (!board.isCellEmpty(x, y)) {
                 positions.add(new Vector2(x, y));
@@ -36,7 +36,8 @@ public class WordGetter {
             }
 
             int positionInNewList = Arrays.asList(newPositions).indexOf(new Vector2(x, y));
-            if (positionInNewList != -1) {
+            boolean containsPosition = positionInNewList != -1;
+            if (containsPosition) {
                 positions.add(newPositions[positionInNewList]);
                 pieces.add(newPieces[positionInNewList]);
                 continue;
@@ -51,11 +52,11 @@ public class WordGetter {
         return pieces.toArray(new Piece[0]);
     }
 
-    private static int getY(Vector2 position, Direction direction, int offset) {
+    private static int getYPosition(Vector2 position, Direction direction, int offset) {
         return direction == Direction.Horizontal ? position.y : offset;
     }
 
-    private static int getX(Vector2 position, Direction direction, int offset) {
+    private static int getXPosition(Vector2 position, Direction direction, int offset) {
         return direction == Direction.Horizontal ? offset : position.x;
     }
 }
