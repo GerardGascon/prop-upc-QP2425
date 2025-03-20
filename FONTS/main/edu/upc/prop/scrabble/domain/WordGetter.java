@@ -32,6 +32,7 @@ public class WordGetter {
             if (new Vector2(x, y).equals(position)){
                 positions.add(new Vector2(x, y));
                 pieces.add(newPiece);
+                continue;
             }
 
             if (positions.contains(position))
