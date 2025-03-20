@@ -16,22 +16,19 @@ public class WordGetter {
     }
 
     public Piece[] run(Piece newPiece, Vector2 position, Direction direction) {
-        if (direction == Direction.Horizontal)
-            return getHorizontalWord(newPiece, position);
-
-        return getVerticalWord(newPiece, position);
-    }
-
-    private Piece[] getHorizontalWord(Piece newPiece, Vector2 position) {
         List<Piece> pieces = new ArrayList<>();
 
         for (int i = 0; i < board.getSize(); i++) {
-            if (!board.isCellEmpty(i, position.y)) {
-                pieces.add(board.getCellPiece(i, position.y));
+            int x = getX(position, direction, i);
+            int y = getY(position, direction, i);
+
+            if (!board.isCellEmpty(x, y)) {
+                pieces.add(board.getCellPiece(x, y));
                 continue;
             }
 
-            tryAddNewPiece(newPiece, new Vector2(i, position.y), position, pieces);
+            if (new Vector2(x, y).equals(position))
+                pieces.add(newPiece);
 
             if (pieces.contains(newPiece))
                 return pieces.toArray(new Piece[0]);
@@ -42,28 +39,11 @@ public class WordGetter {
         return pieces.toArray(new Piece[0]);
     }
 
-    private Piece[] getVerticalWord(Piece newPiece, Vector2 position) {
-        List<Piece> pieces = new ArrayList<>();
-
-        for (int i = 0; i < board.getSize(); i++) {
-            if (!board.isCellEmpty(position.x, i)) {
-                pieces.add(board.getCellPiece(position.x, i));
-                continue;
-            }
-
-            tryAddNewPiece(newPiece, new Vector2(position.x, i), position, pieces);
-
-            if (pieces.contains(newPiece))
-                return pieces.toArray(new Piece[0]);
-
-            pieces.clear();
-        }
-
-        return pieces.toArray(new Piece[0]);
+    private static int getY(Vector2 position, Direction direction, int offset) {
+        return direction == Direction.Horizontal ? position.y : offset;
     }
 
-    private static void tryAddNewPiece(Piece newPiece, Vector2 offset, Vector2 position, List<Piece> pieces) {
-        if (offset.equals(position))
-            pieces.add(newPiece);
+    private static int getX(Vector2 position, Direction direction, int offset) {
+        return direction == Direction.Horizontal ? offset : position.x;
     }
 }
