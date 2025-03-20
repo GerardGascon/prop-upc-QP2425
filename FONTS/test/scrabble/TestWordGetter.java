@@ -51,4 +51,45 @@ public class TestWordGetter {
         assertEquals(new Piece("T", 1), pieces[3]);
         assertEquals(new Piece("S", 1), pieces[4]);
     }
+
+    @Test
+    public void getHorizontalWord(){
+        Board board = new StandardBoard();
+        board.placePiece(new Piece("T", 1), 0, 0);
+        board.placePiece(new Piece("E", 1), 1, 0);
+        board.placePiece(new Piece("S", 1), 2, 0);
+        board.placePiece(new Piece("T", 1), 3, 0);
+        WordGetter sut = new WordGetter(board);
+
+        Piece[] pieces = sut.run(new Piece("S", 1), new Vector2(4, 0), Direction.Horizontal);
+
+        assertEquals(5, pieces.length);
+        assertEquals(new Piece("T", 1), pieces[0]);
+        assertEquals(new Piece("E", 1), pieces[1]);
+        assertEquals(new Piece("S", 1), pieces[2]);
+        assertEquals(new Piece("T", 1), pieces[3]);
+        assertEquals(new Piece("S", 1), pieces[4]);
+    }
+
+    @Test
+    public void getHorizontalWordWithTwoWordsInline(){
+        Board board = new StandardBoard();
+        board.placePiece(new Piece("N", 1), 0, 0);
+        board.placePiece(new Piece("O", 1), 1, 0);
+
+        board.placePiece(new Piece("T", 1), 6, 0);
+        board.placePiece(new Piece("E", 1), 7, 0);
+        board.placePiece(new Piece("S", 1), 8, 0);
+        board.placePiece(new Piece("T", 1), 9, 0);
+        WordGetter sut = new WordGetter(board);
+
+        Piece[] pieces = sut.run(new Piece("S", 1), new Vector2(10, 0), Direction.Horizontal);
+
+        assertEquals(5, pieces.length);
+        assertEquals(new Piece("T", 1), pieces[0]);
+        assertEquals(new Piece("E", 1), pieces[1]);
+        assertEquals(new Piece("S", 1), pieces[2]);
+        assertEquals(new Piece("T", 1), pieces[3]);
+        assertEquals(new Piece("S", 1), pieces[4]);
+    }
 }

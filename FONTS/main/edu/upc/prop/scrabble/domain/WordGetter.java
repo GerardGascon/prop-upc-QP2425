@@ -23,27 +23,47 @@ public class WordGetter {
     }
 
     private Piece[] getHorizontalWord(Piece newPiece, Vector2 position) {
-        return null;
+        List<Piece> pieces = new ArrayList<>();
+
+        for (int i = 0; i < board.getSize(); i++) {
+            if (!board.isCellEmpty(i, position.y)) {
+                pieces.add(board.getCellPiece(i, position.y));
+                continue;
+            }
+
+            tryAddNewPiece(newPiece, new Vector2(i, position.y), position, pieces);
+
+            if (pieces.contains(newPiece))
+                return pieces.toArray(new Piece[0]);
+
+            pieces.clear();
+        }
+
+        return pieces.toArray(new Piece[0]);
     }
 
     private Piece[] getVerticalWord(Piece newPiece, Vector2 position) {
         List<Piece> pieces = new ArrayList<>();
 
         for (int i = 0; i < board.getSize(); i++) {
-            if (board.isCellEmpty(position.x, i)) {
-                if (new Vector2(position.x, i).equals(position))
-                    pieces.add(newPiece);
-
-                if (pieces.contains(newPiece)){
-                    return pieces.toArray(new Piece[0]);
-                }
-                pieces.clear();
+            if (!board.isCellEmpty(position.x, i)) {
+                pieces.add(board.getCellPiece(position.x, i));
                 continue;
             }
 
-            pieces.add(board.getCellPiece(position.x, i));
+            tryAddNewPiece(newPiece, new Vector2(position.x, i), position, pieces);
+
+            if (pieces.contains(newPiece))
+                return pieces.toArray(new Piece[0]);
+
+            pieces.clear();
         }
 
         return pieces.toArray(new Piece[0]);
+    }
+
+    private static void tryAddNewPiece(Piece newPiece, Vector2 offset, Vector2 position, List<Piece> pieces) {
+        if (offset.equals(position))
+            pieces.add(newPiece);
     }
 }
