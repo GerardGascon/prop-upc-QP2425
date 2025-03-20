@@ -65,7 +65,7 @@ public class PointCalculator {
         Vector2[] adjacentTiles = getAdjacentPieces(position, insertedPositions);
         int adjacentPoints = getAdjacentPiecePoints(position, adjacentTiles);
 
-        return cellPoints;
+        return cellPoints + adjacentPoints;
     }
 
     private Vector2[] getAdjacentPieces(Vector2 position, Vector2[] insertedPositions) {
@@ -93,14 +93,24 @@ public class PointCalculator {
 
     private int getAdjacentPiecePoints(Vector2 position, Vector2[] insertedPositions) {
         for (Vector2 insertedPos : insertedPositions) {
-            return getAdjacentPiecePoints(insertedPos, new Vector2(insertedPos.x - position.x, insertedPos.y - position.y));
+            Vector2 direction = new Vector2(
+                    Math.clamp(insertedPos.x - position.x, -1, 1),
+                    Math.clamp(insertedPos.y - position.y, -1, 1)
+            );
+            return getAdjacentPiecePoints(insertedPos, direction);
         }
 
         return 0;
     }
 
     private int getAdjacentPiecePoints(Vector2 position, Vector2 direction) {
-        return 0;
+        if (board.isCellEmpty(position.x, position.y) || !board.isCellValid(position.x, position.y))
+            return 0;
+
+        int adjacentPoints = getAdjacentPiecePoints(position.add(direction), direction);
+        int cellPoints = board.getCellPiece(position.x, position.y).value();
+
+        return adjacentPoints + cellPoints;
     }
 
     private int getLetterMultiplier(Vector2 position) {
