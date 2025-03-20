@@ -4,6 +4,7 @@ import edu.upc.prop.scrabble.data.Piece;
 import edu.upc.prop.scrabble.data.board.Board;
 import edu.upc.prop.scrabble.data.board.StandardBoard;
 import edu.upc.prop.scrabble.domain.PointCalculator;
+import edu.upc.prop.scrabble.domain.WordGetter;
 import edu.upc.prop.scrabble.domain.WordPlacer;
 import edu.upc.prop.scrabble.utils.Direction;
 import org.junit.Test;
@@ -21,7 +22,8 @@ public class TestWordPlacer {
                 new Piece("S", 1),
                 new Piece("T", 1)
         };
-        PointCalculator pointCalculator = new PointCalculator(board);
+        WordGetter wordGetter = new WordGetter(board);
+        PointCalculator pointCalculator = new PointCalculator(board, wordGetter);
         WordPlacer sut = new WordPlacer(board, mock, pointCalculator);
 
         sut.run(pieces, 0, 0, Direction.Vertical);
@@ -42,7 +44,8 @@ public class TestWordPlacer {
                 new Piece("S", 1),
                 new Piece("T", 1)
         };
-        PointCalculator pointCalculator = new PointCalculator(board);
+        WordGetter wordGetter = new WordGetter(board);
+        PointCalculator pointCalculator = new PointCalculator(board, wordGetter);
         WordPlacer sut = new WordPlacer(board, mock, pointCalculator);
 
         sut.run(pieces, 0, 0, Direction.Horizontal);
@@ -57,7 +60,8 @@ public class TestWordPlacer {
     public void noPlaceActionDoesntUpdateBoard() {
         Board board = new StandardBoard();
         BoardViewMock mock = new BoardViewMock();
-        PointCalculator pointCalculator = new PointCalculator(board);
+        WordGetter wordGetter = new WordGetter(board);
+        PointCalculator pointCalculator = new PointCalculator(board, wordGetter);
         WordPlacer _ = new WordPlacer(board, mock, pointCalculator);
 
         assertFalse(mock.getUpdateCallReceived());
@@ -73,7 +77,8 @@ public class TestWordPlacer {
                 new Piece("S", 1),
                 new Piece("T", 1)
         };
-        PointCalculator pointCalculator = new PointCalculator(board);
+        WordGetter wordGetter = new WordGetter(board);
+        PointCalculator pointCalculator = new PointCalculator(board, wordGetter);
         WordPlacer sut = new WordPlacer(board, mock, pointCalculator);
 
         sut.run(pieces, 0, 0, Direction.Horizontal);

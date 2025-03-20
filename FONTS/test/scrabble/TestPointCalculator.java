@@ -4,6 +4,7 @@ import edu.upc.prop.scrabble.data.Piece;
 import edu.upc.prop.scrabble.data.board.Board;
 import edu.upc.prop.scrabble.data.board.StandardBoard;
 import edu.upc.prop.scrabble.domain.PointCalculator;
+import edu.upc.prop.scrabble.domain.WordGetter;
 import edu.upc.prop.scrabble.utils.Vector2;
 import org.junit.Test;
 
@@ -22,7 +23,8 @@ public class TestPointCalculator {
                 new Vector2(5, 4), new Vector2(6, 4), new Vector2(7, 4), new Vector2(8, 4)
         };
 
-        PointCalculator sut = new PointCalculator(board);
+        WordGetter wordGetter = new WordGetter(board);
+        PointCalculator sut = new PointCalculator(board, wordGetter);
 
         int points = sut.run(positions);
 
@@ -41,7 +43,8 @@ public class TestPointCalculator {
                 new Vector2(5, 5), new Vector2(6, 5), new Vector2(7, 5), new Vector2(8, 5)
         };
 
-        PointCalculator sut = new PointCalculator(board);
+        WordGetter wordGetter = new WordGetter(board);
+        PointCalculator sut = new PointCalculator(board, wordGetter);
 
         int points = sut.run(positions);
 
@@ -60,7 +63,8 @@ public class TestPointCalculator {
                 new Vector2(4, 4), new Vector2(5, 4), new Vector2(6, 4), new Vector2(7, 4)
         };
 
-        PointCalculator sut = new PointCalculator(board);
+        WordGetter wordGetter = new WordGetter(board);
+        PointCalculator sut = new PointCalculator(board, wordGetter);
 
         int points = sut.run(positions);
 
@@ -88,7 +92,8 @@ public class TestPointCalculator {
                 new Vector2(7, 7),
         };
 
-        PointCalculator sut = new PointCalculator(board);
+        WordGetter wordGetter = new WordGetter(board);
+        PointCalculator sut = new PointCalculator(board, wordGetter);
 
         int points = sut.run(positions);
 
@@ -114,7 +119,8 @@ public class TestPointCalculator {
                 new Vector2(3, 0)
         };
 
-        PointCalculator sut = new PointCalculator(board);
+        WordGetter wordGetter = new WordGetter(board);
+        PointCalculator sut = new PointCalculator(board, wordGetter);
 
         int points = sut.run(positions);
 
@@ -150,7 +156,8 @@ public class TestPointCalculator {
                 new Vector2(7, 0),
         };
 
-        PointCalculator sut = new PointCalculator(board);
+        WordGetter wordGetter = new WordGetter(board);
+        PointCalculator sut = new PointCalculator(board, wordGetter);
 
         int points = sut.run(positions);
 
@@ -180,7 +187,8 @@ public class TestPointCalculator {
                 new Vector2(4, 0)
         };
 
-        PointCalculator sut = new PointCalculator(board);
+        WordGetter wordGetter = new WordGetter(board);
+        PointCalculator sut = new PointCalculator(board, wordGetter);
 
         int points = sut.run(positions);
 
@@ -219,7 +227,8 @@ public class TestPointCalculator {
                 new Vector2(1, 7)
         };
 
-        PointCalculator sut = new PointCalculator(board);
+        WordGetter wordGetter = new WordGetter(board);
+        PointCalculator sut = new PointCalculator(board, wordGetter);
 
         int points = sut.run(positions);
 

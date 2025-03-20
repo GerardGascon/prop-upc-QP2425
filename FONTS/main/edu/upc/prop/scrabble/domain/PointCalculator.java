@@ -1,18 +1,18 @@
 package edu.upc.prop.scrabble.domain;
 
+import edu.upc.prop.scrabble.data.Piece;
 import edu.upc.prop.scrabble.data.board.Board;
 import edu.upc.prop.scrabble.data.board.PremiumTileType;
+import edu.upc.prop.scrabble.utils.Direction;
 import edu.upc.prop.scrabble.utils.Vector2;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class PointCalculator {
     private final Board board;
+    private final WordGetter wordGetter;
 
-    public PointCalculator(Board board) {
+    public PointCalculator(Board board, WordGetter wordGetter) {
         this.board = board;
+        this.wordGetter = wordGetter;
     }
 
     public int run(Vector2[] positions) {
@@ -27,12 +27,32 @@ public class PointCalculator {
          * 6. Si juga 7 peces de cop, es considera bingo i suma 50 punts extres.
          */
         int points = getPiecePoints(positions);
-        //TODO: Check here for existing words
         int multiplier = getWordMultiplier(positions);
+
+        Direction direction = getWordDirection(positions);
+        int presentWordsPoints = getPresentWordPoints(positions, direction);
 
         int bonus = getBonus(positions);
 
         return points * multiplier + bonus;
+    }
+
+    private Direction getWordDirection(Vector2[] positions) {
+        if (positions.length == 1)
+            return null;
+
+        if (positions[0].x == positions[1].x)
+            return Direction.Vertical;
+        return Direction.Horizontal;
+    }
+
+    private int getPresentWordPoints(Vector2[] positions, Direction direction) {
+        for (Vector2 position : positions) {
+            Piece p = board.getCellPiece(position.x, position.y);
+
+        }
+
+        return 0;
     }
 
     private int getPiecePoints(Vector2[] positions) {
@@ -62,55 +82,7 @@ public class PointCalculator {
         int letterMultiplier = getLetterMultiplier(position);
         int cellPoints = board.getCellPiece(position.x, position.y).value() * letterMultiplier;
 
-        Vector2[] adjacentTiles = getAdjacentPieces(position, insertedPositions);
-        int adjacentPoints = getAdjacentPiecePoints(position, adjacentTiles);
-
-        return cellPoints + adjacentPoints;
-    }
-
-    private Vector2[] getAdjacentPieces(Vector2 position, Vector2[] insertedPositions) {
-        List<Vector2> adjacentTiles = new ArrayList<>();
-
-        Vector2 pos1 = new Vector2(position.x - 1, position.y);
-        if (!board.isCellEmpty(pos1.x, pos1.y) && !contains(pos1, insertedPositions))
-            adjacentTiles.add(pos1);
-        Vector2 pos2 = new Vector2(position.x + 1, position.y);
-        if (!board.isCellEmpty(pos2.x, pos2.y) && !contains(pos2, insertedPositions))
-            adjacentTiles.add(pos2);
-        Vector2 pos3 = new Vector2(position.x, position.y - 1);
-        if (!board.isCellEmpty(pos3.x, pos3.y) && !contains(pos3, insertedPositions))
-            adjacentTiles.add(pos3);
-        Vector2 pos4 = new Vector2(position.x, position.y + 1);
-        if (!board.isCellEmpty(pos4.x, pos4.y) && !contains(pos4, insertedPositions))
-            adjacentTiles.add(pos4);
-
-        return adjacentTiles.toArray(new Vector2[0]);
-    }
-
-    private boolean contains(Vector2 position, Vector2[] insertedPositions) {
-        return Arrays.asList(insertedPositions).contains(position);
-    }
-
-    private int getAdjacentPiecePoints(Vector2 position, Vector2[] insertedPositions) {
-        for (Vector2 insertedPos : insertedPositions) {
-            Vector2 direction = new Vector2(
-                    Math.clamp(insertedPos.x - position.x, -1, 1),
-                    Math.clamp(insertedPos.y - position.y, -1, 1)
-            );
-            return getAdjacentPiecePoints(insertedPos, direction);
-        }
-
-        return 0;
-    }
-
-    private int getAdjacentPiecePoints(Vector2 position, Vector2 direction) {
-        if (board.isCellEmpty(position.x, position.y) || !board.isCellValid(position.x, position.y))
-            return 0;
-
-        int adjacentPoints = getAdjacentPiecePoints(position.add(direction), direction);
-        int cellPoints = board.getCellPiece(position.x, position.y).value();
-
-        return adjacentPoints + cellPoints;
+        return cellPoints;
     }
 
     private int getLetterMultiplier(Vector2 position) {

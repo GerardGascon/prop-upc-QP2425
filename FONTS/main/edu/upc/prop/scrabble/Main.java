@@ -7,6 +7,7 @@ import edu.upc.prop.scrabble.data.board.JuniorBoard;
 import edu.upc.prop.scrabble.data.board.StandardBoard;
 import edu.upc.prop.scrabble.data.board.SuperBoard;
 import edu.upc.prop.scrabble.domain.PointCalculator;
+import edu.upc.prop.scrabble.domain.WordGetter;
 import edu.upc.prop.scrabble.domain.WordPlacer;
 import edu.upc.prop.scrabble.presenter.terminal.BoardView;
 import edu.upc.prop.scrabble.utils.Direction;
@@ -23,7 +24,8 @@ public class Main {
                 new Piece("T", 1),
                 new Piece("O", 1)
         };
-        PointCalculator pointCalculator = new PointCalculator(board);
+        WordGetter wordGetter = new WordGetter(board);
+        PointCalculator pointCalculator = new PointCalculator(board, wordGetter);
         WordPlacer placer = new WordPlacer(board, boardView, pointCalculator);
         placer.run(pieces, 1, 2, Direction.Horizontal);
     }
