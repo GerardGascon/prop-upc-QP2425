@@ -6,6 +6,10 @@ import edu.upc.prop.scrabble.data.board.PremiumTileType;
 import edu.upc.prop.scrabble.utils.Direction;
 import edu.upc.prop.scrabble.utils.Vector2;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class PointCalculator {
     private final Board board;
     private final WordGetter wordGetter;
@@ -16,25 +20,18 @@ public class PointCalculator {
     }
 
     public int run(Vector2[] positions) {
-        /*
-         * 1. Calcular la puntuació de les lletres tenint en compte les caselles de multiplicació de punts per lletres
-         * 2. Recollir la puntuació de paraules formades amb lletres ja col·locades anteriorment al tauler en conjunt
-         *        amb les noves lletres sense tenir en compte multiplicadors
-         * 3. Sumar aquesta puntuació
-         * 4. Multiplicar això per les caselles de multiplicació de punts per paraules (la casella central és un
-         *        multiplicador de paraula per 2)
-         * 5. (Aquestes caselles prèmium no compten si han estat tapades anteriorment)
-         * 6. Si juga 7 peces de cop, es considera bingo i suma 50 punts extres.
-         */
+        Direction direction = getWordDirection(positions);
+
         int points = getPiecePoints(positions);
         int multiplier = getWordMultiplier(positions);
+        int alreadyPresentWordPiecesPoints = getAlreadyPresentWordPiecesPoints(positions, direction);
+        int newWordPoints = (points + alreadyPresentWordPiecesPoints) * multiplier;
 
-        Direction direction = getWordDirection(positions);
         int presentWordsPoints = getPresentWordPoints(positions, direction);
 
         int bonus = getBonus(positions);
 
-        return points * multiplier + presentWordsPoints + bonus;
+        return newWordPoints + presentWordsPoints + bonus;
     }
 
     private Direction getWordDirection(Vector2[] positions) {
@@ -56,12 +53,28 @@ public class PointCalculator {
             if (pieces.length <= 1)
                 continue;
 
-            int wordPoints = getPiecePoints(pieces);
-            int multiplier = getWordMultiplier(position);
-            points += wordPoints * multiplier;
+            points += getPresentPoints(position, pieces);
         }
 
         return points;
+    }
+
+    private int getPresentPoints(Vector2 position, Piece[] pieces) {
+        int wordPoints = getPiecePoints(pieces);
+        int multiplier = getWordMultiplier(position);
+        return wordPoints * multiplier;
+    }
+
+    private int getAlreadyPresentWordPiecesPoints(Vector2[] positions, Direction direction) {
+        Piece p = board.getCellPiece(positions[0].x, positions[0].y);
+        List<Piece> pieces = new ArrayList<>(Arrays.stream(wordGetter.run(p, positions[0], direction)).toList());
+
+        for (Vector2 position : positions) {
+            Piece piece = board.getCellPiece(position.x, position.y);
+            pieces.remove(piece);
+        }
+
+        return getPiecePoints(pieces.toArray(new Piece[0]));
     }
 
     private int getPiecePoints(Vector2[] positions) {
