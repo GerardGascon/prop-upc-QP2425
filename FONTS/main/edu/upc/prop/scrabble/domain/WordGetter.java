@@ -6,6 +6,8 @@ import edu.upc.prop.scrabble.utils.Direction;
 import edu.upc.prop.scrabble.utils.Vector2;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 public class WordGetter {
@@ -36,6 +38,36 @@ public class WordGetter {
             }
 
             if (positions.contains(position))
+                return pieces.toArray(new Piece[0]);
+
+            pieces.clear();
+        }
+
+        return pieces.toArray(new Piece[0]);
+    }
+
+    public Piece[] run(Piece[] newPieces, Vector2[] newPositions, Direction direction) {
+        List<Piece> pieces = new ArrayList<>();
+        List<Vector2> positions = new ArrayList<>();
+
+        for (int i = 0; i < board.getSize(); i++) {
+            int x = getX(newPositions[0], direction, i);
+            int y = getY(newPositions[0], direction, i);
+
+            if (!board.isCellEmpty(x, y)) {
+                positions.add(new Vector2(x, y));
+                pieces.add(board.getCellPiece(x, y));
+                continue;
+            }
+
+            int positionInNewList = Arrays.asList(newPositions).indexOf(new Vector2(x, y));
+            if (positionInNewList != -1){
+                positions.add(newPositions[positionInNewList]);
+                pieces.add(newPieces[positionInNewList]);
+                continue;
+            }
+
+            if (new HashSet<>(positions).containsAll(Arrays.asList(newPositions)))
                 return pieces.toArray(new Piece[0]);
 
             pieces.clear();

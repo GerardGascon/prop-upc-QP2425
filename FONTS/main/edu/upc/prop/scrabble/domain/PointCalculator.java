@@ -77,11 +77,10 @@ public class PointCalculator {
     }
 
     private int getAlreadyPresentWordPiecesPoints(Vector2[] positions, Piece[] pieces, Direction direction) {
-        Piece firstPiece = pieces[0];
-        List<Piece> presentPieces = new ArrayList<>(Arrays.stream(wordGetter.run(firstPiece, positions[0], direction)).toList());
+        List<Piece> presentPieces = new ArrayList<>(Arrays.stream(wordGetter.run(pieces, positions, direction)).toList());
 
-        for (Piece position : pieces)
-            presentPieces.remove(position);
+        for (Piece piece : pieces)
+            presentPieces.remove(piece);
 
         return getPiecePoints(presentPieces.toArray(new Piece[0]));
     }
