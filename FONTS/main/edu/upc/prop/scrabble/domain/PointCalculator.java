@@ -4,6 +4,10 @@ import edu.upc.prop.scrabble.data.board.Board;
 import edu.upc.prop.scrabble.data.board.PremiumTileType;
 import edu.upc.prop.scrabble.utils.Vector2;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class PointCalculator {
     private final Board board;
 
@@ -34,7 +38,7 @@ public class PointCalculator {
     private int getPiecePoints(Vector2[] positions) {
         int points = 0;
         for (Vector2 position : positions) {
-            points += getPiecePoints(position);
+            points += getPiecePoints(position, positions);
         }
         return points;
     }
@@ -54,9 +58,49 @@ public class PointCalculator {
         return multiplier;
     }
 
-    private int getPiecePoints(Vector2 position) {
+    private int getPiecePoints(Vector2 position, Vector2[] insertedPositions) {
         int letterMultiplier = getLetterMultiplier(position);
-        return board.getCellPiece(position.x, position.y).value() * letterMultiplier;
+        int cellPoints = board.getCellPiece(position.x, position.y).value() * letterMultiplier;
+
+        Vector2[] adjacentTiles = getAdjacentPieces(position, insertedPositions);
+        int adjacentPoints = getAdjacentPiecePoints(position, adjacentTiles);
+
+        return cellPoints;
+    }
+
+    private Vector2[] getAdjacentPieces(Vector2 position, Vector2[] insertedPositions) {
+        List<Vector2> adjacentTiles = new ArrayList<>();
+
+        Vector2 pos1 = new Vector2(position.x - 1, position.y);
+        if (!board.isCellEmpty(pos1.x, pos1.y) && !contains(pos1, insertedPositions))
+            adjacentTiles.add(pos1);
+        Vector2 pos2 = new Vector2(position.x + 1, position.y);
+        if (!board.isCellEmpty(pos2.x, pos2.y) && !contains(pos2, insertedPositions))
+            adjacentTiles.add(pos2);
+        Vector2 pos3 = new Vector2(position.x, position.y - 1);
+        if (!board.isCellEmpty(pos3.x, pos3.y) && !contains(pos3, insertedPositions))
+            adjacentTiles.add(pos3);
+        Vector2 pos4 = new Vector2(position.x, position.y + 1);
+        if (!board.isCellEmpty(pos4.x, pos4.y) && !contains(pos4, insertedPositions))
+            adjacentTiles.add(pos4);
+
+        return adjacentTiles.toArray(new Vector2[0]);
+    }
+
+    private boolean contains(Vector2 position, Vector2[] insertedPositions) {
+        return Arrays.asList(insertedPositions).contains(position);
+    }
+
+    private int getAdjacentPiecePoints(Vector2 position, Vector2[] insertedPositions) {
+        for (Vector2 insertedPos : insertedPositions) {
+            return getAdjacentPiecePoints(insertedPos, new Vector2(insertedPos.x - position.x, insertedPos.y - position.y));
+        }
+
+        return 0;
+    }
+
+    private int getAdjacentPiecePoints(Vector2 position, Vector2 direction) {
+        return 0;
     }
 
     private int getLetterMultiplier(Vector2 position) {

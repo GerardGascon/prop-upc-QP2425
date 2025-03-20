@@ -26,6 +26,8 @@ public abstract class Board {
     }
 
     public boolean isCellEmpty(int x, int y) {
+        if (x < 0 || x >= getSize() || y < 0 || y >= getSize())
+            return false;
         return placedTiles[x][y] == null;
     }
 
