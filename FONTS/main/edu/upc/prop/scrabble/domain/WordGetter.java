@@ -18,32 +18,7 @@ public class WordGetter {
     }
 
     public Piece[] run(Piece newPiece, Vector2 position, Direction direction) {
-        List<Piece> pieces = new ArrayList<>();
-        List<Vector2> positions = new ArrayList<>();
-
-        for (int i = 0; i < board.getSize(); i++) {
-            int x = getX(position, direction, i);
-            int y = getY(position, direction, i);
-
-            if (!board.isCellEmpty(x, y)) {
-                positions.add(new Vector2(x, y));
-                pieces.add(board.getCellPiece(x, y));
-                continue;
-            }
-
-            if (new Vector2(x, y).equals(position)){
-                positions.add(new Vector2(x, y));
-                pieces.add(newPiece);
-                continue;
-            }
-
-            if (positions.contains(position))
-                return pieces.toArray(new Piece[0]);
-
-            pieces.clear();
-        }
-
-        return pieces.toArray(new Piece[0]);
+        return run(new Piece[]{newPiece}, new Vector2[]{position}, direction);
     }
 
     public Piece[] run(Piece[] newPieces, Vector2[] newPositions, Direction direction) {
@@ -61,7 +36,7 @@ public class WordGetter {
             }
 
             int positionInNewList = Arrays.asList(newPositions).indexOf(new Vector2(x, y));
-            if (positionInNewList != -1){
+            if (positionInNewList != -1) {
                 positions.add(newPositions[positionInNewList]);
                 pieces.add(newPieces[positionInNewList]);
                 continue;
