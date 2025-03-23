@@ -1,6 +1,6 @@
-package edu.upc.prop.scrabble.domain;
-import edu.upc.prop.scrabble.data.Bag;
-import edu.upc.prop.scrabble.data.Piece;
+package edu.upc.prop.scrabble.domain.pieces;
+import edu.upc.prop.scrabble.data.pieces.Bag;
+import edu.upc.prop.scrabble.data.pieces.Piece;
 import java.lang.reflect.InaccessibleObjectException;
 import java.util.*;
 

@@ -1,4 +1,4 @@
-package scrabble;
+package scrabble.mocks;
 
 import edu.upc.prop.scrabble.domain.IBoard;
 

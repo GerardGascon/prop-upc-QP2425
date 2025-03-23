@@ -1,7 +1,7 @@
-package scrabble;
+package scrabble.pieces;
 
-import edu.upc.prop.scrabble.data.Bag;
-import edu.upc.prop.scrabble.data.Piece;
+import edu.upc.prop.scrabble.data.pieces.Bag;
+import edu.upc.prop.scrabble.data.pieces.Piece;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

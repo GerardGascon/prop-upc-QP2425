@@ -1,7 +1,9 @@
 package edu.upc.prop.scrabble.domain;
 
-import edu.upc.prop.scrabble.data.Piece;
+import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.data.Player;
+import edu.upc.prop.scrabble.domain.board.WordPlacer;
+import edu.upc.prop.scrabble.domain.pieces.PieceDrawer;
 import edu.upc.prop.scrabble.utils.Direction;
 
 import java.util.List;

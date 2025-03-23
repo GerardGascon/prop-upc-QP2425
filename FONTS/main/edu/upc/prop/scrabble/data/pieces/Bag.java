@@ -1,4 +1,4 @@
-package edu.upc.prop.scrabble.data;
+package edu.upc.prop.scrabble.data.pieces;
 import java.util.*;
 
 public class Bag {

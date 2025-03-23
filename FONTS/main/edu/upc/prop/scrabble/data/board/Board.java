@@ -1,6 +1,6 @@
 package edu.upc.prop.scrabble.data.board;
 
-import edu.upc.prop.scrabble.data.Piece;
+import edu.upc.prop.scrabble.data.pieces.Piece;
 
 public abstract class Board {
     private final Piece[][] placedTiles;

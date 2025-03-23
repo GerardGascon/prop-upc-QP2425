@@ -1,9 +1,7 @@
 package edu.upc.prop.scrabble.data;
 
-import edu.upc.prop.scrabble.data.board.Board;
-import edu.upc.prop.scrabble.domain.PieceDrawer;
+import edu.upc.prop.scrabble.data.pieces.Piece;
 
-import java.util.Scanner;
 import java.util.Vector;
 
 public class Player {

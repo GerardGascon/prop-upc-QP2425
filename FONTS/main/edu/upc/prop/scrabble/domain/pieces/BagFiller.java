@@ -1,7 +1,7 @@
-package edu.upc.prop.scrabble.domain;
+package edu.upc.prop.scrabble.domain.pieces;
 
-import edu.upc.prop.scrabble.data.Bag;
-import edu.upc.prop.scrabble.data.Piece;
+import edu.upc.prop.scrabble.data.pieces.Bag;
+import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.utils.Pair;
 
 public class BagFiller {

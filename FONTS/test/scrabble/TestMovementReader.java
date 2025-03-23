@@ -5,6 +5,7 @@ import edu.upc.prop.scrabble.domain.IMovementReader;
 import edu.upc.prop.scrabble.domain.MovementReader;
 import edu.upc.prop.scrabble.utils.Direction;
 import org.junit.Test;
+import scrabble.mocks.MovementReaderMock;
 
 import static org.junit.Assert.*;
 

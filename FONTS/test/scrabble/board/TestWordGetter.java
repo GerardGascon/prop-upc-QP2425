@@ -1,9 +1,9 @@
-package scrabble;
+package scrabble.board;
 
-import edu.upc.prop.scrabble.data.Piece;
+import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.data.board.Board;
 import edu.upc.prop.scrabble.data.board.StandardBoard;
-import edu.upc.prop.scrabble.domain.WordGetter;
+import edu.upc.prop.scrabble.domain.board.WordGetter;
 import edu.upc.prop.scrabble.utils.Direction;
 import edu.upc.prop.scrabble.utils.Vector2;
 import org.junit.Test;

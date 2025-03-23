@@ -1,7 +1,7 @@
-package scrabble;
+package scrabble.pieces;
 
-import edu.upc.prop.scrabble.data.Piece;
-import edu.upc.prop.scrabble.domain.PieceGenerator;
+import edu.upc.prop.scrabble.data.pieces.Piece;
+import edu.upc.prop.scrabble.domain.pieces.PieceGenerator;
 import edu.upc.prop.scrabble.utils.Pair;
 import org.junit.Test;
 
