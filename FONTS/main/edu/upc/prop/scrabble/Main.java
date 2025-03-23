@@ -26,8 +26,4 @@ public class Main {
         WordPlacer placer = new WordPlacer(board, boardView, pointCalculator);
         placer.run(pieces, 1, 2, Direction.Horizontal);
     }
-
-    public float division(int a, int b) throws ArithmeticException {
-        return a / b;
-    }
 }

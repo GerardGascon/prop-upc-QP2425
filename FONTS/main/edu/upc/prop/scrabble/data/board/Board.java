@@ -48,8 +48,6 @@ public abstract class Board {
     }
 
     public boolean isCellValid(int x, int y) {
-        if (x < 0 || x >= getSize() || y < 0 || y >= getSize())
-            return false;
-        return true;
+        return x >= 0 && x < getSize() && y >= 0 && y < getSize();
     }
 }
