@@ -10,17 +10,17 @@ import edu.upc.prop.scrabble.data.LeaderBoard;
 import edu.upc.prop.scrabble.data.Score;
 
 public class LeaderBoardHandler {
-    private final Score[] leaderBoardH;
+    private final LeaderBoard leaderBoardH;
 
-    public LeaderBoardHandler(){ leaderBoardH = new Score[0]; }
+    public LeaderBoardHandler(){ leaderBoardH = new LeaderBoard(); }
 
-    public LeaderBoardHandler(LeaderBoard leaderBoard){ this.leaderBoardH = leaderBoard.getLeaderBoard(); }
+    public LeaderBoardHandler(LeaderBoard leaderBoard){ this.leaderBoardH = leaderBoard; }
 
     public List<String> getRank(int rank) {
 
         Map<Integer, List<String>> auxMap = new TreeMap<>();
-
-        for (Score score : leaderBoardH) {
+        Score[] auxArray = leaderBoardH.getLeaderBoard();
+        for (Score score : auxArray) {
             if(auxMap.containsKey(score.getScoreValue())) {
                 auxMap.get(score.getScoreValue()).add(score.getPlayerName());
             } else {
