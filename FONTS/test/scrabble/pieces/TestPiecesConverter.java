@@ -87,4 +87,14 @@ public class TestPiecesConverter {
 
         assertEquals(new Piece("CH", 0), piece[0]);
     }
+
+    @Test
+    public void getCHNYPiecesFromCHNYCharacterCAST() {
+        String letter = "CHNY";
+        PiecesConverter sut = new PiecesConverter();
+        Piece[] piece = sut.run(letter);
+
+        assertEquals(new Piece("CH", 0), piece[0]);
+        assertEquals(new Piece("NY", 0), piece[1]);
+    }
 }

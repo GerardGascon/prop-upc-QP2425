@@ -21,9 +21,9 @@ public class PiecesInHandVerifier {
         Piece[] piecesInWord = converter.run(word);
         ArrayList<Piece> piecesInHand = new ArrayList<>();
 
-        for (int i = 0; i < piecesInWord.length; i++) {
+        for (Piece piece : piecesInWord) {
             for (int j = 0; j < hand.size(); j++) {
-                if (hand.elementAt(j).equals(piecesInWord[i])) {
+                if (hand.elementAt(j).equals(piece)) {
                     piecesInHand.add(hand.elementAt(j));
                 }
             }
