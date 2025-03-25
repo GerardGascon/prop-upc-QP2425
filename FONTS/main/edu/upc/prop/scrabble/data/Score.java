@@ -23,5 +23,5 @@ public class Score {
 
     public void updateScore(int score) { this.scoreValue = score; }
 
-    public void updateWinner(boolean winner) { this.isWinner = winner; }
+    public void updateIsWinner(boolean winner) { this.isWinner = winner; }
 }
