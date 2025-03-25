@@ -43,4 +43,11 @@ public class Player {
     private Vector<Piece> hand = new Vector<Piece>(7);
 
     public Vector<Piece> getHand() {return hand;}
+
+    public void AddPiece(Piece piece) {
+        hand.addElement(piece);
+    }
+    public void RemovePiece(Piece piece) {
+        hand.removeElement(piece);
+    }
 }
