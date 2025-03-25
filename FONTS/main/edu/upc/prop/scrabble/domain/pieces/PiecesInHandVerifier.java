@@ -15,7 +15,7 @@ public class PiecesInHandVerifier {
         player = p;
     }
 
-    public ArrayList<Piece> run(String word) {
+    public Piece[] run(String word) {
         Vector<Piece> hand = player.getHand();
         Piece[] piecesInWord = piecesConverter.run(word);
         ArrayList<Piece> piecesInHand = new ArrayList<>();
@@ -28,7 +28,7 @@ public class PiecesInHandVerifier {
             }
         }
 
-        return piecesInHand;
+        return piecesInHand.toArray(new Piece[0]);
     }
 
 }
