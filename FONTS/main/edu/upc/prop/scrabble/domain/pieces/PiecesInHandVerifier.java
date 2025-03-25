@@ -1,11 +1,9 @@
-package edu.upc.prop.scrabble.domain;
+package edu.upc.prop.scrabble.domain.pieces;
 
 import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.data.Player;
-import edu.upc.prop.scrabble.domain.pieces.PiecesConverter;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Vector;
 
 public class PiecesInHandVerifier {

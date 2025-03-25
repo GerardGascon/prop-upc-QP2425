@@ -2,11 +2,10 @@ package scrabble.pieces;
 
 import edu.upc.prop.scrabble.data.Player;
 import edu.upc.prop.scrabble.data.pieces.Piece;
-import edu.upc.prop.scrabble.domain.PiecesInHandVerifier;
+import edu.upc.prop.scrabble.domain.pieces.PiecesInHandVerifier;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.Vector;
 
 import static org.junit.Assert.assertEquals;
 
