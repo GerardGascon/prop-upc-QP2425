@@ -16,4 +16,30 @@ public class LeaderBoardHandler {
 
     public LeaderBoardHandler(LeaderBoard leaderBoard){ this.leaderBoardH = leaderBoard.getLeaderBoard(); }
 
+    public List<String> getRank(int rank) {
+
+        Map<Integer, List<String>> auxMap = new TreeMap<>();
+
+        for (Score score : leaderBoardH) {
+            if(auxMap.containsKey(score.getScoreValue())) {
+                auxMap.get(score.getScoreValue()).add(score.getPlayerName());
+            } else {
+                List<String> auxList = new ArrayList<>();
+                auxList.add(score.getPlayerName());
+                auxMap.put(score.getScoreValue(), auxList);
+            }
+        }
+
+        Iterator<Map.Entry<Integer, List<String>>> iterator = auxMap.entrySet().iterator();
+        int rank_i = 0;
+        while (iterator.hasNext()) {
+            Map.Entry<Integer, List<String>> entry = iterator.next();
+            if (rank_i == rank - 1) {
+                return entry.getValue();
+            }
+            rank_i++;
+        }
+        // Non existent rank
+        return new ArrayList<>();
+    }
 }
