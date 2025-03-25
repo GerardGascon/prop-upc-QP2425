@@ -15,7 +15,7 @@ public class PiecesInHandVerifier {
         player = p;
     }
 
-    public List<Piece> run(String word) {
+    public ArrayList<Piece> run(String word) {
         Vector<Piece> hand = player.getHand();
         PiecesConverter converter = new PiecesConverter();
         Piece[] piecesInWord = converter.run(word);
