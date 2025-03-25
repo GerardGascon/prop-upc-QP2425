@@ -54,7 +54,7 @@ public class TestPiecesInHandVerifier {
         PiecesInHandVerifier sut = new PiecesInHandVerifier(player, new CatalanPiecesConverter());
         ArrayList<Piece> pieces = sut.run(word);
 
-         assertEquals(new Piece("NY", 0), pieces.get(0));
+         assertEquals(new Piece("NY", 0), pieces.getFirst());
     }
 
     @Test
@@ -68,7 +68,7 @@ public class TestPiecesInHandVerifier {
         PiecesInHandVerifier sut = new PiecesInHandVerifier(player, new SpanishPiecesConverter());
         ArrayList<Piece> pieces = sut.run(word);
 
-        assertEquals(new Piece("CH", 0), pieces.get(0));
+        assertEquals(new Piece("CH", 0), pieces.getFirst());
     }
 
     @Test
@@ -82,7 +82,7 @@ public class TestPiecesInHandVerifier {
         PiecesInHandVerifier sut = new PiecesInHandVerifier(player, new CatalanPiecesConverter());
         ArrayList<Piece> pieces = sut.run(word);
 
-        assertEquals(new Piece("L·L", 0), pieces.get(0));
+        assertEquals(new Piece("L·L", 0), pieces.getFirst());
     }
 
     @Test
@@ -96,7 +96,7 @@ public class TestPiecesInHandVerifier {
         PiecesInHandVerifier sut = new PiecesInHandVerifier(player, new SpanishPiecesConverter());
         ArrayList<Piece> pieces = sut.run(word);
 
-        assertEquals(new Piece("RR", 0), pieces.get(0));
+        assertEquals(new Piece("RR", 0), pieces.getFirst());
     }
 
     @Test
