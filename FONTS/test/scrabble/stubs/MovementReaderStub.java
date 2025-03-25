@@ -1,11 +1,11 @@
-package scrabble.mocks;
+package scrabble.stubs;
 
 import edu.upc.prop.scrabble.domain.IMovementReader;
 
-public class MovementReaderMock implements IMovementReader {
+public class MovementReaderStub implements IMovementReader {
     private final String movement;
 
-    public MovementReaderMock(String movement) {
+    public MovementReaderStub(String movement) {
         this.movement = movement;
     }
 

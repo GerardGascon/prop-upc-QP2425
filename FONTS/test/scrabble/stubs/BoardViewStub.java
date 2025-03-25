@@ -1,8 +1,8 @@
-package scrabble.mocks;
+package scrabble.stubs;
 
 import edu.upc.prop.scrabble.domain.IBoard;
 
-public class BoardViewMock implements IBoard {
+public class BoardViewStub implements IBoard {
     private boolean UpdateCallReceived = false;
 
     public boolean getUpdateCallReceived() {

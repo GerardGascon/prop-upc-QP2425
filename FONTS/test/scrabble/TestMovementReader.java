@@ -5,14 +5,14 @@ import edu.upc.prop.scrabble.domain.IMovementReader;
 import edu.upc.prop.scrabble.domain.MovementReader;
 import edu.upc.prop.scrabble.utils.Direction;
 import org.junit.Test;
-import scrabble.mocks.MovementReaderMock;
+import scrabble.stubs.MovementReaderStub;
 
 import static org.junit.Assert.*;
 
 public class TestMovementReader {
     @Test
     public void testReadMoveReturnsCorrectWord() {
-        IMovementReader reader = new MovementReaderMock("TEST C0");
+        IMovementReader reader = new MovementReaderStub("TEST C0");
         MovementReader sut = new MovementReader(reader);
 
         Movement res = sut.run();
@@ -22,7 +22,7 @@ public class TestMovementReader {
 
     @Test
     public void testReadMoveReturnsCorrectPosition() {
-        IMovementReader reader = new MovementReaderMock("TEST C0");
+        IMovementReader reader = new MovementReaderStub("TEST C0");
         MovementReader sut = new MovementReader(reader);
 
         Movement res = sut.run();
@@ -33,7 +33,7 @@ public class TestMovementReader {
 
     @Test
     public void testReadMoveReturnsCorrectPositionInverted() {
-        IMovementReader reader = new MovementReaderMock("TEST 0C");
+        IMovementReader reader = new MovementReaderStub("TEST 0C");
         MovementReader sut = new MovementReader(reader);
 
         Movement res = sut.run();
@@ -44,7 +44,7 @@ public class TestMovementReader {
 
     @Test
     public void testReadMoveReturnsCorrectDirectionHorizontal() {
-        IMovementReader reader = new MovementReaderMock("TEST C0");
+        IMovementReader reader = new MovementReaderStub("TEST C0");
         MovementReader sut = new MovementReader(reader);
 
         Movement res = sut.run();
@@ -54,7 +54,7 @@ public class TestMovementReader {
 
     @Test
     public void testReadMoveReturnsCorrectDirectionVertical() {
-        IMovementReader reader = new MovementReaderMock("TEST 0C");
+        IMovementReader reader = new MovementReaderStub("TEST 0C");
         MovementReader sut = new MovementReader(reader);
 
         Movement res = sut.run();

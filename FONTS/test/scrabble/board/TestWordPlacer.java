@@ -8,7 +8,7 @@ import edu.upc.prop.scrabble.domain.board.WordGetter;
 import edu.upc.prop.scrabble.domain.board.WordPlacer;
 import edu.upc.prop.scrabble.utils.Direction;
 import org.junit.Test;
-import scrabble.mocks.BoardViewMock;
+import scrabble.stubs.BoardViewStub;
 
 import static org.junit.Assert.*;
 
@@ -16,7 +16,7 @@ public class TestWordPlacer {
     @Test
     public void placeWordVerticalPlacesWord() {
         Board board = new StandardBoard();
-        BoardViewMock mock = new BoardViewMock();
+        BoardViewStub mock = new BoardViewStub();
         Piece[] pieces = new Piece[]{
                 new Piece("T", 1),
                 new Piece("E", 1),
@@ -38,7 +38,7 @@ public class TestWordPlacer {
     @Test
     public void placeWordHorizontalPlacesWord() {
         Board board = new StandardBoard();
-        BoardViewMock mock = new BoardViewMock();
+        BoardViewStub mock = new BoardViewStub();
         Piece[] pieces = new Piece[]{
                 new Piece("T", 1),
                 new Piece("E", 1),
@@ -60,7 +60,7 @@ public class TestWordPlacer {
     @Test
     public void noPlaceActionDoesntUpdateBoard() {
         Board board = new StandardBoard();
-        BoardViewMock mock = new BoardViewMock();
+        BoardViewStub mock = new BoardViewStub();
         WordGetter wordGetter = new WordGetter(board);
         PointCalculator pointCalculator = new PointCalculator(board, wordGetter);
         WordPlacer _ = new WordPlacer(board, mock, pointCalculator);
@@ -71,7 +71,7 @@ public class TestWordPlacer {
     @Test
     public void placeActionUpdatesBoard() {
         Board board = new StandardBoard();
-        BoardViewMock mock = new BoardViewMock();
+        BoardViewStub mock = new BoardViewStub();
         Piece[] pieces = new Piece[]{
                 new Piece("T", 1),
                 new Piece("E", 1),
