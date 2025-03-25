@@ -1,12 +1,19 @@
 package edu.upc.prop.scrabble.domain;
 
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ArrayList;
+
 import edu.upc.prop.scrabble.data.LeaderBoard;
+import edu.upc.prop.scrabble.data.Score;
 
 public class LeaderBoardHandler {
-    final LeaderBoard leaderBoard;
+    private final Score[] leaderBoardH;
 
-    public LeaderBoardHandler(){ leaderBoard = new LeaderBoard(); }
+    public LeaderBoardHandler(){ leaderBoardH = new Score[0]; }
 
-    public LeaderBoardHandler(LeaderBoard leaderBoard){ this.leaderBoard = leaderBoard; }
+    public LeaderBoardHandler(LeaderBoard leaderBoard){ this.leaderBoardH = leaderBoard.getLeaderBoard(); }
 
 }
