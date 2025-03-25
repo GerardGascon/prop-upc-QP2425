@@ -8,15 +8,16 @@ import java.util.Vector;
 
 public class PiecesInHandVerifier {
     private final Player player;
+    private final PiecesConverter piecesConverter;
 
-    public PiecesInHandVerifier(Player p) {
+    public PiecesInHandVerifier(Player p, PiecesConverter piecesConverter) {
+        this.piecesConverter = piecesConverter;
         player = p;
     }
 
     public ArrayList<Piece> run(String word) {
         Vector<Piece> hand = player.getHand();
-        PiecesConverter converter = new PiecesConverter();
-        Piece[] piecesInWord = converter.run(word);
+        Piece[] piecesInWord = piecesConverter.run(word);
         ArrayList<Piece> piecesInHand = new ArrayList<>();
 
         for (Piece piece : piecesInWord) {

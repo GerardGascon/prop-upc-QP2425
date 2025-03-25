@@ -1,3 +1,4 @@
+
 package edu.upc.prop.scrabble.domain.pieces;
 
 import edu.upc.prop.scrabble.data.pieces.Piece;
@@ -13,31 +14,21 @@ public class PiecesConverter {
         int i = 0;
         while (i < word.length()) {
             char c = word.charAt(i);
-            if (c == 'L' && i < (word.length() - 2) && word.charAt(i + 1) == '·') {   // CATALÀ -> L.L
-                pieces.add(new Piece(word.substring(i, i+3), 0));
-                i += 3;
+
+            Piece specialPiece = parseSpecialPiece(c, i, word);
+            if (specialPiece != null) {
+                pieces.add(specialPiece);
+                i += specialPiece.letter().length();
+                continue;
             }
-            else if (c == 'N' && i < (word.length() - 1) && word.charAt(i + 1) == 'Y') { // CATALÀ -> NY
-                pieces.add(new Piece(word.substring(i, i+2), 0));
-                i += 2;
-            }
-            else if (c == 'R' && i < (word.length() - 1) && word.charAt(i + 1) == 'R') {  //CASTELLÀ -> RR
-                pieces.add(new Piece(word.substring(i, i+2), 0));
-                i += 2;
-            }
-            else if (c == 'L' && i < (word.length() - 1) && word.charAt(i + 1) == 'L') {  //CASTELLÀ -> LL
-                pieces.add(new Piece(word.substring(i, i+2), 0));
-                i += 2;
-            }
-            else if (c == 'C' && i < (word.length() - 1) && word.charAt(i + 1) == 'H') {  //CASTELLÀ -> CH
-                pieces.add(new Piece(word.substring(i, i+2), 0));
-                i += 2;
-            }
-            else{
-                pieces.add(new Piece(Character.toString(c), 0));
-                i += 1;
-            }
+
+            pieces.add(new Piece(Character.toString(c), 0));
+            i++;
         }
         return pieces.toArray(new Piece[0]);
+    }
+
+    protected Piece parseSpecialPiece(char c, int i, String word) {
+        return null;
     }
 }

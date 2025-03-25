@@ -1,7 +1,9 @@
 package scrabble.pieces;
 
 import edu.upc.prop.scrabble.data.pieces.Piece;
+import edu.upc.prop.scrabble.domain.pieces.CatalanPiecesConverter;
 import edu.upc.prop.scrabble.domain.pieces.PiecesConverter;
+import edu.upc.prop.scrabble.domain.pieces.SpanishPiecesConverter;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -41,7 +43,7 @@ public class TestPiecesConverter {
     @Test
     public void getLgeminadaPiecesFromLgeminadaCharacterCAT() {
         String letter = "L·L";
-        PiecesConverter sut = new PiecesConverter();
+        PiecesConverter sut = new CatalanPiecesConverter();
 
         Piece[] piece = sut.run(letter);
 
@@ -51,7 +53,7 @@ public class TestPiecesConverter {
     @Test
     public void getNYPiecesFromNYCharacterCAT() {
         String letter = "NY";
-        PiecesConverter sut = new PiecesConverter();
+        PiecesConverter sut = new CatalanPiecesConverter();
 
         Piece[] piece = sut.run(letter);
 
@@ -61,7 +63,7 @@ public class TestPiecesConverter {
     @Test
     public void getRRPiecesFromRRCharacterCAST() {
         String letter = "RR";
-        PiecesConverter sut = new PiecesConverter();
+        PiecesConverter sut = new SpanishPiecesConverter();
 
         Piece[] piece = sut.run(letter);
 
@@ -71,7 +73,7 @@ public class TestPiecesConverter {
     @Test
     public void getLLPiecesFromLLCharacterCAST() {
         String letter = "LL";
-        PiecesConverter sut = new PiecesConverter();
+        PiecesConverter sut = new SpanishPiecesConverter();
 
         Piece[] piece = sut.run(letter);
 
@@ -81,20 +83,10 @@ public class TestPiecesConverter {
     @Test
     public void getCHPiecesFromCHCharacterCAST() {
         String letter = "CH";
-        PiecesConverter sut = new PiecesConverter();
+        PiecesConverter sut = new SpanishPiecesConverter();
 
         Piece[] piece = sut.run(letter);
 
         assertEquals(new Piece("CH", 0), piece[0]);
-    }
-
-    @Test
-    public void getCHNYPiecesFromCHNYCharacterCAST() {
-        String letter = "CHNY";
-        PiecesConverter sut = new PiecesConverter();
-        Piece[] piece = sut.run(letter);
-
-        assertEquals(new Piece("CH", 0), piece[0]);
-        assertEquals(new Piece("NY", 0), piece[1]);
     }
 }

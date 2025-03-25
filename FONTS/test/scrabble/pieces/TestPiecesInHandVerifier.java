@@ -2,7 +2,10 @@ package scrabble.pieces;
 
 import edu.upc.prop.scrabble.data.Player;
 import edu.upc.prop.scrabble.data.pieces.Piece;
+import edu.upc.prop.scrabble.domain.pieces.CatalanPiecesConverter;
+import edu.upc.prop.scrabble.domain.pieces.PiecesConverter;
 import edu.upc.prop.scrabble.domain.pieces.PiecesInHandVerifier;
+import edu.upc.prop.scrabble.domain.pieces.SpanishPiecesConverter;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -17,7 +20,7 @@ public class TestPiecesInHandVerifier {
         player.AddPiece(new Piece("A", 0));
         player.AddPiece(new Piece("B", 0));
 
-        PiecesInHandVerifier sut = new PiecesInHandVerifier(player);
+        PiecesInHandVerifier sut = new PiecesInHandVerifier(player, new PiecesConverter());
         ArrayList<Piece> pieces = sut.run(word);
 
         assertEquals(new Piece("A", 0), pieces.get(0));
@@ -33,7 +36,7 @@ public class TestPiecesInHandVerifier {
         player.AddPiece(new Piece("C", 0));
         player.AddPiece(new Piece("D", 0));
 
-        PiecesInHandVerifier sut = new PiecesInHandVerifier(player);
+        PiecesInHandVerifier sut = new PiecesInHandVerifier(player, new PiecesConverter());
         ArrayList<Piece> pieces = sut.run(word);
 
         assertEquals(new Piece("A", 0), pieces.get(0));
@@ -48,7 +51,7 @@ public class TestPiecesInHandVerifier {
         player.AddPiece(new Piece("B", 0));
         player.AddPiece(new Piece("NY", 0));
 
-        PiecesInHandVerifier sut = new PiecesInHandVerifier(player);
+        PiecesInHandVerifier sut = new PiecesInHandVerifier(player, new CatalanPiecesConverter());
         ArrayList<Piece> pieces = sut.run(word);
 
          assertEquals(new Piece("NY", 0), pieces.get(0));
@@ -62,7 +65,7 @@ public class TestPiecesInHandVerifier {
         player.AddPiece(new Piece("B", 0));
         player.AddPiece(new Piece("CH", 0));
 
-        PiecesInHandVerifier sut = new PiecesInHandVerifier(player);
+        PiecesInHandVerifier sut = new PiecesInHandVerifier(player, new SpanishPiecesConverter());
         ArrayList<Piece> pieces = sut.run(word);
 
         assertEquals(new Piece("CH", 0), pieces.get(0));
@@ -76,7 +79,7 @@ public class TestPiecesInHandVerifier {
         player.AddPiece(new Piece("B", 0));
         player.AddPiece(new Piece("L·L", 0));
 
-        PiecesInHandVerifier sut = new PiecesInHandVerifier(player);
+        PiecesInHandVerifier sut = new PiecesInHandVerifier(player, new CatalanPiecesConverter());
         ArrayList<Piece> pieces = sut.run(word);
 
         assertEquals(new Piece("L·L", 0), pieces.get(0));
@@ -90,7 +93,7 @@ public class TestPiecesInHandVerifier {
         player.AddPiece(new Piece("B", 0));
         player.AddPiece(new Piece("RR", 0));
 
-        PiecesInHandVerifier sut = new PiecesInHandVerifier(player);
+        PiecesInHandVerifier sut = new PiecesInHandVerifier(player, new SpanishPiecesConverter());
         ArrayList<Piece> pieces = sut.run(word);
 
         assertEquals(new Piece("RR", 0), pieces.get(0));
@@ -98,21 +101,17 @@ public class TestPiecesInHandVerifier {
 
     @Test
     public void getPieceNYCHRRLgeminadaInHandABNYCHRRLgeminada() {
-        String word = "NYCHRRL·L";
+        String word = "CHRR";
         Player player = new Player("example", false);
         player.AddPiece(new Piece("A", 0));
         player.AddPiece(new Piece("B", 0));
-        player.AddPiece(new Piece("NY", 0));
         player.AddPiece(new Piece("CH", 0));
         player.AddPiece(new Piece("RR", 0));
-        player.AddPiece(new Piece("L·L", 0));
 
-        PiecesInHandVerifier sut = new PiecesInHandVerifier(player);
+        PiecesInHandVerifier sut = new PiecesInHandVerifier(player, new SpanishPiecesConverter());
         ArrayList<Piece> pieces = sut.run(word);
 
-        assertEquals(new Piece("NY", 0), pieces.get(0));
-        assertEquals(new Piece("CH", 0), pieces.get(1));
-        assertEquals(new Piece("RR", 0), pieces.get(2));
-        assertEquals(new Piece("L·L", 0), pieces.get(3));
+        assertEquals(new Piece("CH", 0), pieces.get(0));
+        assertEquals(new Piece("RR", 0), pieces.get(1));
     }
 }
