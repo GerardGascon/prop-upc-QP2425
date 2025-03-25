@@ -24,37 +24,3 @@ public class LeaderBoard {
         this.leaderBoard[this.leaderBoard.length - 1] = score;
     }
 }
-/*
-
-    public void addPlayers(List<Score> scoreList) {
-        for (Score score : scoreList) {
-            if(leaderBoard.containsKey(score.getScoreValue())) {
-                leaderBoard.get(score.getScoreValue()).add(score.getPlayerName());
-            } else {
-                List<String> aux = new ArrayList<>();
-                aux.add(score.getPlayerName());
-                leaderBoard.put(score.getScoreValue(), aux);
-            }
-            playerScores.put(score.getPlayerName(), score.getScoreValue());
-        }
-    }
-
-    public Map<Integer, List<String>> getLeaderBoard() { return leaderBoard; }
-
-    public int getPlayerScore(String playerName) { return  playerScores.get(playerName); }
-
-    public List<String> getRank(int rank) {
-
-        Iterator<Map.Entry<Integer, List<String>>> iterator = leaderBoard.entrySet().iterator();
-        int i = 0;
-        while (iterator.hasNext()) {
-            Map.Entry<Integer, List<String>> entry = iterator.next();
-            if (i == rank - 1) {
-                return entry.getValue();
-            }
-            i++;
-        }
-        return new ArrayList<>();
-
-    }
-}*/
