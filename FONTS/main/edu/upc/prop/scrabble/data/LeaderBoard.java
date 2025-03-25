@@ -17,19 +17,14 @@ public class LeaderBoard {
         this.leaderBoard = java.util.Arrays.copyOf(scoreArray, scoreArray.length);
     }
 
+    public Score[] getLeaderBoard() { return leaderBoard; }
+
     public void addScore(Score score) {
         this.leaderBoard = Arrays.copyOf(this.leaderBoard, this.leaderBoard.length + 1);
         this.leaderBoard[this.leaderBoard.length - 1] = score;
     }
 }
 /*
-
-    public void addPlayer(Score score) {
-        List<String> aux = new ArrayList<>();
-        aux.add(score.getPlayerName());
-        leaderBoard.put(score.getScoreValue(), aux);
-        playerScores.put(score.getPlayerName(), score.getScoreValue());
-    }
 
     public void addPlayers(List<Score> scoreList) {
         for (Score score : scoreList) {
