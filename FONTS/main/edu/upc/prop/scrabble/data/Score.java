@@ -11,12 +11,14 @@ public class Score {
         this.playerName = name;
     }
 
-    public String getPlayerName() {
-        return playerName;
-    }
-
     public int getScoreValue() {
         return scoreValue;
+    }
+
+    public boolean getIsWinner() { return isWinner; }
+
+    public String getPlayerName() {
+        return playerName;
     }
 
     public void updateScore(int score) { this.scoreValue = score; }
