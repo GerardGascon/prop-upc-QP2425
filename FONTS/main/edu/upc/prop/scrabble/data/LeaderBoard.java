@@ -1,12 +1,23 @@
 package edu.upc.prop.scrabble.data;
 
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ArrayList;
+import java.util.Arrays;
 
 public class LeaderBoard {
+    private Score[] leaderBoard;
+
+    public LeaderBoard() {
+        this.leaderBoard = new Score[0];
+    }
+
+    public LeaderBoard(Score score) {
+        this.leaderBoard = new Score[]{score};
+    }
+
+    public LeaderBoard(Score[] scoreArray) {
+        this.leaderBoard = java.util.Arrays.copyOf(scoreArray, scoreArray.length);
+    }
+}
+/*public class LeaderBoard {
     private Map<Integer, List<String>> leaderBoard;
     private Map<String, Integer> playerScores;
 
@@ -70,4 +81,4 @@ public class LeaderBoard {
         return new ArrayList<>();
 
     }
-}
+}*/
