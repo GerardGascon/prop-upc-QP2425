@@ -1,6 +1,6 @@
 package edu.upc.prop.scrabble.domain.localization;
 
-public class DictionaryReader extends LocaleReader {
+public class DictionaryReader extends LocaleReader implements IFileReader {
     public String run(Locale locale){
         return switch (locale) {
             case Catalan -> readFileToString("catalan.txt");
