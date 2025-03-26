@@ -21,10 +21,10 @@ public class TestPiecesInHandVerifier {
         player.AddPiece(new Piece("B", 0));
 
         PiecesInHandVerifier sut = new PiecesInHandVerifier(player, new PiecesConverter());
-        ArrayList<Piece> pieces = sut.run(word);
+        Piece [] pieces = sut.run(word);
 
-        assertEquals(new Piece("A", 0), pieces.get(0));
-        assertEquals(new Piece("B", 0), pieces.get(1));
+        assertEquals(new Piece("A", 0), pieces[0]);
+        assertEquals(new Piece("B", 0), pieces[1]);
     }
 
     @Test
@@ -37,10 +37,10 @@ public class TestPiecesInHandVerifier {
         player.AddPiece(new Piece("D", 0));
 
         PiecesInHandVerifier sut = new PiecesInHandVerifier(player, new PiecesConverter());
-        ArrayList<Piece> pieces = sut.run(word);
+        Piece[] pieces = sut.run(word);
 
-        assertEquals(new Piece("A", 0), pieces.get(0));
-        assertEquals(new Piece("B", 0), pieces.get(1));
+        assertEquals(new Piece("A", 0), pieces[0]);
+        assertEquals(new Piece("B", 0), pieces[1]);
     }
 
     @Test
@@ -52,9 +52,9 @@ public class TestPiecesInHandVerifier {
         player.AddPiece(new Piece("NY", 0));
 
         PiecesInHandVerifier sut = new PiecesInHandVerifier(player, new CatalanPiecesConverter());
-        ArrayList<Piece> pieces = sut.run(word);
+        Piece[] pieces = sut.run(word);
 
-         assertEquals(new Piece("NY", 0), pieces.getFirst());
+         assertEquals(new Piece("NY", 0), pieces[0]);
     }
 
     @Test
@@ -66,9 +66,9 @@ public class TestPiecesInHandVerifier {
         player.AddPiece(new Piece("CH", 0));
 
         PiecesInHandVerifier sut = new PiecesInHandVerifier(player, new SpanishPiecesConverter());
-        ArrayList<Piece> pieces = sut.run(word);
+        Piece[] pieces = sut.run(word);
 
-        assertEquals(new Piece("CH", 0), pieces.getFirst());
+        assertEquals(new Piece("CH", 0), pieces[0]);
     }
 
     @Test
@@ -80,9 +80,9 @@ public class TestPiecesInHandVerifier {
         player.AddPiece(new Piece("L·L", 0));
 
         PiecesInHandVerifier sut = new PiecesInHandVerifier(player, new CatalanPiecesConverter());
-        ArrayList<Piece> pieces = sut.run(word);
+        Piece[] pieces = sut.run(word);
 
-        assertEquals(new Piece("L·L", 0), pieces.getFirst());
+        assertEquals(new Piece("L·L", 0), pieces[0]);
     }
 
     @Test
@@ -94,9 +94,9 @@ public class TestPiecesInHandVerifier {
         player.AddPiece(new Piece("RR", 0));
 
         PiecesInHandVerifier sut = new PiecesInHandVerifier(player, new SpanishPiecesConverter());
-        ArrayList<Piece> pieces = sut.run(word);
+        Piece[] pieces = sut.run(word);
 
-        assertEquals(new Piece("RR", 0), pieces.getFirst());
+        assertEquals(new Piece("RR", 0), pieces[0]);
     }
 
     @Test
@@ -109,9 +109,9 @@ public class TestPiecesInHandVerifier {
         player.AddPiece(new Piece("RR", 0));
 
         PiecesInHandVerifier sut = new PiecesInHandVerifier(player, new SpanishPiecesConverter());
-        ArrayList<Piece> pieces = sut.run(word);
+        Piece[] pieces = sut.run(word);
 
-        assertEquals(new Piece("CH", 0), pieces.get(0));
-        assertEquals(new Piece("RR", 0), pieces.get(1));
+        assertEquals(new Piece("CH", 0), pieces[0]);
+        assertEquals(new Piece("RR", 0), pieces[1]);
     }
 }
