@@ -1,26 +1,19 @@
 package edu.upc.prop.scrabble.data;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 public class LeaderBoard {
-    private Score[] leaderBoard;
+    private ArrayList<Score> leaderBoard;
 
-    public LeaderBoard() {
-        this.leaderBoard = new Score[0];
-    }
+    public LeaderBoard() { this.leaderBoard = new ArrayList<>(); }
 
-    public LeaderBoard(Score score) {
-        this.leaderBoard = new Score[]{score};
-    }
+    public LeaderBoard(Score score) { this.leaderBoard = new ArrayList<>(Collections.singletonList(score)); }
 
-    public LeaderBoard(Score[] scoreArray) {
-        this.leaderBoard = java.util.Arrays.copyOf(scoreArray, scoreArray.length);
-    }
+    public LeaderBoard(Score[] scoreArray) { this.leaderBoard = (ArrayList<Score>)  Arrays.stream(scoreArray).toList(); }
 
-    public Score[] getLeaderBoard() { return leaderBoard; }
+    public Score[] getLeaderBoard() { return leaderBoard.toArray(new Score[0]); }
 
-    public void addScore(Score score) {
-        this.leaderBoard = Arrays.copyOf(this.leaderBoard, this.leaderBoard.length + 1);
-        this.leaderBoard[this.leaderBoard.length - 1] = score;
-    }
+    public void addScore(Score score) { leaderBoard.add(score); }
 }
