@@ -8,7 +8,4 @@ public class ScoreTotal {
         this.playerName = name;
         this.scoreTotal = score;
     }
-
-    public int getScoreTotal() { return scoreTotal; }
-
 }
