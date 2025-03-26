@@ -14,7 +14,7 @@ public class ScoreTotalLeaderBoard {
         Map<String, Integer> scoreMap = new HashMap<>();
         for(Score score : scores) scoreMap.put(score.getPlayerName(), scoreMap.getOrDefault(score.getPlayerName(), 0) + score.getScoreValue());
 
-        // Convert map into a sorted ArrayList<ScoreTotal>
+        // Convert map into a sorted ScoreTotal[]
         return scoreMap.entrySet().stream()
                 .sorted((entry1, entry2) -> Integer.compare(entry2.getValue(), entry1.getValue())) // Sort directly using map values
                 .map(entry -> new ScoreTotal(entry.getKey(), entry.getValue())) // Create ScoreTotal objects after sorting
