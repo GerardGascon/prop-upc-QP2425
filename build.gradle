@@ -61,10 +61,24 @@ tasks.register('copyTextFiles', Copy) {
     include '**/*.txt'
 }
 
+tasks.register('generateRunFiles') {
+    doLast {
+        def batchFile = file("${project.buildDir}/classes/java/main/scrabble.bat")
+        batchFile.text = '@echo off\n' +
+                'java edu.upc.prop.scrabble.Main'
+
+        def shellFile = file("${project.buildDir}/classes/java/main/scrabble.sh")
+        shellFile.text = '#!/bin/bash\n' +
+                'java edu.upc.prop.scrabble.Main'
+    }
+}
+
 tasks.named('build') {
     dependsOn copyTextFiles
+    dependsOn generateRunFiles
 }
 
 tasks.named('run') {
     dependsOn copyTextFiles
+    dependsOn generateRunFiles
 }

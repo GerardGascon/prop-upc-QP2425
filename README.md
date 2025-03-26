@@ -10,8 +10,7 @@ Gina Escofet: [gina.escofet@estudiantat.upc.edu](mailto:gina.escofet@estudiantat
 
 ## Executar
 
-Dins la carpeta [EXE/classes/java/main](EXE/classes/java/main), s'ha d'executar la següent comanda:
+Dins la carpeta [EXE/classes/java/main](EXE/classes/java/main), s'ha d'executar el programa:
 
-```shell
-java edu.upc.prop.scrabble.Main
-```
+- scrabble.bat en cas d'estar en Windows
+- scrabble.sh en cas d'estar en Linux
