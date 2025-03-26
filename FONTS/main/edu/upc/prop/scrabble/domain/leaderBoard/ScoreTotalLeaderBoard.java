@@ -17,12 +17,11 @@ public class ScoreTotalLeaderBoard {
         for(Score score : scores) scoreMap.put(score.getPlayerName(), scoreMap.getOrDefault(score.getPlayerName(), 0) + score.getScoreValue());
 
         // Convert map into a sorted ArrayList<ScoreTotal>
-        ArrayList<ScoreTotal> sortedScoreTotal = scoreMap.entrySet().stream()
+        return scoreMap.entrySet().stream()
                 .map(entry -> new ScoreTotal(entry.getKey(), entry.getValue()))
                 .sorted(Comparator.comparingInt(ScoreTotal::getScoreTotal).reversed())
                 .collect(Collectors.toCollection(ArrayList::new));
 
-        return sortedScoreTotal;
     }
 
 }
