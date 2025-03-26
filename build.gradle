@@ -54,3 +54,17 @@ sourceSets {
         }
     }
 }
+
+tasks.register('copyTextFiles', Copy) {
+    from 'FONTS/main'
+    into "$buildDir/classes/java/main"
+    include '**/*.txt'
+}
+
+tasks.named('build') {
+    dependsOn copyTextFiles
+}
+
+tasks.named('run') {
+    dependsOn copyTextFiles
+}
