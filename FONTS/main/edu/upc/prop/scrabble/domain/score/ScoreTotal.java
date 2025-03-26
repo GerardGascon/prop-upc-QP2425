@@ -9,9 +9,6 @@ public class ScoreTotal {
         this.scoreTotal = score;
     }
 
-    public String getPlayerName() { return playerName; }
-
     public int getScoreTotal() { return scoreTotal; }
 
-    public void updateScoreTotal(int score) { this.scoreTotal += score; }
 }
