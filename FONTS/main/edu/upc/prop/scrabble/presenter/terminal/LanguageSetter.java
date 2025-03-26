@@ -1,19 +1,14 @@
 package edu.upc.prop.scrabble.presenter.terminal;
 
-import edu.upc.prop.scrabble.presenter.inout;
-import edu.upc.prop.scrabble.utils.Pair;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
 public class LanguageSetter {
 
     private int selected;
     private final boolean Confirm;
-    private final inout InOut = new inout();
     private String words;
     private String letters;
 
