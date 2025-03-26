@@ -1,4 +1,4 @@
-package edu.upc.prop.scrabble.domain;
+package edu.upc.prop.scrabble.domain.leaderBoard;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -9,12 +9,12 @@ import java.util.ArrayList;
 import edu.upc.prop.scrabble.data.LeaderBoard;
 import edu.upc.prop.scrabble.data.Score;
 
-public class LeaderBoardHandler {
+public class LeaderBoardRankHandler {
     private final LeaderBoard leaderBoardH;
 
-    public LeaderBoardHandler(){ leaderBoardH = new LeaderBoard(); }
+    public LeaderBoardRankHandler(){ leaderBoardH = new LeaderBoard(); }
 
-    public LeaderBoardHandler(LeaderBoard leaderBoard){ this.leaderBoardH = leaderBoard; }
+    public LeaderBoardRankHandler(LeaderBoard leaderBoard){ this.leaderBoardH = leaderBoard; }
 
     public List<String> getRank(int rank) {
 
