@@ -1,4 +1,4 @@
-package edu.upc.prop.scrabble.data;
+package edu.upc.prop.scrabble.data.leaderboard;
 
 public class Score {
     private int scoreValue;

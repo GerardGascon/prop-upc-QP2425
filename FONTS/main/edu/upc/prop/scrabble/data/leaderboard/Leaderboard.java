@@ -1,17 +1,17 @@
-package edu.upc.prop.scrabble.data;
+package edu.upc.prop.scrabble.data.leaderboard;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
-public class LeaderBoard {
+public class Leaderboard {
     private ArrayList<Score> leaderBoard;
 
-    public LeaderBoard() { this.leaderBoard = new ArrayList<>(); }
+    public Leaderboard() { this.leaderBoard = new ArrayList<>(); }
 
-    public LeaderBoard(Score score) { this.leaderBoard = new ArrayList<>(Collections.singletonList(score)); }
+    public Leaderboard(Score score) { this.leaderBoard = new ArrayList<>(Collections.singletonList(score)); }
 
-    public LeaderBoard(Score[] scoreArray) { this.leaderBoard = (ArrayList<Score>)  Arrays.stream(scoreArray).toList(); }
+    public Leaderboard(Score[] scoreArray) { this.leaderBoard = (ArrayList<Score>)  Arrays.stream(scoreArray).toList(); }
 
     public Score[] getScoreArray() { return leaderBoard.toArray(new Score[0]); }
 

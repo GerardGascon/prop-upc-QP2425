@@ -1,13 +1,11 @@
-package edu.upc.prop.scrabble.domain.leaderBoard;
+package edu.upc.prop.scrabble.domain.leaderboard;
 
-import edu.upc.prop.scrabble.data.Score;
-import edu.upc.prop.scrabble.domain.score.ScoreTotal;
+import edu.upc.prop.scrabble.data.leaderboard.Score;
 
-import java.util.Comparator;
 import java.util.Map;
 import java.util.HashMap;
 
-public class ScoreTotalLeaderBoard {
+public class ScoreTotalLeaderboard {
 
     public ScoreTotal[] run(Score[] scores) {
         // Group by player name and total score

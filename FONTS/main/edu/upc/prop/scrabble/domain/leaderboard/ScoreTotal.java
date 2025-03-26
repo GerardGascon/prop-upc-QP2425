@@ -1,4 +1,4 @@
-package edu.upc.prop.scrabble.domain.score;
+package edu.upc.prop.scrabble.domain.leaderboard;
 
 public class ScoreTotal {
     private String playerName;
