@@ -1,23 +1,31 @@
-package edu.upc.prop.scrabble.domain;
+package edu.upc.prop.scrabble.presenter.terminal;
 
 import edu.upc.prop.scrabble.data.Movement;
+import edu.upc.prop.scrabble.domain.movement.IMovementMaker;
+import edu.upc.prop.scrabble.presenter.terminal.utils.IReader;
 import edu.upc.prop.scrabble.utils.Direction;
-import edu.upc.prop.scrabble.utils.Pair;
 import edu.upc.prop.scrabble.utils.Vector2;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class MovementReader {
-    private final IMovementReader reader;
+public class MovementMaker implements IMovementMaker {
+    private final IReader reader;
 
-    public MovementReader(IMovementReader reader) {
+    public MovementMaker(IReader reader) {
         this.reader = reader;
     }
 
-    public Movement run() {
-        String movementRaw = reader.readMove();
-
+    @Override
+    public Movement makeMove() {
+        /*
+         * Format:
+         *   WORD XY
+         *   If X is a letter, it means horizontal word
+         *   If Y is a letter, it means vertical word
+         */
+        String movementRaw = reader.readLine();
+        
         String movementWord = parseMovementWord(movementRaw);
         Vector2 position = parseMovementPosition(movementRaw);
         Direction direction = parseMovementDirection(movementRaw);
@@ -49,14 +57,24 @@ public class MovementReader {
     private static Coordinate getCoordinate(String movement) {
         String direction = movement.split("\\s+")[1];
 
-        Pattern letterPattern = Pattern.compile("[A-Za-z]+");
-        Matcher letterMatcher = letterPattern.matcher(direction);
-        boolean _ = letterMatcher.find();
+        String letter = parseLetterCoordinate(direction);
+        String number = parseNumberCoordinate(direction);
 
+        return new Coordinate(letter, number);
+    }
+
+    private static String parseNumberCoordinate(String direction) {
         Pattern numberPattern = Pattern.compile("\\d+");
         Matcher numberMatcher = numberPattern.matcher(direction);
         boolean _ = numberMatcher.find();
-        return new Coordinate(letterMatcher.group(), numberMatcher.group());
+        return numberMatcher.group();
+    }
+
+    private static String parseLetterCoordinate(String direction) {
+        Pattern letterPattern = Pattern.compile("[A-Za-z]+");
+        Matcher letterMatcher = letterPattern.matcher(direction);
+        boolean _ = letterMatcher.find();
+        return letterMatcher.group();
     }
 
     private record Coordinate(String letter, String number) {
