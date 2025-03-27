@@ -1,4 +1,4 @@
-package edu.upc.prop.scrabble.domain.localization;
+package edu.upc.prop.scrabble.data.localization;
 
 public enum Locale {
     Catalan,
