@@ -32,4 +32,36 @@ public class TestDAWG {
         assertEquals(true, dawg.validWord("llavero"));
         assertEquals(false, dawg.validWord("llaver"));
     }
+    @Test
+    public void notDupeNodes(){
+        DAWG dawg = new DAWG();
+        dawg.Initialize();
+        assertEquals(1, dawg.getuniqueNodes());
+        dawg.addWord("boaaaaa");
+        assertEquals(5,dawg.getuniqueNodes());
+        dawg.addWord("bola");
+        assertEquals(7, dawg.getuniqueNodes());
+        dawg.addWord("bola");
+        assertEquals(7, dawg.getuniqueNodes());
+        dawg.addWord("bolo");
+        assertEquals(8, dawg.getuniqueNodes());
+        dawg.addWord("bolo");
+        assertEquals(8, dawg.getuniqueNodes());
+        dawg.addWord("bolo");
+        assertEquals(8, dawg.getuniqueNodes());
+        dawg.addWord("botella");
+        assertEquals(10, dawg.getuniqueNodes());
+       // dawg.addWord("bola");*/
+        assertEquals(false, dawg.validWord("bol"));
+        assertEquals(true, dawg.validWord("bolo"));
+        assertEquals(true, dawg.validWord("bola"));
+        assertEquals(false, dawg.validWord("botell"));
+        assertEquals(false, dawg.validWord("botello"));
+        assertEquals(false, dawg.validWord("botellaa"));
+        assertEquals(true, dawg.validWord("botella"));
+        assertEquals(true, dawg.validWord("boaaaaa"));
+        assertEquals(false, dawg.validWord("boaaa"));
+        assertEquals(false, dawg.validWord("baaaaaaaaa"));
+
+    }
 }

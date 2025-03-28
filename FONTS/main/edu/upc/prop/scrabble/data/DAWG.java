@@ -75,7 +75,7 @@ public class DAWG {
     public void Initialize() {
         root = new Node(null, 0, null);
         current = root;
-        previousWord = " ";
+        previousWord = "";
         uniqueNodes = new HashMap<Integer, Node>(); //java no deja Map(?¿)
         uniqueNodes.put(root.hashCode, root); //el 0 SIGNATURE PLACEHOLDER
     }
@@ -131,10 +131,19 @@ public class DAWG {
         node.hashCode = node.calculateHashCode();
         if(oldHash != node.hashCode){
             uniqueNodes.remove(oldHash);
-            uniqueNodes.put(node.hashCode, node);
-            if(node.parent != null) {
-                updateHashCodeAndPropagate(node.parent);
+            Node existingNode = uniqueNodes.get(node.hashCode);
+            if (existingNode != null && existingNode.equalNodes(node)) {
+                if(node.parent != null) {
+                    updateHashCodeAndPropagate(node.parent);
+                }
+                else{
+                    uniqueNodes.put(node.hashCode, node);
+                    if(node.parent != null) {
+                        updateHashCodeAndPropagate(node.parent);
+                    }
+                }
             }
+
         }
     }
 
@@ -145,6 +154,11 @@ public class DAWG {
             current = current.successors.get(word.charAt(i));
         }
         return current.terminal;
+    }
+
+    public int getuniqueNodes(){
+       // for(int i = 0;i<uniqueNodes.size();++i)System.out.println(uniqueNodes.get(i));
+        return uniqueNodes.size();
     }
 }
 
