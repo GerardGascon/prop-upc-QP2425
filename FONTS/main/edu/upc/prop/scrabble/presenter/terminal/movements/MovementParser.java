@@ -1,39 +1,21 @@
-package edu.upc.prop.scrabble.presenter.terminal;
+package edu.upc.prop.scrabble.presenter.terminal.movements;
 
 import edu.upc.prop.scrabble.data.Movement;
-import edu.upc.prop.scrabble.domain.movement.IMovementMaker;
-import edu.upc.prop.scrabble.presenter.terminal.utils.IReader;
 import edu.upc.prop.scrabble.utils.Direction;
 import edu.upc.prop.scrabble.utils.Vector2;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class MovementMaker implements IMovementMaker {
-    private final IReader reader;
-
-    public MovementMaker(IReader reader) {
-        this.reader = reader;
-    }
-
-    @Override
-    public Movement makeMove() {
-        /*
-         * Format:
-         *   WORD XY
-         *   If X is a letter, it means horizontal word
-         *   If Y is a letter, it means vertical word
-         */
-        String movementRaw = reader.readLine();
-        
-        String movementWord = parseMovementWord(movementRaw);
-        Vector2 position = parseMovementPosition(movementRaw);
-        Direction direction = parseMovementDirection(movementRaw);
-
+public class MovementParser {
+    public static Movement parse(String input) {
+        String movementWord = parseMovementWord(input);
+        Vector2 position = parseMovementPosition(input);
+        Direction direction = parseMovementDirection(input);
         return new Movement(movementWord, position.x, position.y, direction);
     }
 
-    private Direction parseMovementDirection(String movement) {
+    private static Direction parseMovementDirection(String movement) {
         if (isCoordinateForHorizontal(movement))
             return Direction.Horizontal;
 
@@ -45,8 +27,8 @@ public class MovementMaker implements IMovementMaker {
         return getCoordinate(movement).letter().charAt(0) == direction.charAt(0);
     }
 
-    private Vector2 parseMovementPosition(String movement) {
-        Coordinate coordinate = getCoordinate(movement);
+    private static Vector2 parseMovementPosition(String movement) {
+        MovementParser.Coordinate coordinate = getCoordinate(movement);
 
         int x = coordinate.letter().charAt(0) - (int) 'A';
         int y = Integer.parseInt(coordinate.number());
@@ -54,13 +36,13 @@ public class MovementMaker implements IMovementMaker {
         return new Vector2(x, y);
     }
 
-    private static Coordinate getCoordinate(String movement) {
+    private static MovementParser.Coordinate getCoordinate(String movement) {
         String direction = movement.split("\\s+")[1];
 
         String letter = parseLetterCoordinate(direction);
         String number = parseNumberCoordinate(direction);
 
-        return new Coordinate(letter, number);
+        return new MovementParser.Coordinate(letter, number);
     }
 
     private static String parseNumberCoordinate(String direction) {
@@ -80,7 +62,7 @@ public class MovementMaker implements IMovementMaker {
     private record Coordinate(String letter, String number) {
     }
 
-    private String parseMovementWord(String movement) {
+    private static String parseMovementWord(String movement) {
         return movement.split("\\s+")[0];
     }
 }

@@ -81,4 +81,5 @@ tasks.named('build') {
 tasks.named('run') {
     dependsOn copyTextFiles
     dependsOn generateRunFiles
+    standardInput = System.in
 }

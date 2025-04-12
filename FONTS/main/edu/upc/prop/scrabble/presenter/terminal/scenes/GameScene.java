@@ -9,10 +9,14 @@ import edu.upc.prop.scrabble.domain.board.WordPlacer;
 import edu.upc.prop.scrabble.presenter.scenes.Scene;
 import edu.upc.prop.scrabble.presenter.scenes.SceneManager;
 import edu.upc.prop.scrabble.presenter.terminal.BoardView;
+import edu.upc.prop.scrabble.presenter.terminal.movements.MovementMaker;
 import edu.upc.prop.scrabble.utils.Direction;
 
 public class GameScene extends Scene {
-    @Override
+    public GameScene() {
+        instantiate(new MovementMaker());
+    }
+
     public void onProcess(float delta) {
         Board board = new SuperBoard();
         BoardView boardView = new BoardView(board);
@@ -32,7 +36,6 @@ public class GameScene extends Scene {
         SceneManager.getInstance().quit();
     }
 
-    @Override
     public void onDetach() {
         System.out.println("onDetach");
     }
