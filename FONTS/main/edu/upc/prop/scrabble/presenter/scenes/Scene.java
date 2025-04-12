@@ -1,10 +1,9 @@
 package edu.upc.prop.scrabble.presenter.scenes;
 
 public abstract class Scene {
-    private boolean freeRequested;
-
-    boolean isFreeRequested() {
-        return freeRequested;
+    private SceneManager sceneManager;
+    void setSceneStack(SceneManager manager) {
+        sceneManager = manager;
     }
 
     public void onProcess(float delta) {
@@ -13,7 +12,11 @@ public abstract class Scene {
     public void onDetach() {
     }
 
-    public final void free() {
-        freeRequested = true;
+    public final void quit() {
+        sceneManager.quit();
+    }
+
+    public final void load(Class<? extends Scene> sceneClass) {
+        sceneManager.load(sceneClass);
     }
 }

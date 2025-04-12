@@ -1,23 +1,23 @@
 package edu.upc.prop.scrabble;
 
-import edu.upc.prop.scrabble.presenter.scenes.SceneStack;
-import edu.upc.prop.scrabble.presenter.terminal.scenes.GameScene;
+import edu.upc.prop.scrabble.presenter.scenes.SceneManager;
+import edu.upc.prop.scrabble.presenter.terminal.scenes.MenuScene;
 
 public class Main {
     public static void main(String[] args) {
-        SceneStack sceneStack = new SceneStack();
-        sceneStack.push(GameScene.class);
+        SceneManager sceneManager = new SceneManager();
+        sceneManager.load(MenuScene.class);
 
         long lastTime = System.nanoTime();
         double delta;
 
-        while(!sceneStack.isEmpty()){
+        while(sceneManager.isRunning()){
             long now = System.nanoTime();
             delta = (now - lastTime) / 1_000_000_000.0;
             lastTime = now;
 
-            sceneStack.process((float)delta);
-            sceneStack.clear();
+            sceneManager.process((float)delta);
+            System.out.println(delta);
         }
     }
 }

@@ -10,7 +10,7 @@ public class MenuScene extends Scene {
     @Override
     public void onProcess(float delta) {
         System.out.println("onProcess");
-        free(); // Used only to avoid an infinite loop
+        load(GameScene.class);
     }
 
     @Override

@@ -28,7 +28,7 @@ public class GameScene extends Scene {
         WordPlacer placer = new WordPlacer(board, boardView, pointCalculator);
         placer.run(pieces, 1, 2, Direction.Horizontal);
 
-        free();
+        quit();
     }
 
     @Override
