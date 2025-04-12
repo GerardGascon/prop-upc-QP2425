@@ -1,11 +1,6 @@
-package edu.upc.prop.scrabble.domain;
+package edu.upc.prop.scrabble.domain.actionmaker;
 
-import edu.upc.prop.scrabble.data.Movement;
 import edu.upc.prop.scrabble.data.Player;
-import edu.upc.prop.scrabble.domain.board.WordPlacer;
-import edu.upc.prop.scrabble.domain.dawg.WordValidator;
-import edu.upc.prop.scrabble.domain.movement.MovementReader;
-import edu.upc.prop.scrabble.domain.pieces.PieceDrawer;
 import edu.upc.prop.scrabble.domain.pieces.PiecesConverter;
 
 public abstract class ActionMaker {
@@ -35,11 +30,4 @@ public abstract class ActionMaker {
     //DrawReader cuando lo haga la gina
     
     //PieceDrawer drawer = new PieceDrawer(bolsa);
-
-    /*public class PlayerActionMaker extends ActionMaker {
-
-    }
-    public class AIActionMaker extends ActionMaker {
-
-    }*/
 }
