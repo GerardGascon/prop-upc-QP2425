@@ -16,7 +16,7 @@ public abstract class Scene {
         sceneManager.quit();
     }
 
-    public final void load(Class<? extends Scene> sceneClass) {
-        sceneManager.load(sceneClass);
+    public final void load(Class<? extends Scene> sceneClass, Object... instances) {
+        sceneManager.load(sceneClass, instances);
     }
 }
