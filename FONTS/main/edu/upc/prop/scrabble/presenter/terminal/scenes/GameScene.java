@@ -7,6 +7,7 @@ import edu.upc.prop.scrabble.domain.board.PointCalculator;
 import edu.upc.prop.scrabble.domain.board.WordGetter;
 import edu.upc.prop.scrabble.domain.board.WordPlacer;
 import edu.upc.prop.scrabble.presenter.scenes.Scene;
+import edu.upc.prop.scrabble.presenter.scenes.SceneManager;
 import edu.upc.prop.scrabble.presenter.terminal.BoardView;
 import edu.upc.prop.scrabble.utils.Direction;
 
@@ -28,7 +29,7 @@ public class GameScene extends Scene {
         WordPlacer placer = new WordPlacer(board, boardView, pointCalculator);
         placer.run(pieces, 1, 2, Direction.Horizontal);
 
-        quit();
+        SceneManager.getInstance().quit();
     }
 
     @Override

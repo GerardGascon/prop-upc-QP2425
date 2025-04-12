@@ -1,6 +1,7 @@
 package edu.upc.prop.scrabble.presenter.terminal.scenes;
 
 import edu.upc.prop.scrabble.presenter.scenes.Scene;
+import edu.upc.prop.scrabble.presenter.scenes.SceneManager;
 
 public class MenuScene extends Scene {
     public MenuScene() {
@@ -10,7 +11,7 @@ public class MenuScene extends Scene {
     @Override
     public void onProcess(float delta) {
         System.out.println("onProcess");
-        load(GameScene.class);
+        SceneManager.getInstance().load(GameScene.class);
     }
 
     @Override

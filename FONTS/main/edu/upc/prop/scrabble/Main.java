@@ -5,18 +5,17 @@ import edu.upc.prop.scrabble.presenter.terminal.scenes.MenuScene;
 
 public class Main {
     public static void main(String[] args) {
-        SceneManager sceneManager = new SceneManager();
-        sceneManager.load(MenuScene.class);
+        SceneManager.getInstance().load(MenuScene.class);
 
         long lastTime = System.nanoTime();
         double delta;
 
-        while(sceneManager.isRunning()){
+        while(SceneManager.getInstance().isRunning()){
             long now = System.nanoTime();
             delta = (now - lastTime) / 1_000_000_000.0;
             lastTime = now;
 
-            sceneManager.process((float)delta);
+            SceneManager.getInstance().process((float)delta);
             System.out.println(delta);
         }
     }

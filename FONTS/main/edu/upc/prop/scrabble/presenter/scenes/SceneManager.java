@@ -7,13 +7,20 @@ import java.util.*;
 public class SceneManager {
     private Scene scene;
 
+    private static SceneManager instance;
+    public static SceneManager getInstance() {
+        if (instance == null) {
+            instance = new SceneManager();
+        }
+        return instance;
+    }
+
     public void load(Class<? extends Scene> sceneClass, Object... dependencies) {
         try {
             if (scene != null)
                 scene.onDetach();
 
             scene = instantiateScene(sceneClass, dependencies);
-            scene.setSceneStack(this);
         } catch (Exception e) {
             throw new RuntimeException("Failed to instantiate scene: " + sceneClass.getName(), e);
         }
@@ -31,7 +38,7 @@ public class SceneManager {
                 .orElseThrow(() -> new RuntimeException("No constructors found"));
     }
 
-    void quit() {
+    public void quit() {
         scene.onDetach();
         scene = null;
     }
