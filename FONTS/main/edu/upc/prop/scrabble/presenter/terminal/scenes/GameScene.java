@@ -12,11 +12,6 @@ import edu.upc.prop.scrabble.utils.Direction;
 
 public class GameScene extends Scene {
     @Override
-    public void onAttach() {
-        System.out.println("onAttach");
-    }
-
-    @Override
     public void onProcess(float delta) {
         Board board = new SuperBoard();
         BoardView boardView = new BoardView(board);

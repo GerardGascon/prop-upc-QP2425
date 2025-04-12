@@ -1,10 +1,13 @@
 package edu.upc.prop.scrabble.presenter.scenes;
 
-import java.util.ArrayList;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.*;
 import java.util.List;
 
 public class SceneStack {
     private final List<Scene> scenes = new ArrayList<>();
+    private final Map<Class<?>, Object> dependencyInstances = new HashMap<>();
 
     public void replace(Class<? extends Scene> sceneClass) {
         clear();
@@ -13,13 +16,30 @@ public class SceneStack {
 
     public void push(Class<? extends Scene> sceneClass) {
         try {
-            Scene scene = sceneClass.getDeclaredConstructor().newInstance();
-
-            scenes.add(scene);
-            scene.onAttach();
+            scenes.add(instantiateScene(sceneClass));
         } catch (Exception e) {
             throw new RuntimeException("Failed to instantiate scene: " + sceneClass.getName(), e);
         }
+    }
+
+    private Scene instantiateScene(Class<? extends Scene> sceneClass) throws InstantiationException, IllegalAccessException, InvocationTargetException {
+        Constructor<?> target = getSceneConstructor(sceneClass);
+        Object[] dependencies = gatherSceneDependencies(target);
+        return (Scene)target.newInstance(dependencies);
+    }
+
+    private static Constructor<?> getSceneConstructor(Class<? extends Scene> sceneClass) {
+        Constructor<?>[] constructors = sceneClass.getDeclaredConstructors();
+        return Arrays.stream(constructors)
+                .max(Comparator.comparingInt(Constructor::getParameterCount))
+                .orElseThrow(() -> new RuntimeException("No constructors found"));
+    }
+
+    private Object[] gatherSceneDependencies(Constructor<?> target) {
+        Class<?>[] paramTypes = target.getParameterTypes();
+        return Arrays.stream(paramTypes)
+                .map(dependencyInstances::get)
+                .toArray();
     }
 
     private void pop(Scene scene) {
@@ -46,5 +66,17 @@ public class SceneStack {
 
     public boolean isEmpty() {
         return scenes.isEmpty();
+    }
+
+    public <T> void register(T instance) {
+        dependencyInstances.put(instance.getClass(), instance);
+    }
+
+    public <T> T resolve(Class<T> clazz) {
+        Object instance = dependencyInstances.get(clazz);
+        if (instance == null) {
+            throw new IllegalStateException("No dependency supplier found for class " + clazz.getName());
+        }
+        return clazz.cast(instance);
     }
 }

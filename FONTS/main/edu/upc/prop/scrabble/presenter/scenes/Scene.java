@@ -7,9 +7,6 @@ public abstract class Scene {
         return freeRequested;
     }
 
-    public void onAttach() {
-    }
-
     public void onProcess(float delta) {
     }
 
