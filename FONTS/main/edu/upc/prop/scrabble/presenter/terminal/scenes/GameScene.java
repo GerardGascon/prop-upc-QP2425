@@ -14,7 +14,7 @@ import edu.upc.prop.scrabble.utils.Direction;
 
 public class GameScene extends Scene {
     public GameScene() {
-        instantiate(new MovementMaker());
+        instantiate(MovementMaker.class);
     }
 
     public void onProcess(float delta) {

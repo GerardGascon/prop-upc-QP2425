@@ -34,7 +34,7 @@ public abstract class SceneObject {
     protected void onDisable() {
     }
 
-    protected <T extends SceneObject> T instantiate(T o) {
+    protected <T extends SceneObject> T instantiate(Class<T> o) {
         return scene.instantiate(o);
     }
 
