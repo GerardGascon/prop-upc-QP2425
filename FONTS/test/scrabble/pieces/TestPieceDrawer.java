@@ -14,8 +14,8 @@ public class TestPieceDrawer {
     @Test
     public void emptyBag() {
         Bag bag = new Bag();
-        PieceDrawer pc = new PieceDrawer(bag, null);
-        Piece[] pieces = pc.run(new Piece[0]);
+        PieceDrawer sut = new PieceDrawer(bag, null);
+        Piece[] pieces = sut.run(new Piece[0]);
         assertEquals(0, pieces.length);
     }
 
@@ -29,8 +29,8 @@ public class TestPieceDrawer {
         Piece p2 = new Piece("b", 1);
         player.AddPiece(p2);
 
-        PieceDrawer pc = new PieceDrawer(bag, player);
-        Piece[] pieces = pc.run(new Piece[] { p2 });
+        PieceDrawer sut = new PieceDrawer(bag, player);
+        Piece[] pieces = sut.run(new Piece[] { p2 });
 
         assertEquals(1, pieces.length);
         assertEquals(p1, pieces[0]);
@@ -53,8 +53,8 @@ public class TestPieceDrawer {
         Piece p4 = new Piece("d", 1);
         player.AddPiece(p4);
 
-        PieceDrawer pc = new PieceDrawer(bag, player);
-        Piece[] pieces = pc.run(new Piece[] { p3, p4 });
+        PieceDrawer sut = new PieceDrawer(bag, player);
+        Piece[] pieces = sut.run(new Piece[] { p3, p4 });
 
         assertEquals(2, pieces.length);
         Vector<Piece> hand = player.getHand();
@@ -90,8 +90,8 @@ public class TestPieceDrawer {
             hand.addElement(p[i]);
         }
 
-        PieceDrawer pc = new PieceDrawer(bag, player);
-        Piece[] pieces = pc.run(p);
+        PieceDrawer sut = new PieceDrawer(bag, player);
+        Piece[] pieces = sut.run(p);
 
         assertEquals(5, pieces.length);
     }
