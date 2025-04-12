@@ -12,13 +12,20 @@ public class PieceDrawer {
     }
 
     // pre: es vol posar una fitxa al taulell
-    // post: agafar una fitxa random de la bossa
-    public Piece run() {
+    // post: agafar n fitxes random de la bossa
+    public Piece[] run(Integer n) {
         if (bag.isEmpty()) {
             throw new InaccessibleObjectException("Bag is empty.");
         }
-        Random rand = new Random();
-        int r = rand.nextInt(bag.getSize());
-        return bag.getPiece(r);
+        Piece[] pieces = new Piece[n];
+        for (int i = 0; i < n; i++) {
+            if (bag.isEmpty()) {
+                throw new InaccessibleObjectException("Bag is empty.");
+            }
+            Random rand = new Random();
+            int r = rand.nextInt(bag.getSize());
+            pieces[i] = bag.getPiece(r);
+        }
+        return pieces;
     }
 }

@@ -29,9 +29,10 @@ public class Turn {
 
         //Donem peça
         if (currentPlayer.getHand().size() < 7){
-            Piece actualPiece = drawer.run();
-            currentPlayer.getHand().add(actualPiece);
+            Piece[] actualPiece = drawer.run(1);
+            currentPlayer.getHand().add(actualPiece[0]);
         }
+
 
 
         // TO BE DEVELOPED

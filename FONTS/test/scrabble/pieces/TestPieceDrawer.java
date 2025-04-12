@@ -14,10 +14,34 @@ public class TestPieceDrawer {
         Piece piece = new Piece("a", 1);
         bag.addPiece(piece);
         PieceDrawer pieceDrawer = new PieceDrawer(bag);
-        Piece drawn = pieceDrawer.run();
+        Piece[] drawns = pieceDrawer.run(1);
 
         assertTrue(bag.isEmpty());
-        assertEquals(piece, drawn);
+        assertEquals(piece, drawns[0]);
+    }
+    @Test
+    public void bagDrawnsNPieces() {
+        Bag bag = new Bag();
+        Piece piece = new Piece("a", 1);
+        bag.addPiece(piece);
+        piece = new Piece("b", 1);
+        bag.addPiece(piece);
+        piece = new Piece("c", 1);
+        bag.addPiece(piece);
+        PieceDrawer pieceDrawer = new PieceDrawer(bag);
+        Piece[] drawns = pieceDrawer.run(2);
+
+        assertFalse(bag.isEmpty());
+        assertEquals(2, drawns.length);
     }
 
+    @Test
+    public void bagDrawnsNothing() {
+        Bag bag = new Bag();
+        PieceDrawer pieceDrawer = new PieceDrawer(bag);
+        Piece[] drawns = pieceDrawer.run(4);
+
+        assertTrue(bag.isEmpty());
+        assertEquals(0, drawns.length);
+    }
 }
