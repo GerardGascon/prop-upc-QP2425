@@ -16,27 +16,35 @@ public class PieceDrawer {
 
     // pre: es vol posar una fitxa al taulell
     // post: agafar n fitxes random de la bossa
-    public Piece[] run(Integer n) {
+    public Piece[] run(Piece[] piecesToSwap) {
         ArrayList<Piece> drawnPieces = new ArrayList<>();
         if (bag.is_Empty()) return drawnPieces.toArray(new Piece[0]);
 
         Random rand = new Random();
         Vector<Piece> hand = player.getHand();
-        int available = Math.min(hand.size(), Math.min(bag.getSize(), n));
+
+        int n = piecesToSwap.length;
         int i = 0;
-        while (i < available && !bag.is_Empty()) {
+        while (i < n && !bag.is_Empty()) {
             int r = rand.nextInt(bag.getSize());
             Piece drawnPiece = bag.getPiece(r);
             drawnPieces.add(drawnPiece);
             ++i;
         }
-
-        for (i = 0; i < drawnPieces.size(); i++) {
-            Piece handPiece = hand.get(0);
-            player.RemovePiece(handPiece);
-            bag.addPiece(handPiece);
-            player.AddPiece(drawnPieces.get(i));
-            hand = player.getHand();
+        if (hand.isEmpty()) {       //inici->omplir la mà i ja
+            for (int j = 0; j < drawnPieces.size(); ++j) {
+                Piece p = drawnPieces.get(i);
+                hand.add(p);
+            }
+        }
+        else{   // durant partida
+            for (i = 0; i < drawnPieces.size(); i++) {
+                Piece oldPiece = piecesToSwap[i];
+                player.RemovePiece(oldPiece);
+                bag.addPiece(oldPiece);
+                player.AddPiece(drawnPieces.get(i));
+                hand = player.getHand();
+            }
         }
         return drawnPieces.toArray(new Piece[0]);
     }
