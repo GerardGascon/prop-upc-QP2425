@@ -10,6 +10,10 @@ public class PlayerSetter {
     //TOT AIXO NECESITA SER CRIDAT PER ALGU (CONTROLADOR ?:D) QUE
     // QUAN ES TOQUIN LES TECLES ES CRIDI RESPECTIVAMENT A CADA FUNCIO
 
+    public boolean hasEnded (){
+        return mode == 1;
+    }
+
     //Default
     public PlayerSetter() {
         this.numplay = 0;
@@ -23,20 +27,27 @@ public class PlayerSetter {
         mode = mode%2;
     }
 
+
+    // IMpMPLENETAR TECLADO INTERFACE
+
     public void Increase(){
         //Check si sumem player
+        System.out.println("HOLA AMICS");
         if (mode == 0) {
-            int tmp = numplay++;
+            int tmp = numplay + 1;
             if (!((tmp + numbots) > 4)){
                 numplay = tmp;
+                System.out.println(numplay);
             }
         }
         //Check Si sumem bots
         if (mode == 1) {
-            int tmp = numbots++;
+            int tmp = numbots + 1;
             if (!((tmp + numplay) > 4)){
                 numbots = tmp;
+                System.out.println(numbots);
             }
+
         }
         print_interface();
     }
@@ -44,14 +55,14 @@ public class PlayerSetter {
     public void Decrease(){
         //Check si sumem player
         if (mode == 0) {
-            int tmp = numplay--;
+            int tmp = numplay - 1;
             if (!((tmp + numbots) < 0)){
                 numplay = tmp;
             }
         }
         //Check Si sumem bots
         if (mode == 1) {
-            int tmp = numbots++;
+            int tmp = numbots - 1;
             if (!((tmp + numplay) < 0)){
                 numbots = tmp;
             }

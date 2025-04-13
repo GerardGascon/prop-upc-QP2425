@@ -6,15 +6,10 @@ public class SizeSetter {
     //TOT AIXO NECESITA SER CRIDAT PER ALGU (CONTROLADOR ?:D) QUE
     // QUAN ES TOQUIN LES TECLES ES CRIDI RESPECTIVAMENT A CADA FUNCIO
 
-    //Default Junior
-    public SizeSetter(int selected) {
-        this.selected = 3;
-    }
-
     //Modificadores
     public void next() {
         selected++;
-        selected = selected%3;
+        selected = selected % 3;
         print_interface();
     }
 

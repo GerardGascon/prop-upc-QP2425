@@ -16,13 +16,6 @@ public class LanguageSetter {
     // QUAN ES TOQUIN LES TECLES ES CRIDI RESPECTIVAMENT A CADA FUNCIO
 
 
-    //Default
-    public LanguageSetter() {
-        this.selected = 0;
-        this.words = "noInitizalized";
-        this.letters = "noInitizalized";
-    }
-
     //Modificadores
     public void next() {
         selected++;
