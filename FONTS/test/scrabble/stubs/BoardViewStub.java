@@ -1,5 +1,6 @@
 package scrabble.stubs;
 
+import edu.upc.prop.scrabble.data.board.Board;
 import edu.upc.prop.scrabble.domain.IBoard;
 
 public class BoardViewStub implements IBoard {
@@ -10,7 +11,7 @@ public class BoardViewStub implements IBoard {
     }
 
     @Override
-    public void UpdateBoard() {
+    public void UpdateBoard(Board board) {
         UpdateCallReceived = true;
     }
 }

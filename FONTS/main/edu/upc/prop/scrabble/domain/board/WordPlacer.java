@@ -26,7 +26,7 @@ public class WordPlacer {
 
         int points = pointCalculator.run(positions, pieces);
 
-        view.UpdateBoard();
+        view.UpdateBoard(board);
         return points;
     }
 

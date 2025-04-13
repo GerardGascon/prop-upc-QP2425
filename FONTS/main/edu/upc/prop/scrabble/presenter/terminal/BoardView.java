@@ -2,36 +2,31 @@ package edu.upc.prop.scrabble.presenter.terminal;
 
 import edu.upc.prop.scrabble.data.board.Board;
 import edu.upc.prop.scrabble.domain.IBoard;
+import edu.upc.prop.scrabble.presenter.scenes.SceneObject;
 
-public class BoardView implements IBoard {
-    private final Board board;
-
-    public BoardView(Board board) {
-        this.board = board;
-    }
-
+public class BoardView extends SceneObject implements IBoard {
     @Override
-    public void UpdateBoard() {
-        String s = buildBoardString();
+    public void UpdateBoard(Board board) {
+        String s = buildBoardString(board);
         System.out.print(s);
     }
 
-    private String buildBoardString() {
+    private String buildBoardString(Board board) {
         StringBuilder ret = new StringBuilder();
 
-        ret.append(printBoardLetterCoord());
+        ret.append(printBoardLetterCoord(board));
 
         for (int i = 0; i < board.getSize(); i++) {
             ret.append(getBoardNumberCoord(i));
 
             for (int j = 0; j < board.getSize(); j++) {
                 if (!board.isCellEmpty(j, i)) {
-                    ret.append(getCellPiece(j, i)).append("  ");
+                    ret.append(getCellPiece(board, j, i)).append("  ");
                     continue;
                 }
 
                 if (board.isPremiumTile(j, i)) {
-                    ret.append(getPremiumTile(j, i)).append(" ");
+                    ret.append(getPremiumTile(board, j, i)).append(" ");
                     continue;
                 }
 
@@ -48,11 +43,11 @@ public class BoardView implements IBoard {
         return ret.toString();
     }
 
-    private String getCellPiece(int j, int i) {
+    private String getCellPiece(Board board, int j, int i) {
         return TileConverter.convert(board.getCellPiece(j, i));
     }
 
-    private String getPremiumTile(int j, int i) {
+    private String getPremiumTile(Board board, int j, int i) {
         return TileConverter.convert(board.getPremiumTileType(j, i));
     }
 
@@ -65,7 +60,7 @@ public class BoardView implements IBoard {
         return ret.toString();
     }
 
-    private String printBoardLetterCoord() {
+    private String printBoardLetterCoord(Board board) {
         StringBuilder ret = new StringBuilder();
         ret.append("     ");
         for (int j = 0; j < board.getSize(); j++) {

@@ -31,7 +31,7 @@ public class MovementParser {
         MovementParser.Coordinate coordinate = getCoordinate(movement);
 
         int x = coordinate.letter().charAt(0) - (int) 'A';
-        int y = Integer.parseInt(coordinate.number());
+        int y = Integer.parseInt(coordinate.number()) - 1;
 
         return new Vector2(x, y);
     }
