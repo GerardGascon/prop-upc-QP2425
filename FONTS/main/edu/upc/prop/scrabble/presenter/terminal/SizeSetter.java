@@ -44,9 +44,9 @@ public class SizeSetter {
         String Up = " ________________________________________\n";
         String Up2 = "|                                        |\n";
         String Mid = switch (size) {
-            case Super    -> "|    |Junior|    Standard     Super      |\n";
-            case Junior   -> "|     Junior    |Standard|    Super      |\n";
-            case Standard -> "|     Junior     Standard    |Super|     |\n";
+            case Junior    -> "|    |Junior|    Standard     Super      |\n";
+            case Standard   -> "|     Junior    |Standard|    Super      |\n";
+            case Super -> "|     Junior     Standard    |Super|     |\n";
             default -> "";
         };
         String Down = "|________________________________________|\n";
