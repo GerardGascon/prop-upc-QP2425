@@ -10,10 +10,12 @@ import java.util.Vector;
 public class PiecesInHandGetter {
     private final Player player;
     private final Bag bag;
+    private final IPiecePrinter piecePrinter;
 
-    public PiecesInHandGetter( Bag b, Player p) {
+    public PiecesInHandGetter(Bag b, Player p, IPiecePrinter piecePrinter) {
         player = p;
         bag = b;
+        this.piecePrinter = piecePrinter;
     }
 
     public Piece[] run(Piece[] pieces) {
@@ -32,8 +34,7 @@ public class PiecesInHandGetter {
                 }
             }
             if (count == pieces.length) { // tinc totes les peces a la mà per fer la paraula
-                // System.out.println("The player has the necessary pieces in hand to play the word.");
-                // Printer.display(...);
+
                 PieceDrawer pc = new PieceDrawer(bag, player);
                 return pc.run(pieces);
             }

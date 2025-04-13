@@ -3,6 +3,7 @@ package scrabble.pieces;
 import edu.upc.prop.scrabble.data.Player;
 import edu.upc.prop.scrabble.data.pieces.Bag;
 import edu.upc.prop.scrabble.data.pieces.Piece;
+import edu.upc.prop.scrabble.domain.pieces.IPiecePrinter;
 import edu.upc.prop.scrabble.domain.pieces.PieceDrawer;
 import edu.upc.prop.scrabble.domain.pieces.PiecesInHandGetter;
 import org.junit.Test;
@@ -21,9 +22,9 @@ public class TestPiecesInHandGetter {
         for (int i = 0; i < 7; i++) {
             player.AddPiece(new Piece("b", 1));
         }
-
+        IPiecePrinter piecePrinter = null;
         Piece[] word = new Piece[]{new Piece("b", 1)};
-        PiecesInHandGetter sut = new PiecesInHandGetter(bag, player);
+        PiecesInHandGetter sut = new PiecesInHandGetter(bag, player, piecePrinter);
         Piece[] newPieces = sut.run(word);
 
         assertEquals(p1, newPieces[0]);
@@ -40,8 +41,9 @@ public class TestPiecesInHandGetter {
             player.AddPiece(new Piece("b", 1));
         }
 
+        IPiecePrinter piecePrinter = null;
         Piece[] word = new Piece[]{new Piece("b", 1), new Piece("b", 1)};
-        PiecesInHandGetter sut = new PiecesInHandGetter(bag, player);
+        PiecesInHandGetter sut = new PiecesInHandGetter(bag, player, piecePrinter);
         Piece[] newPieces = sut.run(word);
 
         assertEquals(p1, newPieces[0]);
