@@ -4,10 +4,12 @@ import java.util.Scanner;
 import java.util.concurrent.*;
 
 public class Reader {
+    private static final Reader instance = new Reader();
+
     private final Scanner scanner = new Scanner(System.in);
     private final BlockingQueue<String> inputQueue = new LinkedBlockingQueue<>();
 
-    public Reader() {
+    private Reader() {
         Thread inputThread = new Thread(() -> {
             while (true) {
                 String line = scanner.nextLine();
@@ -16,6 +18,10 @@ public class Reader {
         });
         inputThread.setDaemon(true);
         inputThread.start();
+    }
+
+    public static Reader getInstance() {
+        return instance;
     }
 
     public String readLine() {
