@@ -17,10 +17,10 @@ public class DrawReader {
 
     public void run(int n) {
         Piece[] piecesToDraw = drawReader.run(n);
-
         Piece[] drawnPieces = pieceDrawer.run(piecesToDraw);
+        System.out.print("Drawn pieces: ");
         for (Piece p : drawnPieces) {
-            System.out.print(p);
+            System.out.print(p + " ");
         }
         System.out.println();
     }

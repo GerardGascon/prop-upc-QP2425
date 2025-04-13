@@ -16,28 +16,30 @@ public class PlayerDrawReader implements IDrawReader {
     private final Reader reader;
     private final Player player;
     private final Bag bag;
+    private final PiecesConverter piecesConverter;
 
     public PlayerDrawReader(Reader reader, Player p, Bag bag) {
         this.reader = reader;
         this.player = p;
         this.bag = bag;
+        this.piecesConverter = new PiecesConverter();
     }
 
     @Override
     public Piece[] run(int n) {
         System.out.println("Introduce " + n + " letters to draw:");
+        PiecesInHandVerifier Pverifier = new PiecesInHandVerifier(player, piecesConverter);
+
         while (true) {
             String input = reader.readLine();
             if (input == null) continue;
 
-            PiecesConverter Pconverter = new PiecesConverter();
-            PiecesInHandVerifier Pverifier = new PiecesInHandVerifier(player, Pconverter);
             Piece[] piecesInHand = Pverifier.run(input);
 
             if (piecesInHand.length == n) {
                 PiecesInHandGetter Pgetter = new PiecesInHandGetter(bag, player);
                 Piece[] newPieces = Pgetter.run(piecesInHand);
-                System.out.print("Player" + player.getName() + " changed: ");
+                System.out.print("Player " + player.getName() + " changed: ");
                 for (Piece p : newPieces) {
                     System.out.print(p.letter() + " ");
                 }
