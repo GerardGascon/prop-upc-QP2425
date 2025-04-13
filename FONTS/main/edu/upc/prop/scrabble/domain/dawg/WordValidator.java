@@ -24,4 +24,15 @@ public class WordValidator {
         }
         return current.isEndOfWord();
     }
+    //para el crosschecks (paso de liarme creando piezas que valgan 1
+    //solo para guardar el string)
+    public boolean runString(String word){
+        Node current = dawg.getRoot();
+        for(int i = 0; i < word.length(); i++) {
+            Node successor = current.getSuccessor(word.charAt(i));
+            if (successor == null) return false;
+            current = successor;
+        }
+        return current.isEndOfWord();
+    }
 }
