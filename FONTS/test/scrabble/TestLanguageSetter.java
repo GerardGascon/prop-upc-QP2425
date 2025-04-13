@@ -14,7 +14,7 @@ public class TestLanguageSetter {
     public void increment_select() {
         LanguageSetter languageSetter = new LanguageSetter();
 
-        languageSetter.increment_select();
+        languageSetter.next();
         languageSetter.load_language();
 
 

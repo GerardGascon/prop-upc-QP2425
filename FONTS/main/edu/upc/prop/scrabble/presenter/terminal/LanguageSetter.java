@@ -8,27 +8,57 @@ import java.nio.charset.StandardCharsets;
 public class LanguageSetter {
 
     private int selected;
-    private final boolean Confirm;
     private String words;
     private String letters;
 
+
+    //TOT AIXO NECESITA SER CRIDAT PER ALGU (CONTROLADOR ?:D) QUE
+    // QUAN ES TOQUIN LES TECLES ES CRIDI RESPECTIVAMENT A CADA FUNCIO
+
+
+    //Default
     public LanguageSetter() {
         this.selected = 0;
-        this.Confirm = false;
         this.words = "noInitizalized";
         this.letters = "noInitizalized";
     }
 
-    public String getWords(){return words;}
-
-    public String getLetters(){return letters;}
-
-    public void increment_select() {
+    //Modificadores
+    public void next() {
         selected++;
-        if (selected >= 3) selected = 0;
+        selected = selected%3;
+        print_interface();
     }
 
-    public String print_interface() {
+    public void previous() {
+        selected--;
+        selected = selected%3;
+        print_interface();
+    }
+
+    public void load_language() {
+        String filePathWords;
+        String filePathLetters;
+
+        if (selected == 0) {
+            filePathWords = "FONTS/main/edu/upc/prop/scrabble/locales/english.txt";
+            filePathLetters = "FONTS/main/edu/upc/prop/scrabble/locales/letrasENG.txt";
+        }
+        else if (selected == 1) {
+            filePathWords = "FONTS/main/edu/upc/prop/scrabble/locales/catalan.txt";
+            filePathLetters = "FONTS/main/edu/upc/prop/scrabble/locales/letrasCAT.txt";
+        }
+        else {
+            filePathWords = "FONTS/main/edu/upc/prop/scrabble/locales/castellano.txt";
+            filePathLetters = "FONTS/main/edu/upc/prop/scrabble/locales/letrasCAST.txt";
+        }
+
+        words = readFileToString(filePathWords);
+        letters = readFileToString(filePathLetters);
+    }
+
+    //Visualize
+    public void print_interface() {
         String Up = " ________________________________________\n";
         String Up2 = "|                                        |\n";
         String Mid = switch (selected) {
@@ -38,30 +68,15 @@ public class LanguageSetter {
             default -> "";
         };
         String Down = "|________________________________________|\n";
-        return Up + Up2 + Mid + Down;
+        System.out.println(Up + Up2 + Mid + Down);
     }
 
-    public void load_language() {
-        String filePathWords;
-        String filePathLetters;
+    //Consultores
+    public String getWords(){return words;}
 
-        if (selected == 0) {
-            filePathWords = "FONTS/main/edu/upc/prop/scrabble/presenter/english.txt";
-            filePathLetters = "FONTS/main/edu/upc/prop/scrabble/presenter/letrasENG.txt";
-        }
-        else if (selected == 1) {
-            filePathWords = "FONTS/main/edu/upc/prop/scrabble/presenter/catalan.txt";
-            filePathLetters = "FONTS/main/edu/upc/prop/scrabble/presenter/letrasCAT.txt";
-        }
-        else {
-            filePathWords = "FONTS/main/edu/upc/prop/scrabble/presenter/castellano.txt";
-            filePathLetters = "FONTS/main/edu/upc/prop/scrabble/presenter/letrasCAST.txt";
-        }
+    public String getLetters(){return letters;}
 
-        words = readFileToString(filePathWords);
-        letters = readFileToString(filePathLetters);
-    }
-
+    //Auxiliar
     private String readFileToString(String filePath) {
         StringBuilder content = new StringBuilder();
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath, StandardCharsets.UTF_8))) {
