@@ -25,6 +25,6 @@ public class Reader {
     }
 
     public String readLine() {
-        return inputQueue.poll(); // or `take()` if you want to block
+        return inputQueue.poll();
     }
 }

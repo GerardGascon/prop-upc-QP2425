@@ -4,33 +4,39 @@ import edu.upc.prop.scrabble.data.Player;
 import edu.upc.prop.scrabble.data.pieces.Bag;
 import edu.upc.prop.scrabble.data.pieces.Piece;
 
+import java.util.Objects;
 import java.util.Vector;
 
 public class PiecesInHandGetter {
     private final Player player;
     private final Bag bag;
+    private final IPiecePrinter piecePrinter;
 
-    public PiecesInHandGetter( Bag b, Player p) {
+    public PiecesInHandGetter(Bag b, Player p, IPiecePrinter piecePrinter) {
         player = p;
         bag = b;
+        this.piecePrinter = piecePrinter;
     }
 
     public Piece[] run(Piece[] pieces) {
         try {
             Vector<Piece> hand = player.getHand();
             int count = 0;
-            for (Piece requiredPieces : pieces) {
-                for (Piece handPieces : hand) {
-                    if (handPieces.equals(requiredPieces)) {
-                        ++count;
+            boolean[] visit = new boolean[hand.size()];
+
+            for (int i = 0; i < pieces.length;++i) {
+                for (int j = 0; j < hand.size(); ++j) {
+                    if (!visit[j] && Objects.equals(pieces[i], hand.get(j))) {
+                        visit[j] = true;
+                        count += 1;
+                        break;
                     }
                 }
             }
             if (count == pieces.length) { // tinc totes les peces a la mà per fer la paraula
-                // System.out.println("The player has the necessary pieces in hand to play the word.");
-                // Printer.display(...);
+
                 PieceDrawer pc = new PieceDrawer(bag, player);
-                Piece[] newPieces = pc.run(pieces);
+                return pc.run(pieces);
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
