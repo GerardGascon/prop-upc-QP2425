@@ -6,7 +6,6 @@ import edu.upc.prop.scrabble.presenter.terminal.utils.Reader;
 
 public class PlayerObject extends SceneObject {
     private boolean onTurn = false;
-    private final Reader reader = new Reader();
 
     private MovementMaker movementMaker;
 
@@ -27,11 +26,11 @@ public class PlayerObject extends SceneObject {
         if (!onTurn)
             return;
 
-
-        String movementRaw = reader.readLine();
+        String movementRaw = Reader.getInstance().readLine();
         if (movementRaw == null)
             return;
 
+        System.out.println(movementRaw);
         int score = movementMaker.makeMove(movementRaw);
         System.out.println("Score: " + score);
     }

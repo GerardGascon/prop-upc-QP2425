@@ -12,6 +12,7 @@ public class SceneManager {
     private Pair<Class<? extends Scene>, Object[]> sceneToLoad;
 
     private static SceneManager instance;
+
     public static SceneManager getInstance() {
         if (instance == null) {
             instance = new SceneManager();
@@ -19,11 +20,14 @@ public class SceneManager {
         return instance;
     }
 
+    private SceneManager() {
+    }
+
     public void load(Class<? extends Scene> sceneClass, Object... dependencies) {
         if (!sceneLoaded) {
             sceneLoaded = true;
             loadScene(sceneClass, dependencies);
-        }else{
+        } else {
             sceneToLoad = new Pair<>(sceneClass, dependencies);
         }
     }
