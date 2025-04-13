@@ -1,21 +1,41 @@
 package edu.upc.prop.scrabble.presenter.terminal;
 
-public class SizeSetter {
-    private int selected;
+import edu.upc.prop.scrabble.data.board.BoardType;
 
-    //TOT AIXO NECESITA SER CRIDAT PER ALGU (CONTROLADOR ?:D) QUE
-    // QUAN ES TOQUIN LES TECLES ES CRIDI RESPECTIVAMENT A CADA FUNCIO
+import static java.lang.Math.abs;
+
+public class SizeSetter {
+
+    BoardType size = BoardType.Junior;
 
     //Modificadores
     public void next() {
-        selected++;
-        selected = selected % 3;
+        switch (size) {
+            case Junior:
+                size = BoardType.Standard;
+                break;
+            case Standard:
+                size = BoardType.Super;
+                break;
+            case Super:
+                size = BoardType.Junior;
+                break;
+        }
         print_interface();
     }
 
     public void previous() {
-        selected--;
-        selected = selected%3;
+        switch (size) {
+            case Junior:
+                size = BoardType.Super;
+                break;
+            case Standard:
+                size = BoardType.Junior;
+                break;
+            case Super:
+                size = BoardType.Standard;
+                break;
+        }
         print_interface();
     }
 
@@ -23,10 +43,10 @@ public class SizeSetter {
     public void print_interface() {
         String Up = " ________________________________________\n";
         String Up2 = "|                                        |\n";
-        String Mid = switch (selected) {
-            case 0 -> "|    |Junior|    Standard     Super      |\n";
-            case 1 -> "|     Junior    |Standard|    Super      |\n";
-            case 2 -> "|     Junior     Standard    |Super|     |\n";
+        String Mid = switch (size) {
+            case Super    -> "|    |Junior|    Standard     Super      |\n";
+            case Junior   -> "|     Junior    |Standard|    Super      |\n";
+            case Standard -> "|     Junior     Standard    |Super|     |\n";
             default -> "";
         };
         String Down = "|________________________________________|\n";
@@ -34,7 +54,7 @@ public class SizeSetter {
     }
 
     //Consultores
-    public int getSelected() {
-        return selected;
+    public BoardType getBoardSize() {
+        return size;
     }
 }

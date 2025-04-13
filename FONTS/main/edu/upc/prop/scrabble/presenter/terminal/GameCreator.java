@@ -1,5 +1,6 @@
 package edu.upc.prop.scrabble.presenter.terminal;
 
+import edu.upc.prop.scrabble.data.properties.GameProperties;
 import edu.upc.prop.scrabble.presenter.scenes.SceneManager;
 import edu.upc.prop.scrabble.presenter.scenes.SceneObject;
 import edu.upc.prop.scrabble.presenter.terminal.scenes.GameScene;
@@ -11,7 +12,12 @@ public class GameCreator extends SceneObject {
     private final LanguageSetter languageSetter = new LanguageSetter();
     private final SizeSetter sizeSetter = new SizeSetter();
     private final PlayerSetter playerSetter = new PlayerSetter();
-    private final Reader reader = new Reader();
+
+
+    public GameCreator() {
+        //EN UN MUY FUTURO PONER EL HELP insturccion palabras
+        languageSetter.print_interface();
+    }
 
     enum State {
         Lang,
@@ -23,7 +29,7 @@ public class GameCreator extends SceneObject {
     @Override
     public void onProcess(float delta) {
 
-        String action = reader.readLine();
+        String action = Reader.getInstance().readLine();
         if (action == null)
             return;
         if (action.equals("next")) {
@@ -32,7 +38,7 @@ public class GameCreator extends SceneObject {
         if (action.equals("previous")) {
             previous();
         }
-        if (action.equals("Submit")) {
+        if (action.equals("submit")) {
             submit();
         }
     }
@@ -68,19 +74,27 @@ public class GameCreator extends SceneObject {
     private void submit(){
         switch (state) {
             case Lang:
+                sizeSetter.print_interface();
                 state = State.Size;
                 break;
             case Size:
+                playerSetter.print_interface();
                 state = State.Player;
                 break;
             case Player:
 
                 if (playerSetter.hasEnded())
-                    SceneManager.getInstance().load(GameScene.class);
-                else
+                    loadGame();
+                else {
                     playerSetter.switchMode();
-
+                }
                 break;
         }
+    }
+
+    private void loadGame(){
+        GameProperties gameProperties = new GameProperties(languageSetter.getLanguage(), sizeSetter.getBoardSize(),
+                                                            playerSetter.getRealPlayers(),playerSetter.getCpuPlayers());
+        SceneManager.getInstance().load(GameScene.class,gameProperties);
     }
 }
