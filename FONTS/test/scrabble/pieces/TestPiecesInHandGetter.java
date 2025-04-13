@@ -28,4 +28,23 @@ public class TestPiecesInHandGetter {
 
         assertEquals(p1, newPieces[0]);
     }
+    @Test
+    public void get2Pieces() {
+        Bag bag = new Bag();
+        Piece p1 = new Piece("a", 1);
+        bag.addPiece(p1);
+        bag.addPiece(p1);
+
+        Player player = new Player("nom", false);
+        for (int i = 0; i < 7; i++) {
+            player.AddPiece(new Piece("b", 1));
+        }
+
+        Piece[] word = new Piece[]{new Piece("b", 1), new Piece("b", 1)};
+        PiecesInHandGetter sut = new PiecesInHandGetter(bag, player);
+        Piece[] newPieces = sut.run(word);
+
+        assertEquals(p1, newPieces[0]);
+        assertEquals(p1, newPieces[1]);
+    }
 }
