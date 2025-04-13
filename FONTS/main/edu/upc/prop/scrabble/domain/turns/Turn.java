@@ -2,6 +2,7 @@ package edu.upc.prop.scrabble.domain.turns;
 
 import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.data.Player;
+import edu.upc.prop.scrabble.domain.actionmaker.ActionMaker;
 import edu.upc.prop.scrabble.domain.board.WordPlacer;
 import edu.upc.prop.scrabble.domain.pieces.PieceDrawer;
 import edu.upc.prop.scrabble.utils.Direction;
@@ -9,46 +10,49 @@ import edu.upc.prop.scrabble.utils.Direction;
 import java.util.List;
 
 public class Turn {
-    private final List<Player> players;
+    private final IGamePlayer[] players;
     private int turnNumber;
-    private final PieceDrawer drawer;
-    private final WordPlacer wordPlacer;
+
     //Constructora
-    public Turn(List<Player> players, PieceDrawer drawer, WordPlacer wordPlacer) {
+    public Turn(IGamePlayer[] players) {
         this.players = players;
         this.turnNumber = 0;
-        this.drawer = drawer;
-        this.wordPlacer = wordPlacer;
     }
+
     public void run(){
 
-        ++turnNumber;
-        //Li toca al jugador
-        int PlayerTurn = turnNumber%players.size();
-        Player currentPlayer = players.get(PlayerTurn);
+        int start = 0, end = 0;
+        boolean endgame = false;
+        int modTurn = turnNumber%4;
+        while (!endgame) {
+            modTurn = turnNumber%4;
+            switch (modTurn) {
+                case 0 -> {
+                    start = 0;
+                    end = 3;
+                }
+                case 1 -> {
+                    start = 1;
+                    end = 2;
+                }
+                case 2 -> {
+                    start = 2;
+                    end = 1;
+                }
+                case 3 -> {
+                    start = 3;
+                    end = 2;
+                }
+            }
 
-        //Donem peça
-        if (currentPlayer.getHand().size() < 7){
-            Piece[] actualPiece = drawer.run(new Piece[7]);
-            currentPlayer.getHand().add(actualPiece[0]);
+            players[end].endTurn();
+            players[start].startTurn();
+            turnNumber = turnNumber + 1;
+            endgame = true;
+            //TODO: Winchecker to chekc si s'ha acbaat la partida (en una classe aparte)
+            // Winchdecker una queue de mida 3 (ultimes 3 jugades) per a cadfa jugador que diu si
+            // jugada valida o invalida
         }
 
-
-
-        // TO BE DEVELOPED
-
-        //El jugador posa peça
-        // DESPRES : if (existeix alguna paraula que puguis posar)
-        // DESPRES : decidir si vol fer skip
-
-        // Geri Working on it
-        // DecideWord ----> Piece[] Word, int startX, int startY, Direction direccio
-        Piece[] Word ={new Piece("a",8)};
-        int StartX = 0; int StartY = 0;
-        Direction direction = Direction.Vertical;
-
-        wordPlacer.run(Word,StartX,StartY,direction);
-
-        // CurrentPlayer.score(Update(Word));
     }
 }
