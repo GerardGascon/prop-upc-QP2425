@@ -37,6 +37,11 @@ public class PlayerDrawReader implements IDrawReader {
             if (piecesInHand.length == n) {
                 PiecesInHandGetter Pgetter = new PiecesInHandGetter(bag, player);
                 Piece[] newPieces = Pgetter.run(piecesInHand);
+                System.out.print("Player" + player.getName() + " changed: ");
+                for (Piece p : newPieces) {
+                    System.out.print(p.letter() + " ");
+                }
+                System.out.println();
                 return newPieces;
             }
             else {
