@@ -29,5 +29,4 @@ public class PiecesInHandVerifier {
         }
         return piecesInHand.toArray(new Piece[0]);
     }
-
 }
