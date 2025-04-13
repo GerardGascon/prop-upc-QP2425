@@ -10,12 +10,13 @@ import edu.upc.prop.scrabble.domain.pieces.PiecesConverter;
 import edu.upc.prop.scrabble.presenter.scenes.Scene;
 import edu.upc.prop.scrabble.presenter.scenes.SceneManager;
 import edu.upc.prop.scrabble.presenter.terminal.BoardView;
+import edu.upc.prop.scrabble.presenter.terminal.PlayerObject;
 import edu.upc.prop.scrabble.presenter.terminal.movements.MovementMaker;
 import edu.upc.prop.scrabble.utils.Direction;
 
 public class GameScene extends Scene {
     public GameScene() {
-        MovementMaker movementMaker = instantiate(MovementMaker.class);
+        PlayerObject player = instantiate(PlayerObject.class);
         BoardView boardView = instantiate(BoardView.class);
 
         Board board = new SuperBoard();
@@ -23,7 +24,9 @@ public class GameScene extends Scene {
         PointCalculator pointCalculator = new PointCalculator(board, wordGetter);
         WordPlacer placer = new WordPlacer(board, boardView, pointCalculator);
         PiecesConverter piecesConverter = new PiecesConverter();
+        MovementMaker movementMaker = new MovementMaker(piecesConverter, placer);
 
-        movementMaker.configure(piecesConverter, placer);
+        player.configure(movementMaker);
+        player.startTurn();
     }
 }
