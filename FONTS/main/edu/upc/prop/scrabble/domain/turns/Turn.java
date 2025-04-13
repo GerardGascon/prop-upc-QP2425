@@ -1,4 +1,4 @@
-package edu.upc.prop.scrabble.domain;
+package edu.upc.prop.scrabble.domain.turns;
 
 import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.data.Player;

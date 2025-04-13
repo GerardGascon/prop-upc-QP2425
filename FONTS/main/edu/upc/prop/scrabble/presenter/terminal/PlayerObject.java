@@ -1,10 +1,11 @@
 package edu.upc.prop.scrabble.presenter.terminal;
 
+import edu.upc.prop.scrabble.domain.turns.IGamePlayer;
 import edu.upc.prop.scrabble.presenter.scenes.SceneObject;
 import edu.upc.prop.scrabble.presenter.terminal.movements.MovementMaker;
 import edu.upc.prop.scrabble.presenter.terminal.utils.Reader;
 
-public class PlayerObject extends SceneObject {
+public class PlayerObject extends SceneObject implements IGamePlayer {
     private boolean onTurn = false;
 
     private MovementMaker movementMaker;
@@ -13,10 +14,12 @@ public class PlayerObject extends SceneObject {
         this.movementMaker = movementMaker;
     }
 
+    @Override
     public void startTurn() {
         onTurn = true;
     }
 
+    @Override
     public void endTurn() {
         onTurn = false;
     }
