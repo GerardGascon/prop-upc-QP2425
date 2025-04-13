@@ -15,7 +15,7 @@ public class MovementVerifier {
         this.piecesConverter = piecesConverter;
     }
     
-    public boolean verifyMove(Movement movement) {
+    public boolean run(Movement movement) {
         if (movement == null || movement.word() == null) return false;
         Direction direction = movement.direction();
         if (direction == Direction.Vertical) {
