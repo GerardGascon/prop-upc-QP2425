@@ -18,14 +18,14 @@ public class PieceDrawer {
     // post: agafar n fitxes random de la bossa
     public Piece[] run(Piece[] piecesToSwap) {
         ArrayList<Piece> drawnPieces = new ArrayList<>();
-        if (bag.is_Empty()) return drawnPieces.toArray(new Piece[0]);
+        if (bag.isEmpty()) return drawnPieces.toArray(new Piece[0]);
 
         Random rand = new Random();
         Vector<Piece> hand = player.getHand();
 
         int n = piecesToSwap.length;
         int i = 0;
-        while (i < n && !bag.is_Empty()) {
+        while (i < n && !bag.isEmpty()) {
             int r = rand.nextInt(bag.getSize());
             Piece drawnPiece = bag.getPiece(r);
             drawnPieces.add(drawnPiece);

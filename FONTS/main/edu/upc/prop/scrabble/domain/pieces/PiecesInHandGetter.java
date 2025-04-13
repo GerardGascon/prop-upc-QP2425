@@ -27,7 +27,8 @@ public class PiecesInHandGetter {
                 }
             }
             if (count == pieces.length) { // tinc totes les peces a la mà per fer la paraula
-                System.out.println("The player has the necessary pieces in hand to play the word.");
+                // System.out.println("The player has the necessary pieces in hand to play the word.");
+                // Printer.display(...);
                 PieceDrawer pc = new PieceDrawer(bag, player);
                 Piece[] newPieces = pc.run(pieces);
             }

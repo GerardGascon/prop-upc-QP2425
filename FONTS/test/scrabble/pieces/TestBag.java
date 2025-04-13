@@ -12,7 +12,7 @@ public class TestBag {
     public void bagDefaultsToEmpty() {
         Bag bag = new Bag();
 
-        assertTrue(bag.is_Empty());
+        assertTrue(bag.isEmpty());
     }
     @Test
     public void bagAddsOnePiece() {

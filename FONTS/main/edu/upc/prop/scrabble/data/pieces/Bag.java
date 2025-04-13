@@ -11,7 +11,7 @@ public class Bag {
     }
 
     // Booleà per comprovar si la bossa está buida
-    public boolean is_Empty() {
+    public boolean isEmpty() {
         return bag.isEmpty();
     }
 
