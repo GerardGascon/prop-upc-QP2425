@@ -6,11 +6,11 @@ import edu.upc.prop.scrabble.domain.pieces.PiecesConverter;
 import edu.upc.prop.scrabble.utils.Direction;
 
 
-public class MovementVerifier {
+public class MovementBoundsChecker {
     private final Board board;
     private final PiecesConverter piecesConverter;
 
-    public MovementVerifier(Board board, PiecesConverter piecesConverter) {
+    public MovementBoundsChecker(Board board, PiecesConverter piecesConverter) {
         this.board = board;
         this.piecesConverter = piecesConverter;
     }
@@ -31,9 +31,7 @@ public class MovementVerifier {
         int y = movement.y();
         Piece[] pieces = piecesConverter.run(movement.word());
         int n = pieces.length;
-        for (int i = 0; i < n; ++i) {
-            if (!board.isCellValid(x, y + i)) return false;
-        }
+        if (!board.isCellValid(x, y) || !board.isCellValid(x, y+n-1)) return false;
         return true;
     }
 
@@ -42,9 +40,7 @@ public class MovementVerifier {
         int y = movement.y();
         Piece[] pieces = piecesConverter.run(movement.word());
         int n = pieces.length;
-        for (int i = 0; i < n; ++i) {
-            if (!board.isCellValid(x + i, y)) return false;
-        }
+        if (!board.isCellValid(x, y) || !board.isCellValid(x+n-1, y)) return false;
         return true;
     }
 }

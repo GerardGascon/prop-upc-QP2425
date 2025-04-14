@@ -9,19 +9,19 @@ import edu.upc.prop.scrabble.domain.exceptions.MovementOutsideOfBoardException;
 import edu.upc.prop.scrabble.domain.exceptions.WordDoesNotExistException;
 import edu.upc.prop.scrabble.domain.pieces.PiecesInHandGetter;
 import edu.upc.prop.scrabble.presenter.terminal.movements.MovementCleaner;
-import edu.upc.prop.scrabble.presenter.terminal.movements.MovementVerifier;
+import edu.upc.prop.scrabble.presenter.terminal.movements.MovementBoundsChecker;
 
 public class PlaceActionMaker {
     private final Player player;
-    private final MovementVerifier movementVerifier;
+    private final MovementBoundsChecker MovementBoundsChecker;
     private final WordValidator wordValidator;
     private final PiecesInHandGetter piecesInHandGetter;
     private final MovementCleaner movementCleaner;
     private final WordPlacer wordPlacer;
 
-    public PlaceActionMaker(Player player, MovementVerifier movementVerifier, WordValidator wordValidator, PiecesInHandGetter piecesInHandGetter, MovementCleaner movementCleaner, WordPlacer wordPlacer) {
+    public PlaceActionMaker(Player player, MovementBoundsChecker MovementBoundsChecker, WordValidator wordValidator, PiecesInHandGetter piecesInHandGetter, MovementCleaner movementCleaner, WordPlacer wordPlacer) {
         this.player = player;
-        this.movementVerifier = movementVerifier;
+        this.MovementBoundsChecker = MovementBoundsChecker;
         this.wordValidator = wordValidator;
         this.piecesInHandGetter = piecesInHandGetter;
         this.movementCleaner = movementCleaner;
@@ -46,7 +46,7 @@ public class PlaceActionMaker {
     }
 
     private void assertInsideOfBounds(Movement movement) {
-        if (!movementVerifier.run(movement))
+        if (!MovementBoundsChecker.run(movement))
             throw new MovementOutsideOfBoardException("The movement \"" + movement + "\" is outside of the board bounds.");
     }
 }
