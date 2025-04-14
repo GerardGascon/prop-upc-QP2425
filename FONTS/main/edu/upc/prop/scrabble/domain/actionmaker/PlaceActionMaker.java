@@ -8,8 +8,8 @@ import edu.upc.prop.scrabble.domain.dawg.WordValidator;
 import edu.upc.prop.scrabble.domain.exceptions.MovementOutsideOfBoardException;
 import edu.upc.prop.scrabble.domain.exceptions.WordDoesNotExistException;
 import edu.upc.prop.scrabble.domain.pieces.PiecesInHandGetter;
-import edu.upc.prop.scrabble.presenter.terminal.movements.MovementCleaner;
-import edu.upc.prop.scrabble.presenter.terminal.movements.MovementBoundsChecker;
+import edu.upc.prop.scrabble.domain.movement.MovementCleaner;
+import edu.upc.prop.scrabble.domain.movement.MovementBoundsChecker;
 
 public class PlaceActionMaker {
     private final Player player;

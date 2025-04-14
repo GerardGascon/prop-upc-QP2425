@@ -1,4 +1,4 @@
-package edu.upc.prop.scrabble.presenter.terminal.movements;
+package edu.upc.prop.scrabble.domain.movement;
 
 import edu.upc.prop.scrabble.data.board.Board;
 import edu.upc.prop.scrabble.data.pieces.Piece;

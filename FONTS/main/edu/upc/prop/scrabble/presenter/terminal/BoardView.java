@@ -1,7 +1,7 @@
 package edu.upc.prop.scrabble.presenter.terminal;
 
 import edu.upc.prop.scrabble.data.board.Board;
-import edu.upc.prop.scrabble.domain.IBoard;
+import edu.upc.prop.scrabble.domain.board.IBoard;
 import edu.upc.prop.scrabble.presenter.scenes.SceneObject;
 
 public class BoardView extends SceneObject implements IBoard {

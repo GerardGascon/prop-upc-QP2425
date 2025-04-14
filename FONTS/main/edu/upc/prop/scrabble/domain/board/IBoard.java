@@ -1,4 +1,4 @@
-package edu.upc.prop.scrabble.domain;
+package edu.upc.prop.scrabble.domain.board;
 
 import edu.upc.prop.scrabble.data.board.Board;
 

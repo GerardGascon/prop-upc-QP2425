@@ -1,23 +1,12 @@
 @startuml
-
+skinparam groupInheritance 2
 left to right direction
 
-package actionmaker {
-    class DrawActionMaker {
-    }
-    class PlaceActionMaker {
-        run(movement: Movement)
-    }
-
-    Player "1" -- "*" PlaceActionMaker
-    MovementBoundsChecker "1" -- "*" PlaceActionMaker
-    WordValidator "1" -- "*" PlaceActionMaker
-    PiecesInHandGetter "1" -- "*" PlaceActionMaker
-    MovementCleaner "1" -- "*" PlaceActionMaker
-    WordPlacer "1" -- "*" PlaceActionMaker
-
-    class SkipActionMaker {
-    }
+package data {
+    class DAWG
+    class Board
+    class Player
+    class Bag
 }
 
 package board {
@@ -33,6 +22,10 @@ package board {
 
     class WordPlacer {
         run(pieces: Piece[], x: int, y: int, direction: Direction): int
+    }
+
+    interface IBoard {
+        updateBoard(board: Board)
     }
 
     Board "1" -- "*" WordPlacer
@@ -73,12 +66,108 @@ package leaderboard {
 }
 
 package localization {
-    enum Locale {
-
+    abstract class LocaleReader
+    interface IFileReader {
+        run(language: Language): String
     }
 
-    class DictionaryReader {
+    class DictionaryReader
+    class PiecesReader
 
+    LocaleReader <|-- DictionaryReader
+    IFileReader <|.. DictionaryReader
+    LocaleReader <|-- PiecesReader
+    IFileReader <|.. PiecesReader
+}
+
+package pieces {
+    class BagFiller {
+        run(piecesTxt: String): Bag
+    }
+
+    PieceGenerator "1" -- "*" BagFiller
+
+    abstract class PiecesConverter {
+        run(String word): Piece[]
+    }
+
+    class CatalanPiecesConverter
+    class SpanishPiecesConverter
+    class EnglishPiecesConverter
+
+    PiecesConverter <|-- CatalanPiecesConverter
+    PiecesConverter <|-- SpanishPiecesConverter
+    PiecesConverter <|-- EnglishPiecesConverter
+
+    class PieceDrawer {
+        run(Piece[] piecesToSwap): Piece[]
+    }
+
+    Player "1" -- "*" PieceDrawer
+    Bag "1" -- "*" PieceDrawer
+
+    class PieceGenerator {
+        run(pieces: String): Pair<Piece, Integer>[]
+    }
+
+    class PiecesInHandGetter {
+        run(pieces: Piece[]): Piece[]
+    }
+
+    Player "1" -- "*" PiecesInHandGetter
+    Bag "1" -- "*" PiecesInHandGetter
+
+    class PiecesInHandVerifier {
+        run(String word): Piece[]
+    }
+}
+
+package movement {
+    class MovementBoundsChecker {
+        run(movement: Movement): bool
+    }
+
+    Board "1" -- "*" MovementBoundsChecker
+    PiecesConverter "1" -- "*" MovementBoundsChecker
+
+    class MovementCleaner {
+        run(movement: Movement): Piece[]
+    }
+
+    Board "1" -- "*" MovementCleaner
+    PiecesConverter "1" -- "*" MovementCleaner
+}
+
+package turns {
+    interface IGamePlayer {
+        startTurn()
+        endTurn()
+    }
+
+    class Turn {
+        turnNumber: int
+
+        run()
+    }
+
+    IGamePlayer "1..4" -- "1" Turn
+}
+
+package actionmaker {
+    class DrawActionMaker {
+    }
+    class PlaceActionMaker {
+        run(movement: Movement)
+    }
+
+    Player "1" -- "*" PlaceActionMaker
+    MovementBoundsChecker "1" -- "*" PlaceActionMaker
+    WordValidator "1" -- "*" PlaceActionMaker
+    PiecesInHandGetter "1" -- "*" PlaceActionMaker
+    MovementCleaner "1" -- "*" PlaceActionMaker
+    WordPlacer "1" -- "*" PlaceActionMaker
+
+    class SkipActionMaker {
     }
 }
 
