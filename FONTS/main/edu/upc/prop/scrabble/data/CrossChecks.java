@@ -88,10 +88,12 @@ public class CrossChecks {
         if (move.direction() == Direction.Horizontal) {
             int begginingaddedword = move.x();
             int endaddedword = move.x()+move.word().length();
-            Integer l = move.word().length()+1;
-            String[] wordinboard = new String[l];//+1 pq hay que hacer hueco al principio para la letra a probar si va
             if (board.isCellValid(begginingaddedword-1, move.y()) && board.isCellEmpty(begginingaddedword-1, move.y())) {
-                for(int i = begginingaddedword; i < l-1; ++i) wordinboard[i-begginingaddedword+1] = board.getCellPiece(i,move.y()).letter();
+                //+1 pq hay que hacer hueco al principio para la letra a probar si va
+                Integer l = move.word().length()+1;
+                String[] wordinboard = new String[l];
+                //MIRAR LOGICA QUE NO PETE ESTO POR ACCESO ERRONEO
+                for(int i = begginingaddedword; i < begginingaddedword+l-1; ++i) wordinboard[i-begginingaddedword+1] = board.getCellPiece(i,move.y()).letter();
                 //prueba a poner todas las letras del diccionario delante
                 for(int i = 0; i < numletters;++i){
                     wordinboard[0] = letters[i];
@@ -106,10 +108,25 @@ public class CrossChecks {
                 }
             }
             //crosscheck posterior(si se puede obvio)
-            if (board.isCellValid(begginingaddedword+1, move.y()) && board.isCellEmpty(begginingaddedword+1, move.y())) {
+            if (board.isCellValid(endaddedword+1, move.y()) && board.isCellEmpty(endaddedword+1, move.y())) {
                 //hacer que lo de ponerlo detras sea eficiente consultarlo con el dawg
                 //llegar hasta el nodo del que seria el final de la palabra y para ese nodo mirar si luego tiene otro siguiente
                 // con la letra que toca y sea 'terminal'
+                String wordinboard = "";
+                for(int i = begginingaddedword; i < begginingaddedword+move.word().length();++i){
+                    //palabra que existia en la mesa
+                    wordinboard = wordinboard.concat(board.getCellPiece(i,move.y()).letter());
+                }
+                Integer finalnode = wordValidator.getFinalNode(wordinboard);
+                for(int j = 0; j < numletters;++j){
+                    //probamos de ver si podemos avanzar en el dawg a esas letras
+                    if(!wordValidator.nextNodeTerminal(finalnode,letters[j])) {
+                        crossChecksHor[endaddedword+1][move.y()].set(j);//pone a 1 la letra que
+                        //ha salido que no hace una palabra valida
+
+                    }
+                }
+
             }
         }
         else { //ponemos la palabra en vertical
@@ -122,12 +139,11 @@ public class CrossChecks {
             /*while (board.isCellValid(move.x(), endaddedword+1) && !board.isCellEmpty(move.x(),endaddedword+1)) {
                 begginingaddedword += 1;//buscamos donde acaba la palabra que acabamos de poner
             }*/
-            Integer l = move.word().length()+1;
-            String[] wordinboard = new String[l];//+1 pq hay que hacer hueco al principio para la letra a probar si va
-
             //corsscheck anterior (si se puede siquiera poner una antes)
             if (board.isCellValid(move.x(), begginingaddedword-1) && board.isCellEmpty(move.x(), begginingaddedword-1)) {
-                for(int i = begginingaddedword; i < l-1; ++i) wordinboard[i-begginingaddedword+1] = board.getCellPiece(move.x(),i).letter();
+                Integer l = move.word().length()+1;
+                String[] wordinboard = new String[l];//+1 pq hay que hacer hueco al principio para la letra a probar si va
+                for(int i = begginingaddedword; i < begginingaddedword+l-1; ++i) wordinboard[i-begginingaddedword+1] = board.getCellPiece(move.x(),i).letter();
                 //prueba a poner todas las letras del diccionario delante
                 for(int i = 0; i < numletters;++i){
                     wordinboard[0] = letters[i];
@@ -142,11 +158,26 @@ public class CrossChecks {
                 }
 
             }
-            //crosscheck posterior(si se puede siquiera poner una despues)
-            if (board.isCellValid(move.x(), move.y()+1) && board.isCellEmpty(move.x(), move.y()+1)) {
+            //crosscheck posterior(si se puede obvio)
+            if (board.isCellValid(move.x(), endaddedword+1) && board.isCellEmpty(move.x(), endaddedword+1)) {
                 //hacer que lo de ponerlo detras sea eficiente consultarlo con el dawg
                 //llegar hasta el nodo del que seria el final de la palabra y para ese nodo mirar si luego tiene otro siguiente
                 // con la letra que toca y sea 'terminal'
+                String wordinboard = "";
+                for(int i = begginingaddedword; i < begginingaddedword+move.word().length();++i){
+                    //palabra que existia en la mesa
+                    wordinboard = wordinboard.concat(board.getCellPiece(move.x(),i).letter());
+                }
+                Integer finalnode = wordValidator.getFinalNode(wordinboard);
+                for(int j = 0; j < numletters;++j){
+                    //probamos de ver si podemos avanzar en el dawg a esas letras
+                    if(!wordValidator.nextNodeTerminal(finalnode,letters[j])){
+                        crossChecksHor[move.x()][endaddedword+1].set(j);//pone a 1 la letra que
+                        //ha salido que no hace una palabra valida
+
+                    }
+
+                }
             }
         }
     }

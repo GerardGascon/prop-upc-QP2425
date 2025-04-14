@@ -35,4 +35,24 @@ public class WordValidator {
         }
         return current.isEndOfWord();
     }
+
+    //sabes que la palabra ya esta bien (estaba puesta en el tablero), quieres el nodo de final
+    public Integer getFinalNode(String word){
+        Node current = dawg.getRoot();
+        for(int i = 0; i < word.length(); i++) {
+            current = current.getSuccessor(word.charAt(i));
+        }
+        return current.hashCode();
+    }
+
+    //dado un nodo y una pieza dice si en sus sucesores se encuentra esa pieza y es final
+    public boolean nextNodeTerminal(Integer hash, String piece){
+        Node current = dawg.getNode(hash);
+        //if(current == null) return false; siempre deberiamos de encontrarlo
+        for(int i = 0; i < piece.length(); i++) {
+            Node successor = current.getSuccessor(piece.charAt(i));
+            if(successor == null) return false;
+        }
+        return current.isEndOfWord();
+    }
 }
