@@ -17,15 +17,12 @@ package board {
     }
 
     class JuniorBoard {
-        JuniorBoard()
     }
 
     class StandardBoard {
-        StandardBoard()
     }
 
     class SuperBoard {
-        SuperBoard()
     }
 
     Board <|-- JuniorBoard
@@ -50,7 +47,6 @@ package board {
 
 package pieces {
     class Bag {
-        Bag()
         isEmpty(): bool
         getSize(): int
         addPiece(piece: Piece)
@@ -60,9 +56,6 @@ package pieces {
         letter: String
         value: int
         isBlank: bool
-
-        Piece(letter: String, value: int)
-        Piece(letter: String, value: int, isBlank: bool)
     }
 
     Bag "0..1" -- "0..100" Piece : contains
@@ -82,8 +75,6 @@ package leaderboard {
         value: int
         isWinner: bool
         playerName: String
-
-        Score(score: int, isWinner: bool, name: String)
     }
 
     Leaderboard "1" -- "*" Score
@@ -91,7 +82,6 @@ package leaderboard {
 
 package dawg {
     class DAWG {
-        DAWG()
         getRoot(): Node
         getNode(hash: int): Node
         addNode(node: Node)
@@ -104,7 +94,6 @@ package dawg {
         hashCode: int
         depth: int
 
-        Node(character: char, depth: int, parent: Node, isEndOfWord: bool)
         getSuccessor(character: char): Node
         addSuccessor(character: char, successor: Node)
         getDepth(): int
@@ -127,8 +116,6 @@ package properties {
         boardType: BoardType
         players: int
         cpus: int
-
-        GameProperties()
     }
 
     enum Language {
@@ -143,8 +130,6 @@ class Movement {
     x: int
     y: int
     direction: Direction
-
-    Movement(word: String, x: int, y: int, direction: Direction)
 }
 
 class Player {
@@ -152,7 +137,6 @@ class Player {
     score: int
     cpu: bool
 
-    Player(name: String, cpu: bool)
     addScore(amount: int)
     addPiece(piece: Piece)
     removePiece(piece: Piece)

@@ -1,26 +1,85 @@
 @startuml
 
-abstract class AbstractList
-abstract AbstractCollection
-interface List
-interface Collection
+left to right direction
 
-List <|-- AbstractList
-Collection <|-- AbstractCollection
+package actionmaker {
+    class DrawActionMaker {
+    }
+    class PlaceActionMaker {
+        run(movement: Movement)
+    }
 
-Collection <|- List
-AbstractCollection <|- AbstractList
-AbstractList <|-- ArrayList
+    Player "1" -- "*" PlaceActionMaker
+    MovementBoundsChecker "1" -- "*" PlaceActionMaker
+    WordValidator "1" -- "*" PlaceActionMaker
+    PiecesInHandGetter "1" -- "*" PlaceActionMaker
+    MovementCleaner "1" -- "*" PlaceActionMaker
+    WordPlacer "1" -- "*" PlaceActionMaker
 
-class ArrayList {
-Object[] elementData
-size()
+    class SkipActionMaker {
+    }
 }
 
-enum TimeUnit {
-DAYS
-HOURS
-MINUTES
+package board {
+    class PointCalculator {
+        run(positions: Vector2[], pieces: Piece[]): int
+    }
+
+    class WordGetter {
+        run(newPieces: Piece[], newPositions: Vector2[], direction: Direction): Piece[]
+    }
+
+    Board "1" -- "*" WordGetter
+
+    class WordPlacer {
+        run(pieces: Piece[], x: int, y: int, direction: Direction): int
+    }
+
+    Board "1" -- "*" WordPlacer
+    IBoard "1" -- "*" WordPlacer: view
+    PointCalculator "1" -- "*" WordPlacer: calculator
+}
+
+package dawg {
+    class WordAdder {
+        lastWordAdded: String
+        run(word: String)
+    }
+
+    DAWG "1" -- "*" WordAdder
+
+    class WordValidator {
+        run(word: String): bool
+    }
+
+    DAWG "1" -- "*" WordValidator
+}
+
+package exceptions {
+    exception MovementOutsideOfBoardException
+    exception NotEnoughPiecesInHandException
+    exception WordDoesNotExistException
+}
+
+package leaderboard {
+    class ScoreTotal {
+        playerName: String
+        scoreTotal: int
+    }
+
+    class ScoreTotalLeaderboard {
+        run(scores: Score[]): ScoreTotal[]
+    }
+}
+
+package localization {
+    enum Locale {
+
+    }
+
+    class DictionaryReader {
+
+    }
 }
 
 @enduml

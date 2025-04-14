@@ -1,7 +1,7 @@
 package scrabble.stubs;
 
+import edu.upc.prop.scrabble.data.properties.Language;
 import edu.upc.prop.scrabble.domain.localization.IFileReader;
-import edu.upc.prop.scrabble.domain.localization.Locale;
 
 public class FileReaderStub implements IFileReader {
     private final String fileContents;
@@ -11,7 +11,7 @@ public class FileReaderStub implements IFileReader {
     }
 
     @Override
-    public String run(Locale locale) {
+    public String run(Language locale) {
         return fileContents;
     }
 }
