@@ -1,0 +1,68 @@
+@startuml
+skinparam groupInheritance 2
+
+abstract class Board {
+    placedTiles: Piece[][]
+    premiumTiles: PremiumTileType[][]
+
+    getSize(): int
+    placePiece(piece: Piece, x: int, y: int)
+    isCenter(x: int, y: int): bool
+    isCellEmpty(x: int, y: int): bool
+    getCellPiece(x: int, y: int): Piece
+    isPremiumTile(x: int, y: int): bool
+    getPremiumTileType(x: int, y: int): PremiumTileType
+    isCellValid(x: int, y: int): bool
+}
+
+class JuniorBoard {
+    JuniorBoard()
+}
+
+class StandardBoard {
+    StandardBoard()
+}
+
+class SuperBoard {
+    SuperBoard()
+}
+
+Board <|-- JuniorBoard
+Board <|-- StandardBoard
+Board <|-- SuperBoard
+
+enum BoardType {
+    Junior
+    Standard
+    Super
+}
+
+enum PremiumTileType {
+    QuadrupleWord
+    TripleWord
+    DoubleWord
+    QuadrupleLetter
+    TripleLetter
+    DoubleLetter
+}
+
+class Bag {
+    Bag()
+    isEmpty(): bool
+    getSize(): int
+    addPiece(piece: Piece)
+}
+
+class Piece {
+    letter: String
+    value: int
+    isBlank: bool
+
+    Piece(letter: String, value: int)
+    Piece(letter: String, value: int, isBlank: bool)
+}
+
+Bag "0..1" -- "0..100" Piece : rack
+Board "0..1" -- "0..100" Piece : placedTiles
+
+@enduml
