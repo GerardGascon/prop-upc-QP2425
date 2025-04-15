@@ -28,6 +28,11 @@ public class PlayerObject extends SceneObject implements IGamePlayer {
     }
 
     @Override
+    public boolean isActive() {
+        return onTurn;
+    }
+
+    @Override
     public void onProcess(float delta) {
         if (!onTurn)
             return;
