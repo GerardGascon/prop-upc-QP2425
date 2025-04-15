@@ -7,6 +7,7 @@ import edu.upc.prop.scrabble.utils.Direction;
 
 /***
  * Class to verify if a given movement is within the bounds of a board.
+ * It handles both vertical and horizontal word orientations.
  * @author Gina Escofet González
  */
 public class MovementBoundsChecker {
