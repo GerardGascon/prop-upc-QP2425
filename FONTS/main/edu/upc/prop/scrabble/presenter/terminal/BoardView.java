@@ -6,7 +6,7 @@ import edu.upc.prop.scrabble.presenter.scenes.SceneObject;
 
 public class BoardView extends SceneObject implements IBoard {
     @Override
-    public void UpdateBoard(Board board) {
+    public void updateBoard(Board board) {
         String s = buildBoardString(board);
         System.out.print(s);
     }

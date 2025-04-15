@@ -7,6 +7,10 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+/**
+ * Class used to locate the localization files
+ * @author Gerard Gascón
+ */
 abstract class LocaleReader {
     private File getAbsolutePath(String fileName) {
         try {
@@ -24,6 +28,11 @@ abstract class LocaleReader {
         }
     }
 
+    /**
+     * Read the contents of a file
+     * @param filePath Absolute path of the file to read
+     * @return The contents of the file
+     */
     protected String readFileToString(String filePath) {
         File path = getAbsolutePath(filePath);
         try {

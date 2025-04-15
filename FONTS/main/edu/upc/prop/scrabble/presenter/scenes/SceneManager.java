@@ -6,6 +6,10 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
+/**
+ * Class used to manage all the scenes present in the game and switch between them
+ * @author Gerard Gascón
+ */
 public class SceneManager {
     private boolean sceneLoaded = false;
     private Scene scene;
@@ -13,6 +17,10 @@ public class SceneManager {
 
     private static SceneManager instance;
 
+    /**
+     * Get or instantiate an instance of SceneManager
+     * @return The instance of SceneManager
+     */
     public static SceneManager getInstance() {
         if (instance == null) {
             instance = new SceneManager();
@@ -23,6 +31,12 @@ public class SceneManager {
     private SceneManager() {
     }
 
+    /**
+     * Loads a new scene. If there's one active, it destroys that one before loading the new one
+     * @param sceneClass The class type of the new scene
+     * @param dependencies The dependencies of the new scene
+     * @see Scene
+     */
     public void load(Class<? extends Scene> sceneClass, Object... dependencies) {
         if (!sceneLoaded) {
             sceneLoaded = true;
@@ -56,11 +70,20 @@ public class SceneManager {
                 .orElseThrow(() -> new RuntimeException("No constructors found"));
     }
 
+    /**
+     * Closes the game
+     */
     public void quit() {
         scene.onDetach();
         scene = null;
     }
 
+    /**
+     * Updates the scenes and its objects
+     * @param delta Time difference from the last call
+     * @see Scene
+     * @see SceneObject
+     */
     public void process(float delta) {
         if (sceneToLoad != null) {
             loadScene(sceneToLoad.first(), sceneToLoad.second());
@@ -70,6 +93,11 @@ public class SceneManager {
         scene.onProcess(delta);
     }
 
+    /**
+     * Check if there's an active scene
+     * @return <b>true</b> if there is an active scene
+     * <b>false</b> if there are no active scenes
+     */
     public boolean isRunning() {
         return scene != null;
     }
