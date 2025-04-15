@@ -89,6 +89,7 @@ public class LanguageSetter {
 
     //Visualize
     public void print_interface() {
+        String Instruction = "\ntype 'next' to go right\ntype 'previous' to go left \ntype 'submit' to select language\n";
         String Up = " ________________________________________\n";
         String Up2 = "|                                        |\n";
         String Mid = switch (lan) {
@@ -98,7 +99,7 @@ public class LanguageSetter {
             default -> "";
         };
         String Down = "|________________________________________|\n";
-        System.out.println(Up + Up2 + Mid + Down);
+        System.out.println(Instruction + Up + Up2 + Mid + Down);
     }
 
     //Consultores

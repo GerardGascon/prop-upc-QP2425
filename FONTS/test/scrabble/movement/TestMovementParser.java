@@ -1,4 +1,4 @@
-package scrabble;
+package scrabble.movement;
 
 import edu.upc.prop.scrabble.data.Movement;
 import edu.upc.prop.scrabble.presenter.terminal.movements.MovementParser;

@@ -15,7 +15,6 @@ public class GameCreator extends SceneObject {
 
 
     public GameCreator() {
-        //EN UN MUY FUTURO PONER EL HELP insturccion palabras
         languageSetter.print_interface();
     }
 
@@ -32,14 +31,20 @@ public class GameCreator extends SceneObject {
         String action = Reader.getInstance().readLine();
         if (action == null)
             return;
-        if (action.equals("next")) {
+        else if (action.equals("next")) {
             next();
         }
-        if (action.equals("previous")) {
+        else if (action.equals("previous")) {
             previous();
         }
-        if (action.equals("submit")) {
+        else if (action.equals("submit")) {
             submit();
+        }
+        else {
+            if (state == State.Player && !playerSetter.hasEnded()) {
+                playerSetter.addPlayer(action);
+                playerSetter.print_interface();
+            }
         }
     }
 
@@ -82,11 +87,15 @@ public class GameCreator extends SceneObject {
                 state = State.Player;
                 break;
             case Player:
-
-                if (playerSetter.hasEnded())
-                    loadGame();
+                if (playerSetter.hasEnded()) {
+                    if (playerSetter.getTotalPlayer() < 2)
+                        System.out.println("\n At least 2 players are needed! \n");
+                    else
+                        loadGame();
+                }
                 else {
                     playerSetter.switchMode();
+                    playerSetter.print_interface();
                 }
                 break;
         }
