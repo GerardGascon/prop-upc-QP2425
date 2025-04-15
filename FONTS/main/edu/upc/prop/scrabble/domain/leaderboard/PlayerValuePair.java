@@ -12,4 +12,13 @@ public class PlayerValuePair {
     public String getPlayerName() { return playerName; }
 
     public double getValue() { return value; }
+
+    public PlayerValuePair[] reverse(PlayerValuePair[] arr) {
+        PlayerValuePair[] reversed = new PlayerValuePair[arr.length];
+        for (int i = 0; i < arr.length; i++) {
+            reversed[i] = arr[arr.length - 1 - i];
+        }
+        return reversed;
+    }
+
 }
