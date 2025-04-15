@@ -33,7 +33,7 @@ public class MovementCleaner {
         Piece[] allPieces = piecesConverter.run(movement.word());
         int n = allPieces.length;
         for (int i = 0; i < n; ++i) {
-            if (board.isCellEmpty(x, y + i)) {
+            if (board.isCellEmpty(x + i, y)) {
                 requiredPieces.add(allPieces[i]);
             }
             else {
@@ -55,7 +55,7 @@ public class MovementCleaner {
         Piece[] allPieces = piecesConverter.run(movement.word());
         int n = allPieces.length;
         for (int i = 0; i < n; ++i) {
-            if (board.isCellEmpty(x + i, y)) {
+            if (board.isCellEmpty(x, y + i)) {
                 requiredPieces.add(allPieces[i]);
             }
             else {
