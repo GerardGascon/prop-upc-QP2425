@@ -9,9 +9,10 @@ public class GamesWinsPair {
         if(isWinner) this.wins = 1;
     }
 
-    public void addGame(boolean isWinner) {
+    public GamesWinsPair addGame(boolean isWinner) {
         this.games++;
         if(isWinner) this.wins++;
+        return this;
     }
 
     public double getWinRate() { return (double) wins/games * 100; }
