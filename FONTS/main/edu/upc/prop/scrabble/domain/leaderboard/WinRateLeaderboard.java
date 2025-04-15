@@ -8,7 +8,7 @@ import java.util.Map;
 public class WinRateLeaderboard   {
 
     public ScorePair[] run(Score[] scores) {
-        // Group by player name and maxScore
+        // Group by player name and pair of won and played games
         Map<String, GamesWinsPair> pairMap = new HashMap<>();
         for (Score score : scores) pairMap.compute(score.getPlayerName(), (k, v) -> v == null  ? new GamesWinsPair(score.getIsWinner()) : v.addGame(score.getIsWinner()));
 
