@@ -7,16 +7,16 @@ import java.util.Map;
 
 public class GamesPlayedLeaderboard   {
 
-    public ScorePair[] run(Score[] scores) {
+    public PlayerValuePair[] run(Score[] scores) {
         // Group by player name and games played
         Map<String, Integer> gamesMap = new HashMap<>();
         for (Score score : scores) gamesMap.compute(score.getPlayerName(), (k, v) -> v == null  ? 1 : v + 1);
 
-        // Convert map into a sorted ScorePair[]
+        // Convert map into a sorted PlayerValuePair[]
         return gamesMap.entrySet().stream()
                 .sorted((entry1, entry2) -> Integer.compare(entry2.getValue(), entry1.getValue())) // Sort directly using map values
-                .map(entry -> new ScorePair(entry.getKey(), entry.getValue())) // Create ScorePair objects after sorting
-                .toArray(ScorePair[]::new);
+                .map(entry -> new PlayerValuePair(entry.getKey(), entry.getValue())) // Create PlayerValuePair objects after sorting
+                .toArray(PlayerValuePair[]::new);
 
     }
 }
