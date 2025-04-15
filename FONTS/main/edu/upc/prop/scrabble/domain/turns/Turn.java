@@ -17,40 +17,18 @@ public class Turn {
     }
 
     public void run() {
-        int start = 0, end = 0;
-        int modTurn = turnNumber % players.length;
+        int endTurn = turnNumber % players.length;
+        int startTurn = (turnNumber+1) % players.length;
 
-        switch (modTurn) {
-            case 0 -> {
-                start = 0;
-                end = 3;
-            }
-            case 1 -> {
-                start = 1;
-                end = 2;
-            }
-            case 2 -> {
-                start = 2;
-                end = 1;
-            }
-            case 3 -> {
-                start = 3;
-                end = 2;
-            }
-        }
 
         //enum
-        if (players[end].endTurn() == Skip)
+        if (players[endTurn].endTurn() == Skip)
             skipCounter++;
 
-        players[start].startTurn();
+        players[startTurn].startTurn();
         turnNumber = turnNumber + 1;
 
 
         boolean gameended = endgame.run(skipCounter);
-        //TODO: ENDGAME! to check si s'ha acbaat la partida (en una classe aparte)
-        // ENDGAME una queue de mida 3 (ultimes 3 jugades) per a cadfa jugador que diu si
-        // jugada valida o invalida
-
     }
 }
