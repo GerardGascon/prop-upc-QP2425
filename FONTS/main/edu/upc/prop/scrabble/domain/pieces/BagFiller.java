@@ -17,7 +17,7 @@ public class BagFiller {
         for (Pair<Piece, Integer> piece : pieces) {
             int quantity = piece.second();
             for (int j = 0; j < quantity; j++) {
-                bag.addPiece(piece.first());
+                bag.add(piece.first());
             }
         }
         return bag;

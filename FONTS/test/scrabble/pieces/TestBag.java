@@ -18,7 +18,7 @@ public class TestBag {
     public void bagAddsOnePiece() {
         Bag sut = new Bag();
         Piece piece = new Piece("a", 1);
-        sut.addPiece(piece);
+        sut.add(piece);
 
         assertEquals(1, sut.getSize());
     }
@@ -26,9 +26,9 @@ public class TestBag {
     public void bagGetsOnePiece() {
         Bag sut = new Bag();
         Piece piece = new Piece("a", 1);
-        sut.addPiece(piece);
+        sut.add(piece);
 
-        assertEquals(piece, sut.getPiece(0));
+        assertEquals(piece, sut.draw(0));
     }
 
 }

@@ -16,7 +16,7 @@ public class TestPiecesInHandGetter {
     public void get1Piece() {
         Bag bag = new Bag();
         Piece p1 = new Piece("a", 1);
-        bag.addPiece(p1);
+        bag.add(p1);
 
         Player player = new Player("nom", false);
         for (int i = 0; i < 7; i++) {
@@ -33,8 +33,8 @@ public class TestPiecesInHandGetter {
     public void get2Pieces() {
         Bag bag = new Bag();
         Piece p1 = new Piece("a", 1);
-        bag.addPiece(p1);
-        bag.addPiece(p1);
+        bag.add(p1);
+        bag.add(p1);
 
         Player player = new Player("nom", false);
         for (int i = 0; i < 7; i++) {

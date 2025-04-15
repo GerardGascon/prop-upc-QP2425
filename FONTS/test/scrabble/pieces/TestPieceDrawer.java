@@ -23,7 +23,7 @@ public class TestPieceDrawer {
     public void swap1piece() {
         Bag bag = new Bag();
         Piece p1 = new Piece("a", 1);
-        bag.addPiece(p1);
+        bag.add(p1);
 
         Player player = new Player("nom", false);
         Piece p2 = new Piece("b", 1);
@@ -36,16 +36,16 @@ public class TestPieceDrawer {
         assertEquals(p1, pieces[0]);
         Vector<Piece> hand = player.getHand();
         assertEquals(p1, hand.get(0));
-        assertEquals(p2, bag.getPiece(0));
+        assertEquals(p2, bag.draw(0));
     }
 
     @Test
     public void swap2pieces() {
         Bag bag = new Bag();
         Piece p1 = new Piece("a", 1);
-        bag.addPiece(p1);
+        bag.add(p1);
         Piece p2 = new Piece("b", 1);
-        bag.addPiece(p2);
+        bag.add(p2);
 
         Player player = new Player("nom", false);
         Piece p3 = new Piece("c", 1);
@@ -67,7 +67,7 @@ public class TestPieceDrawer {
         assertEquals(2, bag.getSize());
         int sz = bag.getSize();
         for (int i = 0; i < sz; i++) {
-            Piece p = bag.getPiece(0);
+            Piece p = bag.draw(0);
             if (p.equals(p3)) foundP3 = true;
             else if (p.equals(p4)) foundP4 = true;
         }
@@ -80,7 +80,7 @@ public class TestPieceDrawer {
         Bag bag = new Bag();
         for (int i = 0; i < 5; ++i) {
             Piece p = new Piece("a", 1);
-            bag.addPiece(p);
+            bag.add(p);
         }
         Player player = new Player("nom", false);
         Vector<Piece> hand = player.getHand();

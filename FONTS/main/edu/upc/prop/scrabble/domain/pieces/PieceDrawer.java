@@ -27,7 +27,7 @@ public class PieceDrawer {
         int i = 0;
         while (i < n && !bag.isEmpty()) {
             int r = rand.nextInt(bag.getSize());
-            Piece drawnPiece = bag.getPiece(r);
+            Piece drawnPiece = bag.draw(r);
             drawnPieces.add(drawnPiece);
             ++i;
         }
@@ -41,7 +41,7 @@ public class PieceDrawer {
             for (i = 0; i < drawnPieces.size(); i++) {
                 Piece oldPiece = piecesToSwap[i];
                 player.RemovePiece(oldPiece);
-                bag.addPiece(oldPiece);
+                bag.add(oldPiece);
                 player.AddPiece(drawnPieces.get(i));
                 hand = player.getHand();
             }
