@@ -103,5 +103,7 @@ public class LanguageSetter {
 
     //Consultores
 
-    public Language getLanguage() {return lan;}
+    public Language getLanguage() {
+        return lan;
+    }
 }
