@@ -1,4 +1,4 @@
-package scrabble;
+package scrabble.movement;
 
 import edu.upc.prop.scrabble.data.Player;
 import org.junit.Test;
