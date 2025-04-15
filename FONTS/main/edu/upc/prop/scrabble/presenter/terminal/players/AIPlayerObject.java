@@ -11,7 +11,7 @@ public class AIPlayerObject extends PlayerObject {
 
     @Override
     public void onProcess(float delta) {
-        if (!onTurn)
+        if (!isActive())
             return;
 
         throw new RuntimeException("AI Player not implemented yet");

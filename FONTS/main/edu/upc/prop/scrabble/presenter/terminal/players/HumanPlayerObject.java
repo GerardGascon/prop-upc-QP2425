@@ -12,7 +12,7 @@ public class HumanPlayerObject extends PlayerObject {
 
     @Override
     public void onProcess(float delta) {
-        if (!onTurn)
+        if (!isActive())
             return;
 
         String movementRaw = Reader.getInstance().readLine();

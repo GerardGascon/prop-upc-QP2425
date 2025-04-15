@@ -4,19 +4,19 @@ import edu.upc.prop.scrabble.domain.turns.IGamePlayer;
 import edu.upc.prop.scrabble.presenter.scenes.SceneObject;
 
 public abstract class PlayerObject extends SceneObject implements IGamePlayer {
-    protected boolean onTurn = false;
+    private boolean onTurn = false;
     @Override
-    public void startTurn() {
+    public final void startTurn() {
         onTurn = true;
     }
 
     @Override
-    public void endTurn() {
+    public final void endTurn() {
         onTurn = false;
     }
 
     @Override
-    public boolean isActive() {
+    public final boolean isActive() {
         return onTurn;
     }
 }
