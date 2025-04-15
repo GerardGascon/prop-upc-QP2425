@@ -1,9 +1,9 @@
 package edu.upc.prop.scrabble.data.leaderboard;
 
 public class Score {
-    private int scoreValue;
-    private boolean isWinner;
-    final private String playerName;
+    private final int scoreValue;
+    private final boolean isWinner;
+    private final String playerName;
 
     public Score(int score, boolean winner, String name) {
         this.scoreValue = score;
@@ -21,7 +21,4 @@ public class Score {
         return playerName;
     }
 
-    public void updateScore(int score) { this.scoreValue = score; }
-
-    public void updateIsWinner(boolean winner) { this.isWinner = winner; }
 }

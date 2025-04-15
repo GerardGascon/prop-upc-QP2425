@@ -15,10 +15,6 @@ public class Leaderboard {
 
     public Score[] getScoreArray() { return leaderBoard.toArray(new Score[0]); }
 
-    public ArrayList<Score> getLeaderBoard() { return leaderBoard; }
-
     public void addScore(Score score) { leaderBoard.add(score); }
-
-    public void addScores(Score[] scores) { leaderBoard.addAll(Arrays.asList(scores)); }
 
 }

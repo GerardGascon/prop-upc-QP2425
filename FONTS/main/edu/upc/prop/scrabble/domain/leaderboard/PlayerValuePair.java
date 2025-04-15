@@ -15,10 +15,7 @@ public class PlayerValuePair {
 
     public PlayerValuePair[] reverse(PlayerValuePair[] arr) {
         PlayerValuePair[] reversed = new PlayerValuePair[arr.length];
-        for (int i = 0; i < arr.length; i++) {
-            reversed[i] = arr[arr.length - 1 - i];
-        }
+        for (int i = 0; i < arr.length; i++) reversed[i] = arr[arr.length - 1 - i];
         return reversed;
     }
-
 }
