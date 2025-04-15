@@ -1,18 +1,16 @@
 package edu.upc.prop.scrabble.presenter.terminal.scenes;
 
 import edu.upc.prop.scrabble.data.board.*;
-import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.data.properties.GameProperties;
 import edu.upc.prop.scrabble.domain.board.PointCalculator;
 import edu.upc.prop.scrabble.domain.board.WordGetter;
 import edu.upc.prop.scrabble.domain.board.WordPlacer;
 import edu.upc.prop.scrabble.domain.pieces.PiecesConverter;
 import edu.upc.prop.scrabble.presenter.scenes.Scene;
-import edu.upc.prop.scrabble.presenter.scenes.SceneManager;
 import edu.upc.prop.scrabble.presenter.terminal.BoardView;
-import edu.upc.prop.scrabble.presenter.terminal.PlayerObject;
+import edu.upc.prop.scrabble.presenter.terminal.factories.PlayerFactory;
+import edu.upc.prop.scrabble.presenter.terminal.players.PlayerObject;
 import edu.upc.prop.scrabble.presenter.terminal.movements.MovementMaker;
-import edu.upc.prop.scrabble.utils.Direction;
 
 public class GameScene extends Scene {
     public GameScene(GameProperties properties) {
@@ -22,11 +20,9 @@ public class GameScene extends Scene {
         Board board = getBoard(properties);
         WordGetter wordGetter = new WordGetter(board);
         PointCalculator pointCalculator = new PointCalculator(board, wordGetter);
-        WordPlacer placer = new WordPlacer(board, boardView, pointCalculator);
         PiecesConverter piecesConverter = new PiecesConverter();
-        MovementMaker movementMaker = new MovementMaker(piecesConverter, placer);
 
-        player.configure(movementMaker);
+        PlayerFactory.createPlayer(player, "Potato", false, piecesConverter, pointCalculator, board, boardView);
         player.startTurn();
     }
 

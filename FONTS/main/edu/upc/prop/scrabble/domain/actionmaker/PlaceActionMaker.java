@@ -34,8 +34,7 @@ public class PlaceActionMaker {
 
         Piece[] necessaryPieces = movementCleaner.run(movement);
         Piece[] piecesInHand = piecesInHandGetter.run(necessaryPieces);
-        int score = wordPlacer.run(piecesInHand, movement.x(), movement.y(), movement.direction());
-        player.addScore(score);
+        wordPlacer.run(piecesInHand, movement.x(), movement.y(), movement.direction());
         //TODO: Draw new pieces to replaced the used ones
         //TODO: Add call to update views
     }

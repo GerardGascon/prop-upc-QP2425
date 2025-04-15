@@ -1,5 +1,6 @@
-package edu.upc.prop.scrabble.presenter.terminal;
+package edu.upc.prop.scrabble.presenter.terminal.players;
 
+import edu.upc.prop.scrabble.data.Player;
 import edu.upc.prop.scrabble.domain.turns.IGamePlayer;
 import edu.upc.prop.scrabble.presenter.scenes.SceneObject;
 import edu.upc.prop.scrabble.presenter.terminal.movements.MovementMaker;
@@ -8,9 +9,11 @@ import edu.upc.prop.scrabble.presenter.terminal.utils.Reader;
 public class PlayerObject extends SceneObject implements IGamePlayer {
     private boolean onTurn = false;
 
+    private Player player;
     private MovementMaker movementMaker;
 
-    public void configure(MovementMaker movementMaker) {
+    public void configure(Player player, MovementMaker movementMaker) {
+        this.player = player;
         this.movementMaker = movementMaker;
     }
 
@@ -34,7 +37,6 @@ public class PlayerObject extends SceneObject implements IGamePlayer {
             return;
 
         System.out.println(movementRaw);
-        int score = movementMaker.makeMove(movementRaw);
-        System.out.println("Score: " + score);
+        movementMaker.makeMove(movementRaw);
     }
 }

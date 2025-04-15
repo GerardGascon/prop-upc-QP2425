@@ -1,5 +1,6 @@
 package scrabble.board;
 
+import edu.upc.prop.scrabble.data.Player;
 import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.data.board.Board;
 import edu.upc.prop.scrabble.data.board.StandardBoard;
@@ -25,7 +26,8 @@ public class TestWordPlacer {
         };
         WordGetter wordGetter = new WordGetter(board);
         PointCalculator pointCalculator = new PointCalculator(board, wordGetter);
-        WordPlacer sut = new WordPlacer(board, mock, pointCalculator);
+        Player player = new Player("Test", false);
+        WordPlacer sut = new WordPlacer(player, board, mock, pointCalculator);
 
         sut.run(pieces, 0, 0, Direction.Vertical);
 
@@ -47,7 +49,8 @@ public class TestWordPlacer {
         };
         WordGetter wordGetter = new WordGetter(board);
         PointCalculator pointCalculator = new PointCalculator(board, wordGetter);
-        WordPlacer sut = new WordPlacer(board, mock, pointCalculator);
+        Player player = new Player("Test", false);
+        WordPlacer sut = new WordPlacer(player, board, mock, pointCalculator);
 
         sut.run(pieces, 0, 0, Direction.Horizontal);
 
@@ -63,7 +66,8 @@ public class TestWordPlacer {
         BoardViewStub mock = new BoardViewStub();
         WordGetter wordGetter = new WordGetter(board);
         PointCalculator pointCalculator = new PointCalculator(board, wordGetter);
-        WordPlacer _ = new WordPlacer(board, mock, pointCalculator);
+        Player player = new Player("Test", false);
+        WordPlacer _ = new WordPlacer(player, board, mock, pointCalculator);
 
         assertFalse(mock.getUpdateCallReceived());
     }
@@ -80,7 +84,8 @@ public class TestWordPlacer {
         };
         WordGetter wordGetter = new WordGetter(board);
         PointCalculator pointCalculator = new PointCalculator(board, wordGetter);
-        WordPlacer sut = new WordPlacer(board, mock, pointCalculator);
+        Player player = new Player("Test", false);
+        WordPlacer sut = new WordPlacer(player, board, mock, pointCalculator);
 
         sut.run(pieces, 0, 0, Direction.Horizontal);
 

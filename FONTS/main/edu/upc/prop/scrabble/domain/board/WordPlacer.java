@@ -1,5 +1,6 @@
 package edu.upc.prop.scrabble.domain.board;
 
+import edu.upc.prop.scrabble.data.Player;
 import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.data.board.Board;
 import edu.upc.prop.scrabble.utils.Direction;
@@ -9,14 +10,16 @@ public class WordPlacer {
     private final Board board;
     private final IBoard view;
     private final PointCalculator pointCalculator;
+    private final Player player;
 
-    public WordPlacer(Board board, IBoard view, PointCalculator pointCalculator) {
+    public WordPlacer(Player player, Board board, IBoard view, PointCalculator pointCalculator) {
+        this.player = player;
         this.board = board;
         this.view = view;
         this.pointCalculator = pointCalculator;
     }
 
-    public int run(Piece[] pieces, int x, int y, Direction direction) {
+    public void run(Piece[] pieces, int x, int y, Direction direction) {
         Vector2[] positions;
         if (direction == Direction.Vertical)
             positions = placeWordVertical(pieces, x, y);
@@ -24,9 +27,9 @@ public class WordPlacer {
             positions = placeWordHorizontal(pieces, x, y);
 
         int points = pointCalculator.run(positions, pieces);
+        player.addScore(points);
 
         view.UpdateBoard(board);
-        return points;
     }
 
     private Vector2[] placeWordVertical(Piece[] pieces, int x, int y) {
