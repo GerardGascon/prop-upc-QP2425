@@ -68,7 +68,7 @@ public class CrossCheckUpdater {
             String word = "";
             for (String s : wordInBoard)
                 word = word.concat(s);
-            if (!wordValidator.runString(word)) {
+            if (!wordValidator.run(word)) {
                 crossChecks.setCrossCheckHor(beginningOfAddedWord - 1, move.y(), i);
                 //pone a 1 la letra que ha salido que no hace una palabra valida
             }
@@ -112,7 +112,7 @@ public class CrossCheckUpdater {
             String word = "";
             for (String s : wordInBoard)
                 word = word.concat(s);
-            if (!wordValidator.runString(word)) {
+            if (!wordValidator.run(word)) {
                 crossChecks.setCrossCheckHor(move.x(), beginningOfAddedWord - 1, i);
                 //pone a 1 la letra que ha salido que no hace una palabra valida
             }

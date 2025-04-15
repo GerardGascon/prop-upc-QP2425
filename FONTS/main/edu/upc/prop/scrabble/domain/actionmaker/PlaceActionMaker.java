@@ -40,7 +40,7 @@ public class PlaceActionMaker {
     }
 
     private void assertWordExists(Movement movement) {
-        if (!wordValidator.runString(movement.word()))
+        if (!wordValidator.run(movement.word()))
             throw new WordDoesNotExistException("The word \"" + movement.word() + "\" does not exist");
     }
 
