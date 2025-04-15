@@ -10,7 +10,7 @@ public class WinRateLeaderboard   {
     public PlayerValuePair[] run(Score[] scores) {
         // Group by player name and a pair of won and played games
         Map<String, GamesWinsPair> pairMap = new HashMap<>();
-        for (Score score : scores) pairMap.compute(score.getPlayerName(), (k, v) -> v == null  ? new GamesWinsPair(score.getIsWinner()) : v.addGame(score.getIsWinner()));
+        for (Score score : scores) pairMap.compute(score.playerName(), (k, v) -> v == null  ? new GamesWinsPair(score.isWinner()) : v.addGame(score.isWinner()));
 
         // Convert map into a sorted PlayerValuePair[]
         return pairMap.entrySet().stream()

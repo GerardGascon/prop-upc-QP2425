@@ -10,7 +10,7 @@ public class GamesPlayedLeaderboard   {
     public PlayerValuePair[] run(Score[] scores) {
         // Group by player name and games played
         Map<String, Integer> gamesMap = new HashMap<>();
-        for (Score score : scores) gamesMap.compute(score.getPlayerName(), (k, v) -> v == null  ? 1 : v + 1);
+        for (Score score : scores) gamesMap.compute(score.playerName(), (k, v) -> v == null  ? 1 : v + 1);
 
         // Convert map into a sorted PlayerValuePair[]
         return gamesMap.entrySet().stream()

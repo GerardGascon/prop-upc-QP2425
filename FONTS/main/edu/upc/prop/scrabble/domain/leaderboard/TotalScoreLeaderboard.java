@@ -10,7 +10,7 @@ public class TotalScoreLeaderboard {
     public PlayerValuePair[] run(Score[] scores) {
         // Group by player name and total score
         Map<String, Integer> scoreMap = new HashMap<>();
-        for(Score score : scores) scoreMap.put(score.getPlayerName(), scoreMap.getOrDefault(score.getPlayerName(), 0) + score.getScoreValue());
+        for(Score score : scores) scoreMap.put(score.playerName(), scoreMap.getOrDefault(score.playerName(), 0) + score.scoreValue());
 
         // Convert map into a sorted PlayerValuePair[]
         return scoreMap.entrySet().stream()

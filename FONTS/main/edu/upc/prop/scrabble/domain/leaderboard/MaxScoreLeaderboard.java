@@ -10,7 +10,7 @@ public class MaxScoreLeaderboard   {
     public PlayerValuePair[] run(Score[] scores) {
         // Group by player name and maxScore
         Map<String, Integer> scoreMap = new HashMap<>();
-        for (Score score : scores) scoreMap.compute(score.getPlayerName(), (k, v) -> v == null || score.getScoreValue() > v ? score.getScoreValue() : v);
+        for (Score score : scores) scoreMap.compute(score.playerName(), (k, v) -> v == null || score.scoreValue() > v ? score.scoreValue() : v);
 
         // Convert map into a sorted PlayerValuePair[]
         return scoreMap.entrySet().stream()
