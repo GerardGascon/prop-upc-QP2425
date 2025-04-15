@@ -41,6 +41,7 @@ public class SizeSetter {
 
     //Visualize
     public void print_interface() {
+        String Instruction = "\ntype 'next' to go right\ntype 'previous' to go left \ntype 'submit' to select board size\n";
         String Up = " ________________________________________\n";
         String Up2 = "|                                        |\n";
         String Mid = switch (size) {
@@ -50,7 +51,7 @@ public class SizeSetter {
             default -> "";
         };
         String Down = "|________________________________________|\n";
-        System.out.println(Up + Up2 + Mid + Down);
+        System.out.println(Instruction + Up + Up2 + Mid + Down);
     }
 
     //Consultores
