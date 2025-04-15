@@ -12,8 +12,8 @@ public class TestBagFiller {
     public void bagIsFilled() {
         String aPiece = "A 3 1";
         PieceGenerator pieceGenerator = new PieceGenerator();
-        BagFiller bagFiller = new BagFiller(pieceGenerator);
-        Bag bag = bagFiller.run(aPiece);
+        BagFiller sut = new BagFiller(pieceGenerator);
+        Bag bag = sut.run(aPiece);
 
         assertNotNull(bag);
     }

@@ -18,107 +18,107 @@ public class TestMovementBoundsChecker {
     public void testExactJuniorHorizontalBounds() {
         Board board = new JuniorBoard();
         PiecesConverter converter = new PiecesConverter();
-        MovementBoundsChecker movementBoundsChecker = new MovementBoundsChecker(board, converter);
+        MovementBoundsChecker sut = new MovementBoundsChecker(board, converter);
         Movement m = new Movement("aaaaaaaaaaa", 0, 0, Direction.Horizontal);
-        assertTrue(movementBoundsChecker.run(m));
+        assertTrue(sut.run(m));
     }
 
     @Test
     public void testExactJuniorVerticalBounds() {
         Board board = new JuniorBoard();
         PiecesConverter converter = new PiecesConverter();
-        MovementBoundsChecker movementBoundsChecker = new MovementBoundsChecker(board, converter);
+        MovementBoundsChecker sut = new MovementBoundsChecker(board, converter);
         Movement m = new Movement("aaaaaaaaaaa", 0, 0, Direction.Vertical);
-        assertTrue(movementBoundsChecker.run(m));
+        assertTrue(sut.run(m));
     }
 
     @Test
     public void testMoreThanJuniorHorizontalBounds() {
         Board board = new JuniorBoard();
         PiecesConverter converter = new PiecesConverter();
-        MovementBoundsChecker movementBoundsChecker = new MovementBoundsChecker(board, converter);
+        MovementBoundsChecker sut = new MovementBoundsChecker(board, converter);
         Movement m = new Movement("aaaaaaaaaaaa", 0, 0, Direction.Horizontal);
-        assertFalse(movementBoundsChecker.run(m));
+        assertFalse(sut.run(m));
     }
 
     @Test
     public void testMoreThanJuniorVerticalBounds() {
         Board board = new JuniorBoard();
         PiecesConverter converter = new PiecesConverter();
-        MovementBoundsChecker movementBoundsChecker = new MovementBoundsChecker(board, converter);
+        MovementBoundsChecker sut = new MovementBoundsChecker(board, converter);
         Movement m = new Movement("aaaaaaaaaaaa", 0, 0, Direction.Vertical);
-        assertFalse(movementBoundsChecker.run(m));
+        assertFalse(sut.run(m));
     }
 
     @Test
     public void testExactStandardHorizontalBounds() {
         Board board = new StandardBoard();
         PiecesConverter converter = new PiecesConverter();
-        MovementBoundsChecker movementBoundsChecker = new MovementBoundsChecker(board, converter);
+        MovementBoundsChecker sut = new MovementBoundsChecker(board, converter);
         Movement m = new Movement("aaaaaaaaaaaaaaa", 0, 0, Direction.Horizontal);
-        assertTrue(movementBoundsChecker.run(m));
+        assertTrue(sut.run(m));
     }
 
     @Test
     public void testExactStandardVerticalBounds() {
         Board board = new StandardBoard();
         PiecesConverter converter = new PiecesConverter();
-        MovementBoundsChecker movementBoundsChecker = new MovementBoundsChecker(board, converter);
+        MovementBoundsChecker sut = new MovementBoundsChecker(board, converter);
         Movement m = new Movement("aaaaaaaaaaaaaaa", 0, 0, Direction.Vertical);
-        assertTrue(movementBoundsChecker.run(m));
+        assertTrue(sut.run(m));
     }
 
     @Test
     public void testMoreThanStandardHorizontalBounds() {
         Board board = new StandardBoard();
         PiecesConverter converter = new PiecesConverter();
-        MovementBoundsChecker movementBoundsChecker = new MovementBoundsChecker(board, converter);
+        MovementBoundsChecker sut = new MovementBoundsChecker(board, converter);
         Movement m = new Movement("aaaaaaaaaaaaaaaa", 0, 0, Direction.Horizontal);
-        assertFalse(movementBoundsChecker.run(m));
+        assertFalse(sut.run(m));
     }
 
     @Test
     public void testMoreThanStandardVerticalBounds() {
         Board board = new StandardBoard();
         PiecesConverter converter = new PiecesConverter();
-        MovementBoundsChecker movementBoundsChecker = new MovementBoundsChecker(board, converter);
+        MovementBoundsChecker sut = new MovementBoundsChecker(board, converter);
         Movement m = new Movement("aaaaaaaaaaaaaaaa", 0, 0, Direction.Vertical);
-        assertFalse(movementBoundsChecker.run(m));
+        assertFalse(sut.run(m));
     }
 
     @Test
     public void testExactSuperHorizontalBounds() {
         Board board = new SuperBoard();
         PiecesConverter converter = new PiecesConverter();
-        MovementBoundsChecker movementBoundsChecker = new MovementBoundsChecker(board, converter);
+        MovementBoundsChecker sut = new MovementBoundsChecker(board, converter);
         Movement m = new Movement("aaaaaaaaaaaaaaaaaaaaa", 0, 0, Direction.Horizontal);
-        assertTrue(movementBoundsChecker.run(m));
+        assertTrue(sut.run(m));
     }
 
     @Test
     public void testExactSuperVerticalBounds() {
         Board board = new SuperBoard();
         PiecesConverter converter = new PiecesConverter();
-        MovementBoundsChecker movementBoundsChecker = new MovementBoundsChecker(board, converter);
+        MovementBoundsChecker sut = new MovementBoundsChecker(board, converter);
         Movement m = new Movement("aaaaaaaaaaaaaaaaaaaaa", 0, 0, Direction.Vertical);
-        assertTrue(movementBoundsChecker.run(m));
+        assertTrue(sut.run(m));
     }
 
     @Test
     public void testMoreThanSuperHorizontalBounds() {
         Board board = new SuperBoard();
         PiecesConverter converter = new PiecesConverter();
-        MovementBoundsChecker movementBoundsChecker = new MovementBoundsChecker(board, converter);
+        MovementBoundsChecker sut = new MovementBoundsChecker(board, converter);
         Movement m = new Movement("aaaaaaaaaaaaaaaaaaaaaa", 0, 0, Direction.Horizontal);
-        assertFalse(movementBoundsChecker.run(m));
+        assertFalse(sut.run(m));
     }
 
     @Test
     public void testMoreThanSuperVerticalBounds() {
         Board board = new SuperBoard();
         PiecesConverter converter = new PiecesConverter();
-        MovementBoundsChecker movementBoundsChecker = new MovementBoundsChecker(board, converter);
+        MovementBoundsChecker sut = new MovementBoundsChecker(board, converter);
         Movement m = new Movement("aaaaaaaaaaaaaaaaaaaaaa", 0, 0, Direction.Vertical);
-        assertFalse(movementBoundsChecker.run(m));
+        assertFalse(sut.run(m));
     }
 }

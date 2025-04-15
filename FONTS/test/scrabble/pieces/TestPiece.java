@@ -8,32 +8,32 @@ import static org.junit.Assert.*;
 public class TestPiece {
     @Test
     public void pieceCreator() {
-        Piece piece = new Piece("a", 1);
-        assertEquals(piece.letter(), "a");
-        assertEquals(piece.value(), 1);
+        Piece sut = new Piece("a", 1);
+        assertEquals(sut.letter(), "a");
+        assertEquals(sut.value(), 1);
     }
 
     @Test
     public void pieceComparator() {
-        Piece piece1 = new Piece("a", 1);
-        Piece piece2 = new Piece("b", 2);
-        assertFalse(piece1.equals(piece2));
-        assertTrue(piece1.equals(piece1));
-        assertTrue(piece2.equals(piece2));
+        Piece sut1 = new Piece("a", 1);
+        Piece sut2 = new Piece("b", 2);
+        assertFalse(sut1.equals(sut2));
+        assertTrue(sut1.equals(sut1));
+        assertTrue(sut2.equals(sut2));
     }
 
     @Test
     public void pieceBlank() {
-        Piece piece = new Piece("a", 1, true);
-        assertTrue(piece.isBlank());
+        Piece sut = new Piece("a", 1, true);
+        assertTrue(sut.isBlank());
     }
 
     @Test
     public void setLetterBlankPiece() {
-        Piece piece = new Piece(" ", 0, true);
-        assertEquals(piece.letter(), " ");
+        Piece sut = new Piece(" ", 0, true);
+        assertEquals(sut.letter(), " ");
 
-        piece.setLetter("a");
-        assertEquals(piece.letter(), "a");
+        sut.setLetter("a");
+        assertEquals(sut.letter(), "a");
     }
 }
