@@ -29,25 +29,24 @@ package Repository {
 actor Player
 actor CPU
 
-SeeRanking -- Player
-PauseGame -- Player
+Player --> SeeRanking
+Player --> PauseGame
 
-SetBoardSize -- Player
-SetLanguage -- Player
-SetNumPlayers -- Player
+SetBoardSize <-- Player
+SetLanguage <-- Player
+SetNumPlayers <-- Player
 
-Player -- MakeMove
-Player -- PutPiece
-Player -- SkipTurn
-Player -- DrawPiece
+Player --> MakeMove
 
-PutPiece -- CPU
-MakeMove -- CPU
-SkipTurn -- CPU
-DrawPiece -- CPU
-ThinkMove -- CPU
+CPU --> ThinkMove
 
-Player -- SaveGame
-Player -- LoadGame
+MakeMove --> PutPiece: <<extends>>
+MakeMove --> DrawPiece: <<extends>>
+MakeMove --> SkipTurn: <<extends>>
+
+ThinkMove --> MakeMove: <<includes>>
+
+Player --> SaveGame
+Player --> LoadGame
 
 @enduml
