@@ -6,6 +6,10 @@ import edu.upc.prop.scrabble.data.board.Board;
 import edu.upc.prop.scrabble.utils.Direction;
 import edu.upc.prop.scrabble.utils.Vector2;
 
+/**
+ * Class used to place words on the board and trigger a refresh on the view
+ * @author Gerard Gascón
+ */
 public class WordPlacer {
     private final Board board;
     private final IBoard view;
@@ -19,6 +23,13 @@ public class WordPlacer {
         this.pointCalculator = pointCalculator;
     }
 
+    /**
+     * Place pieces on the board and update the scores and the view
+     * @param pieces An array of the new pieces to place
+     * @param x The X position of the start of the word
+     * @param y The Y position of the start of the word
+     * @param direction The direction in which the word is placed
+     */
     public void run(Piece[] pieces, int x, int y, Direction direction) {
         Vector2[] positions;
         if (direction == Direction.Vertical)
@@ -29,7 +40,7 @@ public class WordPlacer {
         int points = pointCalculator.run(positions, pieces);
         player.addScore(points);
 
-        view.UpdateBoard(board);
+        view.updateBoard(board);
     }
 
     private Vector2[] placeWordVertical(Piece[] pieces, int x, int y) {

@@ -10,6 +10,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Class used to calculate the points of a move.
+ * @author Gerard Gascón
+ */
 public class PointCalculator {
     private final Board board;
     private final WordGetter wordGetter;
@@ -19,6 +23,13 @@ public class PointCalculator {
         this.wordGetter = wordGetter;
     }
 
+    /**
+     * Calculate the points of a move.
+     * @param positions The positions of the new pieces placed on the board
+     * @param pieces The new pieces to add on the board
+     * @return Number of points the player would win if those pieces were placed
+     * @see Piece
+     */
     public int run(Vector2[] positions, Piece[] pieces) {
         Direction direction = getWordDirection(positions);
 

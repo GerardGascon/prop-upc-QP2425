@@ -3,7 +3,18 @@ package edu.upc.prop.scrabble.domain.pieces;
 import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.utils.Pair;
 
+/**
+ * Class used to generate pieces based on the contents of the pieces file
+ * @author Gerard Gascón
+ */
 public class PieceGenerator {
+    /**
+     * Convert the piece file into Piece classes
+     * @param pieces The contents of the pieces file
+     * @return A tuple containing the Piece info and the number of pieces of that type
+     * @see Pair
+     * @see Piece
+     */
     public Pair<Piece, Integer>[] run(String pieces) {
         String[] pieceArray = pieces.lines().toArray(String[]::new);
         Pair<Piece, Integer>[] result = new Pair[pieceArray.length];

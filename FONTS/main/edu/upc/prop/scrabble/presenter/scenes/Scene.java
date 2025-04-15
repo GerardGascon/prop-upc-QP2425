@@ -1,14 +1,25 @@
 package edu.upc.prop.scrabble.presenter.scenes;
 
+import edu.upc.prop.scrabble.presenter.scenes.exceptions.SceneObjectWithParametrizedConstructorException;
+
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * Base class for representing an in-game scene
+ * @author Gerard Gascón
+ */
 public abstract class Scene {
     private final List<SceneObject> objects = new ArrayList<>();
 
+    /**
+     * Constantly call to update the objects present in the scene
+     * @param delta Time difference from the last call
+     * @see SceneObject
+     */
     void onProcess(float delta) {
         for (SceneObject o : objects) {
             if (o.isEnabled())
@@ -16,6 +27,10 @@ public abstract class Scene {
         }
     }
 
+    /**
+     * Detaches all scene objects present on the current scene
+     * @see SceneObject
+     */
     void onDetach() {
         for (SceneObject o : objects) {
             if (o.isEnabled())
@@ -24,6 +39,14 @@ public abstract class Scene {
         }
     }
 
+    /**
+     * Instantiates a new object on the scene
+     * @param o The class of the object to instantiate
+     * @return The instance of the newly instantiated object
+     * @throws SceneObjectWithParametrizedConstructorException If the object to be instantiated has a constructor with parameters
+     * @throws RuntimeException If an error occurs during the object creation
+     * @see SceneObject
+     */
     public <T extends SceneObject> T instantiate(Class<T> o) {
         try {
             Constructor<?> target = getObjectConstructor(o);
@@ -31,7 +54,7 @@ public abstract class Scene {
             try {
                 object = o.cast(target.newInstance());
             } catch (IllegalArgumentException e) {
-                throw new RuntimeException("Parametrized constructors on SceneObject class are not supported.");
+                throw new SceneObjectWithParametrizedConstructorException("Parametrized constructors on SceneObject class are not supported.");
             }
 
             objects.add(object);
@@ -51,7 +74,15 @@ public abstract class Scene {
                 .orElseThrow(() -> new RuntimeException("No constructors found"));
     }
 
+    /**
+     * Destroy an object from the scene
+     * @param o Instance of the object to destroy
+     * @throws NullPointerException If the object to destroy is null
+     * @see SceneObject
+     */
     public void destroy(SceneObject o) {
+        if (o == null)
+            throw new NullPointerException("Object cannot be null");
         objects.remove(o);
         o.onDisable();
         o.onDetach();
