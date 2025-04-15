@@ -12,8 +12,10 @@ public interface IGamePlayer {
 
     /**
      * End the player's turn
+     * @return The action made by the player
+     * @see TurnResult
      */
-    void endTurn();
+    TurnResult endTurn();
 
     /**
      * Check if the player is in a turn or not
