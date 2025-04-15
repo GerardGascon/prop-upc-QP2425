@@ -28,7 +28,7 @@ public class GameScene extends Scene {
 
         BoardView boardView = instantiate(BoardView.class);
         IGamePlayer[] players = instantiatePlayers(properties, boardView, piecesConverter, pointCalculator, board);
-        Turn turnManager = new Turn(players);
+//        Turn turnManager = new Turn(players);
 //        turnManager.run();
     }
 
