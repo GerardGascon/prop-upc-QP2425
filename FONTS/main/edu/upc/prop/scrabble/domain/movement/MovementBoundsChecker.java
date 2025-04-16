@@ -42,7 +42,7 @@ public class MovementBoundsChecker {
         int y = movement.y();
         Piece[] pieces = piecesConverter.run(movement.word());
         int n = pieces.length;
-        return board.isCellValid(x, y) && board.isCellValid(x, y + n - 1);
+        return board.isCellValid(x, y) && board.isCellValid(x + n - 1, y);
     }
 
     private boolean VerifyVertical(Movement movement) {
@@ -50,6 +50,6 @@ public class MovementBoundsChecker {
         int y = movement.y();
         Piece[] pieces = piecesConverter.run(movement.word());
         int n = pieces.length;
-        return board.isCellValid(x, y) && board.isCellValid(x + n - 1, y);
+        return board.isCellValid(x, y) && board.isCellValid(x, y + n - 1);
     }
 }
