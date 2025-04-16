@@ -8,6 +8,7 @@ import edu.upc.prop.scrabble.data.dawg.DAWG;
 import edu.upc.prop.scrabble.data.pieces.Bag;
 import edu.upc.prop.scrabble.domain.actionmaker.PlaceActionMaker;
 import edu.upc.prop.scrabble.domain.board.PointCalculator;
+import edu.upc.prop.scrabble.domain.board.PresentPiecesWordCompleter;
 import edu.upc.prop.scrabble.domain.board.WordGetter;
 import edu.upc.prop.scrabble.domain.board.WordPlacer;
 import edu.upc.prop.scrabble.domain.dawg.WordAdder;
@@ -52,7 +53,8 @@ public class TestPlaceActionMaker {
         piecePrinterStub = new PiecePrinterStub();
         PiecesInHandGetter piecesInHandGetter = new PiecesInHandGetter(bag, player, piecePrinterStub);
         MovementCleaner movementCleaner = new MovementCleaner(board, piecesConverter);
-        placeActionMaker = new PlaceActionMaker(player, boundsChecker, wordValidator, piecesInHandGetter, movementCleaner, wordPlacer);
+        PresentPiecesWordCompleter presentPiecesWordCompleter = new PresentPiecesWordCompleter(wordGetter);
+        placeActionMaker = new PlaceActionMaker(player, boundsChecker, wordValidator, piecesInHandGetter, movementCleaner, wordPlacer, presentPiecesWordCompleter);
     }
 
     @Test
@@ -85,7 +87,7 @@ public class TestPlaceActionMaker {
     @Test
     public void placePieceThrowsExceptionIfContainsCombinedWordThatDoesNotExist() {
         Movement movement1 = new Movement("HOLA", 1, 1, Direction.Horizontal);
-        Movement movement2 = new Movement("CASA", 2, 1, Direction.Horizontal);
+        Movement movement2 = new Movement("CASA", 1, 2, Direction.Horizontal);
         WordAdder wordAdder = new WordAdder(dawg);
         wordAdder.run("HOLA");
         wordAdder.run("CASA");
