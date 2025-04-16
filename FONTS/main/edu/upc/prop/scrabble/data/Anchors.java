@@ -5,13 +5,22 @@ import edu.upc.prop.scrabble.utils.Pair;
 import java.util.ArrayList;
 
 public class Anchors {
-    ArrayList<Pair<Integer,Integer>> anchors;
+    private ArrayList<Pair<Integer,Integer>> anchors;
+    public Anchors() { this.anchors = new ArrayList<>(); }
 
-    public Anchors(ArrayList<Pair<Integer,Integer>> anchors) {
-        this.anchors = new ArrayList<>();
-    }
+    public void addAnchor(int x, int y) { anchors.add(new Pair<>(x, y)); }
+    public int getSize() { return anchors.size(); }
 
-    public void addAnchor(int x, int y) {
-        anchors.add(new Pair<>(x, y));
+    // precon position < size
+    public Pair<Integer,Integer> getAnchor(int position) { return anchors.get(position); }
+
+    // GIGAineficiente tal vez sea mejor hacer que anchors sea un set
+    public boolean exists(int x, int y) {
+        for (Pair<Integer, Integer> anchor : anchors) {
+            if (anchor.first().equals(x) && anchor.second().equals(y)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

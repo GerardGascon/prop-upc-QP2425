@@ -16,23 +16,32 @@ public class AnchorUpdater {
     //poner piece converter segun el idioma
     public AnchorUpdater(Anchors anchors, Board board, PiecesConverter piecesConverter) {
         this.anchors = anchors;
+        this.anchors.addAnchor(board.getSize()/2, board.getSize()/2);
         this.board = board;
         this.piecesConverter = piecesConverter;
     }
 
     public void run(Movement move) {
+
         int size = piecesConverter.run(move.word()).length;
+        int x = move.x();
+        int y = move.y();
+
         if(move.direction() == Direction.Vertical) {
-            for (int i = move.y(); i < size; i++) {
-                        if(board.isCellValid(move.x()+1, i) && board.isCellEmpty(move.x()+1, i)) anchors.addAnchor(move.x()+1, i);
-                        if(board.isCellValid(move.x()-1, i) && board.isCellEmpty(move.x()-1, i)) anchors.addAnchor(move.x()-1, i);
+            if(board.isCellValid(x, y - 1) && board.isCellEmpty(x, y - 1) ) anchors.addAnchor(x, y - 1);
+            if(board.isCellValid(x, y + size) && board.isCellEmpty(x, y + size)) anchors.addAnchor(x, y + size);
+            for (int i_y = y; i_y < size; i_y++) {
+                if(board.isCellValid(x + 1, i_y) && board.isCellEmpty(x + 1, i_y)) anchors.addAnchor(x + 1, i_y);
+                if(board.isCellValid(x - 1, i_y) && board.isCellEmpty(x - 1, i_y)) anchors.addAnchor(x - 1, i_y);
             }
-            if(board.isCellValid(move.x(), move.y()-1) && board.isCellEmpty(move.x(), move.y()-1) ) anchors.addAnchor(move.x(), move.y()-1);
-            if(board.isCellValid(move.x(), move.y()+size) && board.isCellEmpty(move.x(), move.y()+size)) anchors.addAnchor(move.x(), move.y()+size);
         }
         else if(move.direction() == Direction.Horizontal) {
-
+            if(board.isCellValid(x - 1, y) && board.isCellEmpty(x - 1, y) ) anchors.addAnchor(x - 1, y);
+            if(board.isCellValid(x + size, y) && board.isCellEmpty(x + size, y)) anchors.addAnchor(x + size, y);
+            for (int i_x = x; i_x < size; i_x++) {
+                if(board.isCellValid(i_x, y + 1) && board.isCellEmpty(i_x, y + 1)) anchors.addAnchor(i_x, y + 1);
+                if(board.isCellValid(i_x, y - 1) && board.isCellEmpty(i_x, y - 1)) anchors.addAnchor(i_x, y - 1);
+            }
         }
-
     }
 }
