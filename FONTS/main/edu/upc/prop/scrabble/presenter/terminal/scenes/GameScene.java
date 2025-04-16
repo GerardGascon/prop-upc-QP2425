@@ -7,6 +7,7 @@ import edu.upc.prop.scrabble.domain.board.PointCalculator;
 import edu.upc.prop.scrabble.domain.board.WordGetter;
 import edu.upc.prop.scrabble.domain.board.WordPlacer;
 import edu.upc.prop.scrabble.domain.pieces.PiecesConverter;
+import edu.upc.prop.scrabble.domain.turns.Endgame;
 import edu.upc.prop.scrabble.domain.turns.IGamePlayer;
 import edu.upc.prop.scrabble.domain.turns.Turn;
 import edu.upc.prop.scrabble.presenter.scenes.Scene;
@@ -27,27 +28,40 @@ public class GameScene extends Scene {
         PiecesConverter piecesConverter = new PiecesConverter();
 
         BoardView boardView = instantiate(BoardView.class);
-        IGamePlayer[] players = instantiatePlayers(properties, boardView, piecesConverter, pointCalculator, board);
-//        Turn turnManager = new Turn(players);
-//        turnManager.run();
+        Player[] playersData = createPlayersData(properties);
+        IGamePlayer[] players = instantiatePlayers(playersData, boardView, piecesConverter, pointCalculator, board);
+        Endgame endgame = new Endgame(playersData);
+        Turn turnManager = new Turn(endgame, players);
+        //TODO: Replace with call to game class
+        turnManager.run();
     }
 
-    private PlayerObject[] instantiatePlayers(GameProperties properties, BoardView boardView, PiecesConverter piecesConverter,
+    private Player[] createPlayersData(GameProperties properties) {
+        return new Player[]{
+                new Player("Player1", false),
+                new Player("Player2", false),
+                new Player("Player3", false),
+                new Player("Player4", false),
+        };
+    }
+
+    private PlayerObject[] instantiatePlayers(Player[] players, BoardView boardView, PiecesConverter piecesConverter,
                                               PointCalculator pointCalculator, Board board) {
         List<PlayerObject> playerObjects = new ArrayList<>();
-        for (int i = 0; i < properties.players(); i++) {
-            HumanPlayerObject playerObject = createHumanPlayer("Human", piecesConverter, pointCalculator, board, boardView);
-            playerObjects.add(playerObject);
-        }
-        for (int i = 0; i < properties.cpus(); i++) {
-            AIPlayerObject playerObject = createAIPlayer("AI", piecesConverter, pointCalculator, board, boardView);
-            playerObjects.add(playerObject);
+        for (Player player : players) {
+            if (player.getCPU()) {
+                AIPlayerObject playerObject = createAIPlayer(player.getName(), piecesConverter, pointCalculator, board, boardView);
+                playerObjects.add(playerObject);
+            } else {
+                HumanPlayerObject playerObject = createHumanPlayer(player.getName(), piecesConverter, pointCalculator, board, boardView);
+                playerObjects.add(playerObject);
+            }
         }
         return playerObjects.toArray(PlayerObject[]::new);
     }
 
     private HumanPlayerObject createHumanPlayer(String name, PiecesConverter piecesConverter,
-                                      PointCalculator pointCalculator, Board board, BoardView boardView) {
+                                                PointCalculator pointCalculator, Board board, BoardView boardView) {
 
         HumanPlayerObject playerObject = instantiate(HumanPlayerObject.class);
         Player player = new Player(name, false);
