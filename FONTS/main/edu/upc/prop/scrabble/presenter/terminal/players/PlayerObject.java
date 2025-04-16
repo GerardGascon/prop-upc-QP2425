@@ -8,7 +8,7 @@ import edu.upc.prop.scrabble.presenter.terminal.movements.MovementMaker;
 
 public abstract class PlayerObject extends SceneObject implements IGamePlayer {
     private boolean onTurn = false;
-    private Player player;
+    protected Player player;
     protected MovementMaker movementMaker;
 
     public final void configure(MovementMaker movementMaker, Player player) {
