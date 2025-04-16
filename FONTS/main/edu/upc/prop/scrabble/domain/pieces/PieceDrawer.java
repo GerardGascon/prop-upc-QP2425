@@ -5,17 +5,31 @@ import edu.upc.prop.scrabble.data.pieces.Piece;
 import java.lang.reflect.InaccessibleObjectException;
 import java.util.*;
 
+/***
+ * Handles the exchange of pieces between a player's hand and the game bag. It returns unwanted pieces to the bag and
+ * draw new random pieces from the bag.
+ * @author Gina Escofet González
+ */
 public class PieceDrawer {
     private final Bag bag;
     private final Player player;
 
+    /***
+     * Creates a PieceDrawer for the specified game bag and player.
+     * @param bag The game piece bag.
+     * @param player The player making the exchange.
+     * @throws IllegalArgumentException if player parameter is null
+     */
     public PieceDrawer(Bag bag, Player player) {
         this.bag = bag;
         this.player = player;
     }
 
-    // pre: es vol posar una fitxa al taulell
-    // post: agafar n fitxes random de la bossa
+    /***
+     * Exchanges pieces between the player's hand and the bag.
+     * @param piecesToSwap Pieces to return to the bag.
+     * @return New pieces drawn from the bag.
+     */
     public Piece[] run(Piece[] piecesToSwap) {
         ArrayList<Piece> drawnPieces = new ArrayList<>();
         if (bag.isEmpty()) return drawnPieces.toArray(new Piece[0]);
