@@ -2,14 +2,14 @@ package edu.upc.prop.scrabble.domain.leaderboard;
 
 import edu.upc.prop.scrabble.data.leaderboard.Score;
 
-import java.util.HashMap;
+import java.util.TreeMap;
 import java.util.Map;
 
 public class GamesPlayedLeaderboard   {
 
     public PlayerValuePair[] run(Score[] scores) {
         // Group by player name and games played
-        Map<String, Integer> gamesMap = new HashMap<>();
+        Map<String, Integer> gamesMap = new TreeMap<>();
         for (Score score : scores) gamesMap.compute(score.playerName(), (k, v) -> v == null  ? 1 : v + 1);
 
         // Convert map into a sorted PlayerValuePair[]
