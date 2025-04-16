@@ -5,6 +5,10 @@ import edu.upc.prop.scrabble.data.leaderboard.Score;
 import java.util.TreeMap;
 import java.util.Map;
 
+/**
+ * Leaderboard controller to sort players based on the number of games won
+ * @author Felipe Martínez Lassalle
+ */
 public class GamesWonLeaderboard   {
 
     public PlayerValuePair[] run(Score[] scores) {
