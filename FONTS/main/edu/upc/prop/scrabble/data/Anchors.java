@@ -10,4 +10,7 @@ public class Anchors {
 
     public void addAnchor(int x, int y) { anchors.add(new Pair<>(x, y)); }
     public int getSize() { return anchors.size(); }
+
+    // precon position < size
+    public Pair<Integer,Integer> getAnchor(int position) { return anchors.get(position); }
 }
