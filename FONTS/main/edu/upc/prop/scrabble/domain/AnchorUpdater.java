@@ -39,7 +39,7 @@ public class AnchorUpdater {
             if(board.isCellValid(x + size, y) && board.isCellEmpty(x + size, y)) anchors.addAnchor(x + size, y);
             for (int i_x = x; i_x < size; i_x++) {
                 if(board.isCellValid(i_x, y + 1) && board.isCellEmpty(i_x, y + 1)) anchors.addAnchor(i_x, y + 1);
-                if(board.isCellValid(i_x, y + 1) && board.isCellEmpty(i_x, y + 1)) anchors.addAnchor(i_x, y + 1);
+                if(board.isCellValid(i_x, y - 1) && board.isCellEmpty(i_x, y - 1)) anchors.addAnchor(i_x, y - 1);
             }
         }
     }
