@@ -4,6 +4,8 @@ import edu.upc.prop.scrabble.data.Movement;
 import edu.upc.prop.scrabble.data.Player;
 import edu.upc.prop.scrabble.data.board.Board;
 import edu.upc.prop.scrabble.data.board.StandardBoard;
+import edu.upc.prop.scrabble.data.crosschecks.CrossChecks;
+import edu.upc.prop.scrabble.data.crosschecks.EnglishCrossChecks;
 import edu.upc.prop.scrabble.data.dawg.DAWG;
 import edu.upc.prop.scrabble.data.pieces.Bag;
 import edu.upc.prop.scrabble.data.pieces.Piece;
@@ -12,6 +14,7 @@ import edu.upc.prop.scrabble.domain.board.PointCalculator;
 import edu.upc.prop.scrabble.domain.board.PresentPiecesWordCompleter;
 import edu.upc.prop.scrabble.domain.board.WordGetter;
 import edu.upc.prop.scrabble.domain.board.WordPlacer;
+import edu.upc.prop.scrabble.domain.crosschecks.CrossCheckUpdater;
 import edu.upc.prop.scrabble.domain.dawg.WordAdder;
 import edu.upc.prop.scrabble.domain.dawg.WordValidator;
 import edu.upc.prop.scrabble.domain.exceptions.MovementOutsideOfBoardException;
@@ -59,7 +62,9 @@ public class TestPlaceActionMaker {
         PiecesInHandGetter piecesInHandGetter = new PiecesInHandGetter(bag, player, piecePrinterStub, rand);
         MovementCleaner movementCleaner = new MovementCleaner(board, piecesConverter);
         PresentPiecesWordCompleter presentPiecesWordCompleter = new PresentPiecesWordCompleter(wordGetter);
-        placeActionMaker = new PlaceActionMaker(player, boundsChecker, wordValidator, piecesInHandGetter, movementCleaner, wordPlacer, presentPiecesWordCompleter);
+        CrossChecks crossChecks = new EnglishCrossChecks(board, dawg);
+        CrossCheckUpdater crossCheckUpdater = new CrossCheckUpdater(piecesConverter, crossChecks, board, dawg);
+        placeActionMaker = new PlaceActionMaker(boundsChecker, wordValidator, piecesInHandGetter, movementCleaner, wordPlacer, presentPiecesWordCompleter, crossCheckUpdater);
     }
 
     @Test
@@ -134,6 +139,31 @@ public class TestPlaceActionMaker {
 
     @Test
     public void placedPiecesInHandGetReplacedByBagPieces() {
+        Movement movement = new Movement("HOLA", 1, 1, Direction.Horizontal);
+        bag.add(new Piece("T", 1));
+        bag.add(new Piece("E", 1));
+        bag.add(new Piece("S", 1));
+        bag.add(new Piece("T", 1));
+
+        WordAdder wordAdder = new WordAdder(dawg);
+        wordAdder.run("HOLA");
+
+        player.addPiece(new Piece("H", 1));
+        player.addPiece(new Piece("O", 1));
+        player.addPiece(new Piece("L", 1));
+        player.addPiece(new Piece("A", 1));
+
+        placeActionMaker.run(movement);
+
+        assertEquals(4, player.getHand().length);
+        assertEquals("T", player.getHand()[0].letter());
+        assertEquals("E", player.getHand()[1].letter());
+        assertEquals("S", player.getHand()[2].letter());
+        assertEquals("T", player.getHand()[3].letter());
+    }
+
+    @Test
+    public void placedPiecesGetPlacedUpdatesBoard() {
         Movement movement = new Movement("HOLA", 1, 1, Direction.Horizontal);
         bag.add(new Piece("T", 1));
         bag.add(new Piece("E", 1));
