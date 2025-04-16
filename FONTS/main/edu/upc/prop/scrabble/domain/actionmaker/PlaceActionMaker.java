@@ -1,10 +1,11 @@
 package edu.upc.prop.scrabble.domain.actionmaker;
 
 import edu.upc.prop.scrabble.data.Movement;
-import edu.upc.prop.scrabble.data.Player;
+import edu.upc.prop.scrabble.data.exceptions.PlayerDoesNotHavePieceException;
 import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.domain.board.PresentPiecesWordCompleter;
 import edu.upc.prop.scrabble.domain.board.WordPlacer;
+import edu.upc.prop.scrabble.domain.crosschecks.CrossCheckUpdater;
 import edu.upc.prop.scrabble.domain.dawg.WordValidator;
 import edu.upc.prop.scrabble.domain.exceptions.MovementOutsideOfBoardException;
 import edu.upc.prop.scrabble.domain.exceptions.WordDoesNotExistException;
@@ -17,34 +18,44 @@ import edu.upc.prop.scrabble.utils.Vector2;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Manages the steps needed to perform a place move inside the game.
+ * @author Gerard Gascón
+ */
 public class PlaceActionMaker {
-    private final Player player;
     private final MovementBoundsChecker movementBoundsChecker;
     private final WordValidator wordValidator;
     private final PiecesInHandGetter piecesInHandGetter;
     private final MovementCleaner movementCleaner;
     private final WordPlacer wordPlacer;
     private final PresentPiecesWordCompleter presentPiecesWordCompleter;
+    private final CrossCheckUpdater crossCheckUpdater;
 
-    public PlaceActionMaker(Player player, MovementBoundsChecker MovementBoundsChecker, WordValidator wordValidator, PiecesInHandGetter piecesInHandGetter, MovementCleaner movementCleaner, WordPlacer wordPlacer, PresentPiecesWordCompleter presentPiecesWordCompleter) {
-        this.player = player;
+    public PlaceActionMaker(MovementBoundsChecker MovementBoundsChecker, WordValidator wordValidator, PiecesInHandGetter piecesInHandGetter, MovementCleaner movementCleaner, WordPlacer wordPlacer, PresentPiecesWordCompleter presentPiecesWordCompleter, CrossCheckUpdater crossCheckUpdater) {
         this.movementBoundsChecker = MovementBoundsChecker;
         this.wordValidator = wordValidator;
         this.piecesInHandGetter = piecesInHandGetter;
         this.movementCleaner = movementCleaner;
         this.wordPlacer = wordPlacer;
         this.presentPiecesWordCompleter = presentPiecesWordCompleter;
+        this.crossCheckUpdater = crossCheckUpdater;
     }
 
+    /**
+     * Place a word on the board
+     * @param movement The movement to make
+     * @throws WordDoesNotExistException If the word you are trying to place does not exist
+     * @throws MovementOutsideOfBoardException If the movement you are trying to make is outside the bounds of the board
+     * @throws PlayerDoesNotHavePieceException If you are placing a word that contains pieces not present in the player's hand
+     * @see Movement
+     */
     public void run(Movement movement) {
         assertInsideOfBounds(movement);
         Piece[] necessaryPieces = movementCleaner.run(movement);
         assertNewWordsExist(necessaryPieces, movement.x(), movement.y(), movement.direction());
-
         Piece[] piecesInHand = piecesInHandGetter.run(necessaryPieces);
         wordPlacer.run(piecesInHand, movement.x(), movement.y(), movement.direction());
-        //TODO: Draw new pieces to replaced the used ones
-        //TODO: Add call to update views
+        crossCheckUpdater.run(movement);
     }
 
     private void assertNewWordsExist(Piece[] pieces, int x, int y, Direction direction) {
