@@ -12,8 +12,6 @@ public class Leaderboard {
     private ArrayList<Score> leaderBoard;
 
     public Leaderboard() { this.leaderBoard = new ArrayList<>(); }
-    public Leaderboard(Score score) { this.leaderBoard = new ArrayList<>(Collections.singletonList(score)); }
-    public Leaderboard(Score[] scoreArray) { this.leaderBoard = (ArrayList<Score>)  Arrays.stream(scoreArray).toList(); }
 
     /**
      * Transforms the ArrayList to a regular array to ease controllers functions
