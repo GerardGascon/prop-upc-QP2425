@@ -24,6 +24,8 @@ public class Node {
         return successors.get(character);
     }
 
+    public Map<Character, Node> getSuccessors() { return successors;}
+
     public void addSuccessor(Character character, Node successor) {
         successors.put(character, successor);
     }

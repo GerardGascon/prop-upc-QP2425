@@ -103,7 +103,7 @@ public class GameCreator extends SceneObject {
 
     private void loadGame(){
         GameProperties gameProperties = new GameProperties(languageSetter.getLanguage(), sizeSetter.getBoardSize(),
-                                                            playerSetter.getRealPlayers(),playerSetter.getCpuPlayers());
+                                                            playerSetter.getPlayersNames(),playerSetter.getCpusNames());
         SceneManager.getInstance().load(GameScene.class,gameProperties);
     }
 }

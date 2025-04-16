@@ -76,9 +76,9 @@ public class PlayerSetter {
             instruction = "\nPlease select number of CPU's\ntype 'next' to increase the number of CPU \ntype 'previous' to decrease the number of CPU\ntype 'submit' to set the number of CPU's\n";
         String Up  = "---------------------------------------------------------------\n";
         String Up2 = "|                                                             |\n";
-        String Players = "| Players: "; Players = Players + getPlayersName() + "     \n";
+        String Players = "| Players: "; Players = Players + printPlayersName() + "     \n";
         String Up3 = "|                                                             |\n";
-        String Cpus = "| CPU: "; Cpus = Cpus + getCpusName() + "                     \n";
+        String Cpus = "| CPU: "; Cpus = Cpus + printCpusName() + "                     \n";
         String Up4 = "|                                                             |\n";
         String Up6 = "---------------------------------------------------------------\n";
 
@@ -94,7 +94,7 @@ public class PlayerSetter {
         }
     }
 
-    public String getPlayersName(){
+    public String printPlayersName(){
         String players = "";
         for (String nomPlayer : nomPlayers) {
             players = players + " | " + nomPlayer;
@@ -102,13 +102,17 @@ public class PlayerSetter {
         return players;
     }
 
-    public String getCpusName(){
+    public String printCpusName(){
         String cpus = "";
         for (String nomCpus : nomCpus) {
             cpus = cpus + " | " + nomCpus;
         }
         return cpus;
     }
+
+    public List<String> getPlayersNames(){return nomPlayers;}
+
+    public List<String> getCpusNames(){return nomCpus;}
 
     public int getRealPlayers(){
         return numplay;
@@ -121,6 +125,8 @@ public class PlayerSetter {
     public int getTotalPlayer(){
         return  numplay + numbots;
     }
+
+
 }
 
 

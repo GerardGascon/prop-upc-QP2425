@@ -12,7 +12,8 @@ public class HumanPlayerObject extends PlayerObject {
         if (movementRaw == null)
             return;
 
-        System.out.println(movementRaw);
+        int previousScore = player.getScore();
         movementMaker.makeMove(movementRaw);
+        System.out.println("Movement: " + movementRaw + " " + (player.getScore() - previousScore));
     }
 }
