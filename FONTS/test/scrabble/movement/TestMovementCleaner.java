@@ -11,12 +11,20 @@ import edu.upc.prop.scrabble.domain.board.WordPlacer;
 import edu.upc.prop.scrabble.domain.movement.MovementCleaner;
 import edu.upc.prop.scrabble.domain.pieces.PiecesConverter;
 import edu.upc.prop.scrabble.utils.Direction;
+import edu.upc.prop.scrabble.utils.Pair;
+import edu.upc.prop.scrabble.utils.Vector2;
 import org.junit.Test;
 import scrabble.stubs.BoardViewStub;
 
-import static org.junit.Assert.assertEquals;
+import java.util.Arrays;
+
+import static org.junit.Assert.*;
 
 public class TestMovementCleaner {
+    private Piece[] extractNecessaryPieces(Pair<Piece, Vector2>[] necessaryPiecesPositions) {
+        return Arrays.stream(necessaryPiecesPositions).map(Pair::first).toArray(Piece[]::new);
+    }
+
     @Test
     public void test1PieceCleanerVertical() {
         Board board = new JuniorBoard();
@@ -30,10 +38,10 @@ public class TestMovementCleaner {
         wordPlacer.run(pieces, 0, 0, Direction.Vertical);
         MovementCleaner sut = new MovementCleaner(board, piecesConverter);
         Movement movement = new Movement("TEST", 0, 0, Direction.Vertical);
-        Piece[] sutPieces = sut.run(movement);
+        Pair<Piece, Vector2>[] sutPieces = sut.run(movement);
 
         Piece[] estimatedPieces = new Piece[] {new Piece("E", 0), new Piece("S", 0), new Piece("T", 0)};
-        assertEquals(estimatedPieces, sutPieces);
+        assertArrayEquals(estimatedPieces, extractNecessaryPieces(sutPieces));
     }
 
     @Test
@@ -52,13 +60,13 @@ public class TestMovementCleaner {
         wordPlacer.run(pieces, 0, 0, Direction.Vertical);
         MovementCleaner sut = new MovementCleaner(board, piecesConverter);
         Movement movement = new Movement("TEST", 0, 0, Direction.Vertical);
-        Piece[] sutPieces = sut.run(movement);
+        Pair<Piece, Vector2>[] sutPieces = sut.run(movement);
 
         Piece[] estimatedPieces = new Piece[] {
                 new Piece("S", 0),
                 new Piece("T", 0)
         };
-        assertEquals(estimatedPieces, sutPieces);
+        assertArrayEquals(estimatedPieces, extractNecessaryPieces(sutPieces));
     }
 
     @Test
@@ -78,12 +86,12 @@ public class TestMovementCleaner {
         wordPlacer.run(pieces, 0, 0, Direction.Vertical);
         MovementCleaner sut = new MovementCleaner(board, piecesConverter);
         Movement movement = new Movement("TEST", 0, 0, Direction.Vertical);
-        Piece[] sutPieces = sut.run(movement);
+        Pair<Piece, Vector2>[] sutPieces = sut.run(movement);
 
         Piece[] estimatedPieces = new Piece[] {
                 new Piece("T", 0)
         };
-        assertEquals(estimatedPieces, sutPieces);
+        assertArrayEquals(estimatedPieces, extractNecessaryPieces(sutPieces));
     }
     @Test
     public void testAllPiecesCleanerVertical() {
@@ -103,10 +111,10 @@ public class TestMovementCleaner {
         wordPlacer.run(pieces, 0, 0, Direction.Vertical);
         MovementCleaner sut = new MovementCleaner(board, piecesConverter);
         Movement movement = new Movement("TEST", 0, 0, Direction.Vertical);
-        Piece[] sutPieces = sut.run(movement);
+        Pair<Piece, Vector2>[] sutPieces = sut.run(movement);
 
         Piece[] estimatedPieces = new Piece[0];
-        assertEquals(estimatedPieces, sutPieces);
+        assertArrayEquals(estimatedPieces, extractNecessaryPieces(sutPieces));
     }
 
 
@@ -124,10 +132,10 @@ public class TestMovementCleaner {
         wordPlacer.run(pieces, 0, 0, Direction.Horizontal);
         MovementCleaner sut = new MovementCleaner(board, piecesConverter);
         Movement movement = new Movement("TEST", 0, 0, Direction.Horizontal);
-        Piece[] sutPieces = sut.run(movement);
+        Pair<Piece, Vector2>[] sutPieces = sut.run(movement);
 
         Piece[] estimatedPieces = new Piece[] {new Piece("E", 0), new Piece("S", 0), new Piece("T", 0)};
-        assertEquals(estimatedPieces, sutPieces);
+        assertArrayEquals(estimatedPieces, extractNecessaryPieces(sutPieces));
     }
 
     @Test
@@ -146,13 +154,13 @@ public class TestMovementCleaner {
         wordPlacer.run(pieces, 0, 0, Direction.Horizontal);
         MovementCleaner sut = new MovementCleaner(board, piecesConverter);
         Movement movement = new Movement("TEST", 0, 0, Direction.Horizontal);
-        Piece[] sutPieces = sut.run(movement);
+        Pair<Piece, Vector2>[] sutPieces = sut.run(movement);
 
         Piece[] estimatedPieces = new Piece[] {
                 new Piece("S", 0),
                 new Piece("T", 0)
         };
-        assertEquals(estimatedPieces, sutPieces);
+        assertArrayEquals(estimatedPieces, extractNecessaryPieces(sutPieces));
     }
 
     @Test
@@ -172,12 +180,12 @@ public class TestMovementCleaner {
         wordPlacer.run(pieces, 0, 0, Direction.Horizontal);
         MovementCleaner sut = new MovementCleaner(board, piecesConverter);
         Movement movement = new Movement("TEST", 0, 0, Direction.Horizontal);
-        Piece[] sutPieces = sut.run(movement);
+        Pair<Piece, Vector2>[] sutPieces = sut.run(movement);
 
         Piece[] estimatedPieces = new Piece[] {
                 new Piece("T", 0)
         };
-        assertEquals(estimatedPieces, sutPieces);
+        assertArrayEquals(estimatedPieces, extractNecessaryPieces(sutPieces));
     }
     @Test
     public void testAllPiecesCleanerHorizontal() {
@@ -197,9 +205,9 @@ public class TestMovementCleaner {
         wordPlacer.run(pieces, 0, 0, Direction.Horizontal);
         MovementCleaner sut = new MovementCleaner(board, piecesConverter);
         Movement movement = new Movement("TEST", 0, 0, Direction.Horizontal);
-        Piece[] sutPieces = sut.run(movement);
+        Pair<Piece, Vector2>[] sutPieces = sut.run(movement);
 
         Piece[] estimatedPieces = new Piece[0];
-        assertEquals(estimatedPieces, sutPieces);
+        assertArrayEquals(estimatedPieces, extractNecessaryPieces(sutPieces));
     }
 }
