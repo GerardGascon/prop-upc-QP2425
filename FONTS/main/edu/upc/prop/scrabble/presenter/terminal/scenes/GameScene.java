@@ -13,7 +13,10 @@ import edu.upc.prop.scrabble.data.properties.Language;
 import edu.upc.prop.scrabble.domain.actionmaker.PlaceActionMaker;
 import edu.upc.prop.scrabble.domain.board.*;
 import edu.upc.prop.scrabble.domain.crosschecks.CrossCheckUpdater;
+import edu.upc.prop.scrabble.domain.dawg.WordAdder;
 import edu.upc.prop.scrabble.domain.dawg.WordValidator;
+import edu.upc.prop.scrabble.domain.localization.DictionaryReader;
+import edu.upc.prop.scrabble.domain.localization.PiecesReader;
 import edu.upc.prop.scrabble.domain.movement.MovementBoundsChecker;
 import edu.upc.prop.scrabble.domain.movement.MovementCleaner;
 import edu.upc.prop.scrabble.domain.pieces.*;
@@ -54,7 +57,9 @@ public class GameScene extends Scene {
             case Language.English -> new PiecesConverter();
         };
 
-        Bag bag = new Bag(); //TODO: Fill bag
+        Bag bag = generateBag(properties.language());
+        fillDAWG(dawg, properties.language());
+
         MovementBoundsChecker boundsChecker = new MovementBoundsChecker(board, piecesConverter);
         MovementCleaner movementCleaner = new MovementCleaner(board, piecesConverter);
         WordValidator wordValidator = new WordValidator(dawg);
@@ -72,6 +77,21 @@ public class GameScene extends Scene {
         //TODO: Add pieces to players
         //TODO: Replace with call to game class
         turnManager.run();
+    }
+
+    private static void fillDAWG(DAWG dawg, Language language) {
+        WordAdder wordAdder = new WordAdder(dawg);
+        DictionaryReader reader = new DictionaryReader();
+        String dictionary = reader.run(language);
+        dictionary.lines().forEach(wordAdder::run);
+    }
+
+    private static Bag generateBag(Language language) {
+        PiecesReader reader = new PiecesReader();
+        String piecesFile = reader.run(language);
+        PieceGenerator pieceGenerator = new PieceGenerator();
+        BagFiller bagFiller = new BagFiller(pieceGenerator);
+        return bagFiller.run(piecesFile);
     }
 
     private Player[] createPlayersData(GameProperties properties) {
