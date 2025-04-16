@@ -13,7 +13,7 @@ import edu.upc.prop.scrabble.domain.movement.MovementBoundsChecker;
 
 public class PlaceActionMaker {
     private final Player player;
-    private final MovementBoundsChecker MovementBoundsChecker;
+    private final MovementBoundsChecker movementBoundsChecker;
     private final WordValidator wordValidator;
     private final PiecesInHandGetter piecesInHandGetter;
     private final MovementCleaner movementCleaner;
@@ -21,7 +21,7 @@ public class PlaceActionMaker {
 
     public PlaceActionMaker(Player player, MovementBoundsChecker MovementBoundsChecker, WordValidator wordValidator, PiecesInHandGetter piecesInHandGetter, MovementCleaner movementCleaner, WordPlacer wordPlacer) {
         this.player = player;
-        this.MovementBoundsChecker = MovementBoundsChecker;
+        this.movementBoundsChecker = MovementBoundsChecker;
         this.wordValidator = wordValidator;
         this.piecesInHandGetter = piecesInHandGetter;
         this.movementCleaner = movementCleaner;
@@ -45,7 +45,7 @@ public class PlaceActionMaker {
     }
 
     private void assertInsideOfBounds(Movement movement) {
-        if (!MovementBoundsChecker.run(movement))
+        if (!movementBoundsChecker.run(movement))
             throw new MovementOutsideOfBoardException("The movement \"" + movement + "\" is outside of the board bounds.");
     }
 }

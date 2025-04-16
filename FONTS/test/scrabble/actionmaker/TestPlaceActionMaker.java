@@ -12,6 +12,8 @@ import edu.upc.prop.scrabble.domain.board.WordGetter;
 import edu.upc.prop.scrabble.domain.board.WordPlacer;
 import edu.upc.prop.scrabble.domain.dawg.WordAdder;
 import edu.upc.prop.scrabble.domain.dawg.WordValidator;
+import edu.upc.prop.scrabble.domain.exceptions.MovementOutsideOfBoardException;
+import edu.upc.prop.scrabble.domain.exceptions.WordDoesNotExistException;
 import edu.upc.prop.scrabble.domain.movement.MovementBoundsChecker;
 import edu.upc.prop.scrabble.domain.movement.MovementCleaner;
 import edu.upc.prop.scrabble.domain.pieces.PiecesConverter;
@@ -62,5 +64,33 @@ public class TestPlaceActionMaker {
         placeActionMaker.run(movement);
 
         assertTrue(boardViewStub.getUpdateCallReceived());
+    }
+
+    @Test(expected = WordDoesNotExistException.class)
+    public void placePieceThrowsExceptionIfWordDoesNotExist() {
+        Movement movement = new Movement("POTATO", 1, 1, Direction.Horizontal);
+
+        placeActionMaker.run(movement);
+    }
+
+    @Test(expected = MovementOutsideOfBoardException.class)
+    public void placePieceThrowsExceptionIfMovementIsOutsideOfBoard() {
+        Movement movement = new Movement("POTATO", 10, 1, Direction.Horizontal);
+        WordAdder wordAdder = new WordAdder(dawg);
+        wordAdder.run("POTATO");
+
+        placeActionMaker.run(movement);
+    }
+
+    @Test
+    public void placePieceThrowsExceptionIfContainsCombinedWordThatDoesNotExist() {
+        Movement movement1 = new Movement("HOLA", 1, 1, Direction.Horizontal);
+        Movement movement2 = new Movement("CASA", 2, 1, Direction.Horizontal);
+        WordAdder wordAdder = new WordAdder(dawg);
+        wordAdder.run("HOLA");
+        wordAdder.run("CASA");
+
+        placeActionMaker.run(movement1);
+        assertThrows(WordDoesNotExistException.class, () -> placeActionMaker.run(movement2));
     }
 }
