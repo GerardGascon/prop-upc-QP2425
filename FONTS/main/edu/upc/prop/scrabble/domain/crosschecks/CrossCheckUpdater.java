@@ -5,7 +5,9 @@ import edu.upc.prop.scrabble.data.board.Board;
 import edu.upc.prop.scrabble.data.crosschecks.CrossChecks;
 import edu.upc.prop.scrabble.data.dawg.DAWG;
 import edu.upc.prop.scrabble.data.dawg.Node;
+import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.domain.dawg.WordValidator;
+import edu.upc.prop.scrabble.domain.pieces.PiecesConverter;
 import edu.upc.prop.scrabble.utils.Direction;
 
 public class CrossCheckUpdater {
@@ -13,12 +15,14 @@ public class CrossCheckUpdater {
     private final Board board;
     private final WordValidator wordValidator;
     private final DAWG dawg;
+    private final PiecesConverter piecesConverter;
 
     public CrossCheckUpdater(CrossChecks crossChecks, Board board,  DAWG dawg) {
         this.crossChecks = crossChecks;
         this.board = board;
         this.dawg = dawg;
         this.wordValidator = new WordValidator(dawg);
+        this.piecesConverter = new PiecesConverter();
     }
 
     //para cada casilla su array de bits que representa que letras se pueden poner y cuales no
@@ -35,8 +39,12 @@ public class CrossCheckUpdater {
 
     private void calculateHorizontalCrossChecks(Movement move) {
         int beginningOfAddedWord = move.x();
-        //!!!HACER QUE DEPENDIENDO DEL IDIOMA SE COJAN LAS PIEZAS QUE TIENEN VARIOS CARACTERES!!-------------------------------------
-        int endOfAddedWord = move.x() + move.word().length()-1;
+        //-----------------------------------REVISAR ESTO--------------------------------------------------------
+        //que vaya con todos los idiomas
+        Piece[] size= piecesConverter.run(move.word());//cuantas piezas ocupa en el tablero
+        //para casos con piezas que sean mas de una letra
+        int endOfAddedWord = move.x() + size.length-1;
+        //int endOfAddedWord = move.x() + move.word().length()-1;
         calculateHorizontalBeginCrossCheck(move, beginningOfAddedWord);
         calculateHorizontalEndCrossCheck(move, endOfAddedWord);
     }
@@ -85,7 +93,10 @@ public class CrossCheckUpdater {
 
     private void calculateVerticalCrossChecks(Movement move) {
         int beginningOfAddedWord = move.y();
-        int endOfAddedWord = move.y() + move.word().length()-1;//-1 pq empezamos en el 0
+        //mirar que vaya con todos los idiomas
+        Piece[] size= piecesConverter.run(move.word());
+        int endOfAddedWord = move.y() + size.length-1;
+        //int endOfAddedWord = move.y() + move.word().length()-1;//-1 pq empezamos en el 0
         calculateVerticalBeginCrossCheck(move, beginningOfAddedWord);
         calculateVerticalEndCrossCheck(move, endOfAddedWord);
     }
