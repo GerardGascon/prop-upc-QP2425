@@ -1,3 +1,8 @@
 .gradle
 .idea
 build
+
+EXE/generated
+EXE/reports
+EXE/test-results
+EXE/tmp
