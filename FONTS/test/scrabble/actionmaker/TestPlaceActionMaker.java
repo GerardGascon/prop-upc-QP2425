@@ -194,4 +194,39 @@ public class TestPlaceActionMaker {
         assertEquals("S", player.getHand()[2].letter());
         assertEquals("T", player.getHand()[3].letter());
     }
+
+    @Test
+    public void continuousPlacesCorrectlyPlacedOnBoard() {
+        Movement movement1 = new Movement("BOIL", 8, 8, Direction.Vertical);
+        Movement movement2 = new Movement("BOILER", 8, 8, Direction.Vertical);
+        Movement movement3 = new Movement("REST", 8, 13, Direction.Horizontal);
+        WordAdder wordAdder = new WordAdder(dawg);
+        wordAdder.run("BOIL");
+        wordAdder.run("BOILER");
+        wordAdder.run("REST");
+
+        player.addPiece(new Piece("B", 1));
+        player.addPiece(new Piece("O", 1));
+        player.addPiece(new Piece("I", 1));
+        player.addPiece(new Piece("L", 1));
+        player.addPiece(new Piece("E", 1));
+        player.addPiece(new Piece("R", 1));
+        player.addPiece(new Piece("E", 1));
+        player.addPiece(new Piece("S", 1));
+        player.addPiece(new Piece("T", 1));
+
+        placeActionMaker.run(movement1);
+        placeActionMaker.run(movement2);
+        placeActionMaker.run(movement3);
+
+        assertEquals("B", board.getCellPiece(8, 8).letter());
+        assertEquals("O", board.getCellPiece(8, 9).letter());
+        assertEquals("I", board.getCellPiece(8, 10).letter());
+        assertEquals("L", board.getCellPiece(8, 11).letter());
+        assertEquals("E", board.getCellPiece(8, 12).letter());
+        assertEquals("R", board.getCellPiece(8, 13).letter());
+        assertEquals("E", board.getCellPiece(9, 13).letter());
+        assertEquals("S", board.getCellPiece(10, 13).letter());
+        assertEquals("T", board.getCellPiece(11, 13).letter());
+    }
 }

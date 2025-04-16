@@ -13,11 +13,10 @@ import edu.upc.prop.scrabble.domain.game.GameStepper;
 import edu.upc.prop.scrabble.domain.pieces.PiecesInHandGetter;
 import edu.upc.prop.scrabble.domain.movement.MovementCleaner;
 import edu.upc.prop.scrabble.domain.movement.MovementBoundsChecker;
-import edu.upc.prop.scrabble.utils.Direction;
+import edu.upc.prop.scrabble.utils.Pair;
 import edu.upc.prop.scrabble.utils.Vector2;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 /**
  * Manages the steps needed to perform a place move inside the game.
@@ -54,24 +53,27 @@ public class PlaceActionMaker {
      */
     public void run(Movement movement) {
         assertInsideOfBounds(movement);
-        Piece[] necessaryPieces = movementCleaner.run(movement);
-        assertNewWordsExist(necessaryPieces, movement.x(), movement.y(), movement.direction());
+        Pair<Piece, Vector2>[] necessaryPiecesPositions = movementCleaner.run(movement);
+        Piece[] necessaryPieces = extractNecessaryPieces(necessaryPiecesPositions);
+        Vector2[] necessaryPositions = extractNecessaryPositions(necessaryPiecesPositions);
+
+        assertNewWordsExist(necessaryPieces, necessaryPositions);
         Piece[] piecesInHand = piecesInHandGetter.run(necessaryPieces);
         wordPlacer.run(piecesInHand, movement.x(), movement.y(), movement.direction());
         crossCheckUpdater.run(movement);
         stepper.run();
     }
 
-    private void assertNewWordsExist(Piece[] pieces, int x, int y, Direction direction) {
-        List<Vector2> positions = new ArrayList<>();
-        for (int i = 0; i < pieces.length; i++) {
-            if (direction == Direction.Horizontal)
-                positions.add(new Vector2(x + i, y));
-            else
-                positions.add(new Vector2(x, y + i));
-        }
+    private Piece[] extractNecessaryPieces(Pair<Piece, Vector2>[] necessaryPiecesPositions) {
+        return Arrays.stream(necessaryPiecesPositions).map(Pair::first).toArray(Piece[]::new);
+    }
 
-        String[] newWords = presentPiecesWordCompleter.run(positions.toArray(Vector2[]::new), pieces);
+    private Vector2[] extractNecessaryPositions(Pair<Piece, Vector2>[] necessaryPiecesPositions) {
+        return Arrays.stream(necessaryPiecesPositions).map(Pair::second).toArray(Vector2[]::new);
+    }
+
+    private void assertNewWordsExist(Piece[] pieces, Vector2[] positions) {
+        String[] newWords = presentPiecesWordCompleter.run(positions, pieces);
         for (String word : newWords)
             assertWordExists(word);
     }

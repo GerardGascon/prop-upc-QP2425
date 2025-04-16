@@ -46,10 +46,15 @@ public class WordPlacer {
     private Vector2[] placeWordVertical(Piece[] pieces, int x, int y) {
         Vector2[] positions = new Vector2[pieces.length];
 
-        for (int i = 0; i < pieces.length; i++) {
-            Vector2 pos = new Vector2(x, y + i);
-            board.placePiece(pieces[i], pos.x, pos.y);
-            positions[i] = pos;
+        for (int i = y, j = 0; i < board.getSize(); i++) {
+            Vector2 pos = new Vector2(x, i);
+            if (board.getCellPiece(pos.x, pos.y) != null)
+                continue;
+            board.placePiece(pieces[j], pos.x, pos.y);
+            positions[j] = pos;
+            j++;
+            if (j == pieces.length)
+                break;
         }
         return positions;
     }
@@ -57,10 +62,15 @@ public class WordPlacer {
     private Vector2[] placeWordHorizontal(Piece[] pieces, int x, int y) {
         Vector2[] positions = new Vector2[pieces.length];
 
-        for (int i = 0; i < pieces.length; i++) {
-            Vector2 pos = new Vector2(x + i, y);
-            board.placePiece(pieces[i], pos.x, pos.y);
-            positions[i] = pos;
+        for (int i = x, j = 0; i < board.getSize(); i++) {
+            Vector2 pos = new Vector2(i, y);
+            if (board.getCellPiece(pos.x, pos.y) != null)
+                continue;
+            board.placePiece(pieces[j], pos.x, pos.y);
+            positions[j] = pos;
+            j++;
+            if (j == pieces.length)
+                break;
         }
         return positions;
     }
