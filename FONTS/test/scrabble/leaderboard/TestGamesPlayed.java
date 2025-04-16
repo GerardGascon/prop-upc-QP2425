@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
 public class TestGamesPlayed {
 
     @Test
-    public void testRunReturnsCorrectWinRatesSorted() {
+    public void testRunReturnsCorrectGamesPlayedSorted() {
 
         Leaderboard leaderboard = new Leaderboard();
 
