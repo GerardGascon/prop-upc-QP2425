@@ -53,7 +53,7 @@ public class TestPlaceActionMaker {
         MovementBoundsChecker boundsChecker = new MovementBoundsChecker(board, piecesConverter);
         dawg = new DAWG();
         WordValidator wordValidator = new WordValidator(dawg);
-        Bag bag = new Bag();
+        bag = new Bag();
         piecePrinterStub = new PiecePrinterStub();
         IRand rand = new RandStub(0);
         PiecesInHandGetter piecesInHandGetter = new PiecesInHandGetter(bag, player, piecePrinterStub, rand);
@@ -130,5 +130,30 @@ public class TestPlaceActionMaker {
         placeActionMaker.run(movement);
 
         assertEquals(0, player.getHand().length);
+    }
+
+    @Test
+    public void placedPiecesInHandGetReplacedByBagPieces() {
+        Movement movement = new Movement("HOLA", 1, 1, Direction.Horizontal);
+        bag.add(new Piece("T", 1));
+        bag.add(new Piece("E", 1));
+        bag.add(new Piece("S", 1));
+        bag.add(new Piece("T", 1));
+
+        WordAdder wordAdder = new WordAdder(dawg);
+        wordAdder.run("HOLA");
+
+        player.addPiece(new Piece("H", 1));
+        player.addPiece(new Piece("O", 1));
+        player.addPiece(new Piece("L", 1));
+        player.addPiece(new Piece("A", 1));
+
+        placeActionMaker.run(movement);
+
+        assertEquals(4, player.getHand().length);
+        assertEquals("T", player.getHand()[0].letter());
+        assertEquals("E", player.getHand()[1].letter());
+        assertEquals("S", player.getHand()[2].letter());
+        assertEquals("T", player.getHand()[3].letter());
     }
 }
