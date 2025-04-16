@@ -95,12 +95,12 @@ public class GameScene extends Scene {
     }
 
     private Player[] createPlayersData(GameProperties properties) {
-        return new Player[]{
-                new Player("Player1", false),
-                new Player("Player2", false),
-                new Player("Player3", false),
-                new Player("Player4", false),
-        };
+        List<Player> players = new ArrayList<>();
+        for (String name : properties.players())
+            players.add(new Player(name, false));
+        for (String name : properties.Cpus())
+            players.add(new Player(name, true));
+        return players.toArray(Player[]::new);
     }
 
     private PlayerObject[] instantiatePlayers(Player[] players, Board board, BoardView boardView,
