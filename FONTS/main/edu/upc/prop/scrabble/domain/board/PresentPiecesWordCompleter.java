@@ -1,6 +1,5 @@
 package edu.upc.prop.scrabble.domain.board;
 
-import edu.upc.prop.scrabble.data.Movement;
 import edu.upc.prop.scrabble.data.board.Board;
 import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.utils.Direction;
@@ -21,36 +20,41 @@ public class PresentPiecesWordCompleter {
 
     public String[] run(Vector2[] positions, Piece[] pieces) {
         Direction direction = getWordDirection(positions);
-
-        String alreadyPresentWords = getPresentWord(positions, pieces, direction);
-
-        String[] result = new String[] {
-                alreadyPresentWords
-        };
-        return result;
+        return getPresentWords(positions, pieces, direction);
     }
 
-    private String getPresentWord(Vector2[] positions, Piece[] pieces, Direction direction) {
-        StringBuilder result = new StringBuilder();
-        for (int i = 0; i < positions.length; i++) {
-            Piece[] presentPieces = getPresentPieces(positions[i], pieces[i], direction);
-            if (presentPieces.length <= 1)
-                continue;
-
-            for (Piece presentPiece : presentPieces) {
-                result.append(presentPiece.letter());
-            }
+    private String[] getPresentWords(Vector2[] positions, Piece[] pieces, Direction direction) {
+        List<String> words = new ArrayList<>();
+        if (direction == null) {
+            words.addAll(Arrays.stream(getPresentWords(positions, pieces, Direction.Horizontal)).toList());
+            words.addAll(Arrays.stream(getPresentWords(positions, pieces, Direction.Vertical)).toList());
+            return words.toArray(String[]::new);
         }
 
-        return result.toString();
+        if (direction == Direction.Horizontal){
+            String word = getWord(positions, pieces, direction);
+            if (word != null)
+                words.add(word);
+        }
+
+        if (direction == Direction.Vertical){
+            String word = getWord(positions, pieces, direction);
+            if (word != null)
+                words.add(word);
+        }
+
+        return words.toArray(String[]::new);
     }
 
-    private Piece[] getPresentPieces(Vector2 position, Piece piece, Direction direction) {
-        Direction directionToCheck = direction == Direction.Horizontal ? Direction.Vertical : Direction.Horizontal;
+    private String getWord(Vector2[] positions, Piece[] pieces, Direction direction) {
+        Piece[] wordPieces = wordGetter.run(pieces, positions, direction);
+        if (wordPieces.length <= 1)
+            return null;
 
-        return wordGetter.run(
-                new Piece[]{piece}, new Vector2[]{position}, directionToCheck
-        );
+        StringBuilder result = new StringBuilder();
+        for (Piece wordPiece : wordPieces)
+            result.append(wordPiece.letter());
+        return result.toString();
     }
 
     private Direction getWordDirection(Vector2[] positions) {

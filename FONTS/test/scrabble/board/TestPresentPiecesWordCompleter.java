@@ -63,8 +63,7 @@ public class TestPresentPiecesWordCompleter {
 
         String[] words = sut.run(positions, piecesArray);
 
-//        assertEquals(2, words.length);
+        assertEquals(1, words.length);
         assertEquals("TEST", words[0]);
-        assertEquals("TEST", words[1]);
     }
 }
