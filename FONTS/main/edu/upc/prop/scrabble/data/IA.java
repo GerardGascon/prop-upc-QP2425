@@ -66,7 +66,7 @@ public class IA {
         Boolean found = false;
         Integer boardSize = board.getSize();
         int centerPos = boardSize / 2;
-        Vector<Piece> hand = bot.getHand();
+        Piece[] hand = bot.getHand();
         // Caso primer movimiento (tablero vacío, colocar al menos una pieza en el centro )
         if (board.isCellEmpty(centerPos, centerPos)) {
             findCenterPlay(centerPos, hand);
@@ -83,14 +83,14 @@ public class IA {
     //intenta formar una palabra en el centro de manera horizontal
     //funcion a parte porque es mucho mas sencillo al ser el movimiento inicial
     //da igual verticallmente porque es lo mismo no hay nada que 'moleste'
-    private void findCenterPlay(int centerPos,Vector<Piece> hand) {
+    private void findCenterPlay(int centerPos,Piece[] hand) {
 
         //supongo que el tablero nuca será mas pequeño que 7 desde el centro
         //SINO CUIDADO por si acaso
         for (int l = 1; l < 7; l++) {//tamaño de la parte izquierda
             // Iniciamos el algoritmo de LeftPart desde el nodo raíz del DAWG
             StringBuilder partialWord = new StringBuilder();
-            Vector<Piece> copiamano = hand;
+            Piece[] copiamano = hand;
 
             // Llamamos a LeftPart (siempre tendremos espacio)
             //leftPart(partialWord, l, copiamano, centerPos);

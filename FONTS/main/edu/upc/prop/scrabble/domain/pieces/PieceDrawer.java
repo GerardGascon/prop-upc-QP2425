@@ -2,50 +2,60 @@ package edu.upc.prop.scrabble.domain.pieces;
 import edu.upc.prop.scrabble.data.Player;
 import edu.upc.prop.scrabble.data.pieces.Bag;
 import edu.upc.prop.scrabble.data.pieces.Piece;
+import edu.upc.prop.scrabble.domain.exceptions.NotEnoughPiecesInBagException;
+import edu.upc.prop.scrabble.utils.IRand;
+
 import java.lang.reflect.InaccessibleObjectException;
 import java.util.*;
 
+/***
+ * Handles the exchange of pieces between a player's hand and the game bag. It returns unwanted pieces to the bag and
+ * draw new random pieces from the bag.
+ * @author Gina Escofet GonzÃ¡lez
+ */
 public class PieceDrawer {
     private final Bag bag;
     private final Player player;
+    private final IRand rand;
 
-    public PieceDrawer(Bag bag, Player player) {
+    /***
+     * Creates a PieceDrawer for the specified game bag and player.
+     * @param bag The game piece bag.
+     * @param player The player making the exchange.
+     */
+    public PieceDrawer(Bag bag, Player player, IRand rand) {
         this.bag = bag;
         this.player = player;
+        this.rand = rand;
     }
 
-    // pre: es vol posar una fitxa al taulell
-    // post: agafar n fitxes random de la bossa
-    public Piece[] run(Piece[] piecesToSwap) {
-        ArrayList<Piece> drawnPieces = new ArrayList<>();
-        if (bag.isEmpty()) return drawnPieces.toArray(new Piece[0]);
+    /***
+     * Exchanges pieces between the player's hand and the bag.
+     * @param piecesToSwap Pieces to return to the bag.
+     */
+    public void run(Piece[] piecesToSwap) {
+        if (bag.getSize() < piecesToSwap.length)
+            throw new NotEnoughPiecesInBagException("Not enough pieces in bag");
 
-        Random rand = new Random();
-        Vector<Piece> hand = player.getHand();
+        List<Piece> drawnPieces = collectPiecesFromBag(piecesToSwap);
+        swapPiecesWithPlayer(piecesToSwap);
+        for (Piece piece : drawnPieces)
+            player.addPiece(piece);
+    }
 
-        int n = piecesToSwap.length;
-        int i = 0;
-        while (i < n && !bag.isEmpty()) {
-            int r = rand.nextInt(bag.getSize());
-            Piece drawnPiece = bag.getPiece(r);
-            drawnPieces.add(drawnPiece);
-            ++i;
+    private void swapPiecesWithPlayer(Piece[] piecesToSwap) {
+        for (Piece piece : piecesToSwap) {
+            player.removePiece(piece);
+            bag.add(piece);
         }
-        if (hand.isEmpty()) {       //inici->omplir la mà i ja
-            for (int j = 0; j < drawnPieces.size(); ++j) {
-                Piece p = drawnPieces.get(i);
-                hand.add(p);
-            }
+    }
+
+    private List<Piece> collectPiecesFromBag(Piece[] piecesToSwap) {
+        List<Piece> drawnPieces = new ArrayList<>();
+        for (int i = 0; i < piecesToSwap.length; i++) {
+            Piece randomBagPiece = bag.draw(rand.nextInt(bag.getSize()));
+            drawnPieces.add(randomBagPiece);
         }
-        else{   // durant partida
-            for (i = 0; i < drawnPieces.size(); i++) {
-                Piece oldPiece = piecesToSwap[i];
-                player.RemovePiece(oldPiece);
-                bag.addPiece(oldPiece);
-                player.AddPiece(drawnPieces.get(i));
-                hand = player.getHand();
-            }
-        }
-        return drawnPieces.toArray(new Piece[0]);
+        return drawnPieces;
     }
 }

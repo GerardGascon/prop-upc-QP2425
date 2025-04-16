@@ -5,9 +5,10 @@ import edu.upc.prop.scrabble.data.pieces.Piece;
 
 import java.util.ArrayList;
 
-// CASOS CATALÀ: L·L, NY
-// CASOS CASTELLÀ: LL, RR, CH
-// CASOS ANGLÈS: cap
+/***
+ * Class that converts a string of letters into pieces in English.
+ * @author Gina Escofet González
+ */
 public class PiecesConverter {
     public Piece[] run(String word) {
         ArrayList<Piece> pieces = new ArrayList<>();

@@ -1,7 +1,11 @@
 package edu.upc.prop.scrabble.domain.pieces;
 
 import edu.upc.prop.scrabble.data.pieces.Piece;
-
+/***
+ * Class that converts a string of letters into pieces in Spanish.
+ * It handles cases like RR, LL, CH
+ * @author Gina Escofet González
+ */
 public class SpanishPiecesConverter extends PiecesConverter {
     @Override
     protected Piece parseSpecialPiece(char c, int i, String word) {

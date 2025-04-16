@@ -5,7 +5,9 @@ import edu.upc.prop.scrabble.data.board.Board;
 import edu.upc.prop.scrabble.data.crosschecks.CrossChecks;
 import edu.upc.prop.scrabble.data.dawg.DAWG;
 import edu.upc.prop.scrabble.data.dawg.Node;
+import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.domain.dawg.WordValidator;
+import edu.upc.prop.scrabble.domain.pieces.PiecesConverter;
 import edu.upc.prop.scrabble.utils.Direction;
 
 public class CrossCheckUpdater {
@@ -13,12 +15,15 @@ public class CrossCheckUpdater {
     private final Board board;
     private final WordValidator wordValidator;
     private final DAWG dawg;
+    private final PiecesConverter piecesConverter;
 
-    public CrossCheckUpdater(CrossChecks crossChecks, Board board, WordValidator wordValidator, DAWG dawg) {
+    //al crearlo hacer tmb la llamada con el piececonverter que corresponda al idioma correcto
+    public CrossCheckUpdater(PiecesConverter pc,  CrossChecks crossChecks, Board board,  DAWG dawg) {
         this.crossChecks = crossChecks;
         this.board = board;
-        this.wordValidator = wordValidator;
         this.dawg = dawg;
+        this.wordValidator = new WordValidator(dawg);
+        this.piecesConverter = pc;
     }
 
     //para cada casilla su array de bits que representa que letras se pueden poner y cuales no
@@ -35,16 +40,25 @@ public class CrossCheckUpdater {
 
     private void calculateHorizontalCrossChecks(Movement move) {
         int beginningOfAddedWord = move.x();
-        int endOfAddedWord = move.x() + move.word().length();
+        //-----------------------------------REVISAR ESTO--------------------------------------------------------
+        //que vaya con todos los idiomas
+        Piece[] size= piecesConverter.run(move.word());//cuantas piezas ocupa en el tablero
+        //para casos con piezas que sean mas de una letra
+        int endOfAddedWord = move.x() + size.length-1;
+        //int endOfAddedWord = move.x() + move.word().length()-1;
         calculateHorizontalBeginCrossCheck(move, beginningOfAddedWord);
         calculateHorizontalEndCrossCheck(move, endOfAddedWord);
     }
 
     private void calculateHorizontalEndCrossCheck(Movement move, int endOfAddedWord) {
+        //System.out.println("Llamada a funcion");
         if (!board.isCellValid(endOfAddedWord + 1, move.y()) || !board.isCellEmpty(endOfAddedWord + 1, move.y()))
             return;
-
-        int finalNode = getFinalNode(move.word());
+        //System.out.println("WE'RE IN");
+        //System.out.println(endOfAddedWord+1);
+        //System.out.println(move.y());
+        Node finalNode = getFinalNode(move.word());
+        //System.out.println(finalNode.getSuccessor('A'));
         for (int j = 0; j < crossChecks.getLetters().length; ++j) {
             //probamos de ver si podemos avanzar en el dawg a esas letras
             if (!nextNodeTerminal(finalNode, crossChecks.getLetters()[j])) {
@@ -58,16 +72,19 @@ public class CrossCheckUpdater {
         if (!board.isCellValid(beginningOfAddedWord - 1, move.y()) || !board.isCellEmpty(beginningOfAddedWord - 1, move.y()))
             return;
 
-        String[] wordInBoard = new String[move.word().length() + 1];
-        for (int i = beginningOfAddedWord; i < beginningOfAddedWord + move.word().length(); ++i)
-            wordInBoard[i - beginningOfAddedWord + 1] = board.getCellPiece(i, move.y()).letter();
-
+        String[] wordInBoard = new String[2];
+        /*for (int i = beginningOfAddedWord; i < beginningOfAddedWord + move.word().length(); ++i)
+            wordInBoard[i - beginningOfAddedWord + 1] = board.getCellPiece(i, move.y()).letter();*/
+        wordInBoard[1] = move.word();
         //prueba a poner todas las letras del diccionario delante
+
         for (int i = 0; i < crossChecks.getLetters().length; ++i) {
             wordInBoard[0] = crossChecks.getLetters()[i];
             String word = "";
             for (String s : wordInBoard)
                 word = word.concat(s);
+            //System.out.println("Current word" + word);
+            //System.out.println(wordValidator.run(word));
             if (!wordValidator.run(word)) {
                 crossChecks.setCrossCheckHor(beginningOfAddedWord - 1, move.y(), i);
                 //pone a 1 la letra que ha salido que no hace una palabra valida
@@ -77,7 +94,10 @@ public class CrossCheckUpdater {
 
     private void calculateVerticalCrossChecks(Movement move) {
         int beginningOfAddedWord = move.y();
-        int endOfAddedWord = move.y() + move.word().length();
+        //mirar que vaya con todos los idiomas
+        Piece[] size= piecesConverter.run(move.word());
+        int endOfAddedWord = move.y() + size.length-1;
+        //int endOfAddedWord = move.y() + move.word().length()-1;//-1 pq empezamos en el 0
         calculateVerticalBeginCrossCheck(move, beginningOfAddedWord);
         calculateVerticalEndCrossCheck(move, endOfAddedWord);
     }
@@ -89,11 +109,11 @@ public class CrossCheckUpdater {
         //hacer que lo de ponerlo detras sea eficiente consultarlo con el dawg
         //llegar hasta el nodo del que seria el final de la palabra y para ese nodo mirar si luego tiene otro siguiente
         // con la letra que toca y sea 'terminal'
-        int finalNode = getFinalNode(move.word());
+        Node finalNode = getFinalNode(move.word());
         for (int j = 0; j < crossChecks.getLetters().length; ++j) {
             //probamos de ver si podemos avanzar en el dawg a esas letras
             if (!nextNodeTerminal(finalNode, crossChecks.getLetters()[j])) {
-                crossChecks.setCrossCheckHor(move.x(), endOfAddedWord + 1, j);
+                crossChecks.setCrossCheckVer(move.x(), endOfAddedWord + 1, j);
                 //pone a 1 la letra que ha salido que no hace una palabra valida
             }
         }
@@ -103,38 +123,44 @@ public class CrossCheckUpdater {
         if (!board.isCellValid(move.x(), beginningOfAddedWord - 1) || !board.isCellEmpty(move.x(), beginningOfAddedWord - 1))
             return;
 
-        String[] wordInBoard = new String[move.word().length() + 1];//+1 pq hay que hacer hueco al principio para la letra a probar si va
-        for (int i = beginningOfAddedWord; i < beginningOfAddedWord + move.word().length(); ++i)
-            wordInBoard[i - beginningOfAddedWord + 1] = board.getCellPiece(move.x(), i).letter();
+        String[] wordInBoard = new String[2];//+1 pq hay que hacer hueco al principio para la letra a probar si va
+        /*for (int i = beginningOfAddedWord; i < beginningOfAddedWord + move.word().length(); ++i)
+            wordInBoard[i - beginningOfAddedWord + 1] = board.getCellPiece(move.x(), i).letter();*/
+        wordInBoard[1] = move.word();
         //prueba a poner todas las letras del diccionario delante
         for (int i = 0; i < crossChecks.getLetters().length; ++i) {
             wordInBoard[0] = crossChecks.getLetters()[i];
             String word = "";
             for (String s : wordInBoard)
                 word = word.concat(s);
+
             if (!wordValidator.run(word)) {
-                crossChecks.setCrossCheckHor(move.x(), beginningOfAddedWord - 1, i);
+                crossChecks.setCrossCheckVer(move.x(), beginningOfAddedWord - 1, i);
                 //pone a 1 la letra que ha salido que no hace una palabra valida
             }
         }
     }
 
     //sabes que la palabra ya esta bien (estaba puesta en el tablero), quieres el nodo de final
-    private int getFinalNode(String word) {
+    private Node getFinalNode(String word) {
         Node current = dawg.getRoot();
         for (int i = 0; i < word.length(); i++) {
             current = current.getSuccessor(word.charAt(i));
+            //System.out.println(i);
+            //System.out.println(current.getSuccessor('s'));
         }
-        return current.hashCode();
+
+        return current;
     }
 
     //dado un nodo y una pieza dice si en sus sucesores se encuentra esa pieza y es final
-    private boolean nextNodeTerminal(int hash, String piece) {
-        Node current = dawg.getNode(hash);
-        //if(current == null) return false; siempre deberiamos de encontrarlo
+    private boolean nextNodeTerminal(Node almostlast, String piece) {
+        if(almostlast == null) return false;
+        Node current = almostlast;
         for (int i = 0; i < piece.length(); i++) {
             Node successor = current.getSuccessor(piece.charAt(i));
             if (successor == null) return false;
+            current = successor;
         }
         return current.isEndOfWord();
     }

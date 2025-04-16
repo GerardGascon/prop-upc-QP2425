@@ -10,25 +10,25 @@ import static org.junit.Assert.assertTrue;
 public class TestBag {
     @Test
     public void bagDefaultsToEmpty() {
-        Bag bag = new Bag();
+        Bag sut = new Bag();
 
-        assertTrue(bag.isEmpty());
+        assertTrue(sut.isEmpty());
     }
     @Test
     public void bagAddsOnePiece() {
-        Bag bag = new Bag();
+        Bag sut = new Bag();
         Piece piece = new Piece("a", 1);
-        bag.addPiece(piece);
+        sut.add(piece);
 
-        assertEquals(1, bag.getSize());
+        assertEquals(1, sut.getSize());
     }
     @Test
     public void bagGetsOnePiece() {
-        Bag bag = new Bag();
+        Bag sut = new Bag();
         Piece piece = new Piece("a", 1);
-        bag.addPiece(piece);
+        sut.add(piece);
 
-        assertEquals(piece, bag.getPiece(0));
+        assertEquals(piece, sut.draw(0));
     }
 
 }

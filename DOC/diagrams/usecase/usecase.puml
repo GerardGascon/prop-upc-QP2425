@@ -8,17 +8,17 @@ package UI {
 }
 
 package Settings {
-	usecase SetGameMode
 	usecase SetBoardSize
 	usecase SetLanguage
 	usecase SetNumPlayers
 }
 
 package Gameplay {
+	usecase ThinkMove
+	usecase MakeMove
 	usecase PutPiece
-	usecase SaveScore
-	usecase RemovePiece
 	usecase DrawPiece
+	usecase SkipTurn
 }
 
 package Repository {
@@ -27,21 +27,26 @@ package Repository {
 }
 
 actor Player
+actor CPU
 
-SeeRanking -- Player
-PauseGame -- Player
+Player --> SeeRanking
+Player --> PauseGame
 
-SetGameMode -- Player
-SetBoardSize -- Player
-SetLanguage -- Player
-SetNumPlayers -- Player
+SetBoardSize <-- Player
+SetLanguage <-- Player
+SetNumPlayers <-- Player
 
-Player -- PutPiece
-Player -- SaveScore
-Player -- RemovePiece
-Player -- DrawPiece
+Player --> MakeMove
 
-Player -- SaveGame
-Player -- LoadGame
+CPU --> ThinkMove
+
+MakeMove --> PutPiece: <<extends>>
+MakeMove --> DrawPiece: <<extends>>
+MakeMove --> SkipTurn: <<extends>>
+
+ThinkMove --> MakeMove: <<includes>>
+
+Player --> SaveGame
+Player --> LoadGame
 
 @enduml
