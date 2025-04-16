@@ -9,6 +9,7 @@ import edu.upc.prop.scrabble.domain.crosschecks.CrossCheckUpdater;
 import edu.upc.prop.scrabble.domain.dawg.WordValidator;
 import edu.upc.prop.scrabble.domain.exceptions.MovementOutsideOfBoardException;
 import edu.upc.prop.scrabble.domain.exceptions.WordDoesNotExistException;
+import edu.upc.prop.scrabble.domain.game.GameStepper;
 import edu.upc.prop.scrabble.domain.pieces.PiecesInHandGetter;
 import edu.upc.prop.scrabble.domain.movement.MovementCleaner;
 import edu.upc.prop.scrabble.domain.movement.MovementBoundsChecker;
@@ -30,8 +31,9 @@ public class PlaceActionMaker {
     private final WordPlacer wordPlacer;
     private final PresentPiecesWordCompleter presentPiecesWordCompleter;
     private final CrossCheckUpdater crossCheckUpdater;
+    private final GameStepper stepper;
 
-    public PlaceActionMaker(MovementBoundsChecker MovementBoundsChecker, WordValidator wordValidator, PiecesInHandGetter piecesInHandGetter, MovementCleaner movementCleaner, WordPlacer wordPlacer, PresentPiecesWordCompleter presentPiecesWordCompleter, CrossCheckUpdater crossCheckUpdater) {
+    public PlaceActionMaker(MovementBoundsChecker MovementBoundsChecker, WordValidator wordValidator, PiecesInHandGetter piecesInHandGetter, MovementCleaner movementCleaner, WordPlacer wordPlacer, PresentPiecesWordCompleter presentPiecesWordCompleter, CrossCheckUpdater crossCheckUpdater, GameStepper stepper) {
         this.movementBoundsChecker = MovementBoundsChecker;
         this.wordValidator = wordValidator;
         this.piecesInHandGetter = piecesInHandGetter;
@@ -39,6 +41,7 @@ public class PlaceActionMaker {
         this.wordPlacer = wordPlacer;
         this.presentPiecesWordCompleter = presentPiecesWordCompleter;
         this.crossCheckUpdater = crossCheckUpdater;
+        this.stepper = stepper;
     }
 
     /**
@@ -56,6 +59,7 @@ public class PlaceActionMaker {
         Piece[] piecesInHand = piecesInHandGetter.run(necessaryPieces);
         wordPlacer.run(piecesInHand, movement.x(), movement.y(), movement.direction());
         crossCheckUpdater.run(movement);
+        stepper.run();
     }
 
     private void assertNewWordsExist(Piece[] pieces, int x, int y, Direction direction) {

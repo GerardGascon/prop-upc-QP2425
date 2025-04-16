@@ -7,6 +7,7 @@ import edu.upc.prop.scrabble.data.board.StandardBoard;
 import edu.upc.prop.scrabble.data.crosschecks.CrossChecks;
 import edu.upc.prop.scrabble.data.crosschecks.EnglishCrossChecks;
 import edu.upc.prop.scrabble.data.dawg.DAWG;
+import edu.upc.prop.scrabble.data.leaderboard.Leaderboard;
 import edu.upc.prop.scrabble.data.pieces.Bag;
 import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.domain.actionmaker.PlaceActionMaker;
@@ -19,16 +20,21 @@ import edu.upc.prop.scrabble.domain.dawg.WordAdder;
 import edu.upc.prop.scrabble.domain.dawg.WordValidator;
 import edu.upc.prop.scrabble.domain.exceptions.MovementOutsideOfBoardException;
 import edu.upc.prop.scrabble.domain.exceptions.WordDoesNotExistException;
+import edu.upc.prop.scrabble.domain.game.GameStepper;
 import edu.upc.prop.scrabble.domain.movement.MovementBoundsChecker;
 import edu.upc.prop.scrabble.domain.movement.MovementCleaner;
 import edu.upc.prop.scrabble.domain.pieces.PiecesConverter;
 import edu.upc.prop.scrabble.domain.pieces.PiecesInHandGetter;
+import edu.upc.prop.scrabble.domain.turns.Endgame;
+import edu.upc.prop.scrabble.domain.turns.IGamePlayer;
+import edu.upc.prop.scrabble.domain.turns.Turn;
 import edu.upc.prop.scrabble.presenter.terminal.movements.MovementMaker;
 import edu.upc.prop.scrabble.utils.Direction;
 import edu.upc.prop.scrabble.utils.IRand;
 import org.junit.Before;
 import org.junit.Test;
 import scrabble.stubs.BoardViewStub;
+import scrabble.stubs.GamePlayerStub;
 import scrabble.stubs.PiecePrinterStub;
 import scrabble.stubs.RandStub;
 
@@ -64,7 +70,9 @@ public class TestPlaceActionMaker {
         PresentPiecesWordCompleter presentPiecesWordCompleter = new PresentPiecesWordCompleter(wordGetter);
         CrossChecks crossChecks = new EnglishCrossChecks(board, dawg);
         CrossCheckUpdater crossCheckUpdater = new CrossCheckUpdater(piecesConverter, crossChecks, board, dawg);
-        placeActionMaker = new PlaceActionMaker(boundsChecker, wordValidator, piecesInHandGetter, movementCleaner, wordPlacer, presentPiecesWordCompleter, crossCheckUpdater);
+        Turn turn = new Turn(new Endgame(new Player[]{player}), new IGamePlayer[]{new GamePlayerStub()});
+        GameStepper stepper = new GameStepper(turn, new Leaderboard(), new Player[]{player});
+        placeActionMaker = new PlaceActionMaker(boundsChecker, wordValidator, piecesInHandGetter, movementCleaner, wordPlacer, presentPiecesWordCompleter, crossCheckUpdater, stepper);
     }
 
     @Test

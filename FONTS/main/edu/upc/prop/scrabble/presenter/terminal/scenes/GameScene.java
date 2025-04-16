@@ -7,6 +7,7 @@ import edu.upc.prop.scrabble.data.crosschecks.CrossChecks;
 import edu.upc.prop.scrabble.data.crosschecks.EnglishCrossChecks;
 import edu.upc.prop.scrabble.data.crosschecks.SpanishCrossChecks;
 import edu.upc.prop.scrabble.data.dawg.DAWG;
+import edu.upc.prop.scrabble.data.leaderboard.Leaderboard;
 import edu.upc.prop.scrabble.data.pieces.Bag;
 import edu.upc.prop.scrabble.data.properties.GameProperties;
 import edu.upc.prop.scrabble.data.properties.Language;
@@ -15,6 +16,7 @@ import edu.upc.prop.scrabble.domain.board.*;
 import edu.upc.prop.scrabble.domain.crosschecks.CrossCheckUpdater;
 import edu.upc.prop.scrabble.domain.dawg.WordAdder;
 import edu.upc.prop.scrabble.domain.dawg.WordValidator;
+import edu.upc.prop.scrabble.domain.game.GameStepper;
 import edu.upc.prop.scrabble.domain.localization.DictionaryReader;
 import edu.upc.prop.scrabble.domain.localization.PiecesReader;
 import edu.upc.prop.scrabble.domain.movement.MovementBoundsChecker;
@@ -44,6 +46,7 @@ public class GameScene extends Scene {
             case Language.Spanish -> new SpanishCrossChecks(board, dawg);
             case Language.English -> new EnglishCrossChecks(board, dawg);
         };
+        Leaderboard leaderboard = new Leaderboard();
 
         BoardView boardView = instantiate(BoardView.class);
         Player[] playersData = createPlayersData(properties);
@@ -67,14 +70,16 @@ public class GameScene extends Scene {
         CrossCheckUpdater crossCheckUpdater = new CrossCheckUpdater(piecesConverter, crossChecks, board, dawg);
         IPiecePrinter piecePrinter = new PieceDisplay();
 
-        IGamePlayer[] players = instantiatePlayers(playersData, board, boardView, pointCalculator, bag, piecePrinter,
-                boundsChecker, wordValidator, movementCleaner, presentPiecesWordCompleter, crossCheckUpdater);
+        PlayerObject[] players = instantiatePlayers(playersData);
         Endgame endgame = new Endgame(playersData);
         Turn turnManager = new Turn(endgame, players);
-        //TODO: Instantiate game class and assign it to players
-        boardView.updateBoard(board);
+        GameStepper stepper = new GameStepper(turnManager, leaderboard, playersData);
+
+        configurePlayers(players, playersData, stepper, board, boardView, pointCalculator, bag, piecePrinter, boundsChecker,
+                wordValidator, movementCleaner, presentPiecesWordCompleter, crossCheckUpdater);
 
         //TODO: Add pieces to players
+        boardView.updateBoard(board);
 
         players[0].startTurn();
     }
@@ -103,39 +108,42 @@ public class GameScene extends Scene {
         return players.toArray(Player[]::new);
     }
 
-    private PlayerObject[] instantiatePlayers(Player[] players, Board board, BoardView boardView,
-                                              PointCalculator pointCalculator, Bag bag, IPiecePrinter piecePrinter,
-                                              MovementBoundsChecker boundsChecker, WordValidator wordValidator,
-                                              MovementCleaner movementCleaner,
-                                              PresentPiecesWordCompleter presentPiecesWordCompleter,
-                                              CrossCheckUpdater crossCheckUpdater) {
+    private PlayerObject[] instantiatePlayers(Player[] players) {
         List<PlayerObject> playerObjects = new ArrayList<>();
         for (Player player : players) {
             if (player.getCPU()) {
                 AIPlayerObject playerObject = instantiate(AIPlayerObject.class);
-                configurePlayer(playerObject, player, board, boardView, pointCalculator, bag, piecePrinter,
-                        boundsChecker, wordValidator, movementCleaner, presentPiecesWordCompleter, crossCheckUpdater);
                 playerObjects.add(playerObject);
             } else {
                 HumanPlayerObject playerObject = instantiate(HumanPlayerObject.class);
-                configurePlayer(playerObject, player, board, boardView, pointCalculator, bag, piecePrinter,
-                        boundsChecker, wordValidator, movementCleaner, presentPiecesWordCompleter, crossCheckUpdater);
                 playerObjects.add(playerObject);
             }
         }
         return playerObjects.toArray(PlayerObject[]::new);
     }
 
-    public void configurePlayer(PlayerObject playerObject, Player player, Board board, BoardView boardView,
-                                       PointCalculator pointCalculator, Bag bag, IPiecePrinter piecePrinter,
-                                       MovementBoundsChecker boundsChecker, WordValidator wordValidator,
-                                       MovementCleaner movementCleaner,
-                                       PresentPiecesWordCompleter presentPiecesWordCompleter,
-                                       CrossCheckUpdater crossCheckUpdater) {
+    private void configurePlayers(PlayerObject[] playerObjects, Player[] players, GameStepper stepper, Board board,
+                                  BoardView boardView, PointCalculator pointCalculator, Bag bag,
+                                  IPiecePrinter piecePrinter, MovementBoundsChecker boundsChecker,
+                                  WordValidator wordValidator, MovementCleaner movementCleaner,
+                                  PresentPiecesWordCompleter presentPiecesWordCompleter,
+                                  CrossCheckUpdater crossCheckUpdater) {
+        for (int i = 0; i < players.length; i++) {
+            configurePlayer(playerObjects[i], players[i], stepper, board, boardView, pointCalculator, bag, piecePrinter,
+                    boundsChecker, wordValidator, movementCleaner, presentPiecesWordCompleter, crossCheckUpdater);
+        }
+    }
+
+    public void configurePlayer(PlayerObject playerObject, Player player, GameStepper stepper, Board board,
+                                BoardView boardView, PointCalculator pointCalculator, Bag bag,
+                                IPiecePrinter piecePrinter, MovementBoundsChecker boundsChecker,
+                                WordValidator wordValidator, MovementCleaner movementCleaner,
+                                PresentPiecesWordCompleter presentPiecesWordCompleter,
+                                CrossCheckUpdater crossCheckUpdater) {
         WordPlacer wordPlacer = new WordPlacer(player, board, boardView, pointCalculator);
         PiecesInHandGetter piecesInHandGetter = new PiecesInHandGetter(bag, player, piecePrinter, new Rand());
         PlaceActionMaker placeActionMaker = new PlaceActionMaker(boundsChecker, wordValidator, piecesInHandGetter,
-                movementCleaner, wordPlacer, presentPiecesWordCompleter, crossCheckUpdater);
+                movementCleaner, wordPlacer, presentPiecesWordCompleter, crossCheckUpdater, stepper);
         MovementMaker movementMaker = new MovementMaker(placeActionMaker);
         playerObject.configure(movementMaker, player);
     }
