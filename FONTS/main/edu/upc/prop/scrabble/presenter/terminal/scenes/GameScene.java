@@ -34,6 +34,8 @@ public class GameScene extends Scene {
         Turn turnManager = new Turn(endgame, players);
         //TODO: Replace with call to game class
         turnManager.run();
+
+        boardView.updateBoard(board);
     }
 
     private Player[] createPlayersData(GameProperties properties) {
@@ -50,34 +52,32 @@ public class GameScene extends Scene {
         List<PlayerObject> playerObjects = new ArrayList<>();
         for (Player player : players) {
             if (player.getCPU()) {
-                AIPlayerObject playerObject = createAIPlayer(player.getName(), piecesConverter, pointCalculator, board, boardView);
+                AIPlayerObject playerObject = createAIPlayer(player, piecesConverter, pointCalculator, board, boardView);
                 playerObjects.add(playerObject);
             } else {
-                HumanPlayerObject playerObject = createHumanPlayer(player.getName(), piecesConverter, pointCalculator, board, boardView);
+                HumanPlayerObject playerObject = createHumanPlayer(player, piecesConverter, pointCalculator, board, boardView);
                 playerObjects.add(playerObject);
             }
         }
         return playerObjects.toArray(PlayerObject[]::new);
     }
 
-    private HumanPlayerObject createHumanPlayer(String name, PiecesConverter piecesConverter,
+    private HumanPlayerObject createHumanPlayer(Player player, PiecesConverter piecesConverter,
                                                 PointCalculator pointCalculator, Board board, BoardView boardView) {
 
         HumanPlayerObject playerObject = instantiate(HumanPlayerObject.class);
-        Player player = new Player(name, false);
         WordPlacer wordPlacer = new WordPlacer(player, board, boardView, pointCalculator);
         MovementMaker movementMaker = new MovementMaker(piecesConverter, wordPlacer);
-        playerObject.configure(movementMaker);
+        playerObject.configure(movementMaker, player);
         return playerObject;
     }
 
-    private AIPlayerObject createAIPlayer(String name, PiecesConverter piecesConverter,
+    private AIPlayerObject createAIPlayer(Player player, PiecesConverter piecesConverter,
                                           PointCalculator pointCalculator, Board board, BoardView boardView) {
         AIPlayerObject playerObject = instantiate(AIPlayerObject.class);
-        Player player = new Player(name, true);
         WordPlacer wordPlacer = new WordPlacer(player, board, boardView, pointCalculator);
         MovementMaker movementMaker = new MovementMaker(piecesConverter, wordPlacer);
-        playerObject.configure(movementMaker);
+        playerObject.configure(movementMaker, player);
         return playerObject;
     }
 
