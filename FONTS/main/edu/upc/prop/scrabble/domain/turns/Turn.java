@@ -22,11 +22,11 @@ public class Turn {
 
     /**
      * Determine which player ends its turn and which starts it as well
-     * as keeping track of how many turns have passed and if this is the last turn
+     * as keeping track of how many turns have passed and if this turn is the one that ends the game
      * @see Endgame
      * @see IGamePlayer
      */
-    public void run() {
+    public boolean run() {
         int endTurn = turnNumber % players.length;
         int startTurn = (turnNumber+1) % players.length;
 
@@ -38,6 +38,6 @@ public class Turn {
         players[startTurn].startTurn();
         turnNumber = turnNumber + 1;
 
-        boolean finalturn = endgame.run(skipCounter);
+        return endgame.run(skipCounter);
     }
 }
