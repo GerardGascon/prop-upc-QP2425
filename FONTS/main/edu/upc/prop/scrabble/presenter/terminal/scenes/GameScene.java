@@ -71,12 +71,12 @@ public class GameScene extends Scene {
                 boundsChecker, wordValidator, movementCleaner, presentPiecesWordCompleter, crossCheckUpdater);
         Endgame endgame = new Endgame(playersData);
         Turn turnManager = new Turn(endgame, players);
-
+        //TODO: Instantiate game class and assign it to players
         boardView.updateBoard(board);
 
         //TODO: Add pieces to players
-        //TODO: Replace with call to game class
-        turnManager.run();
+
+        players[0].startTurn();
     }
 
     private static void fillDAWG(DAWG dawg, Language language) {
