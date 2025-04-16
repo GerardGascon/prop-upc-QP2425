@@ -24,8 +24,6 @@ public class IA {
     //private DAWG se le pasa el dawg o q
     private WordValidator wordValidator;
 
-    //AÑADIR IDIOMA SELECCIONADO PARA LOS CROSSCHECKS!!
-
     int diff;
 
     //los world placers y demás simlares hacer que se declaren en action maker y usarlos
