@@ -78,7 +78,8 @@ public class GameScene extends Scene {
         configurePlayers(players, playersData, stepper, board, boardView, pointCalculator, bag, piecePrinter, boundsChecker,
                 wordValidator, movementCleaner, presentPiecesWordCompleter, crossCheckUpdater);
 
-        //TODO: Add pieces to players
+        HandFiller handFiller = new HandFiller(bag, playersData, new Rand());
+        handFiller.run();
         boardView.updateBoard(board);
 
         players[0].startTurn();

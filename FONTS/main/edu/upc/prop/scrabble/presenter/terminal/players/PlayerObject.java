@@ -1,6 +1,7 @@
 package edu.upc.prop.scrabble.presenter.terminal.players;
 
 import edu.upc.prop.scrabble.data.Player;
+import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.domain.turns.IGamePlayer;
 import edu.upc.prop.scrabble.domain.turns.TurnResult;
 import edu.upc.prop.scrabble.presenter.scenes.SceneObject;
@@ -19,7 +20,15 @@ public abstract class PlayerObject extends SceneObject implements IGamePlayer {
     @Override
     public final void startTurn() {
         System.out.println("Player \"" + player.getName() + "\" starts turn");
+        printPieces();
         onTurn = true;
+    }
+
+    private void printPieces() {
+        System.out.print("Pieces:");
+        for (Piece piece : player.getHand())
+            System.out.print(" " + piece.letter() + ",");
+        System.out.println();
     }
 
     @Override
