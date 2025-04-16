@@ -15,6 +15,10 @@ import edu.upc.prop.scrabble.domain.board.WordPlacer;
 import edu.upc.prop.scrabble.domain.crosschecks.CrossCheckUpdater;
 import edu.upc.prop.scrabble.domain.dawg.WordAdder;
 import edu.upc.prop.scrabble.domain.dawg.WordValidator;
+import edu.upc.prop.scrabble.domain.pieces.CatalanPiecesConverter;
+import edu.upc.prop.scrabble.domain.pieces.PiecesConverter;
+import edu.upc.prop.scrabble.domain.pieces.PiecesInHandVerifier;
+import edu.upc.prop.scrabble.domain.pieces.SpanishPiecesConverter;
 import edu.upc.prop.scrabble.utils.Direction;
 import org.junit.Test;
 import scrabble.stubs.BoardViewStub;
@@ -45,7 +49,10 @@ public class TestCrossChecks {
         adder.run("COSAS"); //ordenadas
 
         CrossChecks Ecrch = new EnglishCrossChecks(board,dawg);
-        CrossCheckUpdater crchU = new CrossCheckUpdater(Ecrch,board,dawg);
+        PiecesConverter converter = new PiecesConverter();
+        //PiecesConverter converter2 = new CatalanPiecesConverter();
+        //PiecesConverter converter3 = new SpanishPiecesConverter();
+        CrossCheckUpdater crchU = new CrossCheckUpdater(converter, Ecrch,board,dawg);
 
         BitSet allavaliable = new BitSet(26);
         BitSet expected = new BitSet(26);

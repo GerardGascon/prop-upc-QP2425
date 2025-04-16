@@ -17,12 +17,13 @@ public class CrossCheckUpdater {
     private final DAWG dawg;
     private final PiecesConverter piecesConverter;
 
-    public CrossCheckUpdater(CrossChecks crossChecks, Board board,  DAWG dawg) {
+    //al crearlo hacer tmb la llamada con el piececonverter que corresponda al idioma correcto
+    public CrossCheckUpdater(PiecesConverter pc,  CrossChecks crossChecks, Board board,  DAWG dawg) {
         this.crossChecks = crossChecks;
         this.board = board;
         this.dawg = dawg;
         this.wordValidator = new WordValidator(dawg);
-        this.piecesConverter = new PiecesConverter();
+        this.piecesConverter = pc;
     }
 
     //para cada casilla su array de bits que representa que letras se pueden poner y cuales no
