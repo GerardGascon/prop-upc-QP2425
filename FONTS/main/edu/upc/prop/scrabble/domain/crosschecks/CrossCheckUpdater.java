@@ -74,8 +74,8 @@ public class CrossCheckUpdater {
             String word = "";
             for (String s : wordInBoard)
                 word = word.concat(s);
-            System.out.println("Current word" + word);
-            System.out.println(wordValidator.run(word));
+            //System.out.println("Current word" + word);
+            //System.out.println(wordValidator.run(word));
             if (!wordValidator.run(word)) {
                 crossChecks.setCrossCheckHor(beginningOfAddedWord - 1, move.y(), i);
                 //pone a 1 la letra que ha salido que no hace una palabra valida
