@@ -4,10 +4,8 @@ import edu.upc.prop.scrabble.data.Player;
 import edu.upc.prop.scrabble.data.pieces.Bag;
 import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.domain.pieces.IPiecePrinter;
-import edu.upc.prop.scrabble.domain.pieces.PieceDrawer;
 import edu.upc.prop.scrabble.domain.pieces.PiecesInHandGetter;
 import org.junit.Test;
-import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 
@@ -20,7 +18,7 @@ public class TestPiecesInHandGetter {
 
         Player player = new Player("nom", false);
         for (int i = 0; i < 7; i++) {
-            player.AddPiece(new Piece("b", 1));
+            player.addPiece(new Piece("b", 1));
         }
         IPiecePrinter piecePrinter = null;
         Piece[] word = new Piece[]{new Piece("b", 1)};
@@ -38,7 +36,7 @@ public class TestPiecesInHandGetter {
 
         Player player = new Player("nom", false);
         for (int i = 0; i < 7; i++) {
-            player.AddPiece(new Piece("b", 1));
+            player.addPiece(new Piece("b", 1));
         }
 
         IPiecePrinter piecePrinter = null;

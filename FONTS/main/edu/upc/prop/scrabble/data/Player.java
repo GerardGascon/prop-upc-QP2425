@@ -1,7 +1,9 @@
 package edu.upc.prop.scrabble.data;
 
+import edu.upc.prop.scrabble.data.exceptions.PlayerDoesNotHavePieceException;
 import edu.upc.prop.scrabble.data.pieces.Piece;
 
+import java.util.ArrayList;
 import java.util.Vector;
 
 /**
@@ -9,8 +11,10 @@ import java.util.Vector;
  * @author Albert Usero
  */
 public class Player {
-    private String name;
+    private final String name;
     private int score;
+    private final boolean CPU;
+    private final ArrayList<Piece> hand = new ArrayList<>(7);
 
     public Player(String name, boolean CPU) {
         this.name = name;
@@ -26,30 +30,10 @@ public class Player {
     }
 
     /**
-     * Sets the name of the player
-     * @param name Name that we want the player to have
-     *
-     */
-    private void setName(String name) {
-        this.name = name;
-    }
-
-    private boolean CPU = false;//cambiar luego quizas
-
-    /**
      * @return True if it's CPU, False otherwise
      */
     public boolean getCPU() {
         return CPU;
-    }
-
-    /**
-     * Sets the CPU status of the player
-     * @param CPU True if it's CPU, False otherwise
-     *
-     */
-    private void setCPU(boolean CPU) {
-        this.CPU = CPU;
     }
 
     /**
@@ -69,24 +53,40 @@ public class Player {
         this.score += scoretoadd;
     }
 
-    private Vector<Piece> hand = new Vector<Piece>(7);
-
-    public Vector<Piece> getHand() {return hand;}
+    public Piece[] getHand() {return hand.toArray(Piece[]::new);}
 
     /**
      * Adds a given piece to the hand of the player
      * @param piece Piece that that will be added
      * @see Piece
      */
-    public void AddPiece(Piece piece) {
-        hand.addElement(piece);
+    public void addPiece(Piece piece) {
+        hand.add(piece);
     }
     /**
      * Removes a given piece to the hand of the player
      * @param piece Piece that that will be removed
      * @see Piece
      */
-    public void RemovePiece(Piece piece) {
-        hand.removeElement(piece);
+    public Piece removePiece(Piece piece) {
+        if (piece.isBlank()){
+            for (int i = 0; i < hand.size(); i++) {
+                if (hand.get(i).isBlank()) {
+                    Piece p = hand.remove(i);
+                    p.setLetter(piece.letter());
+                    return p;
+                }
+            }
+            throw new PlayerDoesNotHavePieceException("Player " + name + " does not have the piece " + piece.letter());
+        }
+
+        for (Piece value : hand) {
+            if (value.letter().equals(piece.letter())) {
+                hand.remove(piece);
+                return value;
+            }
+        }
+
+        throw new PlayerDoesNotHavePieceException("Player " + name + " does not have the piece " + piece.letter());
     }
 }

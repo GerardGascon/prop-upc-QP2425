@@ -36,13 +36,13 @@ public class PiecesInHandGetter {
      */
     public Piece[] run(Piece[] pieces) {
         try {
-            Vector<Piece> hand = player.getHand();
+            Piece[] hand = player.getHand();
             int count = 0;
-            boolean[] visit = new boolean[hand.size()];
+            boolean[] visit = new boolean[hand.length];
 
             for (int i = 0; i < pieces.length;++i) {
-                for (int j = 0; j < hand.size(); ++j) {
-                    if (!visit[j] && Objects.equals(pieces[i], hand.get(j))) {
+                for (int j = 0; j < hand.length; ++j) {
+                    if (!visit[j] && Objects.equals(pieces[i], hand[j])) {
                         visit[j] = true;
                         count += 1;
                         break;

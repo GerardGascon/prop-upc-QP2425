@@ -26,7 +26,7 @@ public class Endgame {
             return true;
 
         for (Player player : players)
-            if (player.getHand().isEmpty())
+            if (player.getHand().length == 0)
                 return true;
 
         return false;

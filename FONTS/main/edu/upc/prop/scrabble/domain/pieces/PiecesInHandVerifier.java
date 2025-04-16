@@ -41,14 +41,14 @@ public class PiecesInHandVerifier {
         if (word == null) {
             throw new IllegalArgumentException("word cannot be null");
         }
-        Vector<Piece> hand = player.getHand();
+        Piece[] hand = player.getHand();
         Piece[] piecesInWord = piecesConverter.run(word);
         ArrayList<Piece> piecesInHand = new ArrayList<>();
 
         for (Piece piece : piecesInWord) {
-            for (int j = 0; j < hand.size(); j++) {
-                if (hand.elementAt(j).equals(piece)) {
-                    piecesInHand.add(hand.elementAt(j));
+            for (int j = 0; j < hand.length; j++) {
+                if (hand[j].equals(piece)) {
+                    piecesInHand.add(hand[j]);
                 }
             }
         }
