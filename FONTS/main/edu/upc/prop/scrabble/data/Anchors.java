@@ -17,7 +17,7 @@ public class Anchors {
     // GIGAineficiente tal vez sea mejor hacer que anchors sea un set
     public boolean exists(int x, int y) {
         for (Pair<Integer, Integer> anchor : anchors) {
-            if (anchor.getFirst().equals(x) && anchor.getSecond().equals(y)) {
+            if (anchor.first().equals(x) && anchor.second().equals(y)) {
                 return true;
             }
         }
