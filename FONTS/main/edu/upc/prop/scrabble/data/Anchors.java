@@ -10,4 +10,8 @@ public class Anchors {
     public Anchors(ArrayList<Pair<Integer,Integer>> anchors) {
         this.anchors = new ArrayList<>();
     }
+
+    public void addAnchor(int x, int y) {
+        anchors.add(new Pair<>(x, y));
+    }
 }
