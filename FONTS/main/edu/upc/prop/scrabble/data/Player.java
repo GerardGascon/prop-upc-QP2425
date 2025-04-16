@@ -80,9 +80,10 @@ public class Player {
             throw new PlayerDoesNotHavePieceException("Player " + name + " does not have the piece " + piece.letter());
         }
 
-        for (Piece value : hand) {
+        for (int i = 0; i < hand.size(); i++) {
+            Piece value = hand.get(i);
             if (value.letter().equals(piece.letter())) {
-                hand.remove(piece);
+                hand.remove(i);
                 return value;
             }
         }
