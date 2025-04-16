@@ -3,7 +3,9 @@ package edu.upc.prop.scrabble.domain.pieces;
 import edu.upc.prop.scrabble.data.Player;
 import edu.upc.prop.scrabble.data.pieces.Bag;
 import edu.upc.prop.scrabble.data.pieces.Piece;
+import edu.upc.prop.scrabble.utils.IRand;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Vector;
 
@@ -15,6 +17,7 @@ public class PiecesInHandGetter {
     private final Player player;
     private final Bag bag;
     private final IPiecePrinter piecePrinter;
+    private IRand rand;
 
     /***
      * Constructs a new PiecesInHandGetter with the specified bag, player and piecePrinter.
@@ -22,10 +25,11 @@ public class PiecesInHandGetter {
      * @param player The target player.
      * @param piecePrinter The piece display handler.
      */
-    public PiecesInHandGetter(Bag bag, Player player, IPiecePrinter piecePrinter) {
+    public PiecesInHandGetter(Bag bag, Player player, IPiecePrinter piecePrinter, IRand rand) {
         this.player = player;
         this.bag = bag;
         this.piecePrinter = piecePrinter;
+        this.rand = rand;
     }
 
     /***
@@ -35,28 +39,15 @@ public class PiecesInHandGetter {
      * @throws IllegalStateException if process fails.
      */
     public Piece[] run(Piece[] pieces) {
-        try {
-            Piece[] hand = player.getHand();
-            int count = 0;
-            boolean[] visit = new boolean[hand.length];
-
-            for (int i = 0; i < pieces.length;++i) {
-                for (int j = 0; j < hand.length; ++j) {
-                    if (!visit[j] && Objects.equals(pieces[i], hand[j])) {
-                        visit[j] = true;
-                        count += 1;
-                        break;
-                    }
-                }
+        List<Piece> piecesList = new Vector<>();
+        for (Piece piece : pieces) {
+            piecesList.add(player.removePiece(piece));
+            if (!bag.isEmpty()) {
+                int r = rand.nextInt(bag.getSize());
+                Piece newPiece = bag.draw(r);
+                player.addPiece(newPiece);
             }
-            if (count == pieces.length) { // tinc totes les peces a la mà per fer la paraula
-
-                PieceDrawer pc = new PieceDrawer(bag, player);
-                return pc.run(pieces);
-            }
-        } catch (Exception e) {
-            throw new IllegalStateException(e);
         }
-        return pieces;
+        return piecesList.toArray(Piece[]::new);
     }
 }
