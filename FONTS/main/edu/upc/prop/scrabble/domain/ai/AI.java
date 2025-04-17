@@ -85,7 +85,7 @@ public abstract class AI {
                 Piece usedPiece = bot.hasPiece(String.valueOf(entry.getKey()));
                 if (usedPiece != null) {
                     char lastLetter = partialWord.charAt(partialWord.length() - 1);
-                    processNextPiece(lastLetter, partialWord, limit, entry, usedPiece);
+                    processNextLeftPiece(lastLetter, partialWord, limit, entry, usedPiece);
                 }
             }
         }
@@ -93,7 +93,7 @@ public abstract class AI {
 
     protected abstract void processLeftPartSpecialPieces(String partialWord, Node node, int limit, Map.Entry<Character, Node> entry);
 
-    protected abstract void processNextPiece(char lastLetter, String partialWord, int limit, Map.Entry<Character, Node> entry, Piece usedPiece);
+    protected abstract void processNextLeftPiece(char lastLetter, String partialWord, int limit, Map.Entry<Character, Node> entry, Piece usedPiece);
 
     protected void goToNextLeftPiece(String partialWord, int limit, Map.Entry<Character, Node> entry, Piece usedPiece) {
         bot.removePiece(usedPiece);
@@ -129,7 +129,7 @@ public abstract class AI {
                     extendToNextNewPieceRight(partialWord, entry, lastLetter, usedPiece, nextCell);
                 }
             }
-        } else if (board.isCellValid(cell.x, cell.y)) { // NO PONER CONVINATIONS ILEGALES!!!!! NY y tal
+        } else if (board.isCellValid(cell.x, cell.y)) { // NO PONER COMBINATIONS ILEGALES!!!!! NY y tal
             Piece placedPiece = board.getCellPiece(cell.x, cell.y);
             char lastLetter = partialWord.charAt(partialWord.length() - 1);
             String placedLetter = placedPiece.letter();
