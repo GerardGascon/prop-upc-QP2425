@@ -1,23 +1,24 @@
 package edu.upc.prop.scrabble.data;
 
 import edu.upc.prop.scrabble.utils.Pair;
+import edu.upc.prop.scrabble.utils.Vector2;
 
 import java.util.ArrayList;
 
 public class Anchors {
-    private ArrayList<Pair<Integer,Integer>> anchors;
+    private final ArrayList<Vector2> anchors;
     public Anchors() { this.anchors = new ArrayList<>(); }
 
-    public void addAnchor(int x, int y) { anchors.add(new Pair<>(x, y)); }
+    public void addAnchor(int x, int y) { anchors.add(new Vector2(x, y)); }
     public int getSize() { return anchors.size(); }
 
     // precon position < size
-    public Pair<Integer,Integer> getAnchor(int position) { return anchors.get(position); }
+    public Vector2 getAnchor(int position) { return anchors.get(position); }
 
     // GIGAineficiente tal vez sea mejor hacer que anchors sea un set
     public boolean exists(int x, int y) {
-        for (Pair<Integer, Integer> anchor : anchors) {
-            if (anchor.first().equals(x) && anchor.second().equals(y)) {
+        for (Vector2 anchor : anchors) {
+            if (anchor.x == x && anchor.y == y) {
                 return true;
             }
         }
