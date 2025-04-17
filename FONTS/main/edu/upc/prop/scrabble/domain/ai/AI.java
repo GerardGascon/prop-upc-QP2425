@@ -54,28 +54,39 @@ public abstract class AI {
         bestScore = -1;
 
         // Iterate over every available anchor
+        System.out.println("Anchors totales "+anchors.getSize());
         for (int i = 0; i < anchors.getSize(); ++i) {
-            // Set current anchor
-            currentAnchor = anchors.getAnchor(i); // Global variable
-            int currentAnchorX = currentAnchor.x; // Variables to make code cleaner
-            int currentAnchorY = currentAnchor.y;
-            // --------------------------- MOVIMIENTOS HORIZONTALES ---------------------------
-            int limit = 0; // How far to the left can we go
-            while (board.isCellValid(currentAnchorX - limit - 1, currentAnchorY) &&
-                    board.isCellEmpty(currentAnchorX - limit - 1, currentAnchorY) &&
-                    !anchors.exists(currentAnchorX - limit - 1, currentAnchorY)) ++limit;
-
-            // LeftPart is composed by bot's pieces or already placed letters, never both
-            if (limit == 0) { // Already placed letters
-                String partialWord = "";
-                int j = 0;
-                while (board.isCellValid(currentAnchorX - j - 1, currentAnchorY)) { // Check existing string
-                    partialWord = board.getCellPiece(currentAnchorX - i - 1, currentAnchorY).letter() + partialWord;
-                    ++j;
+            //------------------------------------------------------------------------------------------------
+            //cambiar achors updater para que vaya quitando, demomento if chapuza
+            //------------------------------------------------------------------------------------------------
+            if (board.isCellEmpty(anchors.getAnchor(i).x, anchors.getAnchor(i).y)) {
+                // Set current anchor
+                System.out.println("anchor " + i + "\n");
+                currentAnchor = anchors.getAnchor(i); // Global variable
+                int currentAnchorX = currentAnchor.x; // Variables to make code cleaner
+                int currentAnchorY = currentAnchor.y;
+                // --------------------------- MOVIMIENTOS HORIZONTALES ---------------------------
+                int limit = 0; // How far to the left can we go
+                while (board.isCellValid(currentAnchorX - limit - 1, currentAnchorY) &&
+                        board.isCellEmpty(currentAnchorX - limit - 1, currentAnchorY) &&
+                        !anchors.exists(currentAnchorX - limit - 1, currentAnchorY)) ++limit;
+                System.out.println("DSPS DE CALCULAR LIMIT " + limit + "\n");
+                // LeftPart is composed by bot's pieces or already placed letters, never both
+                if (limit == 0) { // Already placed letters
+                    System.out.println("DENTRO DE ALREADY PLACED LETTERS");
+                    String partialWord = "";
+                    int j = 0;
+                    System.out.println("ANTES DEL WHILE " + currentAnchorX + ":" + currentAnchorY + "\n");
+                    while (board.isCellValid(currentAnchorX - j - 1, currentAnchorY)){ // Check existing string
+                        System.out.println("DENTRO DEL WHILE");
+                        System.out.println(currentAnchorX - j - 1 + " " + currentAnchorY + "\n");
+                        partialWord = board.getCellPiece(currentAnchorX - i - 1, currentAnchorY).letter() + partialWord;
+                        ++j;
+                    }
+                    ExtendRight(partialWord, getFinalNode(partialWord), currentAnchor); // Straight to the right part
+                } else { // Bot's pieces
+                    LeftPart("", dawg.getRoot(), limit);
                 }
-                ExtendRight(partialWord, getFinalNode(partialWord), currentAnchor); // Straight to the right part
-            } else { // Bot's pieces
-                LeftPart("", dawg.getRoot(), limit);
             }
         }
         return bestMove;

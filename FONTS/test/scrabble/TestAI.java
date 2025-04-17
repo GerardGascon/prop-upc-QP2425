@@ -18,12 +18,14 @@ import edu.upc.prop.scrabble.domain.ai.EnglishAI;
 import edu.upc.prop.scrabble.domain.ai.SpanishAI;
 import edu.upc.prop.scrabble.domain.board.PointCalculator;
 import edu.upc.prop.scrabble.domain.board.WordGetter;
+import edu.upc.prop.scrabble.domain.board.WordPlacer;
 import edu.upc.prop.scrabble.domain.dawg.WordAdder;
 import edu.upc.prop.scrabble.domain.pieces.CatalanPiecesConverter;
 import edu.upc.prop.scrabble.domain.pieces.PiecesConverter;
 import edu.upc.prop.scrabble.domain.pieces.SpanishPiecesConverter;
 import edu.upc.prop.scrabble.utils.Direction;
 import org.junit.Test;
+import scrabble.stubs.BoardViewStub;
 
 import static org.junit.Assert.assertEquals;
 
@@ -289,6 +291,45 @@ public class TestAI {
         CrossChecks crossChecks = new SpanishCrossChecks(board,dawg);
         AI ai = new SpanishAI(converter, pointCalculator, dawg,board,bot,anchors,crossChecks);
         Movement expectedMove = new Movement("TACH",7,7, Direction.Horizontal);
+        assertEquals(expectedMove, ai.run());
+    }
+
+    @Test
+    public void englishAIHorizontal(){
+        DAWG dawg= new DAWG();
+        WordAdder adder= new WordAdder(dawg);
+        adder.run("TOILET");
+        adder.run("SKIBIDI");
+        Board board = new StandardBoard();
+        Player bot = new Player("ai",true);
+        bot.addPiece(new Piece("S",1));
+        bot.addPiece(new Piece("K",1));
+        bot.addPiece(new Piece("I",1));
+        bot.addPiece(new Piece("B",1));
+        bot.addPiece(new Piece("I",1));
+        bot.addPiece(new Piece("D",1));
+        bot.addPiece(new Piece("I",1));
+        PiecesConverter converter = new PiecesConverter();
+        Anchors anchors = new Anchors();
+        AnchorUpdater anchorUpdater = new AnchorUpdater(anchors,board,converter);
+        WordGetter wordGetter = new WordGetter(board);
+        PointCalculator pointCalculator = new PointCalculator(board, wordGetter);
+        CrossChecks crossChecks = new EnglishCrossChecks(board,dawg);
+        AI ai = new EnglishAI(converter, pointCalculator, dawg,board,bot,anchors,crossChecks);
+        BoardViewStub mock = new BoardViewStub();
+        WordPlacer wordPlacer = new WordPlacer(bot, board,mock,pointCalculator);
+        Piece[] pieces = new Piece[]{
+                new Piece("T", 1),
+                new Piece("O", 1),
+                new Piece("I", 1),
+                new Piece("L", 1),
+                new Piece("E", 1),
+                new Piece("T", 1)
+        };
+        Movement previousmove = new Movement("TOILET",7,3, Direction.Vertical);
+        anchorUpdater.run(previousmove);
+        wordPlacer.run(pieces, 7, 3, Direction.Vertical);
+        Movement expectedMove = new Movement("SKIBIDI",5,5, Direction.Horizontal);
         assertEquals(expectedMove, ai.run());
     }
 }
