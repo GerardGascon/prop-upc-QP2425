@@ -24,12 +24,12 @@ public class EnglishAI extends AI {
     }
 
     @Override
-    protected void processLeftPartSpecialPieces(String partialWord, Node node, int limit, Map.Entry<Character, Node> entry) {
+    protected void processLeftPartSpecialPieces(String partialWord, int limit, Map.Entry<Character, Node> entry) {
     }
 
     @Override
-    protected void processNextLeftPiece(char lastLetter, String partialWord, int limit, Map.Entry<Character, Node> entry, Piece usedPiece) {
-        goToNextLeftPiece(partialWord, limit - 1, entry, usedPiece);
+    protected void processNextLeftPiece(String partialWord, int limit, Map.Entry<Character, Node> entry, Piece usedPiece) {
+        goToNextLeftPiece(partialWord, limit, entry, usedPiece);
     }
 
     @Override

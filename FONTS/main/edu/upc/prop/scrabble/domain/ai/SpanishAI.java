@@ -25,7 +25,7 @@ public class SpanishAI extends AI {
     }
 
     @Override
-    protected void processLeftPartSpecialPieces(String partialWord, Node node, int limit, Map.Entry<Character, Node> entry){
+    protected void processLeftPartSpecialPieces(String partialWord, int limit, Map.Entry<Character, Node> entry){
         if(entry.getKey() == 'R') { // RR
             Node nextNode = entry.getValue().getSuccessor('R');
             Piece usedPiece = bot.hasPiece("RR");
@@ -56,11 +56,13 @@ public class SpanishAI extends AI {
     }
 
     @Override
-    protected void processNextLeftPiece(char lastLetter, String partialWord, int limit, Map.Entry<Character, Node> entry, Piece usedPiece) {
+    protected void processNextLeftPiece(String partialWord, int limit, Map.Entry<Character, Node> entry, Piece usedPiece) {
+        char lastLetter = ' ';
+        if(!partialWord.isEmpty()) lastLetter = partialWord.charAt(partialWord.length() - 1);
         if((lastLetter != 'R' || entry.getKey() != 'R') &&
                 (lastLetter != 'L' || entry.getKey() != 'L') &&
                 (lastLetter != 'C' || entry.getKey() != 'H')) {
-            goToNextLeftPiece(partialWord, limit - 1, entry, usedPiece);
+            goToNextLeftPiece(partialWord, limit, entry, usedPiece);
         }
     }
 

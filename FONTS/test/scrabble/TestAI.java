@@ -30,6 +30,7 @@ import scrabble.stubs.BoardViewStub;
 import static org.junit.Assert.assertEquals;
 
 public class TestAI {
+
     @Test
     public void englishAIEmptyBoard(){
         DAWG dawg= new DAWG();
@@ -79,6 +80,7 @@ public class TestAI {
         Movement expectedMove = new Movement("TANYA",7,7, Direction.Horizontal);
         assertEquals(expectedMove, ai.run());
     }
+
     @Test
     public void catalanAIEmptyBoardLL(){
         DAWG dawg= new DAWG();
@@ -102,6 +104,7 @@ public class TestAI {
         Movement expectedMove = new Movement("TAL·LA",7,7, Direction.Horizontal);
         assertEquals(expectedMove, ai.run());
     }
+
     @Test
     public void catalanAIEmptyBoardNYendOfWord(){
         DAWG dawg= new DAWG();
@@ -326,8 +329,8 @@ public class TestAI {
                 new Piece("E", 1),
                 new Piece("T", 1)
         };
-        Movement previousmove = new Movement("TOILET",7,3, Direction.Vertical);
-        anchorUpdater.run(previousmove);
+        Movement previousMove = new Movement("TOILET",7,3, Direction.Vertical);
+        anchorUpdater.run(previousMove);
         wordPlacer.run(pieces, 7, 3, Direction.Vertical);
         Movement expectedMove = new Movement("SKIBIDI",5,5, Direction.Horizontal);
         assertEquals(expectedMove, ai.run());
