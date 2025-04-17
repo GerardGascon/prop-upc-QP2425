@@ -30,8 +30,9 @@ public class PieceGenerator {
         String character = parseCharacter(piece);
         int value = parseValue(piece);
         int count = parseCount(piece);
+        boolean isBlank = character.equals("#");
 
-        return new Pair<>(new Piece(character, value), count);
+        return new Pair<>(new Piece(character, value, isBlank), count);
     }
 
     private int parseCount(String piece) {
