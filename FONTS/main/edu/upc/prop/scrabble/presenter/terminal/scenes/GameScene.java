@@ -76,7 +76,7 @@ public class GameScene extends Scene {
         GameStepper stepper = new GameStepper(turnManager, leaderboard, playersData);
 
         configurePlayers(players, playersData, stepper, board, boardView, pointCalculator, bag, piecePrinter, boundsChecker,
-                wordValidator, movementCleaner, presentPiecesWordCompleter, crossCheckUpdater);
+                wordValidator, movementCleaner, presentPiecesWordCompleter, crossCheckUpdater, piecesConverter);
 
         HandFiller handFiller = new HandFiller(bag, playersData, new Rand());
         handFiller.run();
@@ -128,10 +128,11 @@ public class GameScene extends Scene {
                                   IPiecePrinter piecePrinter, MovementBoundsChecker boundsChecker,
                                   WordValidator wordValidator, MovementCleaner movementCleaner,
                                   PresentPiecesWordCompleter presentPiecesWordCompleter,
-                                  CrossCheckUpdater crossCheckUpdater) {
+                                  CrossCheckUpdater crossCheckUpdater, PiecesConverter piecesConverter) {
         for (int i = 0; i < players.length; i++) {
             configurePlayer(playerObjects[i], players[i], stepper, board, boardView, pointCalculator, bag, piecePrinter,
-                    boundsChecker, wordValidator, movementCleaner, presentPiecesWordCompleter, crossCheckUpdater);
+                    boundsChecker, wordValidator, movementCleaner, presentPiecesWordCompleter, crossCheckUpdater,
+                    piecesConverter);
         }
     }
 
@@ -140,11 +141,12 @@ public class GameScene extends Scene {
                                 IPiecePrinter piecePrinter, MovementBoundsChecker boundsChecker,
                                 WordValidator wordValidator, MovementCleaner movementCleaner,
                                 PresentPiecesWordCompleter presentPiecesWordCompleter,
-                                CrossCheckUpdater crossCheckUpdater) {
+                                CrossCheckUpdater crossCheckUpdater, PiecesConverter piecesConverter) {
         WordPlacer wordPlacer = new WordPlacer(player, board, boardView, pointCalculator);
         PiecesInHandGetter piecesInHandGetter = new PiecesInHandGetter(bag, player, piecePrinter, new Rand());
         PlaceActionMaker placeActionMaker = new PlaceActionMaker(boundsChecker, wordValidator, piecesInHandGetter,
-                movementCleaner, wordPlacer, presentPiecesWordCompleter, crossCheckUpdater, stepper);
+                movementCleaner, wordPlacer, presentPiecesWordCompleter, crossCheckUpdater, stepper, piecesConverter,
+                board);
         MovementMaker movementMaker = new MovementMaker();
         playerObject.configure(placeActionMaker, movementMaker, player);
     }

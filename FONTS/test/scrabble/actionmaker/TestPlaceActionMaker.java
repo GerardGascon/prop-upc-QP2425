@@ -20,6 +20,7 @@ import edu.upc.prop.scrabble.domain.dawg.WordAdder;
 import edu.upc.prop.scrabble.domain.dawg.WordValidator;
 import edu.upc.prop.scrabble.domain.exceptions.MovementOutsideOfBoardException;
 import edu.upc.prop.scrabble.domain.exceptions.WordDoesNotExistException;
+import edu.upc.prop.scrabble.domain.exceptions.WordNotConnectedToOtherWordsException;
 import edu.upc.prop.scrabble.domain.game.GameStepper;
 import edu.upc.prop.scrabble.domain.movement.MovementBoundsChecker;
 import edu.upc.prop.scrabble.domain.movement.MovementCleaner;
@@ -46,7 +47,7 @@ public class TestPlaceActionMaker {
     private MovementMaker movementMaker;
     private Bag bag;
     private DAWG dawg;
-    private PlaceActionMaker placeActionMaker;
+    private PlaceActionMaker sut;
     private PiecePrinterStub piecePrinterStub;
     private Player player;
 
@@ -72,12 +73,13 @@ public class TestPlaceActionMaker {
         CrossCheckUpdater crossCheckUpdater = new CrossCheckUpdater(piecesConverter, crossChecks, board, dawg);
         Turn turn = new Turn(new Endgame(new Player[]{player}), new IGamePlayer[]{new GamePlayerStub()});
         GameStepper stepper = new GameStepper(turn, new Leaderboard(), new Player[]{player});
-        placeActionMaker = new PlaceActionMaker(boundsChecker, wordValidator, piecesInHandGetter, movementCleaner, wordPlacer, presentPiecesWordCompleter, crossCheckUpdater, stepper);
+        sut = new PlaceActionMaker(boundsChecker, wordValidator, piecesInHandGetter, movementCleaner, wordPlacer,
+                presentPiecesWordCompleter, crossCheckUpdater, stepper, piecesConverter, board);
     }
 
     @Test
     public void placePieceSendsUpdateViewCallback() {
-        Movement movement = new Movement("POTATO", 1, 1, Direction.Horizontal);
+        Movement movement = new Movement("POTATO", 5, 7, Direction.Horizontal);
         WordAdder wordAdder = new WordAdder(dawg);
         wordAdder.run("POTATO");
         player.addPiece(new Piece("P", 1));
@@ -87,16 +89,16 @@ public class TestPlaceActionMaker {
         player.addPiece(new Piece("T", 1));
         player.addPiece(new Piece("O", 1));
 
-        placeActionMaker.run(movement);
+        sut.run(movement);
 
         assertTrue(boardViewStub.getUpdateCallReceived());
     }
 
     @Test(expected = WordDoesNotExistException.class)
     public void placePieceThrowsExceptionIfWordDoesNotExist() {
-        Movement movement = new Movement("POTATO", 1, 1, Direction.Horizontal);
+        Movement movement = new Movement("POTATO", 5, 7, Direction.Horizontal);
 
-        placeActionMaker.run(movement);
+        sut.run(movement);
     }
 
     @Test(expected = MovementOutsideOfBoardException.class)
@@ -105,33 +107,38 @@ public class TestPlaceActionMaker {
         WordAdder wordAdder = new WordAdder(dawg);
         wordAdder.run("POTATO");
 
-        placeActionMaker.run(movement);
+        sut.run(movement);
     }
 
     @Test
     public void placePieceThrowsExceptionIfContainsCombinedWordThatDoesNotExist() {
-        Movement movement1 = new Movement("HOLA", 1, 1, Direction.Horizontal);
-        Movement movement2 = new Movement("CASA", 1, 2, Direction.Horizontal);
+        Movement movement1 = new Movement("HOLA", 7, 7, Direction.Horizontal);
+        Movement movement2 = new Movement("ALL", 10, 7, Direction.Vertical);
+        Movement movement3 = new Movement("COLD", 8, 8, Direction.Horizontal);
         WordAdder wordAdder = new WordAdder(dawg);
+        wordAdder.run("ALL");
+        wordAdder.run("COLD");
         wordAdder.run("HOLA");
-        wordAdder.run("CASA");
 
         player.addPiece(new Piece("H", 1));
         player.addPiece(new Piece("O", 1));
         player.addPiece(new Piece("L", 1));
         player.addPiece(new Piece("A", 1));
-        placeActionMaker.run(movement1);
+        sut.run(movement1);
+
+        player.addPiece(new Piece("L", 1));
+        player.addPiece(new Piece("L", 1));
+        sut.run(movement2);
 
         player.addPiece(new Piece("C", 1));
-        player.addPiece(new Piece("A", 1));
-        player.addPiece(new Piece("S", 1));
-        player.addPiece(new Piece("A", 1));
-        assertThrows(WordDoesNotExistException.class, () -> placeActionMaker.run(movement2));
+        player.addPiece(new Piece("O", 1));
+        player.addPiece(new Piece("D", 1));
+        assertThrows(WordDoesNotExistException.class, () -> sut.run(movement3));
     }
 
     @Test
     public void placePiecesSubtractsPiecesFromPlayer() {
-        Movement movement = new Movement("HOLA", 1, 1, Direction.Horizontal);
+        Movement movement = new Movement("HOLA", 7, 7, Direction.Horizontal);
         WordAdder wordAdder = new WordAdder(dawg);
         wordAdder.run("HOLA");
 
@@ -140,14 +147,14 @@ public class TestPlaceActionMaker {
         player.addPiece(new Piece("L", 1));
         player.addPiece(new Piece("A", 1));
 
-        placeActionMaker.run(movement);
+        sut.run(movement);
 
         assertEquals(0, player.getHand().length);
     }
 
     @Test
     public void placedPiecesInHandGetReplacedByBagPieces() {
-        Movement movement = new Movement("HOLA", 1, 1, Direction.Horizontal);
+        Movement movement = new Movement("HOLA", 7, 7, Direction.Horizontal);
         bag.add(new Piece("T", 1));
         bag.add(new Piece("E", 1));
         bag.add(new Piece("S", 1));
@@ -161,7 +168,7 @@ public class TestPlaceActionMaker {
         player.addPiece(new Piece("L", 1));
         player.addPiece(new Piece("A", 1));
 
-        placeActionMaker.run(movement);
+        sut.run(movement);
 
         assertEquals(4, player.getHand().length);
         assertEquals("T", player.getHand()[0].letter());
@@ -172,7 +179,7 @@ public class TestPlaceActionMaker {
 
     @Test
     public void placedPiecesGetPlacedUpdatesBoard() {
-        Movement movement = new Movement("HOLA", 1, 1, Direction.Horizontal);
+        Movement movement = new Movement("HOLA", 7, 7, Direction.Horizontal);
         bag.add(new Piece("T", 1));
         bag.add(new Piece("E", 1));
         bag.add(new Piece("S", 1));
@@ -186,7 +193,7 @@ public class TestPlaceActionMaker {
         player.addPiece(new Piece("L", 1));
         player.addPiece(new Piece("A", 1));
 
-        placeActionMaker.run(movement);
+        sut.run(movement);
 
         assertEquals(4, player.getHand().length);
         assertEquals("T", player.getHand()[0].letter());
@@ -197,9 +204,9 @@ public class TestPlaceActionMaker {
 
     @Test
     public void continuousPlacesCorrectlyPlacedOnBoard() {
-        Movement movement1 = new Movement("BOIL", 8, 8, Direction.Vertical);
-        Movement movement2 = new Movement("BOILER", 8, 8, Direction.Vertical);
-        Movement movement3 = new Movement("REST", 8, 13, Direction.Horizontal);
+        Movement movement1 = new Movement("BOIL", 7, 7, Direction.Vertical);
+        Movement movement2 = new Movement("BOILER", 7, 7, Direction.Vertical);
+        Movement movement3 = new Movement("REST", 7, 12, Direction.Horizontal);
         WordAdder wordAdder = new WordAdder(dawg);
         wordAdder.run("BOIL");
         wordAdder.run("BOILER");
@@ -215,18 +222,40 @@ public class TestPlaceActionMaker {
         player.addPiece(new Piece("S", 1));
         player.addPiece(new Piece("T", 1));
 
-        placeActionMaker.run(movement1);
-        placeActionMaker.run(movement2);
-        placeActionMaker.run(movement3);
+        sut.run(movement1);
+        sut.run(movement2);
+        sut.run(movement3);
 
-        assertEquals("B", board.getCellPiece(8, 8).letter());
-        assertEquals("O", board.getCellPiece(8, 9).letter());
-        assertEquals("I", board.getCellPiece(8, 10).letter());
-        assertEquals("L", board.getCellPiece(8, 11).letter());
+        assertEquals("B", board.getCellPiece(7, 7).letter());
+        assertEquals("O", board.getCellPiece(7, 8).letter());
+        assertEquals("I", board.getCellPiece(7, 9).letter());
+        assertEquals("L", board.getCellPiece(7, 10).letter());
+        assertEquals("E", board.getCellPiece(7, 11).letter());
+        assertEquals("R", board.getCellPiece(7, 12).letter());
         assertEquals("E", board.getCellPiece(8, 12).letter());
-        assertEquals("R", board.getCellPiece(8, 13).letter());
-        assertEquals("E", board.getCellPiece(9, 13).letter());
-        assertEquals("S", board.getCellPiece(10, 13).letter());
-        assertEquals("T", board.getCellPiece(11, 13).letter());
+        assertEquals("S", board.getCellPiece(9, 12).letter());
+        assertEquals("T", board.getCellPiece(10, 12).letter());
+    }
+
+    @Test(expected = WordNotConnectedToOtherWordsException.class)
+    public void placePieceThrowsExceptionIfNotConnectedToOtherWord() {
+        Movement movement1 = new Movement("HOLA", 7, 7, Direction.Horizontal);
+        Movement movement2 = new Movement("HOLA", 1, 10, Direction.Horizontal);
+        WordAdder wordAdder = new WordAdder(dawg);
+        wordAdder.run("HOLA");
+
+        player.addPiece(new Piece("H", 1));
+        player.addPiece(new Piece("O", 1));
+        player.addPiece(new Piece("L", 1));
+        player.addPiece(new Piece("A", 1));
+
+        sut.run(movement1);
+
+        player.addPiece(new Piece("H", 1));
+        player.addPiece(new Piece("O", 1));
+        player.addPiece(new Piece("L", 1));
+        player.addPiece(new Piece("A", 1));
+
+        sut.run(movement2);
     }
 }

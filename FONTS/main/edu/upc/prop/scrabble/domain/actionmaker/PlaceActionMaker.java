@@ -1,15 +1,19 @@
 package edu.upc.prop.scrabble.domain.actionmaker;
 
 import edu.upc.prop.scrabble.data.Movement;
+import edu.upc.prop.scrabble.data.board.Board;
 import edu.upc.prop.scrabble.data.exceptions.PlayerDoesNotHavePieceException;
 import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.domain.board.PresentPiecesWordCompleter;
 import edu.upc.prop.scrabble.domain.board.WordPlacer;
 import edu.upc.prop.scrabble.domain.crosschecks.CrossCheckUpdater;
 import edu.upc.prop.scrabble.domain.dawg.WordValidator;
+import edu.upc.prop.scrabble.domain.exceptions.InitialMoveNotInCenterException;
 import edu.upc.prop.scrabble.domain.exceptions.MovementOutsideOfBoardException;
 import edu.upc.prop.scrabble.domain.exceptions.WordDoesNotExistException;
+import edu.upc.prop.scrabble.domain.exceptions.WordNotConnectedToOtherWordsException;
 import edu.upc.prop.scrabble.domain.game.GameStepper;
+import edu.upc.prop.scrabble.domain.pieces.PiecesConverter;
 import edu.upc.prop.scrabble.domain.pieces.PiecesInHandGetter;
 import edu.upc.prop.scrabble.domain.movement.MovementCleaner;
 import edu.upc.prop.scrabble.domain.movement.MovementBoundsChecker;
@@ -31,8 +35,10 @@ public class PlaceActionMaker {
     private final PresentPiecesWordCompleter presentPiecesWordCompleter;
     private final CrossCheckUpdater crossCheckUpdater;
     private final GameStepper stepper;
+    private final PiecesConverter piecesConverter;
+    private final Board board;
 
-    public PlaceActionMaker(MovementBoundsChecker MovementBoundsChecker, WordValidator wordValidator, PiecesInHandGetter piecesInHandGetter, MovementCleaner movementCleaner, WordPlacer wordPlacer, PresentPiecesWordCompleter presentPiecesWordCompleter, CrossCheckUpdater crossCheckUpdater, GameStepper stepper) {
+    public PlaceActionMaker(MovementBoundsChecker MovementBoundsChecker, WordValidator wordValidator, PiecesInHandGetter piecesInHandGetter, MovementCleaner movementCleaner, WordPlacer wordPlacer, PresentPiecesWordCompleter presentPiecesWordCompleter, CrossCheckUpdater crossCheckUpdater, GameStepper stepper, PiecesConverter piecesConverter, Board board) {
         this.movementBoundsChecker = MovementBoundsChecker;
         this.wordValidator = wordValidator;
         this.piecesInHandGetter = piecesInHandGetter;
@@ -41,6 +47,8 @@ public class PlaceActionMaker {
         this.presentPiecesWordCompleter = presentPiecesWordCompleter;
         this.crossCheckUpdater = crossCheckUpdater;
         this.stepper = stepper;
+        this.piecesConverter = piecesConverter;
+        this.board = board;
     }
 
     /**
@@ -54,6 +62,8 @@ public class PlaceActionMaker {
     public void run(Movement movement) {
         assertInsideOfBounds(movement);
         Pair<Piece, Vector2>[] necessaryPiecesPositions = movementCleaner.run(movement);
+        assertInitialMoveInCenter(necessaryPiecesPositions);
+        assertWordIsConnected(movement, necessaryPiecesPositions);
         Piece[] necessaryPieces = extractNecessaryPieces(necessaryPiecesPositions);
         Vector2[] necessaryPositions = extractNecessaryPositions(necessaryPiecesPositions);
 
@@ -62,6 +72,30 @@ public class PlaceActionMaker {
         wordPlacer.run(piecesInHand, movement.x(), movement.y(), movement.direction());
         crossCheckUpdater.run(movement);
         stepper.run();
+    }
+
+    private void assertWordIsConnected(Movement movement, Pair<Piece, Vector2>[] necessaryPiecesPositions) {
+        if (board.isEmpty())
+            return;
+
+        Piece[] necessaryPieces = piecesConverter.run(movement.word());
+        if (necessaryPieces.length == necessaryPiecesPositions.length)
+            throw new WordNotConnectedToOtherWordsException("The word is not connected to any other words on the board.");
+    }
+
+    private void assertInitialMoveInCenter(Pair<Piece, Vector2>[] necessaryPiecesPositions) {
+        if (!board.isEmpty())
+            return;
+        boolean inCenter = false;
+        for (Pair<Piece, Vector2> piece: necessaryPiecesPositions) {
+            if (board.isCenter(piece.second().x, piece.second().y)){
+                inCenter = true;
+                break;
+            }
+        }
+
+        if (!inCenter)
+            throw new InitialMoveNotInCenterException("The first move must go through the center of the board.");
     }
 
     private Piece[] extractNecessaryPieces(Pair<Piece, Vector2>[] necessaryPiecesPositions) {

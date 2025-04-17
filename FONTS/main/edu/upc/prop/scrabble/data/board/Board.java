@@ -5,6 +5,7 @@ import edu.upc.prop.scrabble.data.pieces.Piece;
 public abstract class Board {
     private final Piece[][] placedTiles;
     private final PremiumTileType[][] premiumTiles;
+    private boolean empty = true;
 
     public Board(int size) {
         placedTiles = new Piece[size][size];
@@ -19,6 +20,7 @@ public abstract class Board {
         if (placedTiles[x][y] != null) return;
 
         placedTiles[x][y] = piece;
+        empty = false;
     }
 
     public boolean isCenter(int x, int y) {
@@ -49,5 +51,9 @@ public abstract class Board {
 
     public boolean isCellValid(int x, int y) {
         return x >= 0 && x < getSize() && y >= 0 && y < getSize();
+    }
+
+    public boolean isEmpty() {
+        return empty;
     }
 }
