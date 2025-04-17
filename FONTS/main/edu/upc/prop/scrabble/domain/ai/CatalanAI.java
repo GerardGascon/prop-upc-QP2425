@@ -111,10 +111,11 @@ public class CatalanAI extends AI {
                         bot.removePiece(usedPiece);
                         bestScore = points;
                         bestMove = new Movement(partialWord, posVector[0].x, posVector[0].y, getWordDirection(posVector));
+                        bot.addPiece(usedPiece);
                     }
                 }
                 bot.removePiece(usedPiece);
-                ExtendRight(partialWord + "L·L", nextNode.getSuccessor('L'), nextCell);
+                ExtendRight(partialWord + "L·L", nextNode, nextCell);
                 bot.addPiece(usedPiece);
             }
         }
