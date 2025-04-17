@@ -1,6 +1,7 @@
 package edu.upc.prop.scrabble.domain.ai;
 
 import edu.upc.prop.scrabble.data.Anchors;
+import edu.upc.prop.scrabble.data.Movement;
 import edu.upc.prop.scrabble.data.Player;
 import edu.upc.prop.scrabble.data.board.Board;
 import edu.upc.prop.scrabble.data.crosschecks.CrossChecks;
@@ -74,6 +75,20 @@ public class CatalanAI extends AI {
             Node nextNode = entry.getValue().getSuccessor('Y');
             Piece usedPiece = bot.hasPiece("NY");
             if(nextNode != null && usedPiece != null && crossChecks.ableToPlace(cell.x, cell.y, "NY")) {
+                if(nextNode.isEndOfWord()) {
+                    partialWord = partialWord + "NY";
+                    Piece[] pieceArray = piecesConverter.run(partialWord);
+                    Vector2[] posVector = new Vector2[pieceArray.length];
+                    for (int i = 0; i < pieceArray.length; ++i) {
+                        posVector[i] = new Vector2(cell.x - pieceArray.length + 1 + i, cell.y);
+                    }
+                    int points = pointCalculator.run(posVector, pieceArray);
+                    if (points > bestScore) {
+                        bot.removePiece(usedPiece);
+                        bestScore = points;
+                        bestMove = new Movement(partialWord, posVector[0].x, posVector[0].y, getWordDirection(posVector));
+                    }
+                }
                 bot.removePiece(usedPiece);
                 ExtendRight(partialWord + "NY", nextNode, nextCell);
                 bot.addPiece(usedPiece);
@@ -81,8 +96,23 @@ public class CatalanAI extends AI {
         }
         else if(entry.getKey() == 'L') { // L·L
             Node nextNode = entry.getValue().getSuccessor('·');
+            if(nextNode != null) nextNode = nextNode.getSuccessor('L');
             Piece usedPiece = bot.hasPiece("L·L");
             if(nextNode != null && usedPiece != null && crossChecks.ableToPlace(cell.x, cell.y, "L·L")) {
+                if(nextNode.isEndOfWord()) {
+                    partialWord = partialWord + "L·L";
+                    Piece[] pieceArray = piecesConverter.run(partialWord);
+                    Vector2[] posVector = new Vector2[pieceArray.length];
+                    for (int i = 0; i < pieceArray.length; ++i) {
+                        posVector[i] = new Vector2(cell.x - pieceArray.length + 1 + i, cell.y);
+                    }
+                    int points = pointCalculator.run(posVector, pieceArray);
+                    if (points > bestScore) {
+                        bot.removePiece(usedPiece);
+                        bestScore = points;
+                        bestMove = new Movement(partialWord, posVector[0].x, posVector[0].y, getWordDirection(posVector));
+                    }
+                }
                 bot.removePiece(usedPiece);
                 ExtendRight(partialWord + "L·L", nextNode.getSuccessor('L'), nextCell);
                 bot.addPiece(usedPiece);

@@ -28,10 +28,10 @@ public abstract class AI {
     private final Anchors anchors;
     protected CrossChecks crossChecks;
     private Vector2 currentAnchor;
-    private final PointCalculator pointCalculator;
-    private final PiecesConverter piecesConverter;
-    private Movement bestMove;
-    private int bestScore;
+    protected final PointCalculator pointCalculator;
+    protected final PiecesConverter piecesConverter;
+    protected Movement bestMove;
+    protected int bestScore;
 
     public AI(PiecesConverter piecesConverter, PointCalculator pointCalculator, DAWG dawg, Board board, Player bot, Anchors anchors, CrossChecks crossChecks) {
         this.dawg = dawg;
@@ -127,22 +127,22 @@ public abstract class AI {
 
     protected void ExtendRight(String partialWord, Node node, Vector2 cell) {
         // FALTA CHECAR SI ES UNA PALABRA VALIDA CALCULAR PUNTOS MEJOR MOVIMIENTO Y TAL Y CUAL
+        // SI LA PALABRA ACABA CON COMB ESPECIAL HAY Q CHECAR
         Vector2 nextCell = new Vector2(cell.x + 1, cell.y);
         if (board.isCellValid(cell.x, cell.y) && board.isCellEmpty(cell.x, cell.y)) {
             Map<Character, Node> nextNodes = node.getSuccessors();
             for (Map.Entry<Character, Node> entry : nextNodes.entrySet()) {
                 if (entry.getValue().isEndOfWord() && bot.hasPiece(entry.getKey().toString()) != null) {
+                    partialWord = partialWord + entry.getKey();
                     Piece[] pieceArray = piecesConverter.run(partialWord);
                     Vector2[] posVector = new Vector2[pieceArray.length];
-                    System.out.println(pieceArray.length + "\n");
                     for (int i = 0; i < pieceArray.length; ++i) {
-                        System.out.println(cell.x - pieceArray.length + i + "," + cell.y + "," + pieceArray[i].letter() + "\n");
-                        posVector[i] = new Vector2(cell.x - pieceArray.length + i, cell.y);
+                        posVector[i] = new Vector2(cell.x - pieceArray.length + 1 + i, cell.y);
                     }
                     int points = pointCalculator.run(posVector, pieceArray);
                     if (points > bestScore) {
                         bestScore = points;
-                        bestMove = new Movement(partialWord + entry.getKey(), posVector[0].x, posVector[0].y, getWordDirection(posVector));
+                        bestMove = new Movement(partialWord, posVector[0].x, posVector[0].y, getWordDirection(posVector));
                     }
                 }
 
@@ -193,7 +193,7 @@ public abstract class AI {
         return current;
     }
 
-    private Direction getWordDirection(Vector2[] positions) {
+    protected Direction getWordDirection(Vector2[] positions) {
         if (positions.length == 1)
             return null;
 
