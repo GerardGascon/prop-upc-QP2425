@@ -27,7 +27,7 @@ public abstract class CrossChecks {
 
     public abstract String[] getLetters();
     public abstract int getNumberOfLetters();
-
+    public abstract Boolean ableToPlace(int x, int y, String letter);
     public BitSet getCrossCheckVer(int x, int y) {
         return crossChecksVer[x][y];
     }

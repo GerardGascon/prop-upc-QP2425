@@ -22,4 +22,18 @@ public class CatalanCrossChecks extends CrossChecks {
     public int getNumberOfLetters() {
         return 29;
     }
+
+    @Override
+    public Boolean ableToPlace(int x, int y, String letter) {
+        int numletter;
+        if(letters.length == 1) {
+            if(letter.charAt(0) == 'Ç') numletter = 27;
+            else numletter = letter.charAt(0) - 'A';
+        }
+        else if(letter.charAt(0) == 'L') numletter = 28;
+        else numletter = 29;
+
+        if(getCrossCheckVer(x, y).get(numletter)) return false;
+        else return !getCrossCheckHor(x, y).get(numletter);
+    }
 }
