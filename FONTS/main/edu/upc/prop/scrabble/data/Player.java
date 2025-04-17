@@ -90,4 +90,13 @@ public class Player {
 
         throw new PlayerDoesNotHavePieceException("Player " + name + " does not have the piece " + piece.letter());
     }
+    public Boolean hasPiece(Piece piece) {
+        Piece actual;
+        for (Piece value : hand) {
+            actual = value;
+            if (actual.isBlank()) return true;//tenemos todas
+            else if (actual.letter().equals(piece.letter())) return true;
+        }
+        return false;
+    }
 }
