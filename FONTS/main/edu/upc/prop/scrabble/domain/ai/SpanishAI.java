@@ -1,6 +1,7 @@
 package edu.upc.prop.scrabble.domain.ai;
 
 import edu.upc.prop.scrabble.data.Anchors;
+import edu.upc.prop.scrabble.data.Movement;
 import edu.upc.prop.scrabble.data.Player;
 import edu.upc.prop.scrabble.data.board.Board;
 import edu.upc.prop.scrabble.data.crosschecks.CrossChecks;
@@ -26,7 +27,7 @@ public class SpanishAI extends AI {
     @Override
     protected void processLeftPartSpecialPieces(String partialWord, Node node, int limit, Map.Entry<Character, Node> entry){
         if(entry.getKey() == 'R') { // RR
-            Node nextNode = node.getSuccessor('R');
+            Node nextNode = entry.getValue().getSuccessor('R');
             Piece usedPiece = bot.hasPiece("RR");
             if(nextNode != null && usedPiece != null) {
                 bot.removePiece(usedPiece);
@@ -35,7 +36,7 @@ public class SpanishAI extends AI {
             }
         }
         else if(entry.getKey() == 'L') { // LL
-            Node nextNode = node.getSuccessor('L');
+            Node nextNode = entry.getValue().getSuccessor('L');
             Piece usedPiece = bot.hasPiece("LL");
             if(nextNode != null && usedPiece != null) {
                 bot.removePiece(usedPiece);
@@ -44,7 +45,7 @@ public class SpanishAI extends AI {
             }
         }
         else if(entry.getKey() == 'C') { // CH
-            Node nextNode = node.getSuccessor('H');
+            Node nextNode = entry.getValue().getSuccessor('H');
             Piece usedPiece = bot.hasPiece("CH");
             if(nextNode != null && usedPiece != null) {
                 bot.removePiece(usedPiece);
@@ -84,27 +85,72 @@ public class SpanishAI extends AI {
     @Override
     protected void processRightPartSpecialPieces(String partialWord, Node node, Vector2 cell, Map.Entry<Character, Node> entry, Vector2 nextCell) {
         if(entry.getKey() == 'R') { // RR
-            Node nextNode = node.getSuccessor('R');
+            Node nextNode = entry.getValue().getSuccessor('R');
             Piece usedPiece = bot.hasPiece("RR");
             if(nextNode != null && usedPiece != null && crossChecks.ableToPlace(cell.x, cell.y, "RR")) {
+                if(nextNode.isEndOfWord()) {
+                    partialWord = partialWord + "RR";
+                    Piece[] pieceArray = piecesConverter.run(partialWord);
+                    Vector2[] posVector = new Vector2[pieceArray.length];
+                    for (int i = 0; i < pieceArray.length; ++i) {
+                        posVector[i] = new Vector2(cell.x - pieceArray.length + 1 + i, cell.y);
+                    }
+                    int points = pointCalculator.run(posVector, pieceArray);
+                    if (points > bestScore) {
+                        bot.removePiece(usedPiece);
+                        bestScore = points;
+                        bestMove = new Movement(partialWord, posVector[0].x, posVector[0].y, getWordDirection(posVector));
+                        bot.addPiece(usedPiece);
+                    }
+                }
                 bot.removePiece(usedPiece);
                 ExtendRight(partialWord + "RR", nextNode, nextCell);
                 bot.addPiece(usedPiece);
             }
         }
         else if(entry.getKey() == 'L') { // LL
-            Node nextNode = node.getSuccessor('L');
+            Node nextNode = entry.getValue().getSuccessor('L');
             Piece usedPiece = bot.hasPiece("LL");
             if(nextNode != null && usedPiece != null && crossChecks.ableToPlace(cell.x, cell.y, "LL")) {
+                if(nextNode.isEndOfWord()) {
+                    partialWord = partialWord + "LL";
+                    Piece[] pieceArray = piecesConverter.run(partialWord);
+                    Vector2[] posVector = new Vector2[pieceArray.length];
+                    for (int i = 0; i < pieceArray.length; ++i) {
+                        posVector[i] = new Vector2(cell.x - pieceArray.length + 1 + i, cell.y);
+                    }
+                    int points = pointCalculator.run(posVector, pieceArray);
+                    if (points > bestScore) {
+                        bot.removePiece(usedPiece);
+                        bestScore = points;
+                        bestMove = new Movement(partialWord, posVector[0].x, posVector[0].y, getWordDirection(posVector));
+                        bot.addPiece(usedPiece);
+                    }
+                }
                 bot.removePiece(usedPiece);
                 ExtendRight(partialWord + "LL", nextNode, nextCell);
                 bot.addPiece(usedPiece);
             }
         }
         else if(entry.getKey() == 'C') { // CH
-            Node nextNode = node.getSuccessor('H');
+            Node nextNode = entry.getValue().getSuccessor('H');
             Piece usedPiece = bot.hasPiece("CH");
             if(nextNode != null && usedPiece != null && crossChecks.ableToPlace(cell.x, cell.y, "CH")) {
+                if(nextNode.isEndOfWord()) {
+                    partialWord = partialWord + "CH";
+                    Piece[] pieceArray = piecesConverter.run(partialWord);
+                    Vector2[] posVector = new Vector2[pieceArray.length];
+                    for (int i = 0; i < pieceArray.length; ++i) {
+                        posVector[i] = new Vector2(cell.x - pieceArray.length + 1 + i, cell.y);
+                    }
+                    int points = pointCalculator.run(posVector, pieceArray);
+                    if (points > bestScore) {
+                        bot.removePiece(usedPiece);
+                        bestScore = points;
+                        bestMove = new Movement(partialWord, posVector[0].x, posVector[0].y, getWordDirection(posVector));
+                        bot.addPiece(usedPiece);
+                    }
+                }
                 bot.removePiece(usedPiece);
                 ExtendRight(partialWord + "CH", nextNode, nextCell);
                 bot.addPiece(usedPiece);
