@@ -1,5 +1,7 @@
 package edu.upc.prop.scrabble.presenter.terminal.players;
 
+import edu.upc.prop.scrabble.data.Movement;
+import edu.upc.prop.scrabble.presenter.terminal.movements.MovementMaker;
 import edu.upc.prop.scrabble.presenter.terminal.utils.Reader;
 
 public class HumanPlayerObject extends PlayerObject {
@@ -13,7 +15,8 @@ public class HumanPlayerObject extends PlayerObject {
             return;
 
         int previousScore = player.getScore();
-        movementMaker.makeMove(movementRaw);
+        Movement move = movementMaker.makeMove(movementRaw);
+        placePiece(move);
         System.out.println("Movement: " + movementRaw + " " + (player.getScore() - previousScore));
     }
 }
