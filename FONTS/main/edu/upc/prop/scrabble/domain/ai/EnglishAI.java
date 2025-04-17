@@ -28,8 +28,8 @@ public class EnglishAI extends AI {
     }
 
     @Override
-    protected void processNextPiece(char lastLetter, String partialWord, int limit, Map.Entry<Character, Node> entry, Piece usedPiece) {
-        goToNextLeftPiece(partialWord, limit, entry, usedPiece);
+    protected void processNextLeftPiece(char lastLetter, String partialWord, int limit, Map.Entry<Character, Node> entry, Piece usedPiece) {
+        goToNextLeftPiece(partialWord, limit - 1, entry, usedPiece);
     }
 
     @Override

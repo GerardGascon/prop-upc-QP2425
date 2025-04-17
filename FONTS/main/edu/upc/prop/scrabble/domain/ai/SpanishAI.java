@@ -55,11 +55,11 @@ public class SpanishAI extends AI {
     }
 
     @Override
-    protected void processNextPiece(char lastLetter, String partialWord, int limit, Map.Entry<Character, Node> entry, Piece usedPiece) {
+    protected void processNextLeftPiece(char lastLetter, String partialWord, int limit, Map.Entry<Character, Node> entry, Piece usedPiece) {
         if((lastLetter != 'R' || entry.getKey() != 'R') &&
                 (lastLetter != 'L' || entry.getKey() != 'L') &&
                 (lastLetter != 'C' || entry.getKey() != 'H')) {
-            goToNextLeftPiece(partialWord, limit, entry, usedPiece);
+            goToNextLeftPiece(partialWord, limit - 1, entry, usedPiece);
         }
     }
 

@@ -46,10 +46,10 @@ public class CatalanAI extends AI {
     }
 
     @Override
-    protected void processNextPiece(char lastLetter, String partialWord, int limit, Map.Entry<Character, Node> entry, Piece usedPiece) {
+    protected void processNextLeftPiece(char lastLetter, String partialWord, int limit, Map.Entry<Character, Node> entry, Piece usedPiece) {
         if((lastLetter != 'N' || entry.getKey() != 'Y') &&
                 (lastLetter != 'L' || entry.getKey() != '·')) {
-            goToNextLeftPiece(partialWord, limit, entry, usedPiece);
+            goToNextLeftPiece(partialWord, limit - 1, entry, usedPiece);
         }
     }
 
