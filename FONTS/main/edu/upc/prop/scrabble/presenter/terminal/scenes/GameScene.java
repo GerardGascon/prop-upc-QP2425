@@ -145,8 +145,8 @@ public class GameScene extends Scene {
         PiecesInHandGetter piecesInHandGetter = new PiecesInHandGetter(bag, player, piecePrinter, new Rand());
         PlaceActionMaker placeActionMaker = new PlaceActionMaker(boundsChecker, wordValidator, piecesInHandGetter,
                 movementCleaner, wordPlacer, presentPiecesWordCompleter, crossCheckUpdater, stepper);
-        MovementMaker movementMaker = new MovementMaker(placeActionMaker);
-        playerObject.configure(movementMaker, player);
+        MovementMaker movementMaker = new MovementMaker();
+        playerObject.configure(placeActionMaker, movementMaker, player);
     }
 
     private Board getBoard(GameProperties properties) {

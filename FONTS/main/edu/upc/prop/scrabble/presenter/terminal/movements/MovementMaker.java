@@ -8,15 +8,7 @@ import edu.upc.prop.scrabble.domain.board.WordPlacer;
 import edu.upc.prop.scrabble.domain.pieces.PiecesConverter;
 
 public class MovementMaker {
-    private final PlaceActionMaker placeActionMaker;
-
-    public MovementMaker(PlaceActionMaker placeActionMaker) {
-        this.placeActionMaker = placeActionMaker;
-    }
-
-    public void makeMove(String movementRaw) {
-        Movement move = MovementParser.parse(movementRaw);
-        System.out.println(move);
-        placeActionMaker.run(move);
+    public Movement makeMove(String movementRaw) {
+        return MovementParser.parse(movementRaw);
     }
 }
