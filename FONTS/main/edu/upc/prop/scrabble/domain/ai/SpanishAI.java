@@ -67,7 +67,9 @@ public class SpanishAI extends AI {
     }
 
     @Override
-    protected void extendToNextNewPieceRight(String partialWord, Map.Entry<Character, Node> entry, char lastLetter, Piece usedPiece, Vector2 nextCell) {
+    protected void extendToNextNewPieceRight(String partialWord, Map.Entry<Character, Node> entry, Piece usedPiece, Vector2 nextCell) {
+        char lastLetter = ' ';
+        if(!partialWord.isEmpty()) lastLetter = partialWord.charAt(partialWord.length() - 1);
         if((lastLetter != 'R' || entry.getKey() != 'R') &&
                 (lastLetter != 'L' || entry.getKey() != 'L') &&
                 (lastLetter != 'C' || entry.getKey() != 'H')) {
@@ -76,11 +78,22 @@ public class SpanishAI extends AI {
     }
 
     @Override
-    protected void extendToNextExistingPieceRight(String partialWord, char lastLetter, String placedLetter, Node nextNode, Vector2 nextCell) {
-        if ((lastLetter != 'R' || !placedLetter.equals("R")) &&
-                (lastLetter != 'L' || !placedLetter.equals("L")) &&
-                (lastLetter != 'C' || !placedLetter.equals("H"))) {
+    protected void extendToNextExistingPieceRight(String partialWord, Piece placedPiece, Node node, Vector2 nextCell) {
+        char lastLetter = ' ';
+        if(!partialWord.isEmpty()) lastLetter = partialWord.charAt(partialWord.length() - 1);
+        String placedLetter = placedPiece.letter();
+        Node nextNode = node.getSuccessor(placedPiece.letter().charAt(0));
+        if (placedLetter.length() == 1 && nextNode != null &&
+                (lastLetter != 'R' || !placedLetter.equals("R")) &&
+                (lastLetter != 'C' || !placedLetter.equals("H")) &&
+                (lastLetter != 'L' || !placedLetter.equals("L"))) {
             ExtendRight(partialWord + placedLetter, nextNode, nextCell);
+        }
+        else if (placedLetter.length() > 1 && nextNode != null) {
+            for (int i = 1; i < partialWord.length() && nextNode != null; i++)
+                nextNode = node.getSuccessor(placedPiece.letter().charAt(i));
+            if (nextNode != null)
+                ExtendRight(partialWord + placedLetter, nextNode, nextCell);
         }
     }
 

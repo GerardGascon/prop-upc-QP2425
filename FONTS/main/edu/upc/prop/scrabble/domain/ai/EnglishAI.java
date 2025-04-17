@@ -33,13 +33,13 @@ public class EnglishAI extends AI {
     }
 
     @Override
-    protected void extendToNextNewPieceRight(String partialWord, Map.Entry<Character, Node> entry, char lastLetter, Piece usedPiece, Vector2 nextCell) {
+    protected void extendToNextNewPieceRight(String partialWord, Map.Entry<Character, Node> entry, Piece usedPiece, Vector2 nextCell) {
         goToNextRightPiece(partialWord, entry, usedPiece, nextCell);
     }
 
     @Override
-    protected void extendToNextExistingPieceRight(String partialWord, char lastLetter, String placedLetter, Node nextNode, Vector2 nextCell) {
-        ExtendRight(partialWord + placedLetter, nextNode, nextCell);
+    protected void extendToNextExistingPieceRight(String partialWord, Piece placedPiece, Node node, Vector2 nextCell) {
+        ExtendRight(partialWord + placedPiece.letter(), node.getSuccessor(placedPiece.letter().charAt(0)), nextCell);
     }
 
     @Override

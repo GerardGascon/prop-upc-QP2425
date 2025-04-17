@@ -162,50 +162,24 @@ public abstract class AI {
                 Piece usedPiece = bot.hasPiece(String.valueOf(c));
                 // In possession of matching and usable piece
                 if (usedPiece != null && crossChecks.ableToPlace(cell.x, cell.y, String.valueOf(c))) {
-
                     // Word already valid
-                    if (entry.getValue().isEndOfWord()) {
-                        partialWord = partialWord + entry.getKey(); // update partial word
-                        // Create needed variables
-                        Piece[] pieceArray = piecesConverter.run(partialWord);
-                        Vector2[] posVector = new Vector2[pieceArray.length];
-                        for (int i = 0; i < pieceArray.length; ++i) {
-                            posVector[i] = new Vector2(cell.x - pieceArray.length + 1 + i, cell.y);
-                        }
-                        // Update best move and score if needed
-                        int points = pointCalculator.run(posVector, pieceArray);
-                        if (points > bestScore) {
-                            bestScore = points;
-                            bestMove = new Movement(partialWord, posVector[0].x, posVector[0].y, getWordDirection(posVector));
-                        }
-                    }
-                    char lastLetter = ' ';
-                    if(!partialWord.isEmpty()) lastLetter = partialWord.charAt(partialWord.length() - 1);
-                    extendToNextNewPieceRight(partialWord, entry, lastLetter, usedPiece, nextCell);
+                    if (entry.getValue().isEndOfWord()) checkWord(partialWord + c, cell);
+                    // Standard check
+                    extendToNextNewPieceRight(partialWord, entry, usedPiece, nextCell);
                 }
             }
-        } else if (board.isCellValid(cell.x, cell.y ) && !board.isCellEmpty(cell.x, cell.y)) { // NO PONER COMBINATIONS ILEGALES!!!!! NY y tal
-            Piece placedPiece = board.getCellPiece(cell.x, cell.y);
-            char lastLetter = ' ';
-            if(!partialWord.isEmpty()) lastLetter = partialWord.charAt(partialWord.length() - 1);
-            String placedLetter = placedPiece.letter();
-            Node nextNode = node.getSuccessor(placedPiece.letter().charAt(0));
-            if (placedLetter.length() == 1 && nextNode != null)
-                extendToNextExistingPieceRight(partialWord, lastLetter, placedLetter, nextNode, nextCell);
-            else {
-                for (int i = 1; i < partialWord.length() && nextNode != null; i++)
-                    nextNode = node.getSuccessor(placedPiece.letter().charAt(i));
-                if (nextNode != null)
-                    ExtendRight(partialWord + placedLetter, nextNode, nextCell);
-            }
+        }
+        // Already placed piece
+        else if (board.isCellValid(cell.x, cell.y ) && !board.isCellEmpty(cell.x, cell.y)) {
+            extendToNextExistingPieceRight(partialWord, board.getCellPiece(cell.x, cell.y), node, nextCell);
         }
     }
 
     protected abstract void processRightPartSpecialPieces(String partialWord, Node node, Vector2 cell, Map.Entry<Character, Node> entry, Vector2 nextCell);
 
-    protected abstract void extendToNextNewPieceRight(String partialWord, Map.Entry<Character, Node> entry, char lastLetter, Piece usedPiece, Vector2 nextCell);
+    protected abstract void extendToNextNewPieceRight(String partialWord, Map.Entry<Character, Node> entry, Piece usedPiece, Vector2 nextCell);
 
-    protected abstract void extendToNextExistingPieceRight(String partialWord, char lastLetter, String placedLetter, Node nextNode, Vector2 nextCell);
+    protected abstract void extendToNextExistingPieceRight(String partialWord, Piece placedPiece, Node nextNode, Vector2 nextCell);
 
     /**
      * Backtracking handler
@@ -238,5 +212,20 @@ public abstract class AI {
         if (positions[0].x == positions[1].x)
             return Direction.Vertical;
         return Direction.Horizontal;
+    }
+
+    private void checkWord(String word, Vector2 cell) {
+        // Create needed variables
+        Piece[] pieceArray = piecesConverter.run(word);
+        Vector2[] posVector = new Vector2[pieceArray.length];
+        for (int i = 0; i < pieceArray.length; ++i) {
+            posVector[i] = new Vector2(cell.x - pieceArray.length + 1 + i, cell.y);
+        }
+        // Update best move and score if needed
+        int points = pointCalculator.run(posVector, pieceArray);
+        if (points > bestScore) {
+            bestScore = points;
+            bestMove = new Movement(word, posVector[0].x, posVector[0].y, getWordDirection(posVector));
+        }
     }
 }

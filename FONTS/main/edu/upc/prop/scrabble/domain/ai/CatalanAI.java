@@ -57,7 +57,9 @@ public class CatalanAI extends AI {
     }
 
     @Override
-    protected void extendToNextNewPieceRight(String partialWord, Map.Entry<Character, Node> entry, char lastLetter, Piece usedPiece, Vector2 nextCell) {
+    protected void extendToNextNewPieceRight(String partialWord, Map.Entry<Character, Node> entry, Piece usedPiece, Vector2 nextCell) {
+        char lastLetter = ' ';
+        if(!partialWord.isEmpty()) lastLetter = partialWord.charAt(partialWord.length() - 1);
         if((lastLetter != 'N' || entry.getKey() != 'Y') &&
                 (lastLetter != 'L' || entry.getKey() != '·')) {
             goToNextRightPiece(partialWord, entry, usedPiece, nextCell);
@@ -65,9 +67,21 @@ public class CatalanAI extends AI {
     }
 
     @Override
-    protected void extendToNextExistingPieceRight(String partialWord, char lastLetter, String placedLetter, Node nextNode, Vector2 nextCell) {
-        if ((lastLetter != 'N' || !placedLetter.equals("Y")) && (lastLetter != 'L' || !placedLetter.equals("·"))) {
+    protected void extendToNextExistingPieceRight(String partialWord, Piece placedPiece, Node node, Vector2 nextCell) {
+        char lastLetter = ' ';
+        if(!partialWord.isEmpty()) lastLetter = partialWord.charAt(partialWord.length() - 1);
+        String placedLetter = placedPiece.letter();
+        Node nextNode = node.getSuccessor(placedPiece.letter().charAt(0));
+        if (placedLetter.length() == 1 && nextNode != null &&
+            (lastLetter != 'N' || !placedLetter.equals("Y")) &&
+            (lastLetter != 'L' || !placedLetter.equals("·"))) {
             ExtendRight(partialWord + placedLetter, nextNode, nextCell);
+        }
+        else if (placedLetter.length() > 1 && nextNode != null) {
+            for (int i = 1; i < partialWord.length() && nextNode != null; i++)
+                nextNode = node.getSuccessor(placedPiece.letter().charAt(i));
+            if (nextNode != null)
+                ExtendRight(partialWord + placedLetter, nextNode, nextCell);
         }
     }
 
