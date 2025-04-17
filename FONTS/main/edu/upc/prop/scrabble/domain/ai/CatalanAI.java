@@ -35,7 +35,7 @@ public class CatalanAI extends AI {
             }
         }
         else if(entry.getKey() == 'L') { // L·L
-            Node nextNode = node.getSuccessor('·');
+            Node nextNode = entry.getValue().getSuccessor('·');
             Piece usedPiece = bot.hasPiece("L·L");
             if(nextNode != null && usedPiece != null) {
                 bot.removePiece(usedPiece);
@@ -71,7 +71,7 @@ public class CatalanAI extends AI {
     @Override
     protected void processRightPartSpecialPieces(String partialWord, Node node, Vector2 cell, Map.Entry<Character, Node> entry, Vector2 nextCell) {
         if(entry.getKey() == 'N') { // NY
-            Node nextNode = node.getSuccessor('Y');
+            Node nextNode = entry.getValue().getSuccessor('Y');
             Piece usedPiece = bot.hasPiece("NY");
             if(nextNode != null && usedPiece != null && crossChecks.ableToPlace(cell.x, cell.y, "NY")) {
                 bot.removePiece(usedPiece);
@@ -80,7 +80,7 @@ public class CatalanAI extends AI {
             }
         }
         else if(entry.getKey() == 'L') { // L·L
-            Node nextNode = node.getSuccessor('·');
+            Node nextNode = entry.getValue().getSuccessor('·');
             Piece usedPiece = bot.hasPiece("L·L");
             if(nextNode != null && usedPiece != null && crossChecks.ableToPlace(cell.x, cell.y, "L·L")) {
                 bot.removePiece(usedPiece);

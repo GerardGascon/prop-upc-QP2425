@@ -62,7 +62,7 @@ public class TestAI {
         bot.addPiece(new Piece("T",1));
         bot.addPiece(new Piece("A",1));
         bot.addPiece(new Piece("NY",1));
-        bot.addPiece(new Piece("Y",1));
+        bot.addPiece(new Piece("N",1));
         bot.addPiece(new Piece("A",1));
         PiecesConverter converter = new CatalanPiecesConverter();
         Anchors anchors = new Anchors();

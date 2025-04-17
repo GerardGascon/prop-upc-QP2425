@@ -131,7 +131,7 @@ public abstract class AI {
         if (board.isCellValid(cell.x, cell.y) && board.isCellEmpty(cell.x, cell.y)) {
             Map<Character, Node> nextNodes = node.getSuccessors();
             for (Map.Entry<Character, Node> entry : nextNodes.entrySet()) {
-                if (entry.getValue().isEndOfWord()) {
+                if (entry.getValue().isEndOfWord() && bot.hasPiece(entry.getKey().toString()) != null) {
                     Piece[] pieceArray = piecesConverter.run(partialWord);
                     Vector2[] posVector = new Vector2[pieceArray.length];
                     System.out.println(pieceArray.length + "\n");
