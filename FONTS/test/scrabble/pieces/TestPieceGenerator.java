@@ -17,6 +17,16 @@ public class TestPieceGenerator {
 
         assertEquals("D", p[0].first().letter());
     }
+    @Test
+    public void whenPassingBlankPieceStringGenerateBlankPiece(){
+        String dPiece = "# 2 0";
+        PieceGenerator sut = new PieceGenerator();
+
+        Pair<Piece, Integer>[] p = sut.run(dPiece);
+
+        assertEquals("#", p[0].first().letter());
+        assertTrue(p[0].first().isBlank());
+    }
 
     @Test
     public void whenPassingCPieceStringGenerateCPiece(){
