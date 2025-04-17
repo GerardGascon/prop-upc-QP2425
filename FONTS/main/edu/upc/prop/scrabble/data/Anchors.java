@@ -10,6 +10,7 @@ public class Anchors {
     public Anchors() { this.anchors = new ArrayList<>(); }
 
     public void addAnchor(int x, int y) { anchors.add(new Vector2(x, y)); }
+    public void removeAnchor(int x, int y) { anchors.remove(new Vector2(x, y)); }
     public int getSize() { return anchors.size(); }
 
     // precon position < size
@@ -22,11 +23,5 @@ public class Anchors {
     //de la mitad de board*board)
     public boolean exists(int x, int y) {
         return anchors.contains(new Vector2(x, y));
-        /*for (Vector2 anchor : anchors) {
-            if (anchor.x == x && anchor.y == y) {
-                return true;
-            }
-        }
-        return false;*/
     }
 }
