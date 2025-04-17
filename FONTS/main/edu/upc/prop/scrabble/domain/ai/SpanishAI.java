@@ -9,12 +9,7 @@ import edu.upc.prop.scrabble.data.dawg.DAWG;
 import edu.upc.prop.scrabble.data.dawg.Node;
 import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.domain.board.PointCalculator;
-import edu.upc.prop.scrabble.domain.board.WordGetter;
-import edu.upc.prop.scrabble.domain.board.WordPlacer;
-import edu.upc.prop.scrabble.domain.dawg.WordValidator;
 import edu.upc.prop.scrabble.domain.pieces.PiecesConverter;
-import edu.upc.prop.scrabble.domain.pieces.PiecesInHandVerifier;
-import edu.upc.prop.scrabble.utils.Pair;
 import edu.upc.prop.scrabble.utils.Vector2;
 
 import java.util.Map;
@@ -25,43 +20,44 @@ public class SpanishAI extends AI {
     }
 
     @Override
-    protected void processLeftPartSpecialPieces(String partialWord, int limit, Map.Entry<Character, Node> entry){
-        if(entry.getKey() == 'R') { // RR
-            Node nextNode = entry.getValue().getSuccessor('R');
-            Piece usedPiece = bot.hasPiece("RR");
-            if(nextNode != null && usedPiece != null) {
-                bot.removePiece(usedPiece);
-                LeftPart(partialWord + "RR", nextNode, limit - 1);
-                bot.addPiece(usedPiece);
-            }
-        }
-        else if(entry.getKey() == 'L') { // LL
-            Node nextNode = entry.getValue().getSuccessor('L');
-            Piece usedPiece = bot.hasPiece("LL");
-            if(nextNode != null && usedPiece != null) {
-                bot.removePiece(usedPiece);
-                LeftPart(partialWord + "LL", nextNode, limit - 1);
-                bot.addPiece(usedPiece);
-            }
-        }
-        else if(entry.getKey() == 'C') { // CH
-            Node nextNode = entry.getValue().getSuccessor('H');
-            Piece usedPiece = bot.hasPiece("CH");
-            if(nextNode != null && usedPiece != null) {
-                bot.removePiece(usedPiece);
-                LeftPart(partialWord + "CH", nextNode, limit - 1);
-                bot.addPiece(usedPiece);
-            }
+    protected void processLeftPartSpecialPieces(String partialWord, Map.Entry<Character, Node> entry, int limit) {
+        char c = entry.getKey(); // Current char
+        Node nextNode = null; // Initialize
+        Piece usedPiece = null;
+        switch (c) {
+            case 'R':
+                nextNode = entry.getValue().getSuccessor('R');
+                usedPiece = bot.hasPiece("RR");
+                if(nextNode != null && usedPiece != null) {
+                    goToNextLeftPiece(partialWord + "RR", nextNode, limit, usedPiece);
+                }
+                break;
+
+            case 'L':
+                nextNode = entry.getValue().getSuccessor('L');
+                usedPiece = bot.hasPiece("LL");
+                if(nextNode != null && usedPiece != null) {
+                    goToNextLeftPiece(partialWord + "LL", nextNode, limit, usedPiece);
+                }
+                break;
+
+            case 'C':
+                nextNode = entry.getValue().getSuccessor('C');
+                usedPiece = bot.hasPiece("CH");
+                if(nextNode != null && usedPiece != null) {
+                    goToNextLeftPiece(partialWord + "CH", nextNode, limit, usedPiece);
+                }
+                break;
         }
     }
 
     @Override
-    protected void processNextLeftPiece(String partialWord, int limit, Map.Entry<Character, Node> entry, Piece usedPiece) {
+    protected void processNextLeftPiece(String partialWord, Map.Entry<Character, Node> entry, int limit, Piece usedPiece) {
         char lastLetter = ' ';
         if(!partialWord.isEmpty()) lastLetter = partialWord.charAt(partialWord.length() - 1);
         if((lastLetter != 'R' || entry.getKey() != 'R') &&
-                (lastLetter != 'L' || entry.getKey() != 'L') &&
-                (lastLetter != 'C' || entry.getKey() != 'H')) {
+           (lastLetter != 'L' || entry.getKey() != 'L') &&
+           (lastLetter != 'C' || entry.getKey() != 'H')) {
             goToNextLeftPiece(partialWord + entry.getKey(), entry.getValue(), limit, usedPiece);
         }
     }

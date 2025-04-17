@@ -8,12 +8,7 @@ import edu.upc.prop.scrabble.data.dawg.DAWG;
 import edu.upc.prop.scrabble.data.dawg.Node;
 import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.domain.board.PointCalculator;
-import edu.upc.prop.scrabble.domain.board.WordGetter;
-import edu.upc.prop.scrabble.domain.board.WordPlacer;
-import edu.upc.prop.scrabble.domain.dawg.WordValidator;
 import edu.upc.prop.scrabble.domain.pieces.PiecesConverter;
-import edu.upc.prop.scrabble.domain.pieces.PiecesInHandVerifier;
-import edu.upc.prop.scrabble.utils.Pair;
 import edu.upc.prop.scrabble.utils.Vector2;
 
 import java.util.Map;
@@ -24,11 +19,11 @@ public class EnglishAI extends AI {
     }
 
     @Override
-    protected void processLeftPartSpecialPieces(String partialWord, int limit, Map.Entry<Character, Node> entry) {
+    protected void processLeftPartSpecialPieces(String partialWord, Map.Entry<Character, Node> entry, int limit) {
     }
 
     @Override
-    protected void processNextLeftPiece(String partialWord, int limit, Map.Entry<Character, Node> entry, Piece usedPiece) {
+    protected void processNextLeftPiece(String partialWord, Map.Entry<Character, Node> entry, int limit, Piece usedPiece) {
         goToNextLeftPiece(partialWord + entry.getKey(), entry.getValue(), limit, usedPiece);
     }
 

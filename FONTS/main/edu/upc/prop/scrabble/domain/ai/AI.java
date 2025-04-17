@@ -9,10 +9,8 @@ import edu.upc.prop.scrabble.data.dawg.DAWG;
 import edu.upc.prop.scrabble.data.dawg.Node;
 import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.domain.board.PointCalculator;
-import edu.upc.prop.scrabble.domain.pieces.PieceDrawer;
 import edu.upc.prop.scrabble.domain.pieces.PiecesConverter;
 import edu.upc.prop.scrabble.utils.Direction;
-import edu.upc.prop.scrabble.utils.Pair;
 import edu.upc.prop.scrabble.utils.Vector2;
 
 import java.util.*;
@@ -100,10 +98,10 @@ public abstract class AI {
             Map<Character, Node> nextNodes = node.getSuccessors();
             for (Map.Entry<Character, Node> entry : nextNodes.entrySet()) {
                 // Special cases check (need to enter even if not in possession of current char)
-                processLeftPartSpecialPieces(partialWord, limit, entry);
+                processLeftPartSpecialPieces(partialWord, entry, limit);
                 // Standard check (if in possession of usable piece)
                 Piece usedPiece = bot.hasPiece(String.valueOf(entry.getKey()));
-                if (usedPiece != null) processNextLeftPiece(partialWord, limit, entry, usedPiece);
+                if (usedPiece != null) processNextLeftPiece(partialWord, entry, limit, usedPiece);
             }
         }
     }
@@ -116,18 +114,19 @@ public abstract class AI {
      * @see DAWG
      * @see Node
      */
-    protected abstract void processLeftPartSpecialPieces(String partialWord, int limit, Map.Entry<Character, Node> entry);
+    protected abstract void processLeftPartSpecialPieces(String partialWord, Map.Entry<Character, Node> entry, int limit);
 
     /**
      * Checks no illegal combination is done (may do nothing if language doesn't have any)
+     *
      * @param partialWord current word fragment.
-     * @param limit how far can we go.
-     * @param entry current successor entry.
-     * @param usedPiece piece used in current iteration.
+     * @param entry       current successor entry.
+     * @param limit       how far can we go.
+     * @param usedPiece   piece used in current iteration.
      * @see DAWG
      * @see Node
      */
-    protected abstract void processNextLeftPiece(String partialWord, int limit, Map.Entry<Character, Node> entry, Piece usedPiece);
+    protected abstract void processNextLeftPiece(String partialWord, Map.Entry<Character, Node> entry, int limit, Piece usedPiece);
 
     /**
      * Backtracking handler

@@ -9,12 +9,7 @@ import edu.upc.prop.scrabble.data.dawg.DAWG;
 import edu.upc.prop.scrabble.data.dawg.Node;
 import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.domain.board.PointCalculator;
-import edu.upc.prop.scrabble.domain.board.WordGetter;
-import edu.upc.prop.scrabble.domain.board.WordPlacer;
-import edu.upc.prop.scrabble.domain.dawg.WordValidator;
 import edu.upc.prop.scrabble.domain.pieces.PiecesConverter;
-import edu.upc.prop.scrabble.domain.pieces.PiecesInHandVerifier;
-import edu.upc.prop.scrabble.utils.Pair;
 import edu.upc.prop.scrabble.utils.Vector2;
 
 import java.util.Map;
@@ -25,7 +20,7 @@ public class CatalanAI extends AI {
     }
 
     @Override
-    protected void processLeftPartSpecialPieces(String partialWord, int limit, Map.Entry<Character, Node> entry) {
+    protected void processLeftPartSpecialPieces(String partialWord, Map.Entry<Character, Node> entry, int limit) {
         char c = entry.getKey(); // Current char
         Node nextNode = null; // Initialize
         Piece usedPiece = null;
@@ -49,7 +44,7 @@ public class CatalanAI extends AI {
     }
 
     @Override
-    protected void processNextLeftPiece(String partialWord, int limit, Map.Entry<Character, Node> entry, Piece usedPiece) {
+    protected void processNextLeftPiece(String partialWord, Map.Entry<Character, Node> entry, int limit, Piece usedPiece) {
         char lastLetter = ' ';
         if(!partialWord.isEmpty()) lastLetter = partialWord.charAt(partialWord.length() - 1);
         if((lastLetter != 'N' || entry.getKey() != 'Y') &&
