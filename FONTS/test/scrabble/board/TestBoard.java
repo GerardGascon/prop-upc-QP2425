@@ -30,6 +30,22 @@ public class TestBoard {
     }
 
     @Test
+    public void boardIsEmptyWhenNoPiecesPlaced() {
+        Board sut = new JuniorBoard();
+
+        assertTrue(sut.isEmpty());
+    }
+
+    @Test
+    public void boardIsNotEmptyWhenPiecesPlaced() {
+        Board sut = new JuniorBoard();
+
+        sut.placePiece(new Piece("C", 0), 0, 0);
+
+        assertFalse(sut.isEmpty());
+    }
+
+    @Test
     public void placePieceAddsItToBoard() {
         Board sut = new StandardBoard();
 
