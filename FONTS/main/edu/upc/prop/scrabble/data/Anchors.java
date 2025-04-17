@@ -15,13 +15,18 @@ public class Anchors {
     // precon position < size
     public Vector2 getAnchor(int position) { return anchors.get(position); }
 
-    // GIGAineficiente tal vez sea mejor hacer que anchors sea un set
+    //esto sige siendo ineficiente aunque + clean
+    //para hacerlo + eficiente hacer que cada ancor tenga asociado un hash
+    //y hacer si existe en el array list de anchors ese hash del anchor q queremos mirar
+    //No creo que sea muy importante pq dudo mucho que tengamos muchos anchors a la vez (nisiquera cerca
+    //de la mitad de board*board)
     public boolean exists(int x, int y) {
-        for (Vector2 anchor : anchors) {
+        return anchors.contains(new Vector2(x, y));
+        /*for (Vector2 anchor : anchors) {
             if (anchor.x == x && anchor.y == y) {
                 return true;
             }
         }
-        return false;
+        return false;*/
     }
 }

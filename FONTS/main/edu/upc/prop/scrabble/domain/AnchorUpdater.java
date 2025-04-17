@@ -30,7 +30,7 @@ public class AnchorUpdater {
         if(move.direction() == Direction.Vertical) {
             if(board.isCellValid(x, y - 1) && board.isCellEmpty(x, y - 1) ) anchors.addAnchor(x, y - 1);
             if(board.isCellValid(x, y + size) && board.isCellEmpty(x, y + size)) anchors.addAnchor(x, y + size);
-            for (int i_y = y; i_y < size; i_y++) {
+            for (int i_y = y; i_y < y+size; i_y++) {
                 if(board.isCellValid(x + 1, i_y) && board.isCellEmpty(x + 1, i_y)) anchors.addAnchor(x + 1, i_y);
                 if(board.isCellValid(x - 1, i_y) && board.isCellEmpty(x - 1, i_y)) anchors.addAnchor(x - 1, i_y);
             }
@@ -38,7 +38,7 @@ public class AnchorUpdater {
         else if(move.direction() == Direction.Horizontal) {
             if(board.isCellValid(x - 1, y) && board.isCellEmpty(x - 1, y) ) anchors.addAnchor(x - 1, y);
             if(board.isCellValid(x + size, y) && board.isCellEmpty(x + size, y)) anchors.addAnchor(x + size, y);
-            for (int i_x = x; i_x < size; i_x++) {
+            for (int i_x = x; i_x < x+size; i_x++) {
                 if(board.isCellValid(i_x, y + 1) && board.isCellEmpty(i_x, y + 1)) anchors.addAnchor(i_x, y + 1);
                 if(board.isCellValid(i_x, y - 1) && board.isCellEmpty(i_x, y - 1)) anchors.addAnchor(i_x, y - 1);
             }
