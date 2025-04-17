@@ -18,7 +18,7 @@ public abstract class SceneObject {
         onEnable();
     }
 
-    public boolean isEnabled() {
+    public final boolean isEnabled() {
         return enabled;
     }
 
