@@ -17,6 +17,10 @@ import edu.upc.prop.scrabble.utils.Vector2;
 
 import java.util.*;
 
+/**
+ * AI class used to compute the move to make
+ * @author Albert Usero & Felipe Martínez Lassalle
+ */
 public abstract class AI {
     private final DAWG dawg;
     protected Player bot;//para la mano
@@ -29,9 +33,7 @@ public abstract class AI {
     private Movement bestMove;
     private int bestScore;
 
-    //los world placers y demás simlares hacer que se declaren en action maker y usarlos
-    //tanto para persona como bot
-    public AI(PiecesConverter piecesConverter, PointCalculator pointCalculator, String language, DAWG dawg, Board board, Player bot, Anchors anchors, CrossChecks crossChecks) {
+    public AI(PiecesConverter piecesConverter, PointCalculator pointCalculator, DAWG dawg, Board board, Player bot, Anchors anchors, CrossChecks crossChecks) {
         this.dawg = dawg;
         this.bot = bot;
         this.board = board;
@@ -41,17 +43,23 @@ public abstract class AI {
         this.piecesConverter = piecesConverter;
     }
 
-    //devuelve un vector con para cada pieza la posicionen la que va
+    /**
+     * Computes and returns the best possible move based on the highest point value.
+     * @return the move that yields the highest number of points. Null if no move possible.
+     */
     public Movement run() {
-        // Move initialization
+
+        // Reset global variables
         bestMove = new Movement("", 0, 0, Direction.Horizontal);
         bestScore = -1;
+
         // Iterate over every available anchor
         for (int i = 0; i < anchors.getSize(); ++i) {
+            // Set current anchor
             currentAnchor = anchors.getAnchor(i); // Global variable
-            int currentAnchorX = currentAnchor.x;
+            int currentAnchorX = currentAnchor.x; // Variables to make code cleaner
             int currentAnchorY = currentAnchor.y;
-            //MOVIMIENTOS HORIZONTALES---------------------------
+            // --------------------------- MOVIMIENTOS HORIZONTALES ---------------------------
             int limit = 0; // How far to the left can we go
             while (board.isCellValid(currentAnchorX - limit - 1, currentAnchorY) &&
                     board.isCellEmpty(currentAnchorX - limit - 1, currentAnchorY) &&
@@ -61,20 +69,26 @@ public abstract class AI {
             if (limit == 0) { // Already placed letters
                 String partialWord = "";
                 int j = 0;
-                while (board.isCellValid(currentAnchorX - j - 1, currentAnchorY)) {
+                while (board.isCellValid(currentAnchorX - j - 1, currentAnchorY)) { // Check existing string
                     partialWord = board.getCellPiece(currentAnchorX - i - 1, currentAnchorY).letter() + partialWord;
                     ++j;
                 }
-                ExtendRight(partialWord, getFinalNode(partialWord), currentAnchor);
-            } else {
+                ExtendRight(partialWord, getFinalNode(partialWord), currentAnchor); // Straight to the right part
+            } else { // Bot's pieces
                 LeftPart("", dawg.getRoot(), limit);
             }
         }
-
-        //tmb que best score sea -1 significa que no ha encontrado nada
-        return bestMove; //si es null hacer luego que se cambien piezas o pase turno
+        return bestMove;
     }
 
+    /**
+     * Backtracking function that iterates over every left part of possible words.
+     * @param partialWord current word fragment.
+     * @param node dawg node equivalent to the partialWord.
+     * @param limit how far can we go.
+     * @see DAWG
+     * @see Node
+     */
     protected void LeftPart(String partialWord, Node node, int limit) {
         ExtendRight(partialWord, node, currentAnchor);
         if (limit > 0) {
@@ -91,6 +105,15 @@ public abstract class AI {
         }
     }
 
+    /**
+     *
+     * @param partialWord current word fragment.
+     * @param node dawg node equivalent to the partialWord.
+     * @param limit how far can we go.
+     * @param entry current successor entry.
+     * @see DAWG
+     * @see Node
+     */
     protected abstract void processLeftPartSpecialPieces(String partialWord, Node node, int limit, Map.Entry<Character, Node> entry);
 
     protected abstract void processNextLeftPiece(char lastLetter, String partialWord, int limit, Map.Entry<Character, Node> entry, Piece usedPiece);

@@ -20,7 +20,7 @@ import java.util.Map;
 
 public class EnglishAI extends AI {
     public EnglishAI(PiecesConverter piecesConverter, PointCalculator pointCalculator, String language, DAWG dawg, Board board, Player bot, int diff, WordPlacer wordPlacer, WordGetter wordGetter, PiecesInHandVerifier piecesInHandVerifier, WordValidator wordValidator, Anchors anchors, CrossChecks crossChecks) {
-        super(piecesConverter, pointCalculator, language, dawg, board, bot, anchors, crossChecks);
+        super(piecesConverter, pointCalculator, dawg, board, bot, anchors, crossChecks);
     }
 
     @Override
