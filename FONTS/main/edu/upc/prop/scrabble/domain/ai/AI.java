@@ -133,14 +133,13 @@ public abstract class AI {
      * Backtracking handler
      * @param partialWord current word fragment.
      * @param limit how far can we go.
-     * @param entry current successor entry.
      * @param usedPiece piece used in current iteration.
      * @see DAWG
      * @see Node
      */
-    protected void goToNextLeftPiece(String partialWord, int limit, Map.Entry<Character, Node> entry, Piece usedPiece) {
+    protected void goToNextLeftPiece(String partialWord, Node node, int limit, Piece usedPiece) {
         bot.removePiece(usedPiece);
-        LeftPart(partialWord + entry.getKey(), entry.getValue(), limit - 1);
+        LeftPart(partialWord, node, limit - 1);
         bot.addPiece(usedPiece);
     }
 

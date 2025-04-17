@@ -62,7 +62,7 @@ public class SpanishAI extends AI {
         if((lastLetter != 'R' || entry.getKey() != 'R') &&
                 (lastLetter != 'L' || entry.getKey() != 'L') &&
                 (lastLetter != 'C' || entry.getKey() != 'H')) {
-            goToNextLeftPiece(partialWord, limit, entry, usedPiece);
+            goToNextLeftPiece(partialWord + entry.getKey(), entry.getValue(), limit, usedPiece);
         }
     }
 

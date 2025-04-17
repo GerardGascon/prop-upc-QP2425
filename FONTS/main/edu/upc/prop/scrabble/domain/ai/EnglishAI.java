@@ -29,7 +29,7 @@ public class EnglishAI extends AI {
 
     @Override
     protected void processNextLeftPiece(String partialWord, int limit, Map.Entry<Character, Node> entry, Piece usedPiece) {
-        goToNextLeftPiece(partialWord, limit, entry, usedPiece);
+        goToNextLeftPiece(partialWord + entry.getKey(), entry.getValue(), limit, usedPiece);
     }
 
     @Override

@@ -26,23 +26,25 @@ public class CatalanAI extends AI {
 
     @Override
     protected void processLeftPartSpecialPieces(String partialWord, int limit, Map.Entry<Character, Node> entry) {
-        if(entry.getKey() == 'N') { // NY
-            Node nextNode = entry.getValue().getSuccessor('Y');
-            Piece usedPiece = bot.hasPiece("NY");
-            if(nextNode != null && usedPiece != null) {
-                bot.removePiece(usedPiece);
-                LeftPart(partialWord + "NY", nextNode, limit - 1);
-                bot.addPiece(usedPiece);
-            }
-        }
-        else if(entry.getKey() == 'L') { // L·L
-            Node nextNode = entry.getValue().getSuccessor('·');
-            Piece usedPiece = bot.hasPiece("L·L");
-            if(nextNode != null && usedPiece != null) {
-                bot.removePiece(usedPiece);
-                LeftPart(partialWord + "L·L", nextNode.getSuccessor('L'), limit - 1);
-                bot.addPiece(usedPiece);
-            }
+        char c = entry.getKey(); // Current char
+        Node nextNode = null; // Initialize
+        Piece usedPiece = null;
+        switch (c) {
+            case 'N':
+                nextNode = entry.getValue().getSuccessor('Y');
+                usedPiece = bot.hasPiece("NY");
+                if(nextNode != null && usedPiece != null) {
+                    goToNextLeftPiece(partialWord + "NY", nextNode, limit, usedPiece);
+                }
+                break;
+
+            case 'L':
+                nextNode = entry.getValue().getSuccessor('·');
+                usedPiece = bot.hasPiece("L·L");
+                if(nextNode != null && usedPiece != null) {
+                    goToNextLeftPiece(partialWord + "L·L", nextNode.getSuccessor('L'), limit, usedPiece);
+                }
+                break;
         }
     }
 
@@ -51,8 +53,8 @@ public class CatalanAI extends AI {
         char lastLetter = ' ';
         if(!partialWord.isEmpty()) lastLetter = partialWord.charAt(partialWord.length() - 1);
         if((lastLetter != 'N' || entry.getKey() != 'Y') &&
-                (lastLetter != 'L' || entry.getKey() != '·')) {
-            goToNextLeftPiece(partialWord, limit, entry, usedPiece);
+           (lastLetter != 'L' || entry.getKey() != '·')) {
+            goToNextLeftPiece(partialWord + entry.getKey(), entry.getValue(), limit, usedPiece);
         }
     }
 
