@@ -8,6 +8,7 @@ import edu.upc.prop.scrabble.domain.board.PresentPiecesWordCompleter;
 import edu.upc.prop.scrabble.domain.board.WordPlacer;
 import edu.upc.prop.scrabble.domain.crosschecks.CrossCheckUpdater;
 import edu.upc.prop.scrabble.domain.dawg.WordValidator;
+import edu.upc.prop.scrabble.domain.exceptions.InitialMoveNotInCenterException;
 import edu.upc.prop.scrabble.domain.exceptions.MovementOutsideOfBoardException;
 import edu.upc.prop.scrabble.domain.exceptions.WordDoesNotExistException;
 import edu.upc.prop.scrabble.domain.exceptions.WordNotConnectedToOtherWordsException;
@@ -61,6 +62,7 @@ public class PlaceActionMaker {
     public void run(Movement movement) {
         assertInsideOfBounds(movement);
         Pair<Piece, Vector2>[] necessaryPiecesPositions = movementCleaner.run(movement);
+        assertInitialMoveInCenter(necessaryPiecesPositions);
         assertWordIsConnected(movement, necessaryPiecesPositions);
         Piece[] necessaryPieces = extractNecessaryPieces(necessaryPiecesPositions);
         Vector2[] necessaryPositions = extractNecessaryPositions(necessaryPiecesPositions);
@@ -79,6 +81,21 @@ public class PlaceActionMaker {
         Piece[] necessaryPieces = piecesConverter.run(movement.word());
         if (necessaryPieces.length == necessaryPiecesPositions.length)
             throw new WordNotConnectedToOtherWordsException("The word is not connected to any other words on the board.");
+    }
+
+    private void assertInitialMoveInCenter(Pair<Piece, Vector2>[] necessaryPiecesPositions) {
+        if (!board.isEmpty())
+            return;
+        boolean inCenter = false;
+        for (Pair<Piece, Vector2> piece: necessaryPiecesPositions) {
+            if (board.isCenter(piece.second().x, piece.second().y)){
+                inCenter = true;
+                break;
+            }
+        }
+
+        if (!inCenter)
+            throw new InitialMoveNotInCenterException("The first move must go through the center of the board.");
     }
 
     private Piece[] extractNecessaryPieces(Pair<Piece, Vector2>[] necessaryPiecesPositions) {
