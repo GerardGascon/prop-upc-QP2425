@@ -19,7 +19,7 @@ import edu.upc.prop.scrabble.utils.Vector2;
 import java.util.Map;
 
 public class SpanishAI extends AI {
-    public SpanishAI(PiecesConverter piecesConverter, PointCalculator pointCalculator, String language, DAWG dawg, Board board, Player bot, int diff, WordPlacer wordPlacer, WordGetter wordGetter, PiecesInHandVerifier piecesInHandVerifier, WordValidator wordValidator, Anchors anchors, CrossChecks crossChecks) {
+    public SpanishAI(PiecesConverter piecesConverter, PointCalculator pointCalculator, DAWG dawg, Board board, Player bot, Anchors anchors, CrossChecks crossChecks) {
         super(piecesConverter, pointCalculator, dawg, board, bot, anchors, crossChecks);
     }
 
