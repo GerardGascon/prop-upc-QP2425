@@ -8,12 +8,12 @@ public abstract class SceneObject {
         this.scene = scene;
     }
 
-    public void disable() {
+    public final void disable() {
         enabled = false;
         onDisable();
     }
 
-    public void enable() {
+    public final void enable() {
         enabled = true;
         onEnable();
     }
@@ -38,7 +38,7 @@ public abstract class SceneObject {
         return scene.instantiate(o);
     }
 
-    protected void destroy(SceneObject o) {
+    protected final void destroy(SceneObject o) {
         scene.destroy(o);
     }
 }

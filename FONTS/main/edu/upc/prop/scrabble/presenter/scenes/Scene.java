@@ -34,7 +34,7 @@ public abstract class Scene {
     void onDetach() {
         for (SceneObject o : objects) {
             if (o.isEnabled())
-                o.onDisable();
+                o.disable();
             o.onDetach();
         }
     }
@@ -84,7 +84,7 @@ public abstract class Scene {
         if (o == null)
             throw new NullPointerException("Object cannot be null");
         objects.remove(o);
-        o.onDisable();
+        o.disable();
         o.onDetach();
     }
 }
