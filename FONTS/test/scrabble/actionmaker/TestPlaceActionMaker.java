@@ -258,4 +258,24 @@ public class TestPlaceActionMaker {
 
         sut.run(movement2);
     }
+
+    @Test
+    public void placeWordWithBlankPiece() {
+        Movement movement = new Movement("HOlA", 7, 7, Direction.Horizontal);
+
+        WordAdder wordAdder = new WordAdder(dawg);
+        wordAdder.run("HOLA");
+
+        player.addPiece(new Piece("H", 1));
+        player.addPiece(new Piece("O", 1));
+        player.addPiece(new Piece("#", 1, true));
+        player.addPiece(new Piece("A", 1));
+
+        sut.run(movement);
+
+        assertEquals("H", board.getCellPiece(7, 7).letter());
+        assertEquals("O", board.getCellPiece(8, 7).letter());
+        assertEquals("L", board.getCellPiece(9, 7).letter());
+        assertEquals("A", board.getCellPiece(10, 7).letter());
+    }
 }
