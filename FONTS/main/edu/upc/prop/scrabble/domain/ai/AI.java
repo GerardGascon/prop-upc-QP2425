@@ -91,10 +91,11 @@ public abstract class AI {
      * @see Node
      */
     protected void LeftPart(String partialWord, Node node, int limit) {
+
         // Straight to right part check
         ExtendRight(partialWord, node, currentAnchor);
 
-        if (limit > 0) { // Available space
+        if (limit > 0) { // Available space (no need to recheck if valid)
             // Get all possible successors and iterate over them
             Map<Character, Node> nextNodes = node.getSuccessors();
             for (Map.Entry<Character, Node> entry : nextNodes.entrySet()) {
@@ -145,33 +146,33 @@ public abstract class AI {
 
     protected void ExtendRight(String partialWord, Node node, Vector2 cell) {
 
-        // Prepare next cell
-        Vector2 nextCell = new Vector2(cell.x + 1, cell.y);
+        // Valid cell and node
+        if(board.isCellValid(cell.x, cell.y) && node != null) {
+            // Prepare next cell
+            Vector2 nextCell = new Vector2(cell.x + 1, cell.y);
 
-        // No placed piece in current cell and available node
-        if (board.isCellValid(cell.x, cell.y) && board.isCellEmpty(cell.x, cell.y) && node != null) {
-            // Get all possible successors and iterate over them
-            Map<Character, Node> nextNodes = node.getSuccessors();
-            for (Map.Entry<Character, Node> entry : nextNodes.entrySet()) {
+            // No placed piece in current cell and available node
+            if(board.isCellEmpty(cell.x, cell.y)) {
+                // Get all possible successors and iterate over them
+                Map<Character, Node> nextNodes = node.getSuccessors();
+                for (Map.Entry<Character, Node> entry : nextNodes.entrySet()) {
 
-                // Special cases check (need to check even if not in possession of current char)
-                processRightPartSpecialPieces(partialWord, node, cell, entry, nextCell);
+                    // Special cases check (need to check even if not in possession of current char)
+                    processRightPartSpecialPieces(partialWord, node, cell, entry, nextCell);
 
-                // Get current char and matching piece (null if non-existent)
-                char c = entry.getKey();
-                Piece usedPiece = bot.hasPiece(String.valueOf(c));
-                // In possession of matching and usable piece
-                if (usedPiece != null && crossChecks.ableToPlace(cell.x, cell.y, String.valueOf(c))) {
-                    // Word already valid
-                    if (entry.getValue().isEndOfWord()) checkWord(partialWord + c, cell);
-                    // Standard check
-                    extendToNextNewPieceRight(partialWord, entry, usedPiece, nextCell);
+                    // In possession of matching and usable piece
+                    char c = entry.getKey(); // Current char
+                    Piece usedPiece = bot.hasPiece(String.valueOf(c)); // Matching piece (null if non-existent)
+                    if (usedPiece != null && crossChecks.ableToPlace(cell.x, cell.y, String.valueOf(c))) {
+                        // Standard check
+                        extendToNextNewPieceRight(partialWord, entry, usedPiece, nextCell);
+                        // Word already valid
+                        if (entry.getValue().isEndOfWord()) checkWord(partialWord + c, cell);
+                    }
                 }
             }
-        }
-        // Already placed piece
-        else if (board.isCellValid(cell.x, cell.y ) && !board.isCellEmpty(cell.x, cell.y)) {
-            extendToNextExistingPieceRight(partialWord, board.getCellPiece(cell.x, cell.y), node, nextCell);
+            // Already placed piece
+            else extendToNextExistingPieceRight(partialWord, board.getCellPiece(cell.x, cell.y), node, nextCell);
         }
     }
 
@@ -184,9 +185,9 @@ public abstract class AI {
     /**
      * Backtracking handler
      * @param partialWord current word fragment.
-
      * @param entry current successor entry.
      * @param usedPiece piece used in current iteration.
+     * @param nextCell next iteration cell.
      * @see DAWG
      * @see Node
      */
