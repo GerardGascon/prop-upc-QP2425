@@ -153,7 +153,7 @@ public class CrossCheckUpdater {
         return current;
     }
 
-    //dado un nodo y una pieza dice si en sus sucesores se encuentra esa pieza y es final
+    //dado un nodo y una pieza dice si en sus sucesores se encuentra e y es final
     private boolean nextNodeTerminal(Node almostlast, String piece) {
         if(almostlast == null) return false;
         Node current = almostlast;
