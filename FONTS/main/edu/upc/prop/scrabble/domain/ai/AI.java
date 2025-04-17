@@ -98,7 +98,8 @@ public abstract class AI {
                 processLeftPartSpecialPieces(partialWord, node, limit, entry);
                 Piece usedPiece = bot.hasPiece(String.valueOf(entry.getKey()));
                 if (usedPiece != null) {
-                    char lastLetter = partialWord.charAt(partialWord.length() - 1);
+                    char lastLetter = ' ';
+                    if(!partialWord.isEmpty()) lastLetter = partialWord.charAt(partialWord.length() - 1);
                     processNextLeftPiece(lastLetter, partialWord, limit, entry, usedPiece);
                 }
             }
@@ -133,13 +134,15 @@ public abstract class AI {
                 if (entry.getValue().isEndOfWord()) {
                     Piece[] pieceArray = piecesConverter.run(partialWord);
                     Vector2[] posVector = new Vector2[pieceArray.length];
+                    System.out.println(pieceArray.length + "\n");
                     for (int i = 0; i < pieceArray.length; ++i) {
-                        posVector[i] = new Vector2(cell.x - i, cell.y - i);
+                        System.out.println(cell.x - pieceArray.length + i + "," + cell.y + "," + pieceArray[i].letter() + "\n");
+                        posVector[i] = new Vector2(cell.x - pieceArray.length + i, cell.y);
                     }
                     int points = pointCalculator.run(posVector, pieceArray);
                     if (points > bestScore) {
                         bestScore = points;
-                        bestMove = new Movement(partialWord, posVector[0].x, posVector[0].y, getWordDirection(posVector));
+                        bestMove = new Movement(partialWord + entry.getKey(), posVector[0].x, posVector[0].y, getWordDirection(posVector));
                     }
                 }
 
@@ -148,7 +151,8 @@ public abstract class AI {
 
                 Piece usedPiece = bot.hasPiece(String.valueOf(entry.getKey()));
                 if (usedPiece != null && crossChecks.ableToPlace(cell.x, cell.y, String.valueOf(entry.getKey()))) {
-                    char lastLetter = partialWord.charAt(partialWord.length() - 1);
+                    char lastLetter = ' ';
+                    if(!partialWord.isEmpty()) lastLetter = partialWord.charAt(partialWord.length() - 1);
                     extendToNextNewPieceRight(partialWord, entry, lastLetter, usedPiece, nextCell);
                 }
             }

@@ -5,16 +5,19 @@ import edu.upc.prop.scrabble.data.Movement;
 import edu.upc.prop.scrabble.data.Player;
 import edu.upc.prop.scrabble.data.board.Board;
 import edu.upc.prop.scrabble.data.board.StandardBoard;
+import edu.upc.prop.scrabble.data.crosschecks.CatalanCrossChecks;
 import edu.upc.prop.scrabble.data.crosschecks.CrossChecks;
 import edu.upc.prop.scrabble.data.crosschecks.EnglishCrossChecks;
 import edu.upc.prop.scrabble.data.dawg.DAWG;
 import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.domain.AnchorUpdater;
 import edu.upc.prop.scrabble.domain.ai.AI;
+import edu.upc.prop.scrabble.domain.ai.CatalanAI;
 import edu.upc.prop.scrabble.domain.ai.EnglishAI;
 import edu.upc.prop.scrabble.domain.board.PointCalculator;
 import edu.upc.prop.scrabble.domain.board.WordGetter;
 import edu.upc.prop.scrabble.domain.dawg.WordAdder;
+import edu.upc.prop.scrabble.domain.pieces.CatalanPiecesConverter;
 import edu.upc.prop.scrabble.domain.pieces.PiecesConverter;
 import edu.upc.prop.scrabble.utils.Direction;
 import org.junit.Test;
@@ -44,7 +47,31 @@ public class TestAI {
         PointCalculator pointCalculator = new PointCalculator(board, wordGetter);
         CrossChecks crossChecks = new EnglishCrossChecks(board,dawg);
         AI ai = new EnglishAI(converter, pointCalculator, dawg,board,bot,anchors,crossChecks);
-        Movement expectedmove = new Movement("SKIBIDI",7,0, Direction.Horizontal);
-        assertEquals(ai.run(), expectedmove);
+        Movement expectedMove = new Movement("SKIBIDI",7,7, Direction.Horizontal);
+        assertEquals(expectedMove, ai.run());
+    }
+
+    @Test
+    public void catalanAIEmptyBoard(){
+        DAWG dawg= new DAWG();
+        WordAdder adder= new WordAdder(dawg);
+        adder.run("SKIBIDI");
+        adder.run("TANYA");
+        Board board = new StandardBoard();
+        Player bot = new Player("ai",true);
+        bot.addPiece(new Piece("T",1));
+        bot.addPiece(new Piece("A",1));
+        bot.addPiece(new Piece("NY",1));
+        bot.addPiece(new Piece("Y",1));
+        bot.addPiece(new Piece("A",1));
+        PiecesConverter converter = new CatalanPiecesConverter();
+        Anchors anchors = new Anchors();
+        AnchorUpdater anchorUpdater = new AnchorUpdater(anchors,board,converter);
+        WordGetter wordGetter = new WordGetter(board);
+        PointCalculator pointCalculator = new PointCalculator(board, wordGetter);
+        CrossChecks crossChecks = new CatalanCrossChecks(board,dawg);
+        AI ai = new CatalanAI(converter, pointCalculator, dawg,board,bot,anchors,crossChecks);
+        Movement expectedMove = new Movement("TANYA",7,7, Direction.Horizontal);
+        assertEquals(expectedMove, ai.run());
     }
 }

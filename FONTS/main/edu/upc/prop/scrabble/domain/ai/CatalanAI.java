@@ -26,7 +26,7 @@ public class CatalanAI extends AI {
     @Override
     protected void processLeftPartSpecialPieces(String partialWord, Node node, int limit, Map.Entry<Character, Node> entry) {
         if(entry.getKey() == 'N') { // NY
-            Node nextNode = node.getSuccessor('Y');
+            Node nextNode = entry.getValue().getSuccessor('Y');
             Piece usedPiece = bot.hasPiece("NY");
             if(nextNode != null && usedPiece != null) {
                 bot.removePiece(usedPiece);
