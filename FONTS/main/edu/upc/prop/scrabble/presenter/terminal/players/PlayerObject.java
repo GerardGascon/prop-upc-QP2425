@@ -23,13 +23,12 @@ public abstract class PlayerObject extends SceneObject implements IGamePlayer {
     }
 
     @Override
-    public final void startTurn() {
+    public void startTurn() {
         System.out.println("Player \"" + player.getName() + "\" starts turn");
-        printPieces();
         onTurn = true;
     }
 
-    private void printPieces() {
+    protected void printPieces() {
         System.out.print("Pieces:");
         for (Piece piece : player.getHand())
             System.out.print(" " + piece.letter() + ",");
