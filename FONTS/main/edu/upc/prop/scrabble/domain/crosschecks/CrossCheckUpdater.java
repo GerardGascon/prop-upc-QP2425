@@ -144,13 +144,21 @@ public class CrossCheckUpdater {
     //sabes que la palabra ya esta bien (estaba puesta en el tablero), quieres el nodo de final
     private Node getFinalNode(String word) {
         Node current = dawg.getRoot();
+        int i = 0;
+        while(i < word.length() && current != null) {
+            current = current.getSuccessor(word.charAt(i));
+            ++i;
+        }
+
+        return current;
+        /*Node current = dawg.getRoot();
         for (int i = 0; i < word.length(); i++) {
             current = current.getSuccessor(word.charAt(i));
             //System.out.println(i);
             //System.out.println(current.getSuccessor('s'));
         }
 
-        return current;
+        return current;*/
     }
 
     //dado un nodo y una pieza dice si en sus sucesores se encuentra e y es final
