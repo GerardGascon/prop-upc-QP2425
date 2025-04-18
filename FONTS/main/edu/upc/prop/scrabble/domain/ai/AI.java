@@ -201,7 +201,6 @@ public abstract class AI {
             current = current.getSuccessor(word.charAt(i));
             ++i;
         }
-
         return current;
     }
 

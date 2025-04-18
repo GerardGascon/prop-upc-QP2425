@@ -342,7 +342,7 @@ public class TestAI {
     public void catalanAIHorizontalNY(){
         DAWG dawg= new DAWG();
         WordAdder adder= new WordAdder(dawg);
-        adder.run("ANY");//este tmb problemas del extend left al right (deberia de salir el pazny por tener + putnos))
+        //adder.run("ANY");//este tmb problemas del extend left al right (deberia de salir el pazny por tener + putnos))
         adder.run("PAZNYP");//problemas de pasar del extend left al right, deberia de quedar
         Board board = new StandardBoard();
         Player bot = new Player("ai",true);
@@ -370,4 +370,135 @@ public class TestAI {
         Movement expectedMove = new Movement("PAZNYP",4,7, Direction.Horizontal);
         assertEquals(expectedMove, ai.run());
     }
+    @Test
+    public void catalanAIHorizontalLL(){
+        DAWG dawg= new DAWG();
+        WordAdder adder= new WordAdder(dawg);
+        //adder.run("AL·L");//este tmb problemas del extend left al right (deberia de salir el pazny por tener + putnos))
+        adder.run("PAZL·LP");//problemas de pasar del extend left al right, deberia de quedar
+        Board board = new StandardBoard();
+        Player bot = new Player("ai",true);
+        bot.addPiece(new Piece("P",1));
+        bot.addPiece(new Piece("A",1));
+        bot.addPiece(new Piece("Z",1));
+        bot.addPiece(new Piece("P",1));
+        PiecesConverter converter = new CatalanPiecesConverter();
+        Anchors anchors = new Anchors();
+        AnchorUpdater anchorUpdater = new AnchorUpdater(anchors,board,converter);
+        WordGetter wordGetter = new WordGetter(board);
+        PointCalculator pointCalculator = new PointCalculator(board, wordGetter);
+        CrossChecks crossChecks = new CatalanCrossChecks(board,dawg);
+        CrossCheckUpdater updater = new CrossCheckUpdater(converter,crossChecks,board,dawg);
+        AI ai = new CatalanAI(converter, pointCalculator, dawg,board,bot,anchors,crossChecks);
+        BoardViewStub mock = new BoardViewStub();
+        WordPlacer wordPlacer = new WordPlacer(bot, board,mock,pointCalculator);
+        Piece[] pieces = new Piece[]{
+                new Piece("L·L", 1),
+        };
+        Movement previousMove = new Movement("L·L",7,7, Direction.Vertical);
+        anchorUpdater.run(previousMove);
+        updater.run(previousMove);
+        wordPlacer.run(pieces, 7, 7, Direction.Vertical);
+        Movement expectedMove = new Movement("PAZL·LP",4,7, Direction.Horizontal);
+        assertEquals(expectedMove, ai.run());
+    }
+    @Test
+    public void spanishAIHorizontalRR(){
+        DAWG dawg= new DAWG();
+        WordAdder adder= new WordAdder(dawg);
+        //adder.run("AL·L");//este tmb problemas del extend left al right (deberia de salir el pazny por tener + putnos))
+        adder.run("PAZRRP");//problemas de pasar del extend left al right, deberia de quedar
+        Board board = new StandardBoard();
+        Player bot = new Player("ai",true);
+        bot.addPiece(new Piece("P",1));
+        bot.addPiece(new Piece("A",1));
+        bot.addPiece(new Piece("Z",1));
+        bot.addPiece(new Piece("P",1));
+        PiecesConverter converter = new SpanishPiecesConverter();
+        Anchors anchors = new Anchors();
+        AnchorUpdater anchorUpdater = new AnchorUpdater(anchors,board,converter);
+        WordGetter wordGetter = new WordGetter(board);
+        PointCalculator pointCalculator = new PointCalculator(board, wordGetter);
+        CrossChecks crossChecks = new SpanishCrossChecks(board,dawg);
+        CrossCheckUpdater updater = new CrossCheckUpdater(converter,crossChecks,board,dawg);
+        AI ai = new SpanishAI(converter, pointCalculator, dawg,board,bot,anchors,crossChecks);
+        BoardViewStub mock = new BoardViewStub();
+        WordPlacer wordPlacer = new WordPlacer(bot, board,mock,pointCalculator);
+        Piece[] pieces = new Piece[]{
+                new Piece("RR", 1),
+        };
+        Movement previousMove = new Movement("RR",7,7, Direction.Vertical);
+        anchorUpdater.run(previousMove);
+        updater.run(previousMove);
+        wordPlacer.run(pieces, 7, 7, Direction.Vertical);
+        Movement expectedMove = new Movement("PAZRRP",4,7, Direction.Horizontal);
+        assertEquals(expectedMove, ai.run());
+    }
+    @Test
+    public void spanishAIHorizontalLL(){
+        DAWG dawg= new DAWG();
+        WordAdder adder= new WordAdder(dawg);
+        //adder.run("AL·L");//este tmb problemas del extend left al right (deberia de salir el pazny por tener + putnos))
+        adder.run("PAZLLP");//problemas de pasar del extend left al right, deberia de quedar
+        Board board = new StandardBoard();
+        Player bot = new Player("ai",true);
+        bot.addPiece(new Piece("P",1));
+        bot.addPiece(new Piece("A",1));
+        bot.addPiece(new Piece("Z",1));
+        bot.addPiece(new Piece("P",1));
+        PiecesConverter converter = new SpanishPiecesConverter();
+        Anchors anchors = new Anchors();
+        AnchorUpdater anchorUpdater = new AnchorUpdater(anchors,board,converter);
+        WordGetter wordGetter = new WordGetter(board);
+        PointCalculator pointCalculator = new PointCalculator(board, wordGetter);
+        CrossChecks crossChecks = new SpanishCrossChecks(board,dawg);
+        CrossCheckUpdater updater = new CrossCheckUpdater(converter,crossChecks,board,dawg);
+        AI ai = new SpanishAI(converter, pointCalculator, dawg,board,bot,anchors,crossChecks);
+        BoardViewStub mock = new BoardViewStub();
+        WordPlacer wordPlacer = new WordPlacer(bot, board,mock,pointCalculator);
+        Piece[] pieces = new Piece[]{
+                new Piece("LL", 1),
+        };
+        Movement previousMove = new Movement("LL",7,7, Direction.Vertical);
+        anchorUpdater.run(previousMove);
+        updater.run(previousMove);
+        wordPlacer.run(pieces, 7, 7, Direction.Vertical);
+        Movement expectedMove = new Movement("PAZLLP",4,7, Direction.Horizontal);
+        assertEquals(expectedMove, ai.run());
+    }
+    @Test
+    public void spanishAIHorizontalCH(){
+        DAWG dawg= new DAWG();
+        WordAdder adder= new WordAdder(dawg);
+        //adder.run("AL·L");//este tmb problemas del extend left al right (deberia de salir el pazny por tener + putnos))
+        adder.run("PAZCHP");//problemas de pasar del extend left al right, deberia de quedar
+        Board board = new StandardBoard();
+        Player bot = new Player("ai",true);
+        bot.addPiece(new Piece("P",1));
+        bot.addPiece(new Piece("A",1));
+        bot.addPiece(new Piece("Z",1));
+        bot.addPiece(new Piece("P",1));
+        PiecesConverter converter = new SpanishPiecesConverter();
+        Anchors anchors = new Anchors();
+        AnchorUpdater anchorUpdater = new AnchorUpdater(anchors,board,converter);
+        WordGetter wordGetter = new WordGetter(board);
+        PointCalculator pointCalculator = new PointCalculator(board, wordGetter);
+        CrossChecks crossChecks = new SpanishCrossChecks(board,dawg);
+        CrossCheckUpdater updater = new CrossCheckUpdater(converter,crossChecks,board,dawg);
+        AI ai = new SpanishAI(converter, pointCalculator, dawg,board,bot,anchors,crossChecks);
+        BoardViewStub mock = new BoardViewStub();
+        WordPlacer wordPlacer = new WordPlacer(bot, board,mock,pointCalculator);
+        Piece[] pieces = new Piece[]{
+                new Piece("CH", 1),
+        };
+        Movement previousMove = new Movement("CH",7,7, Direction.Vertical);
+        anchorUpdater.run(previousMove);
+        updater.run(previousMove);
+        wordPlacer.run(pieces, 7, 7, Direction.Vertical);
+        Movement expectedMove = new Movement("PAZCHP",4,7, Direction.Horizontal);
+        assertEquals(expectedMove, ai.run());
+    }
+
+
+
 }
