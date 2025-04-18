@@ -151,6 +151,14 @@ public class CrossCheckUpdater {
         }
 
         return current;
+        /*Node current = dawg.getRoot();
+        for (int i = 0; i < word.length(); i++) {
+            current = current.getSuccessor(word.charAt(i));
+            //System.out.println(i);
+            //System.out.println(current.getSuccessor('s'));
+        }
+
+        return current;*/
     }
 
     //dado un nodo y una pieza dice si en sus sucesores se encuentra e y es final
