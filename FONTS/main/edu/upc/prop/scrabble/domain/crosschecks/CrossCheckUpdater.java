@@ -144,10 +144,10 @@ public class CrossCheckUpdater {
     //sabes que la palabra ya esta bien (estaba puesta en el tablero), quieres el nodo de final
     private Node getFinalNode(String word) {
         Node current = dawg.getRoot();
-        for (int i = 0; i < word.length(); i++) {
+        int i = 0;
+        while(i < word.length() && current != null) {
             current = current.getSuccessor(word.charAt(i));
-            //System.out.println(i);
-            //System.out.println(current.getSuccessor('s'));
+            ++i;
         }
 
         return current;

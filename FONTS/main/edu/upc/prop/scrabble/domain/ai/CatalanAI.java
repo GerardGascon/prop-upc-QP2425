@@ -76,8 +76,11 @@ public class CatalanAI extends AI {
                 }
             }
             else { //Special piece
-                for (int i = 1; i < partialWord.length() && nextNode != null; i++) nextNode = node.getSuccessor(placedPiece.letter().charAt(i));
+                for (int i = 1; i < placedLetter.length() && nextNode != null; i++) {
+                    nextNode = nextNode.getSuccessor(placedPiece.letter().charAt(i));
+                }
                 if (nextNode != null) ExtendRight(partialWord + placedLetter, nextNode, cell);
+
             }
         }
     }
