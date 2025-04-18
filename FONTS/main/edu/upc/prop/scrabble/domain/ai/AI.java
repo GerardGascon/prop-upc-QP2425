@@ -73,7 +73,8 @@ public abstract class AI {
                     partialWord = board.getCellPiece(currentAnchorX - j , currentAnchorY).letter() + partialWord;
                     ++j;
                 }
-                ExtendRight(partialWord, getFinalNode(partialWord), currentAnchor); // Straight to the right part
+                Node node = getFinalNode(partialWord);
+                if(node != null) ExtendRight(partialWord, node, currentAnchor); // Straight to the right part
             }
             else LeftPart("", dawg.getRoot(), limit); // Bot's pieces case
         }
@@ -99,35 +100,36 @@ public abstract class AI {
             Map<Character, Node> nextNodes = node.getSuccessors();
             for (Map.Entry<Character, Node> entry : nextNodes.entrySet()) {
                 // Special cases check (need to enter even if not in possession of current char)
-                processLeftPartSpecialPieces(partialWord, entry, limit);
+                processLeftPartSpecialPieces(partialWord, limit, entry);
                 // Standard check (if in possession of usable piece)
                 Piece usedPiece = bot.hasPiece(String.valueOf(entry.getKey()));
-                if (usedPiece != null) processNextLeftPiece(partialWord, entry, limit, usedPiece);
+                if (usedPiece != null) processNextLeftPiece(partialWord, limit, entry, usedPiece);
             }
         }
     }
 
     /**
      * Processes special cases (may do nothing if language doesn't have any)
+     *
      * @param partialWord current word fragment.
-     * @param limit how far can we go.
-     * @param entry current successor entry.
+     * @param limit       how far can we go.
+     * @param entry       current successor entry.
      * @see DAWG
      * @see Node
      */
-    protected abstract void processLeftPartSpecialPieces(String partialWord, Map.Entry<Character, Node> entry, int limit);
+    protected abstract void processLeftPartSpecialPieces(String partialWord, int limit, Map.Entry<Character, Node> entry);
 
     /**
      * Checks no illegal combination is done (may do nothing if language doesn't have any)
      *
      * @param partialWord current word fragment.
-     * @param entry       current successor entry.
      * @param limit       how far can we go.
+     * @param entry       current successor entry.
      * @param usedPiece   piece used in current iteration.
      * @see DAWG
      * @see Node
      */
-    protected abstract void processNextLeftPiece(String partialWord, Map.Entry<Character, Node> entry, int limit, Piece usedPiece);
+    protected abstract void processNextLeftPiece(String partialWord, int limit, Map.Entry<Character, Node> entry, Piece usedPiece);
 
     /**
      * Backtracking handler
@@ -145,61 +147,56 @@ public abstract class AI {
 
     protected void ExtendRight(String partialWord, Node node, Vector2 cell) {
 
-        // Valid cell and node
-        if(board.isCellValid(cell.x, cell.y) && node != null) {
-            // Prepare next cell
-            Vector2 nextCell = new Vector2(cell.x + 1, cell.y);
-
-            // No placed piece in current cell and available node
-            if(board.isCellEmpty(cell.x, cell.y)) {
+        // Already valid word
+        if (node.isEndOfWord()) checkWord(partialWord, new Vector2(cell.x - 1, cell.y));
+        // Valid cell
+        if (board.isCellValid(cell.x, cell.y)) {
+            // No placed piece in current cell
+            if (board.isCellEmpty(cell.x, cell.y)) {
                 // Get all possible successors and iterate over them
                 Map<Character, Node> nextNodes = node.getSuccessors();
                 for (Map.Entry<Character, Node> entry : nextNodes.entrySet()) {
-
                     // Special cases check (need to check even if not in possession of current char)
-                    processRightPartSpecialPieces(partialWord, node, cell, entry, nextCell);
-
+                    processRightPartSpecialPieces(partialWord, node, cell, entry);
                     // In possession of matching and usable piece
                     char c = entry.getKey(); // Current char
                     Piece usedPiece = bot.hasPiece(String.valueOf(c)); // Matching piece (null if non-existent)
                     if (usedPiece != null && crossChecks.ableToPlace(cell.x, cell.y, String.valueOf(c))) {
                         // Standard check
-                        extendToNextNewPieceRight(partialWord, entry, usedPiece, nextCell);
-                        // Word already valid
-                        System.out.println(partialWord +" + " +c);
-                        if (entry.getValue().isEndOfWord()) checkWord(partialWord + c, cell);
+                        extendToNextNewPieceRight(partialWord, cell, entry, usedPiece);
                     }
                 }
             }
             // Already placed piece
             else {
                 //System.out.println("Current word "+ partialWord + " Piece in board: "+board.getCellPiece(cell.x, cell.y).letter());
-                extendToNextExistingPieceRight(partialWord, board.getCellPiece(cell.x, cell.y), node, nextCell);
+                extendToNextExistingPieceRight(partialWord, node, new Vector2(cell.x + 1, cell.y), board.getCellPiece(cell.x, cell.y));
                 //if(node.getSuccessor(board.getCellPiece(cell.x,cell.y).letter()
             }
         }
     }
 
-    protected abstract void processRightPartSpecialPieces(String partialWord, Node node, Vector2 cell, Map.Entry<Character, Node> entry, Vector2 nextCell);
+    protected abstract void processRightPartSpecialPieces(String partialWord, Node node, Vector2 cell, Map.Entry<Character, Node> entry);
 
-    protected abstract void extendToNextNewPieceRight(String partialWord, Map.Entry<Character, Node> entry, Piece usedPiece, Vector2 nextCell);
+    protected abstract void extendToNextNewPieceRight(String partialWord, Vector2 cell, Map.Entry<Character, Node> entry, Piece usedPiece);
 
-    protected abstract void extendToNextExistingPieceRight(String partialWord, Piece placedPiece, Node nextNode, Vector2 nextCell);
+    protected abstract void extendToNextExistingPieceRight(String partialWord, Node node, Vector2 cell, Piece placedPiece);
 
     /**
      * Backtracking handler
+     *
      * @param partialWord current word fragment.
-     * @param entry current successor entry.
-     * @param usedPiece piece used in current iteration.
-     * @param nextCell next iteration cell.
+     * @param nextNode    current successor entry.
+     * @param cell        next iteration cell.
+     * @param usedPiece   piece used in current iteration.
      * @see DAWG
      * @see Node
      */
-    protected void goToNextRightPiece(String partialWord, Map.Entry<Character, Node> entry, Piece usedPiece, Vector2 nextCell) {
+    protected void goToNextRightPiece(String partialWord, Node nextNode, Vector2 cell, Piece usedPiece) {
         bot.removePiece(usedPiece);
         //System.out.println(partialWord+ " + "+entry.getKey()+"\n");
         //System.out.println("Used piece string: " + usedPiece.letter());
-        ExtendRight(partialWord + entry.getKey(), entry.getValue(), nextCell);
+        ExtendRight(partialWord, nextNode, new Vector2(cell.x + 1, cell.y));
         bot.addPiece(usedPiece);
     }
 
@@ -237,7 +234,7 @@ public abstract class AI {
         return Direction.Horizontal;
     }
 
-    private void checkWord(String word, Vector2 cell) {
+    protected void checkWord(String word, Vector2 cell) {
         // Create needed variables
         Piece[] pieceArray = piecesConverter.run(word);
         Vector2[] posVector = new Vector2[pieceArray.length];

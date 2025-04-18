@@ -20,7 +20,7 @@ public class SpanishAI extends AI {
     }
 
     @Override
-    protected void processLeftPartSpecialPieces(String partialWord, Map.Entry<Character, Node> entry, int limit) {
+    protected void processLeftPartSpecialPieces(String partialWord, int limit, Map.Entry<Character, Node> entry) {
         char c = entry.getKey(); // Current char
         Node nextNode = null; // Initialize
         Piece usedPiece = null;
@@ -52,7 +52,7 @@ public class SpanishAI extends AI {
     }
 
     @Override
-    protected void processNextLeftPiece(String partialWord, Map.Entry<Character, Node> entry, int limit, Piece usedPiece) {
+    protected void processNextLeftPiece(String partialWord, int limit, Map.Entry<Character, Node> entry, Piece usedPiece) {
         char lastLetter = ' ';
         if(!partialWord.isEmpty()) lastLetter = partialWord.charAt(partialWord.length() - 1);
         if((lastLetter != 'R' || entry.getKey() != 'R') &&
@@ -63,38 +63,39 @@ public class SpanishAI extends AI {
     }
 
     @Override
-    protected void extendToNextNewPieceRight(String partialWord, Map.Entry<Character, Node> entry, Piece usedPiece, Vector2 nextCell) {
+    protected void extendToNextNewPieceRight(String partialWord, Vector2 cell, Map.Entry<Character, Node> entry, Piece usedPiece) {
         char lastLetter = ' ';
         if(!partialWord.isEmpty()) lastLetter = partialWord.charAt(partialWord.length() - 1);
-        if((lastLetter != 'R' || entry.getKey() != 'R') &&
-                (lastLetter != 'L' || entry.getKey() != 'L') &&
-                (lastLetter != 'C' || entry.getKey() != 'H')) {
-            goToNextRightPiece(partialWord, entry, usedPiece, nextCell);
+        if((lastLetter != 'R' || entry.getKey() != 'R') && // Illegal combinations check
+           (lastLetter != 'L' || entry.getKey() != 'L') &&
+           (lastLetter != 'C' || entry.getKey() != 'H')) {
+            goToNextRightPiece(partialWord + entry.getKey(), entry.getValue(), cell, usedPiece);
         }
     }
 
     @Override
-    protected void extendToNextExistingPieceRight(String partialWord, Piece placedPiece, Node node, Vector2 nextCell) {
+    protected void extendToNextExistingPieceRight(String partialWord, Node node, Vector2 cell, Piece placedPiece) {
         char lastLetter = ' ';
         if(!partialWord.isEmpty()) lastLetter = partialWord.charAt(partialWord.length() - 1);
         String placedLetter = placedPiece.letter();
         Node nextNode = node.getSuccessor(placedPiece.letter().charAt(0));
-        if (placedLetter.length() == 1 && nextNode != null &&
-                (lastLetter != 'R' || !placedLetter.equals("R")) &&
-                (lastLetter != 'C' || !placedLetter.equals("H")) &&
-                (lastLetter != 'L' || !placedLetter.equals("L"))) {
-            ExtendRight(partialWord + placedLetter, nextNode, nextCell);
-        }
-        else if (placedLetter.length() > 1 && nextNode != null) {
-            for (int i = 1; i < partialWord.length() && nextNode != null; i++)
-                nextNode = node.getSuccessor(placedPiece.letter().charAt(i));
-            if (nextNode != null)
-                ExtendRight(partialWord + placedLetter, nextNode, nextCell);
+        if(nextNode != null) { // Valid node
+            if (placedLetter.length() == 1) { // Regular piece
+                if ((lastLetter != 'R' || !placedLetter.equals("R")) && // Illegal combinations check
+                        (lastLetter != 'C' || !placedLetter.equals("H")) &&
+                        (lastLetter != 'L' || !placedLetter.equals("L"))) {
+                    ExtendRight(partialWord + placedLetter, nextNode, cell);
+                }
+            }
+            else { //Special piece
+                nextNode = node.getSuccessor(placedPiece.letter().charAt(1));
+                if (nextNode != null) ExtendRight(partialWord + placedLetter, nextNode, cell);
+            }
         }
     }
 
     @Override
-    protected void processRightPartSpecialPieces(String partialWord, Node node, Vector2 cell, Map.Entry<Character, Node> entry, Vector2 nextCell) {
+    protected void processRightPartSpecialPieces(String partialWord, Node node, Vector2 cell, Map.Entry<Character, Node> entry) {
         if(entry.getKey() == 'R') { // RR
             Node nextNode = entry.getValue().getSuccessor('R');
             Piece usedPiece = bot.hasPiece("RR");
@@ -115,7 +116,7 @@ public class SpanishAI extends AI {
                     }
                 }
                 bot.removePiece(usedPiece);
-                ExtendRight(partialWord + "RR", nextNode, nextCell);
+                ExtendRight(partialWord + "RR", nextNode, new Vector2(cell.x + 1, cell.y));
                 bot.addPiece(usedPiece);
             }
         }
@@ -139,7 +140,7 @@ public class SpanishAI extends AI {
                     }
                 }
                 bot.removePiece(usedPiece);
-                ExtendRight(partialWord + "LL", nextNode, nextCell);
+                ExtendRight(partialWord + "LL", nextNode, new Vector2(cell.x + 1, cell.y));
                 bot.addPiece(usedPiece);
             }
         }
@@ -163,7 +164,7 @@ public class SpanishAI extends AI {
                     }
                 }
                 bot.removePiece(usedPiece);
-                ExtendRight(partialWord + "CH", nextNode, nextCell);
+                ExtendRight(partialWord + "CH", nextNode, new Vector2(cell.x + 1, cell.y));
                 bot.addPiece(usedPiece);
             }
         }

@@ -19,25 +19,26 @@ public class EnglishAI extends AI {
     }
 
     @Override
-    protected void processLeftPartSpecialPieces(String partialWord, Map.Entry<Character, Node> entry, int limit) {
+    protected void processLeftPartSpecialPieces(String partialWord, int limit, Map.Entry<Character, Node> entry) {
     }
 
     @Override
-    protected void processNextLeftPiece(String partialWord, Map.Entry<Character, Node> entry, int limit, Piece usedPiece) {
+    protected void processNextLeftPiece(String partialWord, int limit, Map.Entry<Character, Node> entry, Piece usedPiece) {
         goToNextLeftPiece(partialWord + entry.getKey(), entry.getValue(), limit, usedPiece);
     }
 
     @Override
-    protected void extendToNextNewPieceRight(String partialWord, Map.Entry<Character, Node> entry, Piece usedPiece, Vector2 nextCell) {
-        goToNextRightPiece(partialWord, entry, usedPiece, nextCell);
+    protected void extendToNextNewPieceRight(String partialWord, Vector2 cell, Map.Entry<Character, Node> entry, Piece usedPiece) {
+        goToNextRightPiece(partialWord + entry.getKey(), entry.getValue(), cell, usedPiece);
     }
 
     @Override
-    protected void extendToNextExistingPieceRight(String partialWord, Piece placedPiece, Node node, Vector2 nextCell) {
-        ExtendRight(partialWord + placedPiece.letter(), node.getSuccessor(placedPiece.letter().charAt(0)), nextCell);
+    protected void extendToNextExistingPieceRight(String partialWord, Node node, Vector2 cell, Piece placedPiece) {
+        Node nextNode = node.getSuccessor(placedPiece.letter().charAt(0));
+        if(nextNode != null) ExtendRight(partialWord + placedPiece.letter(), nextNode, cell);
     }
 
     @Override
-    protected void processRightPartSpecialPieces(String partialWord, Node node, Vector2 cell, Map.Entry<Character, Node> entry, Vector2 nextCell) {
+    protected void processRightPartSpecialPieces(String partialWord, Node node, Vector2 cell, Map.Entry<Character, Node> entry) {
     }
 }
