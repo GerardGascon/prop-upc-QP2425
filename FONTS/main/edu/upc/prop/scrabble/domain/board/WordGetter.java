@@ -11,24 +11,34 @@ import java.util.HashSet;
 import java.util.List;
 
 /**
- * Class used to get the new word formed by placing new pieces
+ * This class is responsible for identifying and retrieving the pieces that form a new word on the Scrabble board
+ * after placing new pieces. It handles cases where the new pieces extend existing words or form new words.
+ *
  * @author Gerard Gascón
  */
 public class WordGetter {
     private final Board board;
 
+    /**
+     * Constructs a WordGetter instance that operates on the provided board.
+     *
+     * @param board The board where pieces are placed and words are formed.
+     */
     public WordGetter(Board board) {
         this.board = board;
     }
 
     /**
-     * Get the pieces of the new word formed on the board.
-     * <br>
-     * Useful for when placing pieces that make a word longer.
-     * @param newPieces Array of pieces to be added on the board
-     * @param newPositions Array of the positions of the pieces to be added on the board
-     * @param direction Direction of the newly added word
-     * @return Array of pieces present in the newly formed word
+     * Retrieves the pieces that form a new word on the board after placing new pieces.
+     * <p>
+     * This method is useful when placing pieces that extend an existing word or create new words.
+     * It checks both the newly added pieces and their positions on the board, and returns all the pieces that
+     * form a continuous word either horizontally or vertically.
+     *
+     * @param newPieces An array of the new pieces being added to the board.
+     * @param newPositions An array of positions for the new pieces on the board.
+     * @param direction The direction (horizontal or vertical) in which the new word is formed.
+     * @return An array of pieces that form the new word created on the board.
      * @see Piece
      * @see Direction
      */

@@ -29,7 +29,6 @@ import edu.upc.prop.scrabble.domain.pieces.PiecesInHandGetter;
 import edu.upc.prop.scrabble.domain.turns.Endgame;
 import edu.upc.prop.scrabble.domain.turns.IGamePlayer;
 import edu.upc.prop.scrabble.domain.turns.Turn;
-import edu.upc.prop.scrabble.presenter.terminal.movements.MovementMaker;
 import edu.upc.prop.scrabble.utils.Direction;
 import edu.upc.prop.scrabble.utils.IRand;
 import org.junit.Before;
@@ -44,7 +43,6 @@ import static org.junit.Assert.*;
 public class TestPlaceActionMaker {
     private BoardViewStub boardViewStub;
     private Board board;
-    private MovementMaker movementMaker;
     private Bag bag;
     private DAWG dawg;
     private PlaceActionMaker sut;

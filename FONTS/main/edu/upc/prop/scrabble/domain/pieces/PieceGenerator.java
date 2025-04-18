@@ -4,14 +4,27 @@ import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.utils.Pair;
 
 /**
- * Class used to generate pieces based on the contents of the pieces file
+ * Class responsible for generating `Piece` objects based on the contents of a pieces file.
+ * <p>
+ * The `PieceGenerator` class parses the contents of a pieces file (a string) to create `Piece` instances.
+ * Each `Piece` represents a letter, its value, and the number of occurrences of that letter. The result is returned
+ * as an array of `Pair&lt;Piece, Integer&gt;`, where `Piece` represents the letter and its properties, and the integer represents
+ * the count of that piece.
+ * </p>
+ *
  * @author Gerard Gascón
  */
 public class PieceGenerator {
     /**
-     * Convert the piece file into Piece classes
-     * @param pieces The contents of the pieces file
-     * @return A tuple containing the Piece info and the number of pieces of that type
+     * Converts the contents of a pieces file into an array of `Piece` objects and their respective counts.
+     * <p>
+     * The file is parsed line by line, and each line is expected to contain information about a specific piece's
+     * character, count, and value. The result is an array of `Pair&lt;Piece, Integer&gt;`, where each pair contains a `Piece`
+     * object and the number of occurrences of that piece.
+     * </p>
+     *
+     * @param pieces The contents of the pieces file as a string.
+     * @return An array of pairs, where each pair contains a `Piece` and the number of occurrences of that piece.
      * @see Pair
      * @see Piece
      */

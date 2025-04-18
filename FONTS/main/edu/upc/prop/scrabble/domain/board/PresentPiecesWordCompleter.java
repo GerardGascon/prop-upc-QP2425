@@ -8,13 +8,33 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * This class is responsible for identifying and completing words formed by the newly placed pieces
+ * on the Scrabble board, as well as adjacent words formed by interacting with existing pieces.
+ *
+ * @author Gerard Gascón
+ */
 public class PresentPiecesWordCompleter {
     private final WordGetter wordGetter;
 
+    /**
+     * Constructs a PresentPiecesWordCompleter instance using the provided word getter.
+     *
+     * @param wordGetter An instance of WordGetter used to retrieve words formed by placed pieces.
+     */
     public PresentPiecesWordCompleter(WordGetter wordGetter) {
         this.wordGetter = wordGetter;
     }
 
+    /**
+     * Runs the word completion logic for the given positions and pieces. It first determines the direction of the word
+     * (either horizontal or vertical) and then retrieves any present words formed by the new pieces placed on the board.
+     *
+     * @param positions The positions of the newly placed pieces on the board.
+     * @param pieces    The newly placed pieces.
+     * @return An array of strings representing the words formed, both horizontally and vertically.
+     * @see Piece
+     */
     public String[] run(Vector2[] positions, Piece[] pieces) {
         Direction direction = getWordDirection(positions);
         return getPresentWords(positions, pieces, direction);

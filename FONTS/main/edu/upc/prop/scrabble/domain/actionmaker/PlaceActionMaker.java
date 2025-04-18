@@ -23,7 +23,10 @@ import edu.upc.prop.scrabble.utils.Vector2;
 import java.util.Arrays;
 
 /**
- * Manages the steps needed to perform a place move inside the game.
+ * Manages the steps required to perform a word placement move in the Scrabble game.
+ * This includes validating the movement, checking if the word exists, and placing
+ * the word on the board with the necessary pieces.
+ *
  * @author Gerard Gascón
  */
 public class PlaceActionMaker {
@@ -38,8 +41,26 @@ public class PlaceActionMaker {
     private final PiecesConverter piecesConverter;
     private final Board board;
 
-    public PlaceActionMaker(MovementBoundsChecker MovementBoundsChecker, WordValidator wordValidator, PiecesInHandGetter piecesInHandGetter, MovementCleaner movementCleaner, WordPlacer wordPlacer, PresentPiecesWordCompleter presentPiecesWordCompleter, CrossCheckUpdater crossCheckUpdater, GameStepper stepper, PiecesConverter piecesConverter, Board board) {
-        this.movementBoundsChecker = MovementBoundsChecker;
+    /**
+     * Constructs a PlaceActionMaker instance that will manage word placement actions.
+     *
+     * @param movementBoundsChecker A checker that ensures the movement stays within board boundaries.
+     * @param wordValidator A validator to check if the word exists in the dictionary.
+     * @param piecesInHandGetter A utility to get the pieces currently in the player's hand.
+     * @param movementCleaner A utility to clean and validate the pieces involved in the movement.
+     * @param wordPlacer A component that places the word on the board.
+     * @param presentPiecesWordCompleter A utility to check the completion of words formed by the current move.
+     * @param crossCheckUpdater Updates cross-checks for word validity after placement.
+     * @param stepper A stepper to proceed with the game logic after the move.
+     * @param piecesConverter A utility that converts a word to a set of pieces.
+     * @param board The current game board.
+     */
+    public PlaceActionMaker(MovementBoundsChecker movementBoundsChecker, WordValidator wordValidator,
+                            PiecesInHandGetter piecesInHandGetter, MovementCleaner movementCleaner,
+                            WordPlacer wordPlacer, PresentPiecesWordCompleter presentPiecesWordCompleter,
+                            CrossCheckUpdater crossCheckUpdater, GameStepper stepper, PiecesConverter piecesConverter,
+                            Board board) {
+        this.movementBoundsChecker = movementBoundsChecker;
         this.wordValidator = wordValidator;
         this.piecesInHandGetter = piecesInHandGetter;
         this.movementCleaner = movementCleaner;
@@ -52,11 +73,14 @@ public class PlaceActionMaker {
     }
 
     /**
-     * Place a word on the board
-     * @param movement The movement to make
-     * @throws WordDoesNotExistException If the word you are trying to place does not exist
-     * @throws MovementOutsideOfBoardException If the movement you are trying to make is outside the bounds of the board
-     * @throws PlayerDoesNotHavePieceException If you are placing a word that contains pieces not present in the player's hand
+     * Executes a word placement action on the board.
+     * This method performs all necessary validations and updates the board,
+     * player's pieces, and game state.
+     *
+     * @param movement The movement containing the word and its position.
+     * @throws WordDoesNotExistException If the word being placed does not exist in the dictionary.
+     * @throws MovementOutsideOfBoardException If the movement goes outside the board's boundaries.
+     * @throws PlayerDoesNotHavePieceException If the player does not have the necessary pieces to place the word.
      * @see Movement
      */
     public void run(Movement movement) {

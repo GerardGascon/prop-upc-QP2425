@@ -7,19 +7,16 @@ import edu.upc.prop.scrabble.domain.actionmaker.PlaceActionMaker;
 import edu.upc.prop.scrabble.domain.turns.IGamePlayer;
 import edu.upc.prop.scrabble.domain.turns.TurnResult;
 import edu.upc.prop.scrabble.presenter.scenes.SceneObject;
-import edu.upc.prop.scrabble.presenter.terminal.movements.MovementMaker;
 
 public abstract class PlayerObject extends SceneObject implements IGamePlayer {
     private boolean onTurn = false;
     protected Player player;
-    protected MovementMaker movementMaker;
     private TurnResult turnResult;
     private PlaceActionMaker placeActionMaker;
 
-    public final void configure(PlaceActionMaker placeActionMaker, MovementMaker movementMaker, Player player) {
+    public final void configure(PlaceActionMaker placeActionMaker, Player player) {
         this.placeActionMaker = placeActionMaker;
         this.player = player;
-        this.movementMaker = movementMaker;
     }
 
     @Override

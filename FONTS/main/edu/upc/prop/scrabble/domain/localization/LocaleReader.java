@@ -8,7 +8,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 /**
- * Class used to locate the localization files
+ * Abstract class used to locate and read localization files.
+ * <p>
+ * The `LocaleReader` class provides functionality to locate and read localization files
+ * (e.g., dictionary files). The `readFileToString` method reads the contents of a specified
+ * file from the local filesystem, using a specific encoding. This class is typically used as
+ * a base class for other classes that need to load localized resources.
+ * </p>
+ *
  * @author Gerard Gascón
  */
 abstract class LocaleReader {
@@ -29,9 +36,10 @@ abstract class LocaleReader {
     }
 
     /**
-     * Read the contents of a file
-     * @param filePath Absolute path of the file to read
-     * @return The contents of the file
+     * Reads the contents of a file and returns it as a string.
+     *
+     * @param filePath The name of the file to read.
+     * @return A string containing the contents of the file, or null if an error occurs.
      */
     protected String readFileToString(String filePath) {
         File path = getAbsolutePath(filePath);

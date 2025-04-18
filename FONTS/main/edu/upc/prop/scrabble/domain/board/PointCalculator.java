@@ -11,23 +11,34 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Class used to calculate the points of a move.
+ * This class is responsible for calculating the points associated with a move on the Scrabble board.
+ * It considers factors such as individual piece values, word multipliers, bonuses, and interactions with
+ * previously placed pieces on the board.
+ *
  * @author Gerard Gascón
  */
 public class PointCalculator {
     private final Board board;
     private final WordGetter wordGetter;
 
+    /**
+     * Constructs a PointCalculator instance with the given board and word getter.
+     *
+     * @param board      The board where the game is being played.
+     * @param wordGetter An instance of WordGetter used to retrieve words formed by placed pieces.
+     */
     public PointCalculator(Board board, WordGetter wordGetter) {
         this.board = board;
         this.wordGetter = wordGetter;
     }
 
     /**
-     * Calculate the points of a move.
-     * @param positions The positions of the new pieces placed on the board
-     * @param pieces The new pieces to add on the board
-     * @return Number of points the player would win if those pieces were placed
+     * Calculates the total points of a move based on the positions and pieces placed on the board.
+     * It computes the score by considering factors such as piece points, word multipliers, and additional bonuses.
+     *
+     * @param positions The positions of the new pieces being placed on the board.
+     * @param pieces    The new pieces to be placed on the board.
+     * @return The total points the player would earn if those pieces were placed on the board.
      * @see Piece
      */
     public int run(Vector2[] positions, Piece[] pieces) {

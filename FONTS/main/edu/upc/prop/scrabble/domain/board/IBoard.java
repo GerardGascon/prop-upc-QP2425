@@ -3,13 +3,17 @@ package edu.upc.prop.scrabble.domain.board;
 import edu.upc.prop.scrabble.data.board.Board;
 
 /**
- * Used to ease communication between domain and presentation
+ * Interface that facilitates communication between the domain and presentation layers for board updates.
+ * It defines a method to trigger a refresh of the board in the presentation layer when the state of the game changes.
+ *
  * @author Gerard Gascón
  */
 public interface IBoard {
     /**
-     * Trigger a board refresh on a presenter
-     * @param board A reference to the board of the current game
+     * Triggers a board refresh on the presenter to update the game board in the presentation layer.
+     * This method will be called when the game state or the board changes and needs to be reflected in the UI.
+     *
+     * @param board A reference to the current game board that needs to be updated in the presentation layer.
      * @see Board
      */
     void updateBoard(Board board);

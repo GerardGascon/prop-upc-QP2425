@@ -7,7 +7,13 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 /**
- * Class used to manage all the scenes present in the game and switch between them
+ * Class used to manage all the scenes present in the game and switch between them.
+ * <p>
+ * The SceneManager is responsible for loading and managing different scenes during the game.
+ * It handles the transitions between scenes, the destruction of scenes when switching, and ensures
+ * that the proper dependencies are passed when a new scene is loaded.
+ * </p>
+ *
  * @author Gerard Gascón
  */
 public class SceneManager {
@@ -18,7 +24,11 @@ public class SceneManager {
     private static SceneManager instance;
 
     /**
-     * Get or instantiate an instance of SceneManager
+     * Get or instantiate an instance of SceneManager.
+     * <p>
+     * This method ensures that only one instance of the SceneManager exists at any time.
+     * </p>
+     *
      * @return The instance of SceneManager
      */
     public static SceneManager getInstance() {
@@ -32,8 +42,13 @@ public class SceneManager {
     }
 
     /**
-     * Loads a new scene. If there's one active, it destroys that one before loading the new one
-     * @param sceneClass The class type of the new scene
+     * Loads a new scene. If there's one active, it destroys that one before loading the new one.
+     * <p>
+     * This method is responsible for switching between scenes. If a scene is already active, it detaches
+     * that scene and loads the new one. If no scene is loaded, it simply loads the new scene.
+     * </p>
+     *
+     * @param sceneClass   The class type of the new scene
      * @param dependencies The dependencies of the new scene
      * @see Scene
      */
@@ -71,7 +86,11 @@ public class SceneManager {
     }
 
     /**
-     * Closes the game
+     * Closes the game and destroys the current active scene.
+     * <p>
+     * This method is responsible for cleaning up resources and closing the game, detaching the active
+     * scene before shutting down.
+     * </p>
      */
     public void quit() {
         scene.onDetach();
@@ -79,7 +98,12 @@ public class SceneManager {
     }
 
     /**
-     * Updates the scenes and its objects
+     * Updates the active scene and its objects.
+     * <p>
+     * This method is called continuously to update the current scene. If there is a scene queued to load,
+     * it will load it. Otherwise, it processes the current active scene.
+     * </p>
+     *
      * @param delta Time difference from the last call
      * @see Scene
      * @see SceneObject
@@ -94,9 +118,12 @@ public class SceneManager {
     }
 
     /**
-     * Check if there's an active scene
-     * @return <b>true</b> if there is an active scene
-     * <b>false</b> if there are no active scenes
+     * Checks if there is an active scene currently running.
+     * <p>
+     * This method allows the game or application to check if there is a scene to interact with.
+     * </p>
+     *
+     * @return <b>true</b> if there is an active scene, <b>false</b> if no scene is active
      */
     public boolean isRunning() {
         return scene != null;

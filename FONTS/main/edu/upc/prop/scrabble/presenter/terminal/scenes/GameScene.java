@@ -23,7 +23,6 @@ import edu.upc.prop.scrabble.domain.movement.MovementBoundsChecker;
 import edu.upc.prop.scrabble.domain.movement.MovementCleaner;
 import edu.upc.prop.scrabble.domain.pieces.*;
 import edu.upc.prop.scrabble.domain.turns.Endgame;
-import edu.upc.prop.scrabble.domain.turns.IGamePlayer;
 import edu.upc.prop.scrabble.domain.turns.Turn;
 import edu.upc.prop.scrabble.presenter.scenes.Scene;
 import edu.upc.prop.scrabble.presenter.terminal.BoardView;
@@ -31,7 +30,6 @@ import edu.upc.prop.scrabble.presenter.terminal.PieceDisplay;
 import edu.upc.prop.scrabble.presenter.terminal.players.AIPlayerObject;
 import edu.upc.prop.scrabble.presenter.terminal.players.HumanPlayerObject;
 import edu.upc.prop.scrabble.presenter.terminal.players.PlayerObject;
-import edu.upc.prop.scrabble.presenter.terminal.movements.MovementMaker;
 import edu.upc.prop.scrabble.utils.Rand;
 
 import java.util.ArrayList;
@@ -147,8 +145,7 @@ public class GameScene extends Scene {
         PlaceActionMaker placeActionMaker = new PlaceActionMaker(boundsChecker, wordValidator, piecesInHandGetter,
                 movementCleaner, wordPlacer, presentPiecesWordCompleter, crossCheckUpdater, stepper, piecesConverter,
                 board);
-        MovementMaker movementMaker = new MovementMaker();
-        playerObject.configure(placeActionMaker, movementMaker, player);
+        playerObject.configure(placeActionMaker, player);
     }
 
     private Board getBoard(GameProperties properties) {

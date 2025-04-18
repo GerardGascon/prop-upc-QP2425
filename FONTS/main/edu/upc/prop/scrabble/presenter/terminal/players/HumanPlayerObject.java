@@ -2,6 +2,7 @@ package edu.upc.prop.scrabble.presenter.terminal.players;
 
 import edu.upc.prop.scrabble.data.Movement;
 import edu.upc.prop.scrabble.domain.turns.TurnResult;
+import edu.upc.prop.scrabble.presenter.terminal.movements.MovementParser;
 import edu.upc.prop.scrabble.presenter.terminal.utils.Reader;
 
 public class HumanPlayerObject extends PlayerObject {
@@ -37,7 +38,7 @@ public class HumanPlayerObject extends PlayerObject {
 
         if (movementDesired == TurnResult.Place){
             int previousScore = player.getScore();
-            Movement move = movementMaker.makeMove(movementRaw);
+            Movement move = MovementParser.parse(movementRaw);
             placePiece(move);
             System.out.println("Movement: " + movementRaw + " " + (player.getScore() - previousScore));
         }

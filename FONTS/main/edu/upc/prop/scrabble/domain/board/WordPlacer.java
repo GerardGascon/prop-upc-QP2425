@@ -7,7 +7,9 @@ import edu.upc.prop.scrabble.utils.Direction;
 import edu.upc.prop.scrabble.utils.Vector2;
 
 /**
- * Class used to place words on the board and trigger a refresh on the view
+ * The WordPlacer class is responsible for placing words (pieces) on the board and updating the scores.
+ * It triggers a refresh on the view after the word is placed.
+ *
  * @author Gerard Gascón
  */
 public class WordPlacer {
@@ -16,6 +18,14 @@ public class WordPlacer {
     private final PointCalculator pointCalculator;
     private final Player player;
 
+    /**
+     * Constructs a WordPlacer instance with the specified player, board, view, and point calculator.
+     *
+     * @param player          The player who is making the move.
+     * @param board           The game board where the pieces will be placed.
+     * @param view            The view that will be updated after the move.
+     * @param pointCalculator The point calculator used to calculate the score for the move.
+     */
     public WordPlacer(Player player, Board board, IBoard view, PointCalculator pointCalculator) {
         this.player = player;
         this.board = board;
@@ -24,11 +34,16 @@ public class WordPlacer {
     }
 
     /**
-     * Place pieces on the board and update the scores and the view
-     * @param pieces An array of the new pieces to place
-     * @param x The X position of the start of the word
-     * @param y The Y position of the start of the word
-     * @param direction The direction in which the word is placed
+     * Places the given pieces on the board and updates the player's score and the view.
+     * <p>
+     * This method calculates the positions for each piece based on the starting position and direction
+     * (horizontal or vertical), places the pieces on the board, calculates the score using the PointCalculator,
+     * and updates the board view.
+     *
+     * @param pieces    An array of the new pieces to place on the board.
+     * @param x         The X position of the start of the word.
+     * @param y         The Y position of the start of the word.
+     * @param direction The direction in which the word will be placed (horizontal or vertical).
      */
     public void run(Piece[] pieces, int x, int y, Direction direction) {
         Vector2[] positions;
