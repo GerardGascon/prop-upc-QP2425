@@ -21,6 +21,8 @@ public class DAWG {
         return uniqueNodes.get(hash);
     }
 
+    public int getTotalNodes() {return uniqueNodes.size();}
+
     public void addNode(Node node) {
         uniqueNodes.put(node.hashCode(), node);
     }

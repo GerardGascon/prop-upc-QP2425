@@ -19,6 +19,7 @@ import edu.upc.prop.scrabble.domain.ai.SpanishAI;
 import edu.upc.prop.scrabble.domain.board.PointCalculator;
 import edu.upc.prop.scrabble.domain.board.WordGetter;
 import edu.upc.prop.scrabble.domain.board.WordPlacer;
+import edu.upc.prop.scrabble.domain.crosschecks.CrossCheckUpdater;
 import edu.upc.prop.scrabble.domain.dawg.WordAdder;
 import edu.upc.prop.scrabble.domain.pieces.CatalanPiecesConverter;
 import edu.upc.prop.scrabble.domain.pieces.PiecesConverter;
@@ -321,6 +322,7 @@ public class TestAI {
         AI ai = new EnglishAI(converter, pointCalculator, dawg,board,bot,anchors,crossChecks);
         BoardViewStub mock = new BoardViewStub();
         WordPlacer wordPlacer = new WordPlacer(bot, board,mock,pointCalculator);
+        CrossCheckUpdater updater = new CrossCheckUpdater(converter,crossChecks,board,dawg);
         Piece[] pieces = new Piece[]{
                 new Piece("T", 1),
                 new Piece("O", 1),
@@ -331,8 +333,51 @@ public class TestAI {
         };
         Movement previousMove = new Movement("TOILET",7,3, Direction.Vertical);
         anchorUpdater.run(previousMove);
+        updater.run(previousMove);
         wordPlacer.run(pieces, 7, 3, Direction.Vertical);
         Movement expectedMove = new Movement("SKIBIDI",5,5, Direction.Horizontal);
+        assertEquals(expectedMove, ai.run());
+    }
+    @Test
+    public void catalanAIHorizontalNY(){
+        DAWG dawg= new DAWG();
+        WordAdder adder= new WordAdder(dawg);
+        adder.run("ANY");//este tmb problemas del extend left al right (deberia de salir el pazny por tener + putnos))
+        adder.run("ESPANYA");
+        //adder.run("NYAPZ");//este lo hace bien asi que supongo que extend right correcto
+        adder.run("PAZNYP");//problemas de pasar del extend left al right, deberia de quedar
+        Board board = new StandardBoard();
+        Player bot = new Player("ai",true);
+        bot.addPiece(new Piece("E",1));
+        bot.addPiece(new Piece("G",1));
+        bot.addPiece(new Piece("I",1));
+        bot.addPiece(new Piece("A",1));
+        bot.addPiece(new Piece("Z",1));
+        bot.addPiece(new Piece("P",1));
+        bot.addPiece(new Piece("A",1));
+        PiecesConverter converter = new CatalanPiecesConverter();
+        Anchors anchors = new Anchors();
+        AnchorUpdater anchorUpdater = new AnchorUpdater(anchors,board,converter);
+        WordGetter wordGetter = new WordGetter(board);
+        PointCalculator pointCalculator = new PointCalculator(board, wordGetter);
+        CrossChecks crossChecks = new CatalanCrossChecks(board,dawg);
+        CrossCheckUpdater updater = new CrossCheckUpdater(converter,crossChecks,board,dawg);
+        AI ai = new CatalanAI(converter, pointCalculator, dawg,board,bot,anchors,crossChecks);
+        BoardViewStub mock = new BoardViewStub();
+        WordPlacer wordPlacer = new WordPlacer(bot, board,mock,pointCalculator);
+        Piece[] pieces = new Piece[]{
+                new Piece("E", 1),
+                new Piece("S", 1),
+                new Piece("P", 1),
+                new Piece("A", 1),
+                new Piece("NY", 1),
+                new Piece("A", 1)
+        };
+        Movement previousMove = new Movement("ESPANYA",7,3, Direction.Vertical);
+        anchorUpdater.run(previousMove);
+        //updater.run(previousMove);
+        wordPlacer.run(pieces, 7, 3, Direction.Vertical);
+        Movement expectedMove = new Movement("PAZNYP",5,7, Direction.Horizontal);
         assertEquals(expectedMove, ai.run());
     }
 }

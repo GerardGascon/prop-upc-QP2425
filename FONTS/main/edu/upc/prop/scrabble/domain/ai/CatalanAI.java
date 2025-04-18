@@ -65,6 +65,7 @@ public class CatalanAI extends AI {
 
     @Override
     protected void extendToNextExistingPieceRight(String partialWord, Piece placedPiece, Node node, Vector2 nextCell) {
+        //System.out.println("");
         char lastLetter = ' ';
         if(!partialWord.isEmpty()) lastLetter = partialWord.charAt(partialWord.length() - 1);
         String placedLetter = placedPiece.letter();
@@ -72,14 +73,21 @@ public class CatalanAI extends AI {
         if (placedLetter.length() == 1 && nextNode != null &&
             (lastLetter != 'N' || !placedLetter.equals("Y")) &&
             (lastLetter != 'L' || !placedLetter.equals("·"))) {
+           // System.out.println("LENGTH UNO");
             ExtendRight(partialWord + placedLetter, nextNode, nextCell);
         }
         else if (placedLetter.length() > 1 && nextNode != null) {
-            for (int i = 1; i < partialWord.length() && nextNode != null; i++)
-                nextNode = node.getSuccessor(placedPiece.letter().charAt(i));
-            if (nextNode != null)
-                ExtendRight(partialWord + placedLetter, nextNode, nextCell);
+           // System.out.println("LENGTH ESPECIAL");
+            //for (int i = 1; i < partialWord.length() && nextNode != null; i++)
+            for (int i = 1; i < placedLetter.length() && nextNode != null; i++)
+                //nextNode = node.getSuccessor(placedPiece.letter().charAt(i));
+                nextNode = nextNode.getSuccessor(placedPiece.letter().charAt(i));
+                if (nextNode != null) {
+                   // System.out.println(partialWord + " + " + placedLetter);
+                    ExtendRight(partialWord + placedLetter, nextNode, nextCell);
+                }
         }
+
     }
 
     @Override

@@ -89,7 +89,8 @@ public abstract class AI {
      * @see Node
      */
     protected void LeftPart(String partialWord, Node node, int limit) {
-
+        //System.out.println(partialWord+"\n");
+        //System.out.println(currentAnchor.x + " " +currentAnchor.y);
         // Straight to right part check
         ExtendRight(partialWord, node, currentAnchor);
 
@@ -165,12 +166,17 @@ public abstract class AI {
                         // Standard check
                         extendToNextNewPieceRight(partialWord, entry, usedPiece, nextCell);
                         // Word already valid
+                        System.out.println(partialWord +" + " +c);
                         if (entry.getValue().isEndOfWord()) checkWord(partialWord + c, cell);
                     }
                 }
             }
             // Already placed piece
-            else extendToNextExistingPieceRight(partialWord, board.getCellPiece(cell.x, cell.y), node, nextCell);
+            else {
+                //System.out.println("Current word "+ partialWord + " Piece in board: "+board.getCellPiece(cell.x, cell.y).letter());
+                extendToNextExistingPieceRight(partialWord, board.getCellPiece(cell.x, cell.y), node, nextCell);
+                //if(node.getSuccessor(board.getCellPiece(cell.x,cell.y).letter()
+            }
         }
     }
 
@@ -191,17 +197,35 @@ public abstract class AI {
      */
     protected void goToNextRightPiece(String partialWord, Map.Entry<Character, Node> entry, Piece usedPiece, Vector2 nextCell) {
         bot.removePiece(usedPiece);
+        //System.out.println(partialWord+ " + "+entry.getKey()+"\n");
+        //System.out.println("Used piece string: " + usedPiece.letter());
         ExtendRight(partialWord + entry.getKey(), entry.getValue(), nextCell);
         bot.addPiece(usedPiece);
     }
 
     private Node getFinalNode(String word) {
         Node current = dawg.getRoot();
-        for (int i = 0; i < word.length(); i++) {
+        int i = 0;
+        while(i < word.length() && current != null) {
             current = current.getSuccessor(word.charAt(i));
+            ++i;
         }
 
         return current;
+        /*System.out.println(word);
+        Node current = dawg.getRoot();
+        //System.out.println(current);
+
+        for (int i = 0; i < word.length(); i++) {
+            System.out.println("antes del getsuccessor");
+            System.out.println(current);
+            current = current.getSuccessor(word.charAt(i));
+            System.out.println("despues del getsuccessor");
+            System.out.println(current);
+
+        }
+
+        return current;*/
     }
 
     protected Direction getWordDirection(Vector2[] positions) {
