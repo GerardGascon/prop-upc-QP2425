@@ -149,4 +149,59 @@ public class TestPiecesConverter {
 
         assertEquals(new Piece("CH", 0, true), piece[0]);
     }
+
+    @Test
+    public void getPieceWithDictionaryConvertsItWithProperScore() {
+        String letter = "A";
+        Piece[] dictionary = new Piece[] { new Piece("A", 5) };
+        PiecesConverter sut = new PiecesConverter(dictionary);
+
+        Piece[] piece = sut.run(letter);
+
+        assertEquals(new Piece("A", 5, false), piece[0]);
+    }
+
+    @Test
+    public void getSpecialCatalanPieceWithDictionaryConvertsItWithProperScore() {
+        String letter = "NY";
+        Piece[] dictionary = new Piece[] { new Piece("NY", 5) };
+        PiecesConverter sut = new CatalanPiecesConverter(dictionary);
+
+        Piece[] piece = sut.run(letter);
+
+        assertEquals(new Piece("NY", 5, false), piece[0]);
+    }
+
+    @Test
+    public void getSpecialSpanishPieceWithDictionaryConvertsItWithProperScore() {
+        String letter = "CH";
+        Piece[] dictionary = new Piece[] { new Piece("CH", 5) };
+        PiecesConverter sut = new SpanishPiecesConverter(dictionary);
+
+        Piece[] piece = sut.run(letter);
+
+        assertEquals(new Piece("CH", 5, false), piece[0]);
+    }
+
+    @Test
+    public void getSpecialSpanishBlankPieceWithDictionaryConvertsItWithNoScore() {
+        String letter = "ch";
+        Piece[] dictionary = new Piece[] { new Piece("CH", 5) };
+        PiecesConverter sut = new SpanishPiecesConverter(dictionary);
+
+        Piece[] piece = sut.run(letter);
+
+        assertEquals(new Piece("CH", 0, true), piece[0]);
+    }
+
+    @Test
+    public void getSpecialCatalanBlankPieceWithDictionaryConvertsItWithNoScore() {
+        String letter = "ny";
+        Piece[] dictionary = new Piece[] { new Piece("NY", 5) };
+        PiecesConverter sut = new CatalanPiecesConverter(dictionary);
+
+        Piece[] piece = sut.run(letter);
+
+        assertEquals(new Piece("NY", 0, true), piece[0]);
+    }
 }

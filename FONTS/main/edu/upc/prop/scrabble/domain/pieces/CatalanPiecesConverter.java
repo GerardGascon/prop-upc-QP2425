@@ -7,15 +7,36 @@ import edu.upc.prop.scrabble.data.pieces.Piece;
  * @author Gina Escofet González
  */
 public class CatalanPiecesConverter extends PiecesConverter {
+    public CatalanPiecesConverter() {
+        super();
+    }
+
+    public CatalanPiecesConverter(Piece[] dictionary) {
+        super(dictionary);
+    }
+
     @Override
     protected Piece parseSpecialPiece(char c, int i, String word) {
         boolean isBlank = Character.isLowerCase(c);
+        String capsWord = word.toUpperCase();
         // CATALÀ -> L·L
-        if ((c == 'L' || c == 'l') && i < (word.length() - 2) && word.charAt(i + 1) == '·')
-            return new Piece(word.substring(i, i + 3).toUpperCase(), 0, isBlank);
+        if (capsWord.charAt(i) == 'L' && i < (capsWord.length() - 2) && capsWord.charAt(i + 1) == '·'){
+            String pieceLetter = capsWord.substring(i, i + 3);
+            int score = getPieceScore(pieceLetter, isBlank);
+            return new Piece(pieceLetter, score, isBlank);
+        }
         // CATALÀ -> NY
-        if ((c == 'N' || c == 'n') && i < (word.length() - 1) && (word.charAt(i + 1) == 'Y' || word.charAt(i + 1) == 'y'))
-            return new Piece(word.substring(i, i + 2).toUpperCase(), 0, isBlank);
+        if (capsWord.charAt(i) == 'N' && i < (capsWord.length() - 1) && capsWord.charAt(i + 1) == 'Y'){
+            String pieceLetter = capsWord.substring(i, i + 2);
+            int score = getPieceScore(pieceLetter, isBlank);
+            return new Piece(pieceLetter, score, isBlank);
+        }
         return null;
+    }
+
+    private int getPieceScore(String piece, boolean isBlank) {
+        if (isBlank)
+            return 0;
+        return findPieceScore(piece);
     }
 }
