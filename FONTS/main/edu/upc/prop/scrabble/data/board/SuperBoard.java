@@ -1,5 +1,7 @@
 package edu.upc.prop.scrabble.data.board;
 
+import edu.upc.prop.scrabble.data.pieces.Piece;
+
 public class SuperBoard extends Board {
     public SuperBoard() {
         super(21);
@@ -191,5 +193,10 @@ public class SuperBoard extends Board {
 
         super.setPremiumTile(5, 18, PremiumTileType.QuadrupleLetter);
         super.setPremiumTile(15, 18, PremiumTileType.QuadrupleLetter);
+    }
+
+    @Override
+    protected Board copy() {
+        return new SuperBoard();
     }
 }
