@@ -137,4 +137,30 @@ public class TestBoard {
 
         assertEquals(new Piece("C", 0), sut.getCellPiece(0, 0));
     }
+
+    @Test
+    public void rotateBoardRotatesPiece(){
+        Board sut = new StandardBoard();
+        sut.placePiece(new Piece("A", 0), 0, 0);
+
+        Board res = sut.rotate();
+
+        assertEquals("A", res.getCellPiece(0, 14).letter());
+    }
+
+    @Test
+    public void rotateBoardRotatesWord(){
+        Board sut = new StandardBoard();
+        sut.placePiece(new Piece("H", 0), 4, 0);
+        sut.placePiece(new Piece("O", 0), 4, 1);
+        sut.placePiece(new Piece("L", 0), 4, 2);
+        sut.placePiece(new Piece("A", 0), 4, 3);
+
+        Board res = sut.rotate();
+
+        assertEquals("H", res.getCellPiece(0, 10).letter());
+        assertEquals("O", res.getCellPiece(1, 10).letter());
+        assertEquals("L", res.getCellPiece(2, 10).letter());
+        assertEquals("A", res.getCellPiece(3, 10).letter());
+    }
 }

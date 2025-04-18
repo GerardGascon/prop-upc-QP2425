@@ -3,7 +3,7 @@ package edu.upc.prop.scrabble.data.board;
 import edu.upc.prop.scrabble.data.pieces.Piece;
 
 public abstract class Board {
-    private final Piece[][] placedTiles;
+    protected Piece[][] placedTiles;
     private final PremiumTileType[][] premiumTiles;
     private boolean empty = true;
 
@@ -56,4 +56,22 @@ public abstract class Board {
     public boolean isEmpty() {
         return empty;
     }
+
+    public Board rotate() {
+        Board copy = copy();
+        copy.placedTiles = getRotatedPieces();
+        return copy;
+    }
+
+    private Piece[][] getRotatedPieces() {
+        Piece[][] rotatedPieces = new Piece[getSize()][getSize()];
+        for (int row = 0; row < getSize(); row++) {
+            for (int col = 0; col < getSize(); col++) {
+                rotatedPieces[col][getSize() - row - 1] = placedTiles[row][col];
+            }
+        }
+        return rotatedPieces;
+    }
+
+    protected abstract Board copy();
 }
