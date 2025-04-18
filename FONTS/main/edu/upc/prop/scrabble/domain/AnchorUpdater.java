@@ -16,7 +16,6 @@ public class AnchorUpdater {
     //poner piece converter segun el idioma
     public AnchorUpdater(Anchors anchors, Board board, PiecesConverter piecesConverter) {
         this.anchors = anchors;
-        this.anchors.addAnchor(board.getSize()/2, board.getSize()/2);
         this.board = board;
         this.piecesConverter = piecesConverter;
     }

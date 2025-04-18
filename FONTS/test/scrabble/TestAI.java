@@ -25,304 +25,267 @@ import edu.upc.prop.scrabble.domain.pieces.CatalanPiecesConverter;
 import edu.upc.prop.scrabble.domain.pieces.PiecesConverter;
 import edu.upc.prop.scrabble.domain.pieces.SpanishPiecesConverter;
 import edu.upc.prop.scrabble.utils.Direction;
+import org.junit.Before;
 import org.junit.Test;
 import scrabble.stubs.BoardViewStub;
 
 import static org.junit.Assert.assertEquals;
 
 public class TestAI {
+    private DAWG dawg;
+    private Board board;
+    private WordAdder adder;
+    private Player bot;
+    private PointCalculator pointCalculator;
+    private Anchors anchors;
+    private BoardViewStub boardViewStub;
+    private WordPlacer wordPlacer;
+
+    @Before
+    public void setUp() {
+        dawg = new DAWG();
+        bot = new Player("ai", true);
+
+        adder = new WordAdder(dawg);
+        board = new StandardBoard();
+        anchors = new Anchors(board);
+        WordGetter wordGetter = new WordGetter(board);
+        pointCalculator = new PointCalculator(board, wordGetter);
+
+        boardViewStub = new BoardViewStub();
+        wordPlacer = new WordPlacer(bot, board, boardViewStub, pointCalculator);
+    }
 
     @Test
-    public void englishAIEmptyBoard(){
-        DAWG dawg= new DAWG();
-        WordAdder adder= new WordAdder(dawg);
+    public void englishAIEmptyBoard() {
         adder.run("HELLO");
         adder.run("SKIBIDI");
-        Board board = new StandardBoard();
-        Player bot = new Player("ai",true);
-        bot.addPiece(new Piece("S",1));
-        bot.addPiece(new Piece("K",1));
-        bot.addPiece(new Piece("I",1));
-        bot.addPiece(new Piece("B",1));
-        bot.addPiece(new Piece("I",1));
-        bot.addPiece(new Piece("D",1));
-        bot.addPiece(new Piece("I",1));
+
+        bot.addPiece(new Piece("S", 1));
+        bot.addPiece(new Piece("K", 1));
+        bot.addPiece(new Piece("I", 1));
+        bot.addPiece(new Piece("B", 1));
+        bot.addPiece(new Piece("I", 1));
+        bot.addPiece(new Piece("D", 1));
+        bot.addPiece(new Piece("I", 1));
+
         PiecesConverter converter = new PiecesConverter();
-        Anchors anchors = new Anchors();
-        AnchorUpdater anchorUpdater = new AnchorUpdater(anchors,board,converter);
-        WordGetter wordGetter = new WordGetter(board);
-        PointCalculator pointCalculator = new PointCalculator(board, wordGetter);
-        CrossChecks crossChecks = new EnglishCrossChecks(board,dawg);
-        AI ai = new EnglishAI(converter, pointCalculator, dawg,board,bot,anchors,crossChecks);
-        Movement expectedMove = new Movement("SKIBIDI",7,7, Direction.Horizontal);
+        CrossChecks crossChecks = new EnglishCrossChecks(board, dawg);
+        AI ai = new EnglishAI(converter, pointCalculator, dawg, board, bot, anchors, crossChecks);
+
+        Movement expectedMove = new Movement("SKIBIDI", 7, 7, Direction.Horizontal);
         assertEquals(expectedMove, ai.run());
     }
 
     @Test
-    public void catalanAIEmptyBoardNY(){
-        DAWG dawg= new DAWG();
-        WordAdder adder= new WordAdder(dawg);
+    public void catalanAIEmptyBoardNY() {
         adder.run("SKIBIDI");
         adder.run("TANYA");
-        Board board = new StandardBoard();
-        Player bot = new Player("ai",true);
-        bot.addPiece(new Piece("T",1));
-        bot.addPiece(new Piece("A",1));
-        bot.addPiece(new Piece("NY",1));
-        bot.addPiece(new Piece("N",1));
-        bot.addPiece(new Piece("A",1));
+
+        bot.addPiece(new Piece("T", 1));
+        bot.addPiece(new Piece("A", 1));
+        bot.addPiece(new Piece("NY", 1));
+        bot.addPiece(new Piece("N", 1));
+        bot.addPiece(new Piece("A", 1));
+
         PiecesConverter converter = new CatalanPiecesConverter();
-        Anchors anchors = new Anchors();
-        AnchorUpdater anchorUpdater = new AnchorUpdater(anchors,board,converter);
-        WordGetter wordGetter = new WordGetter(board);
-        PointCalculator pointCalculator = new PointCalculator(board, wordGetter);
-        CrossChecks crossChecks = new CatalanCrossChecks(board,dawg);
-        AI ai = new CatalanAI(converter, pointCalculator, dawg,board,bot,anchors,crossChecks);
-        Movement expectedMove = new Movement("TANYA",7,7, Direction.Horizontal);
+        CrossChecks crossChecks = new CatalanCrossChecks(board, dawg);
+        AI ai = new CatalanAI(converter, pointCalculator, dawg, board, bot, anchors, crossChecks);
+
+        Movement expectedMove = new Movement("TANYA", 7, 7, Direction.Horizontal);
         assertEquals(expectedMove, ai.run());
     }
 
     @Test
-    public void catalanAIEmptyBoardLL(){
-        DAWG dawg= new DAWG();
-        WordAdder adder= new WordAdder(dawg);
+    public void catalanAIEmptyBoardLL() {
         adder.run("SKIBIDI");
         adder.run("TAL·LA");
-        Board board = new StandardBoard();
-        Player bot = new Player("ai",true);
-        bot.addPiece(new Piece("T",1));
-        bot.addPiece(new Piece("A",1));
-        bot.addPiece(new Piece("L·L",1));
-        bot.addPiece(new Piece("N",1));
-        bot.addPiece(new Piece("A",1));
+
+        bot.addPiece(new Piece("T", 1));
+        bot.addPiece(new Piece("A", 1));
+        bot.addPiece(new Piece("L·L", 1));
+        bot.addPiece(new Piece("N", 1));
+        bot.addPiece(new Piece("A", 1));
+
         PiecesConverter converter = new CatalanPiecesConverter();
-        Anchors anchors = new Anchors();
-        AnchorUpdater anchorUpdater = new AnchorUpdater(anchors,board,converter);
-        WordGetter wordGetter = new WordGetter(board);
-        PointCalculator pointCalculator = new PointCalculator(board, wordGetter);
-        CrossChecks crossChecks = new CatalanCrossChecks(board,dawg);
-        AI ai = new CatalanAI(converter, pointCalculator, dawg,board,bot,anchors,crossChecks);
-        Movement expectedMove = new Movement("TAL·LA",7,7, Direction.Horizontal);
+        CrossChecks crossChecks = new CatalanCrossChecks(board, dawg);
+        AI ai = new CatalanAI(converter, pointCalculator, dawg, board, bot, anchors, crossChecks);
+
+        Movement expectedMove = new Movement("TAL·LA", 7, 7, Direction.Horizontal);
         assertEquals(expectedMove, ai.run());
     }
 
     @Test
-    public void catalanAIEmptyBoardNYendOfWord(){
-        DAWG dawg= new DAWG();
-        WordAdder adder= new WordAdder(dawg);
+    public void catalanAIEmptyBoardNYendOfWord() {
         adder.run("SKIBIDI");
         adder.run("TANY");
-        Board board = new StandardBoard();
-        Player bot = new Player("ai",true);
-        bot.addPiece(new Piece("T",1));
-        bot.addPiece(new Piece("A",1));
-        bot.addPiece(new Piece("NY",1));
-        bot.addPiece(new Piece("N",1));
-        bot.addPiece(new Piece("A",1));
+
+        bot.addPiece(new Piece("T", 1));
+        bot.addPiece(new Piece("A", 1));
+        bot.addPiece(new Piece("NY", 1));
+        bot.addPiece(new Piece("N", 1));
+        bot.addPiece(new Piece("A", 1));
+
         PiecesConverter converter = new CatalanPiecesConverter();
-        Anchors anchors = new Anchors();
-        AnchorUpdater anchorUpdater = new AnchorUpdater(anchors,board,converter);
-        WordGetter wordGetter = new WordGetter(board);
-        PointCalculator pointCalculator = new PointCalculator(board, wordGetter);
-        CrossChecks crossChecks = new CatalanCrossChecks(board,dawg);
-        AI ai = new CatalanAI(converter, pointCalculator, dawg,board,bot,anchors,crossChecks);
-        Movement expectedMove = new Movement("TANY",7,7, Direction.Horizontal);
+        CrossChecks crossChecks = new CatalanCrossChecks(board, dawg);
+        AI ai = new CatalanAI(converter, pointCalculator, dawg, board, bot, anchors, crossChecks);
+
+        Movement expectedMove = new Movement("TANY", 7, 7, Direction.Horizontal);
         assertEquals(expectedMove, ai.run());
     }
 
     @Test
-    public void catalanAIEmptyBoardLLendOfWord(){//no se puede poner · en el nomre del test
-        DAWG dawg= new DAWG();
-        WordAdder adder= new WordAdder(dawg);
+    public void catalanAIEmptyBoardLGeminadaEndOfWord() {
         adder.run("SKIBIDI");
         adder.run("TAL·L");
-        Board board = new StandardBoard();
-        Player bot = new Player("ai",true);
-        bot.addPiece(new Piece("T",1));
-        bot.addPiece(new Piece("A",1));
-        bot.addPiece(new Piece("L·L",1));
-        bot.addPiece(new Piece("N",1));
-        bot.addPiece(new Piece("A",1));
+
+        bot.addPiece(new Piece("T", 1));
+        bot.addPiece(new Piece("A", 1));
+        bot.addPiece(new Piece("L·L", 1));
+        bot.addPiece(new Piece("N", 1));
+        bot.addPiece(new Piece("A", 1));
+
         PiecesConverter converter = new CatalanPiecesConverter();
-        Anchors anchors = new Anchors();
-        AnchorUpdater anchorUpdater = new AnchorUpdater(anchors,board,converter);
-        WordGetter wordGetter = new WordGetter(board);
-        PointCalculator pointCalculator = new PointCalculator(board, wordGetter);
-        CrossChecks crossChecks = new CatalanCrossChecks(board,dawg);
-        AI ai = new CatalanAI(converter, pointCalculator, dawg,board,bot,anchors,crossChecks);
-        Movement expectedMove = new Movement("TAL·L",7,7, Direction.Horizontal);
+        CrossChecks crossChecks = new CatalanCrossChecks(board, dawg);
+        AI ai = new CatalanAI(converter, pointCalculator, dawg, board, bot, anchors, crossChecks);
+
+        Movement expectedMove = new Movement("TAL·L", 7, 7, Direction.Horizontal);
         assertEquals(expectedMove, ai.run());
     }
 
     @Test
-    public void spanishAIEmptyBoardRR(){
-        DAWG dawg= new DAWG();
-        WordAdder adder= new WordAdder(dawg);
+    public void spanishAIEmptyBoardRR() {
         adder.run("SKIBIDI");
         adder.run("TARRA");
-        Board board = new StandardBoard();
-        Player bot = new Player("ai",true);
-        bot.addPiece(new Piece("T",1));
-        bot.addPiece(new Piece("A",1));
-        bot.addPiece(new Piece("RR",1));
-        bot.addPiece(new Piece("N",1));
-        bot.addPiece(new Piece("A",1));
+
+        bot.addPiece(new Piece("T", 1));
+        bot.addPiece(new Piece("A", 1));
+        bot.addPiece(new Piece("RR", 1));
+        bot.addPiece(new Piece("N", 1));
+        bot.addPiece(new Piece("A", 1));
+
         PiecesConverter converter = new SpanishPiecesConverter();
-        Anchors anchors = new Anchors();
-        AnchorUpdater anchorUpdater = new AnchorUpdater(anchors,board,converter);
-        WordGetter wordGetter = new WordGetter(board);
-        PointCalculator pointCalculator = new PointCalculator(board, wordGetter);
-        CrossChecks crossChecks = new SpanishCrossChecks(board,dawg);
-        AI ai = new SpanishAI(converter, pointCalculator, dawg,board,bot,anchors,crossChecks);
-        Movement expectedMove = new Movement("TARRA",7,7, Direction.Horizontal);
+        CrossChecks crossChecks = new SpanishCrossChecks(board, dawg);
+        AI ai = new SpanishAI(converter, pointCalculator, dawg, board, bot, anchors, crossChecks);
+
+        Movement expectedMove = new Movement("TARRA", 7, 7, Direction.Horizontal);
         assertEquals(expectedMove, ai.run());
     }
 
     @Test
-    public void spanishAIEmptyBoardRRendOfWord(){
-        DAWG dawg= new DAWG();
-        WordAdder adder= new WordAdder(dawg);
+    public void spanishAIEmptyBoardRRendOfWord() {
         adder.run("SKIBIDI");
         adder.run("TARR");
-        Board board = new StandardBoard();
-        Player bot = new Player("ai",true);
-        bot.addPiece(new Piece("T",1));
-        bot.addPiece(new Piece("A",1));
-        bot.addPiece(new Piece("RR",1));
-        bot.addPiece(new Piece("N",1));
-        bot.addPiece(new Piece("A",1));
+
+        bot.addPiece(new Piece("T", 1));
+        bot.addPiece(new Piece("A", 1));
+        bot.addPiece(new Piece("RR", 1));
+        bot.addPiece(new Piece("N", 1));
+        bot.addPiece(new Piece("A", 1));
+
         PiecesConverter converter = new SpanishPiecesConverter();
-        Anchors anchors = new Anchors();
-        AnchorUpdater anchorUpdater = new AnchorUpdater(anchors,board,converter);
-        WordGetter wordGetter = new WordGetter(board);
-        PointCalculator pointCalculator = new PointCalculator(board, wordGetter);
-        CrossChecks crossChecks = new SpanishCrossChecks(board,dawg);
-        AI ai = new SpanishAI(converter, pointCalculator, dawg,board,bot,anchors,crossChecks);
-        Movement expectedMove = new Movement("TARR",7,7, Direction.Horizontal);
+        CrossChecks crossChecks = new SpanishCrossChecks(board, dawg);
+        AI ai = new SpanishAI(converter, pointCalculator, dawg, board, bot, anchors, crossChecks);
+
+        Movement expectedMove = new Movement("TARR", 7, 7, Direction.Horizontal);
         assertEquals(expectedMove, ai.run());
     }
 
     @Test
-    public void spanishAIEmptyBoardLL(){
-        DAWG dawg= new DAWG();
-        WordAdder adder= new WordAdder(dawg);
+    public void spanishAIEmptyBoardLL() {
         adder.run("SKIBIDI");
         adder.run("TALLA");
-        Board board = new StandardBoard();
-        Player bot = new Player("ai",true);
-        bot.addPiece(new Piece("T",1));
-        bot.addPiece(new Piece("A",1));
-        bot.addPiece(new Piece("LL",1));
-        bot.addPiece(new Piece("N",1));
-        bot.addPiece(new Piece("A",1));
+
+        bot.addPiece(new Piece("T", 1));
+        bot.addPiece(new Piece("A", 1));
+        bot.addPiece(new Piece("LL", 1));
+        bot.addPiece(new Piece("N", 1));
+        bot.addPiece(new Piece("A", 1));
+
         PiecesConverter converter = new SpanishPiecesConverter();
-        Anchors anchors = new Anchors();
-        AnchorUpdater anchorUpdater = new AnchorUpdater(anchors,board,converter);
-        WordGetter wordGetter = new WordGetter(board);
-        PointCalculator pointCalculator = new PointCalculator(board, wordGetter);
-        CrossChecks crossChecks = new SpanishCrossChecks(board,dawg);
-        AI ai = new SpanishAI(converter, pointCalculator, dawg,board,bot,anchors,crossChecks);
-        Movement expectedMove = new Movement("TALLA",7,7, Direction.Horizontal);
+        CrossChecks crossChecks = new SpanishCrossChecks(board, dawg);
+        AI ai = new SpanishAI(converter, pointCalculator, dawg, board, bot, anchors, crossChecks);
+
+        Movement expectedMove = new Movement("TALLA", 7, 7, Direction.Horizontal);
         assertEquals(expectedMove, ai.run());
     }
 
     @Test
-    public void spanishAIEmptyBoardLLendOfWord(){
-        DAWG dawg= new DAWG();
-        WordAdder adder= new WordAdder(dawg);
+    public void spanishAIEmptyBoardLLendOfWord() {
         adder.run("SKIBIDI");
         adder.run("TALL");
-        Board board = new StandardBoard();
-        Player bot = new Player("ai",true);
-        bot.addPiece(new Piece("T",1));
-        bot.addPiece(new Piece("A",1));
-        bot.addPiece(new Piece("LL",1));
-        bot.addPiece(new Piece("N",1));
-        bot.addPiece(new Piece("A",1));
+
+        bot.addPiece(new Piece("T", 1));
+        bot.addPiece(new Piece("A", 1));
+        bot.addPiece(new Piece("LL", 1));
+        bot.addPiece(new Piece("N", 1));
+        bot.addPiece(new Piece("A", 1));
+
         PiecesConverter converter = new SpanishPiecesConverter();
-        Anchors anchors = new Anchors();
-        AnchorUpdater anchorUpdater = new AnchorUpdater(anchors,board,converter);
-        WordGetter wordGetter = new WordGetter(board);
-        PointCalculator pointCalculator = new PointCalculator(board, wordGetter);
-        CrossChecks crossChecks = new SpanishCrossChecks(board,dawg);
-        AI ai = new SpanishAI(converter, pointCalculator, dawg,board,bot,anchors,crossChecks);
-        Movement expectedMove = new Movement("TALL",7,7, Direction.Horizontal);
+        CrossChecks crossChecks = new SpanishCrossChecks(board, dawg);
+        AI ai = new SpanishAI(converter, pointCalculator, dawg, board, bot, anchors, crossChecks);
+
+        Movement expectedMove = new Movement("TALL", 7, 7, Direction.Horizontal);
         assertEquals(expectedMove, ai.run());
     }
 
     @Test
-    public void spanishAIEmptyBoardCH(){
-        DAWG dawg= new DAWG();
-        WordAdder adder= new WordAdder(dawg);
+    public void spanishAIEmptyBoardCH() {
         adder.run("SKIBIDI");
         adder.run("TACHA");
-        Board board = new StandardBoard();
-        Player bot = new Player("ai",true);
-        bot.addPiece(new Piece("T",1));
-        bot.addPiece(new Piece("A",1));
-        bot.addPiece(new Piece("CH",1));
-        bot.addPiece(new Piece("N",1));
-        bot.addPiece(new Piece("A",1));
+
+        bot.addPiece(new Piece("T", 1));
+        bot.addPiece(new Piece("A", 1));
+        bot.addPiece(new Piece("CH", 1));
+        bot.addPiece(new Piece("N", 1));
+        bot.addPiece(new Piece("A", 1));
+
         PiecesConverter converter = new SpanishPiecesConverter();
-        Anchors anchors = new Anchors();
-        AnchorUpdater anchorUpdater = new AnchorUpdater(anchors,board,converter);
-        WordGetter wordGetter = new WordGetter(board);
-        PointCalculator pointCalculator = new PointCalculator(board, wordGetter);
-        CrossChecks crossChecks = new SpanishCrossChecks(board,dawg);
-        AI ai = new SpanishAI(converter, pointCalculator, dawg,board,bot,anchors,crossChecks);
-        Movement expectedMove = new Movement("TACHA",7,7, Direction.Horizontal);
+        CrossChecks crossChecks = new SpanishCrossChecks(board, dawg);
+        AI ai = new SpanishAI(converter, pointCalculator, dawg, board, bot, anchors, crossChecks);
+
+        Movement expectedMove = new Movement("TACHA", 7, 7, Direction.Horizontal);
         assertEquals(expectedMove, ai.run());
     }
 
     @Test
-    public void spanishAIEmptyBoardCHendOfWord(){
-        DAWG dawg= new DAWG();
-        WordAdder adder= new WordAdder(dawg);
+    public void spanishAIEmptyBoardCHendOfWord() {
         adder.run("SKIBIDI");
         adder.run("TACH");
-        Board board = new StandardBoard();
-        Player bot = new Player("ai",true);
-        bot.addPiece(new Piece("T",1));
-        bot.addPiece(new Piece("A",1));
-        bot.addPiece(new Piece("CH",1));
-        bot.addPiece(new Piece("N",1));
-        bot.addPiece(new Piece("A",1));
+
+        bot.addPiece(new Piece("T", 1));
+        bot.addPiece(new Piece("A", 1));
+        bot.addPiece(new Piece("CH", 1));
+        bot.addPiece(new Piece("N", 1));
+        bot.addPiece(new Piece("A", 1));
+
         PiecesConverter converter = new SpanishPiecesConverter();
-        Anchors anchors = new Anchors();
-        AnchorUpdater anchorUpdater = new AnchorUpdater(anchors,board,converter);
-        WordGetter wordGetter = new WordGetter(board);
-        PointCalculator pointCalculator = new PointCalculator(board, wordGetter);
-        CrossChecks crossChecks = new SpanishCrossChecks(board,dawg);
-        AI ai = new SpanishAI(converter, pointCalculator, dawg,board,bot,anchors,crossChecks);
-        Movement expectedMove = new Movement("TACH",7,7, Direction.Horizontal);
+        CrossChecks crossChecks = new SpanishCrossChecks(board, dawg);
+        AI ai = new SpanishAI(converter, pointCalculator, dawg, board, bot, anchors, crossChecks);
+
+        Movement expectedMove = new Movement("TACH", 7, 7, Direction.Horizontal);
         assertEquals(expectedMove, ai.run());
     }
 
     @Test
-    public void englishAIHorizontal(){
-        DAWG dawg= new DAWG();
-        WordAdder adder= new WordAdder(dawg);
+    public void englishAIHorizontal() {
         adder.run("TOILET");
         adder.run("SKIBIDI");
-        Board board = new StandardBoard();
-        Player bot = new Player("ai",true);
-        bot.addPiece(new Piece("S",1));
-        bot.addPiece(new Piece("K",1));
-        bot.addPiece(new Piece("I",1));
-        bot.addPiece(new Piece("B",1));
-        bot.addPiece(new Piece("I",1));
-        bot.addPiece(new Piece("D",1));
-        bot.addPiece(new Piece("I",1));
+
+        bot.addPiece(new Piece("S", 1));
+        bot.addPiece(new Piece("K", 1));
+        bot.addPiece(new Piece("I", 1));
+        bot.addPiece(new Piece("B", 1));
+        bot.addPiece(new Piece("I", 1));
+        bot.addPiece(new Piece("D", 1));
+        bot.addPiece(new Piece("I", 1));
+
         PiecesConverter converter = new PiecesConverter();
-        Anchors anchors = new Anchors();
-        AnchorUpdater anchorUpdater = new AnchorUpdater(anchors,board,converter);
-        WordGetter wordGetter = new WordGetter(board);
-        PointCalculator pointCalculator = new PointCalculator(board, wordGetter);
-        CrossChecks crossChecks = new EnglishCrossChecks(board,dawg);
-        AI ai = new EnglishAI(converter, pointCalculator, dawg,board,bot,anchors,crossChecks);
-        BoardViewStub mock = new BoardViewStub();
-        WordPlacer wordPlacer = new WordPlacer(bot, board,mock,pointCalculator);
-        CrossCheckUpdater updater = new CrossCheckUpdater(converter,crossChecks,board,dawg);
+        AnchorUpdater anchorUpdater = new AnchorUpdater(anchors, board, converter);
+        CrossChecks crossChecks = new EnglishCrossChecks(board, dawg);
+        AI ai = new EnglishAI(converter, pointCalculator, dawg, board, bot, anchors, crossChecks);
+        CrossCheckUpdater updater = new CrossCheckUpdater(converter, crossChecks, board, dawg);
+
         Piece[] pieces = new Piece[]{
                 new Piece("T", 1),
                 new Piece("O", 1),
@@ -331,198 +294,175 @@ public class TestAI {
                 new Piece("E", 1),
                 new Piece("T", 1)
         };
-        Movement previousMove = new Movement("TOILET",7,3, Direction.Vertical);
+        Movement previousMove = new Movement("TOILET", 7, 3, Direction.Vertical);
         anchorUpdater.run(previousMove);
         updater.run(previousMove);
+
         wordPlacer.run(pieces, 7, 3, Direction.Vertical);
-        Movement expectedMove = new Movement("SKIBIDI",5,5, Direction.Horizontal);
+
+        Movement expectedMove = new Movement("SKIBIDI", 5, 5, Direction.Horizontal);
         assertEquals(expectedMove, ai.run());
     }
+
     @Test
-    public void catalanAIHorizontalNY(){
-        DAWG dawg= new DAWG();
-        WordAdder adder= new WordAdder(dawg);
-        //adder.run("ANY");//este tmb problemas del extend left al right (deberia de salir el pazny por tener + putnos))
-        adder.run("PAZNYP");//problemas de pasar del extend left al right, deberia de quedar
-        Board board = new StandardBoard();
-        Player bot = new Player("ai",true);
-        bot.addPiece(new Piece("P",1));
-        bot.addPiece(new Piece("A",1));
-        bot.addPiece(new Piece("Z",1));
-        bot.addPiece(new Piece("P",1));
+    public void catalanAIHorizontalNY() {
+        adder.run("PAZNYP");
+
+        bot.addPiece(new Piece("P", 1));
+        bot.addPiece(new Piece("A", 1));
+        bot.addPiece(new Piece("Z", 1));
+        bot.addPiece(new Piece("P", 1));
+
         PiecesConverter converter = new CatalanPiecesConverter();
-        Anchors anchors = new Anchors();
-        AnchorUpdater anchorUpdater = new AnchorUpdater(anchors,board,converter);
-        WordGetter wordGetter = new WordGetter(board);
-        PointCalculator pointCalculator = new PointCalculator(board, wordGetter);
-        CrossChecks crossChecks = new CatalanCrossChecks(board,dawg);
-        CrossCheckUpdater updater = new CrossCheckUpdater(converter,crossChecks,board,dawg);
-        AI ai = new CatalanAI(converter, pointCalculator, dawg,board,bot,anchors,crossChecks);
-        BoardViewStub mock = new BoardViewStub();
-        WordPlacer wordPlacer = new WordPlacer(bot, board,mock,pointCalculator);
+        AnchorUpdater anchorUpdater = new AnchorUpdater(anchors, board, converter);
+        CrossChecks crossChecks = new CatalanCrossChecks(board, dawg);
+        AI ai = new CatalanAI(converter, pointCalculator, dawg, board, bot, anchors, crossChecks);
+        CrossCheckUpdater updater = new CrossCheckUpdater(converter, crossChecks, board, dawg);
+
         Piece[] pieces = new Piece[]{
                 new Piece("NY", 1),
         };
-        Movement previousMove = new Movement("NY",7,7, Direction.Vertical);
+        Movement previousMove = new Movement("NY", 7, 7, Direction.Vertical);
         anchorUpdater.run(previousMove);
         updater.run(previousMove);
+
         wordPlacer.run(pieces, 7, 7, Direction.Vertical);
-        Movement expectedMove = new Movement("PAZNYP",4,7, Direction.Horizontal);
+
+        Movement expectedMove = new Movement("PAZNYP", 4, 7, Direction.Horizontal);
         assertEquals(expectedMove, ai.run());
     }
+
     @Test
-    public void catalanAIHorizontalLL(){
-        DAWG dawg= new DAWG();
-        WordAdder adder= new WordAdder(dawg);
-        //adder.run("AL·L");//este tmb problemas del extend left al right (deberia de salir el pazny por tener + putnos))
-        adder.run("PAZL·LP");//problemas de pasar del extend left al right, deberia de quedar
-        Board board = new StandardBoard();
-        Player bot = new Player("ai",true);
-        bot.addPiece(new Piece("P",1));
-        bot.addPiece(new Piece("A",1));
-        bot.addPiece(new Piece("Z",1));
-        bot.addPiece(new Piece("P",1));
+    public void catalanAIHorizontalLGeminada() {
+        adder.run("PAZL·LP");
+
+        bot.addPiece(new Piece("P", 1));
+        bot.addPiece(new Piece("A", 1));
+        bot.addPiece(new Piece("Z", 1));
+        bot.addPiece(new Piece("P", 1));
+
         PiecesConverter converter = new CatalanPiecesConverter();
-        Anchors anchors = new Anchors();
-        AnchorUpdater anchorUpdater = new AnchorUpdater(anchors,board,converter);
-        WordGetter wordGetter = new WordGetter(board);
-        PointCalculator pointCalculator = new PointCalculator(board, wordGetter);
-        CrossChecks crossChecks = new CatalanCrossChecks(board,dawg);
-        CrossCheckUpdater updater = new CrossCheckUpdater(converter,crossChecks,board,dawg);
-        AI ai = new CatalanAI(converter, pointCalculator, dawg,board,bot,anchors,crossChecks);
-        BoardViewStub mock = new BoardViewStub();
-        WordPlacer wordPlacer = new WordPlacer(bot, board,mock,pointCalculator);
+        AnchorUpdater anchorUpdater = new AnchorUpdater(anchors, board, converter);
+        CrossChecks crossChecks = new CatalanCrossChecks(board, dawg);
+        AI ai = new CatalanAI(converter, pointCalculator, dawg, board, bot, anchors, crossChecks);
+        CrossCheckUpdater updater = new CrossCheckUpdater(converter, crossChecks, board, dawg);
+
         Piece[] pieces = new Piece[]{
                 new Piece("L·L", 1),
         };
-        Movement previousMove = new Movement("L·L",7,7, Direction.Vertical);
+        Movement previousMove = new Movement("L·L", 7, 7, Direction.Vertical);
         anchorUpdater.run(previousMove);
         updater.run(previousMove);
+
         wordPlacer.run(pieces, 7, 7, Direction.Vertical);
-        Movement expectedMove = new Movement("PAZL·LP",4,7, Direction.Horizontal);
+
+        Movement expectedMove = new Movement("PAZL·LP", 4, 7, Direction.Horizontal);
         assertEquals(expectedMove, ai.run());
     }
+
     @Test
-    public void spanishAIHorizontalRR(){
-        DAWG dawg= new DAWG();
-        WordAdder adder= new WordAdder(dawg);
-        //adder.run("AL·L");//este tmb problemas del extend left al right (deberia de salir el pazny por tener + putnos))
-        adder.run("PAZRRP");//problemas de pasar del extend left al right, deberia de quedar
-        Board board = new StandardBoard();
-        Player bot = new Player("ai",true);
-        bot.addPiece(new Piece("P",1));
-        bot.addPiece(new Piece("A",1));
-        bot.addPiece(new Piece("Z",1));
-        bot.addPiece(new Piece("P",1));
+    public void spanishAIHorizontalRR() {
+        adder.run("PAZRRP");
+
+        bot.addPiece(new Piece("P", 1));
+        bot.addPiece(new Piece("A", 1));
+        bot.addPiece(new Piece("Z", 1));
+        bot.addPiece(new Piece("P", 1));
+
         PiecesConverter converter = new SpanishPiecesConverter();
-        Anchors anchors = new Anchors();
-        AnchorUpdater anchorUpdater = new AnchorUpdater(anchors,board,converter);
-        WordGetter wordGetter = new WordGetter(board);
-        PointCalculator pointCalculator = new PointCalculator(board, wordGetter);
-        CrossChecks crossChecks = new SpanishCrossChecks(board,dawg);
-        CrossCheckUpdater updater = new CrossCheckUpdater(converter,crossChecks,board,dawg);
-        AI ai = new SpanishAI(converter, pointCalculator, dawg,board,bot,anchors,crossChecks);
-        BoardViewStub mock = new BoardViewStub();
-        WordPlacer wordPlacer = new WordPlacer(bot, board,mock,pointCalculator);
+        AnchorUpdater anchorUpdater = new AnchorUpdater(anchors, board, converter);
+        CrossChecks crossChecks = new SpanishCrossChecks(board, dawg);
+        AI ai = new SpanishAI(converter, pointCalculator, dawg, board, bot, anchors, crossChecks);
+        CrossCheckUpdater updater = new CrossCheckUpdater(converter, crossChecks, board, dawg);
+
         Piece[] pieces = new Piece[]{
                 new Piece("RR", 1),
         };
-        Movement previousMove = new Movement("RR",7,7, Direction.Vertical);
+        Movement previousMove = new Movement("RR", 7, 7, Direction.Vertical);
         anchorUpdater.run(previousMove);
         updater.run(previousMove);
+
         wordPlacer.run(pieces, 7, 7, Direction.Vertical);
-        Movement expectedMove = new Movement("PAZRRP",4,7, Direction.Horizontal);
+
+        Movement expectedMove = new Movement("PAZRRP", 4, 7, Direction.Horizontal);
         assertEquals(expectedMove, ai.run());
     }
+
     @Test
-    public void spanishAIHorizontalLL(){
-        DAWG dawg= new DAWG();
-        WordAdder adder= new WordAdder(dawg);
-        //adder.run("AL·L");//este tmb problemas del extend left al right (deberia de salir el pazny por tener + putnos))
-        adder.run("PAZLLP");//problemas de pasar del extend left al right, deberia de quedar
-        Board board = new StandardBoard();
-        Player bot = new Player("ai",true);
-        bot.addPiece(new Piece("P",1));
-        bot.addPiece(new Piece("A",1));
-        bot.addPiece(new Piece("Z",1));
-        bot.addPiece(new Piece("P",1));
+    public void spanishAIHorizontalLL() {
+        adder.run("PAZLLP");
+
+        bot.addPiece(new Piece("P", 1));
+        bot.addPiece(new Piece("A", 1));
+        bot.addPiece(new Piece("Z", 1));
+        bot.addPiece(new Piece("P", 1));
+
         PiecesConverter converter = new SpanishPiecesConverter();
-        Anchors anchors = new Anchors();
-        AnchorUpdater anchorUpdater = new AnchorUpdater(anchors,board,converter);
-        WordGetter wordGetter = new WordGetter(board);
-        PointCalculator pointCalculator = new PointCalculator(board, wordGetter);
-        CrossChecks crossChecks = new SpanishCrossChecks(board,dawg);
-        CrossCheckUpdater updater = new CrossCheckUpdater(converter,crossChecks,board,dawg);
-        AI ai = new SpanishAI(converter, pointCalculator, dawg,board,bot,anchors,crossChecks);
-        BoardViewStub mock = new BoardViewStub();
-        WordPlacer wordPlacer = new WordPlacer(bot, board,mock,pointCalculator);
+        AnchorUpdater anchorUpdater = new AnchorUpdater(anchors, board, converter);
+        CrossChecks crossChecks = new SpanishCrossChecks(board, dawg);
+        AI ai = new SpanishAI(converter, pointCalculator, dawg, board, bot, anchors, crossChecks);
+        CrossCheckUpdater updater = new CrossCheckUpdater(converter, crossChecks, board, dawg);
+
         Piece[] pieces = new Piece[]{
                 new Piece("LL", 1),
         };
-        Movement previousMove = new Movement("LL",7,7, Direction.Vertical);
+        Movement previousMove = new Movement("LL", 7, 7, Direction.Vertical);
         anchorUpdater.run(previousMove);
         updater.run(previousMove);
+
         wordPlacer.run(pieces, 7, 7, Direction.Vertical);
-        Movement expectedMove = new Movement("PAZLLP",4,7, Direction.Horizontal);
+
+        Movement expectedMove = new Movement("PAZLLP", 4, 7, Direction.Horizontal);
         assertEquals(expectedMove, ai.run());
     }
+
     @Test
-    public void spanishAIHorizontalCH(){
-        DAWG dawg= new DAWG();
-        WordAdder adder= new WordAdder(dawg);
-        //adder.run("AL·L");//este tmb problemas del extend left al right (deberia de salir el pazny por tener + putnos))
-        adder.run("PAZCHP");//problemas de pasar del extend left al right, deberia de quedar
-        Board board = new StandardBoard();
-        Player bot = new Player("ai",true);
-        bot.addPiece(new Piece("P",1));
-        bot.addPiece(new Piece("A",1));
-        bot.addPiece(new Piece("Z",1));
-        bot.addPiece(new Piece("P",1));
+    public void spanishAIHorizontalCH() {
+        adder.run("PAZCHP");
+
+        bot.addPiece(new Piece("P", 1));
+        bot.addPiece(new Piece("A", 1));
+        bot.addPiece(new Piece("Z", 1));
+        bot.addPiece(new Piece("P", 1));
+
         PiecesConverter converter = new SpanishPiecesConverter();
-        Anchors anchors = new Anchors();
-        AnchorUpdater anchorUpdater = new AnchorUpdater(anchors,board,converter);
-        WordGetter wordGetter = new WordGetter(board);
-        PointCalculator pointCalculator = new PointCalculator(board, wordGetter);
-        CrossChecks crossChecks = new SpanishCrossChecks(board,dawg);
-        CrossCheckUpdater updater = new CrossCheckUpdater(converter,crossChecks,board,dawg);
-        AI ai = new SpanishAI(converter, pointCalculator, dawg,board,bot,anchors,crossChecks);
-        BoardViewStub mock = new BoardViewStub();
-        WordPlacer wordPlacer = new WordPlacer(bot, board,mock,pointCalculator);
+        AnchorUpdater anchorUpdater = new AnchorUpdater(anchors, board, converter);
+        CrossChecks crossChecks = new SpanishCrossChecks(board, dawg);
+        AI ai = new SpanishAI(converter, pointCalculator, dawg, board, bot, anchors, crossChecks);
+        CrossCheckUpdater updater = new CrossCheckUpdater(converter, crossChecks, board, dawg);
+
         Piece[] pieces = new Piece[]{
                 new Piece("CH", 1),
         };
-        Movement previousMove = new Movement("CH",7,7, Direction.Vertical);
+        Movement previousMove = new Movement("CH", 7, 7, Direction.Vertical);
         anchorUpdater.run(previousMove);
         updater.run(previousMove);
+
         wordPlacer.run(pieces, 7, 7, Direction.Vertical);
-        Movement expectedMove = new Movement("PAZCHP",4,7, Direction.Horizontal);
+
+        Movement expectedMove = new Movement("PAZCHP", 4, 7, Direction.Horizontal);
         assertEquals(expectedMove, ai.run());
     }
+
     @Test
-    public void englishAIHorizontalwithBlank(){
-        DAWG dawg= new DAWG();
-        WordAdder adder= new WordAdder(dawg);
+    public void englishAIHorizontalwithBlank() {
         adder.run("TOILET");
         adder.run("SKIBIDI");
-        Board board = new StandardBoard();
-        Player bot = new Player("ai",true);
-        bot.addPiece(new Piece("#",0,true));
-        bot.addPiece(new Piece("K",1));
-        bot.addPiece(new Piece("I",1));
-        bot.addPiece(new Piece("B",1));
-        bot.addPiece(new Piece("I",1));
-        bot.addPiece(new Piece("D",1));
-        bot.addPiece(new Piece("I",1));
+
+        bot.addPiece(new Piece("#", 0, true));
+        bot.addPiece(new Piece("K", 1));
+        bot.addPiece(new Piece("I", 1));
+        bot.addPiece(new Piece("B", 1));
+        bot.addPiece(new Piece("I", 1));
+        bot.addPiece(new Piece("D", 1));
+        bot.addPiece(new Piece("I", 1));
+
         PiecesConverter converter = new PiecesConverter();
-        Anchors anchors = new Anchors();
-        AnchorUpdater anchorUpdater = new AnchorUpdater(anchors,board,converter);
-        WordGetter wordGetter = new WordGetter(board);
-        PointCalculator pointCalculator = new PointCalculator(board, wordGetter);
-        CrossChecks crossChecks = new EnglishCrossChecks(board,dawg);
-        AI ai = new EnglishAI(converter, pointCalculator, dawg,board,bot,anchors,crossChecks);
-        BoardViewStub mock = new BoardViewStub();
-        WordPlacer wordPlacer = new WordPlacer(bot, board,mock,pointCalculator);
-        CrossCheckUpdater updater = new CrossCheckUpdater(converter,crossChecks,board,dawg);
+        AnchorUpdater anchorUpdater = new AnchorUpdater(anchors, board, converter);
+        CrossChecks crossChecks = new EnglishCrossChecks(board, dawg);
+        AI ai = new EnglishAI(converter, pointCalculator, dawg, board, bot, anchors, crossChecks);
+        CrossCheckUpdater updater = new CrossCheckUpdater(converter, crossChecks, board, dawg);
+
         Piece[] pieces = new Piece[]{
                 new Piece("T", 1, true),
                 new Piece("O", 1),
@@ -531,59 +471,51 @@ public class TestAI {
                 new Piece("E", 1),
                 new Piece("T", 1)
         };
-        Movement previousMove = new Movement("TOILET",7,3, Direction.Vertical);
+        Movement previousMove = new Movement("TOILET", 7, 3, Direction.Vertical);
         anchorUpdater.run(previousMove);
         updater.run(previousMove);
+
         wordPlacer.run(pieces, 7, 3, Direction.Vertical);
-        Movement expectedMove = new Movement("sKIBIDI",5,5, Direction.Horizontal);
+
+        Movement expectedMove = new Movement("sKIBIDI", 5, 5, Direction.Horizontal);
         assertEquals(expectedMove, ai.run());
     }
 
     @Test
-    public void catalanAIEmptyBoardNYwithBlank(){
-        DAWG dawg= new DAWG();
-        WordAdder adder= new WordAdder(dawg);
+    public void catalanAIEmptyBoardNYwithBlank() {
         adder.run("SKIBIDI");
         adder.run("TAYA");
-        Board board = new StandardBoard();
-        Player bot = new Player("ai",true);
-        bot.addPiece(new Piece("T",1));
-        bot.addPiece(new Piece("A",1));
-        bot.addPiece(new Piece("#",0,true));
-        bot.addPiece(new Piece("Y",1));
-        bot.addPiece(new Piece("A",1));
+
+        bot.addPiece(new Piece("T", 1));
+        bot.addPiece(new Piece("A", 1));
+        bot.addPiece(new Piece("#", 0, true));
+        bot.addPiece(new Piece("Y", 1));
+        bot.addPiece(new Piece("A", 1));
+
         PiecesConverter converter = new CatalanPiecesConverter();
-        Anchors anchors = new Anchors();
-        AnchorUpdater anchorUpdater = new AnchorUpdater(anchors,board,converter);
-        WordGetter wordGetter = new WordGetter(board);
-        PointCalculator pointCalculator = new PointCalculator(board, wordGetter);
-        CrossChecks crossChecks = new CatalanCrossChecks(board,dawg);
-        AI ai = new CatalanAI(converter, pointCalculator, dawg,board,bot,anchors,crossChecks);
-        Movement expectedMove = new Movement("TAyA",7,7, Direction.Horizontal);
-        assertEquals(expectedMove, ai.run());
-    }
-    @Test
-    public void spanishAIEmptyBoardRRwithBlank(){
-        DAWG dawg= new DAWG();
-        WordAdder adder= new WordAdder(dawg);
-        adder.run("SKIBIDI");
-        adder.run("TARRA");
-        Board board = new StandardBoard();
-        Player bot = new Player("ai",true);
-        bot.addPiece(new Piece("T",1));
-        bot.addPiece(new Piece("A",1));
-        bot.addPiece(new Piece("#",0,true));
-        bot.addPiece(new Piece("N",1));
-        bot.addPiece(new Piece("A",1));
-        PiecesConverter converter = new SpanishPiecesConverter();
-        Anchors anchors = new Anchors();
-        AnchorUpdater anchorUpdater = new AnchorUpdater(anchors,board,converter);
-        WordGetter wordGetter = new WordGetter(board);
-        PointCalculator pointCalculator = new PointCalculator(board, wordGetter);
-        CrossChecks crossChecks = new SpanishCrossChecks(board,dawg);
-        AI ai = new SpanishAI(converter, pointCalculator, dawg,board,bot,anchors,crossChecks);
-        Movement expectedMove = new Movement("TArrA",7,7, Direction.Horizontal);
+        CrossChecks crossChecks = new CatalanCrossChecks(board, dawg);
+        AI ai = new CatalanAI(converter, pointCalculator, dawg, board, bot, anchors, crossChecks);
+
+        Movement expectedMove = new Movement("TAyA", 7, 7, Direction.Horizontal);
         assertEquals(expectedMove, ai.run());
     }
 
+    @Test
+    public void spanishAIEmptyBoardRRwithBlank() {
+        adder.run("SKIBIDI");
+        adder.run("TARRA");
+
+        bot.addPiece(new Piece("T", 1));
+        bot.addPiece(new Piece("A", 1));
+        bot.addPiece(new Piece("#", 0, true));
+        bot.addPiece(new Piece("N", 1));
+        bot.addPiece(new Piece("A", 1));
+
+        PiecesConverter converter = new SpanishPiecesConverter();
+        CrossChecks crossChecks = new SpanishCrossChecks(board, dawg);
+        AI ai = new SpanishAI(converter, pointCalculator, dawg, board, bot, anchors, crossChecks);
+
+        Movement expectedMove = new Movement("TArrA", 7, 7, Direction.Horizontal);
+        assertEquals(expectedMove, ai.run());
+    }
 }
