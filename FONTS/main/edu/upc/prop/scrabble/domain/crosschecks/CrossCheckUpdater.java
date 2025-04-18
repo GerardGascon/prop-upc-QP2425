@@ -57,7 +57,7 @@ public class CrossCheckUpdater {
         //System.out.println("WE'RE IN");
         //System.out.println(endOfAddedWord+1);
         //System.out.println(move.y());
-        Node finalNode = getFinalNode(move.word());
+        Node finalNode = getFinalNode(move.word().toUpperCase());
         //System.out.println(finalNode.getSuccessor('A'));
         for (int j = 0; j < crossChecks.getLetters().length; ++j) {
             //probamos de ver si podemos avanzar en el dawg a esas letras
@@ -109,7 +109,7 @@ public class CrossCheckUpdater {
         //hacer que lo de ponerlo detras sea eficiente consultarlo con el dawg
         //llegar hasta el nodo del que seria el final de la palabra y para ese nodo mirar si luego tiene otro siguiente
         // con la letra que toca y sea 'terminal'
-        Node finalNode = getFinalNode(move.word());
+        Node finalNode = getFinalNode(move.word().toUpperCase());
         for (int j = 0; j < crossChecks.getLetters().length; ++j) {
             //probamos de ver si podemos avanzar en el dawg a esas letras
             if (!nextNodeTerminal(finalNode, crossChecks.getLetters()[j])) {
