@@ -15,7 +15,7 @@ public record Pair<X, Y>(X first, Y second) {
      *
      * @return The first element of type X.
      */
-    public X getFirst() {
+    public X first() {
         return first;
     }
 
@@ -24,7 +24,7 @@ public record Pair<X, Y>(X first, Y second) {
      *
      * @return The second element of type Y.
      */
-    public Y getSecond() {
+    public Y second() {
         return second;
     }
 }
