@@ -23,7 +23,8 @@ public class PiecesConverter {
                 continue;
             }
 
-            pieces.add(new Piece(Character.toString(c), 0));
+            String character = Character.toString(Character.toUpperCase(c));
+            pieces.add(new Piece(character, 0, Character.isLowerCase(c)));
             i++;
         }
         return pieces.toArray(new Piece[0]);

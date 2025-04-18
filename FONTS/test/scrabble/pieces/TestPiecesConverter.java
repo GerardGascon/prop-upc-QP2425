@@ -89,4 +89,64 @@ public class TestPiecesConverter {
 
         assertEquals(new Piece("CH", 0), piece[0]);
     }
+
+    @Test
+    public void getPieceAsBlankPieceWhenCharacterIsLowercase() {
+        String letter = "a";
+        PiecesConverter sut = new PiecesConverter();
+
+        Piece[] piece = sut.run(letter);
+
+        assertEquals(new Piece("A", 0, true), piece[0]);
+    }
+
+    @Test
+    public void getLgeminadaBlankPieceFromLgeminadaCharacterCAT() {
+        String letter = "l·l";
+        PiecesConverter sut = new CatalanPiecesConverter();
+
+        Piece[] piece = sut.run(letter);
+
+        assertEquals(new Piece("L·L", 0, true), piece[0]);
+    }
+
+    @Test
+    public void getNYBlankPieceFromNYCharacterCAT() {
+        String letter = "ny";
+        PiecesConverter sut = new CatalanPiecesConverter();
+
+        Piece[] piece = sut.run(letter);
+
+        assertEquals(new Piece("NY", 0, true), piece[0]);
+    }
+
+    @Test
+    public void getRRBlankPieceFromRRCharacterCAST() {
+        String letter = "rr";
+        PiecesConverter sut = new SpanishPiecesConverter();
+
+        Piece[] piece = sut.run(letter);
+
+        assertEquals(new Piece("RR", 0, true), piece[0]);
+    }
+
+    @Test
+    public void getLLBlankPieceFromLLCharacterCAST() {
+        String letter = "ll";
+        PiecesConverter sut = new SpanishPiecesConverter();
+
+        Piece[] piece = sut.run(letter);
+
+        assertEquals(new Piece("LL", 0, true), piece[0]);
+    }
+
+    @Test
+    public void getCHBlankPieceFromCHCharacterCAST() {
+        String letter = "ch";
+        PiecesConverter sut = new SpanishPiecesConverter();
+
+        Piece[] piece = sut.run(letter);
+
+        assertEquals(new Piece("CH", 0, true), piece[0]);
+    }
 }

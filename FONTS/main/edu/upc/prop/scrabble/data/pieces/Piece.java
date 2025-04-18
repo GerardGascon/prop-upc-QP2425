@@ -72,12 +72,20 @@ public final class Piece {
      * @param obj The object to compare with.
      * @return True if both are equal pieces, False otherwise.
      */
+
     @Override
     public boolean equals(Object obj) {
         if (obj == this) return true;
         if (obj == null || obj.getClass() != this.getClass()) return false;
         var that = (Piece) obj;
         return Objects.equals(this.letter, that.letter) &&
-                this.value == that.value;
+                this.value == that.value && this.isBlank == that.isBlank;
+    }
+
+    @Override
+    public String toString() {
+        if (isBlank)
+            return "[Blank]: " + letter + " " + value;
+        return letter + " " + value;
     }
 }
