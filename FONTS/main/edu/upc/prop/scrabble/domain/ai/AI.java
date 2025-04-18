@@ -161,6 +161,7 @@ public abstract class AI {
                     // In possession of matching and usable piece
                     char c = entry.getKey(); // Current char
                     Piece usedPiece = bot.hasPiece(String.valueOf(c)); // Matching piece (null if non-existent)
+
                     if (usedPiece != null && crossChecks.ableToPlace(cell.x, cell.y, String.valueOf(c))) {
                         // Standard check
                         extendToNextNewPieceRight(partialWord, cell, entry, usedPiece);

@@ -28,7 +28,8 @@ public class CatalanAI extends AI {
                 nextNode = entry.getValue().getSuccessor('Y');
                 usedPiece = bot.hasPiece("NY");
                 if(nextNode != null && usedPiece != null) {
-                    goToNextLeftPiece(partialWord + "NY", nextNode, limit, usedPiece);
+                    if(usedPiece.isBlank()) goToNextLeftPiece(partialWord + "ny", nextNode, limit, usedPiece);
+                    else goToNextLeftPiece(partialWord + "NY", nextNode, limit, usedPiece);
                 }
                 break;
 
@@ -36,7 +37,8 @@ public class CatalanAI extends AI {
                 nextNode = entry.getValue().getSuccessor('·');
                 usedPiece = bot.hasPiece("L·L");
                 if(nextNode != null && usedPiece != null) {
-                    goToNextLeftPiece(partialWord + "L·L", nextNode.getSuccessor('L'), limit, usedPiece);
+                    if(usedPiece.isBlank()) goToNextLeftPiece(partialWord + "l·l", nextNode, limit, usedPiece);
+                    else goToNextLeftPiece(partialWord + "L·L", nextNode.getSuccessor('L'), limit, usedPiece);
                 }
                 break;
         }
@@ -46,9 +48,10 @@ public class CatalanAI extends AI {
     protected void processNextLeftPiece(String partialWord, int limit, Map.Entry<Character, Node> entry, Piece usedPiece) {
         char lastLetter = ' ';
         if(!partialWord.isEmpty()) lastLetter = partialWord.charAt(partialWord.length() - 1);
-        if((lastLetter != 'N' || entry.getKey() != 'Y') &&
-           (lastLetter != 'L' || entry.getKey() != '·')) {
-            goToNextLeftPiece(partialWord + entry.getKey(), entry.getValue(), limit, usedPiece);
+        if((((lastLetter != 'N') && (lastLetter != 'n')) || entry.getKey() != 'Y') &&
+        (((lastLetter != 'L')&&(lastLetter != 'l'))|| entry.getKey() != '·')) {
+            if(usedPiece.isBlank()) goToNextLeftPiece(partialWord + Character.toLowerCase(entry.getKey()), entry.getValue(), limit, usedPiece);
+            else goToNextLeftPiece(partialWord + entry.getKey(), entry.getValue(), limit, usedPiece);
         }
     }
 
@@ -56,9 +59,10 @@ public class CatalanAI extends AI {
     protected void extendToNextNewPieceRight(String partialWord, Vector2 cell, Map.Entry<Character, Node> entry, Piece usedPiece) {
         char lastLetter = ' ';
         if(!partialWord.isEmpty()) lastLetter = partialWord.charAt(partialWord.length() - 1);
-        if((lastLetter != 'N' || entry.getKey() != 'Y') &&
-           (lastLetter != 'L' || entry.getKey() != '·')) {
-            goToNextRightPiece(partialWord + entry.getKey(), entry.getValue(), cell, usedPiece);
+        if((((lastLetter != 'N') && (lastLetter != 'n')) || entry.getKey() != 'Y') &&
+        (((lastLetter != 'L')&&(lastLetter != 'l'))|| entry.getKey() != '·')){
+            if(usedPiece.isBlank()) goToNextRightPiece(partialWord + Character.toLowerCase(entry.getKey()), entry.getValue(), cell, usedPiece);
+            else goToNextRightPiece(partialWord + entry.getKey(), entry.getValue(), cell, usedPiece);
         }
     }
 
@@ -70,8 +74,8 @@ public class CatalanAI extends AI {
         Node nextNode = node.getSuccessor(placedPiece.letter().charAt(0));
         if(nextNode != null) { // Valid node
             if (placedLetter.length() == 1) { // Regular piece
-                if ((lastLetter != 'N' || !placedLetter.equals("Y")) && // Illegal combinations check
-                    (lastLetter != 'L' || !placedLetter.equals("·"))) {
+                    if((((lastLetter != 'N') && (lastLetter != 'n')) || !placedLetter.equals("Y")) &&
+                    (((lastLetter != 'L')&&(lastLetter != 'l'))|| !placedLetter.equals("·"))){
                     ExtendRight(partialWord + placedLetter, nextNode, cell);
                 }
             }
@@ -95,8 +99,12 @@ public class CatalanAI extends AI {
                 nextNode = entry.getValue().getSuccessor('Y');
                 usedPiece = bot.hasPiece("NY");
                 if(nextNode != null && usedPiece != null && crossChecks.ableToPlace(cell.x, cell.y, "NY")) {
-                    if(nextNode.isEndOfWord()) checkWord(partialWord + "NY", cell);
-                    goToNextRightPiece(partialWord + "NY", nextNode, cell, usedPiece);
+                    if(nextNode.isEndOfWord()) {
+                        if(usedPiece.isBlank()) checkWord(partialWord + "ny", cell);
+                        else checkWord(partialWord + "NY", cell);
+                    }
+                    if(usedPiece.isBlank()) goToNextRightPiece(partialWord + "ny", nextNode, cell, usedPiece);
+                    else goToNextRightPiece(partialWord + "NY", nextNode, cell, usedPiece);
                 }
                 break;
 
@@ -105,8 +113,12 @@ public class CatalanAI extends AI {
                 if(nextNode != null) nextNode = nextNode.getSuccessor('L');
                 usedPiece = bot.hasPiece("L·L");
                 if(nextNode != null && usedPiece != null && crossChecks.ableToPlace(cell.x, cell.y, "L·L")) {
-                    if(nextNode.isEndOfWord()) checkWord(partialWord + "L·L", cell);
-                    goToNextRightPiece(partialWord + "L·L", nextNode, cell, usedPiece);
+                    if(nextNode.isEndOfWord()) {
+                        if(usedPiece.isBlank()) checkWord(partialWord + "l·l", cell);
+                        else checkWord(partialWord + "L·L", cell);
+                    }
+                    if(usedPiece.isBlank()) goToNextRightPiece(partialWord + "l·l", nextNode, cell, usedPiece);
+                    else goToNextRightPiece(partialWord + "L·L", nextNode, cell, usedPiece);
                 }
                 break;
         }

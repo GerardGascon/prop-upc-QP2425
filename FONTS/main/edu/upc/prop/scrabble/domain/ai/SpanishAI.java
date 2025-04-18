@@ -29,7 +29,8 @@ public class SpanishAI extends AI {
                 nextNode = entry.getValue().getSuccessor('R');
                 usedPiece = bot.hasPiece("RR");
                 if(nextNode != null && usedPiece != null) {
-                    goToNextLeftPiece(partialWord + "RR", nextNode, limit, usedPiece);
+                    if(usedPiece.isBlank()) goToNextLeftPiece(partialWord + "rr", nextNode, limit, usedPiece);
+                    else goToNextLeftPiece(partialWord + "RR", nextNode, limit, usedPiece);
                 }
                 break;
 
@@ -37,7 +38,8 @@ public class SpanishAI extends AI {
                 nextNode = entry.getValue().getSuccessor('L');
                 usedPiece = bot.hasPiece("LL");
                 if(nextNode != null && usedPiece != null) {
-                    goToNextLeftPiece(partialWord + "LL", nextNode, limit, usedPiece);
+                    if(usedPiece.isBlank()) goToNextLeftPiece(partialWord + "ll", nextNode, limit, usedPiece);
+                    else goToNextLeftPiece(partialWord + "LL", nextNode, limit, usedPiece);
                 }
                 break;
 
@@ -45,7 +47,8 @@ public class SpanishAI extends AI {
                 nextNode = entry.getValue().getSuccessor('C');
                 usedPiece = bot.hasPiece("CH");
                 if(nextNode != null && usedPiece != null) {
-                    goToNextLeftPiece(partialWord + "CH", nextNode, limit, usedPiece);
+                    if(usedPiece.isBlank()) goToNextLeftPiece(partialWord + "ch", nextNode, limit, usedPiece);
+                    else goToNextLeftPiece(partialWord + "CH", nextNode, limit, usedPiece);
                 }
                 break;
         }
@@ -55,10 +58,11 @@ public class SpanishAI extends AI {
     protected void processNextLeftPiece(String partialWord, int limit, Map.Entry<Character, Node> entry, Piece usedPiece) {
         char lastLetter = ' ';
         if(!partialWord.isEmpty()) lastLetter = partialWord.charAt(partialWord.length() - 1);
-        if((lastLetter != 'R' || entry.getKey() != 'R') &&
-           (lastLetter != 'L' || entry.getKey() != 'L') &&
-           (lastLetter != 'C' || entry.getKey() != 'H')) {
-            goToNextLeftPiece(partialWord + entry.getKey(), entry.getValue(), limit, usedPiece);
+        if((((lastLetter != 'R')&&(lastLetter != 'r'))|| entry.getKey() != 'R') && // Illegal combinations check
+        (((lastLetter != 'L')&&(lastLetter != 'l')) || entry.getKey() != 'L') &&
+        (((lastLetter != 'C')&&(lastLetter != 'c')) || entry.getKey() != 'H')){
+            if(usedPiece.isBlank()) goToNextLeftPiece(partialWord + Character.toLowerCase(entry.getKey()), entry.getValue(), limit, usedPiece);
+            else goToNextLeftPiece(partialWord + entry.getKey(), entry.getValue(), limit, usedPiece);
         }
     }
 
@@ -66,10 +70,11 @@ public class SpanishAI extends AI {
     protected void extendToNextNewPieceRight(String partialWord, Vector2 cell, Map.Entry<Character, Node> entry, Piece usedPiece) {
         char lastLetter = ' ';
         if(!partialWord.isEmpty()) lastLetter = partialWord.charAt(partialWord.length() - 1);
-        if((lastLetter != 'R' || entry.getKey() != 'R') && // Illegal combinations check
-           (lastLetter != 'L' || entry.getKey() != 'L') &&
-           (lastLetter != 'C' || entry.getKey() != 'H')) {
-            goToNextRightPiece(partialWord + entry.getKey(), entry.getValue(), cell, usedPiece);
+        if((((lastLetter != 'R')&&(lastLetter != 'r'))|| entry.getKey() != 'R') && // Illegal combinations check
+           (((lastLetter != 'L')&&(lastLetter != 'l')) || entry.getKey() != 'L') &&
+           (((lastLetter != 'C')&&(lastLetter != 'c')) || entry.getKey() != 'H')) {
+            if(usedPiece.isBlank()) goToNextRightPiece(partialWord + Character.toLowerCase(entry.getKey()), entry.getValue(), cell, usedPiece);
+            else goToNextRightPiece(partialWord + entry.getKey(), entry.getValue(), cell, usedPiece);
         }
     }
 
@@ -81,9 +86,9 @@ public class SpanishAI extends AI {
         Node nextNode = node.getSuccessor(placedPiece.letter().charAt(0));
         if(nextNode != null) { // Valid node
             if (placedLetter.length() == 1) { // Regular piece
-                if ((lastLetter != 'R' || !placedLetter.equals("R")) && // Illegal combinations check
-                        (lastLetter != 'C' || !placedLetter.equals("H")) &&
-                        (lastLetter != 'L' || !placedLetter.equals("L"))) {
+                    if((((lastLetter != 'R')&&(lastLetter != 'r'))|| !placedLetter.equals("R")) && // Illegal combinations check
+                    (((lastLetter != 'L')&&(lastLetter != 'l')) || !placedLetter.equals("L")) &&
+                    (((lastLetter != 'C')&&(lastLetter != 'c')) || !placedLetter.equals("H"))){
                     ExtendRight(partialWord + placedLetter, nextNode, cell);
                 }
             }
@@ -104,8 +109,14 @@ public class SpanishAI extends AI {
                 nextNode = entry.getValue().getSuccessor('R');
                 usedPiece = bot.hasPiece("RR");
                 if (nextNode != null && usedPiece != null && crossChecks.ableToPlace(cell.x, cell.y, "RR")) {
-                    if (nextNode.isEndOfWord()) checkWord(partialWord + "RR", cell);
-                    goToNextRightPiece(partialWord + "RR", nextNode, cell, usedPiece);
+                    if (nextNode.isEndOfWord()) {
+                        if(usedPiece.isBlank()) checkWord(partialWord + "rr", cell);
+                        else checkWord(partialWord + "RR", cell);
+                    }
+                    else {
+                        if(usedPiece.isBlank()) goToNextRightPiece(partialWord + "rr", nextNode, cell, usedPiece);
+                        else goToNextRightPiece(partialWord + "RR", nextNode, cell, usedPiece);
+                    }
                 }
                 break;
 
@@ -113,16 +124,28 @@ public class SpanishAI extends AI {
                 nextNode = entry.getValue().getSuccessor('L');
                 usedPiece = bot.hasPiece("LL");
                 if (nextNode != null && usedPiece != null && crossChecks.ableToPlace(cell.x, cell.y, "LL")) {
-                    if (nextNode.isEndOfWord()) checkWord(partialWord + "LL", cell);
-                    goToNextRightPiece(partialWord + "LL", nextNode, cell, usedPiece);
+                    if (nextNode.isEndOfWord()) {
+                        if(usedPiece.isBlank()) checkWord(partialWord + "ll", cell);
+                        else checkWord(partialWord + "LL", cell);
+                    }
+                    else {
+                        if(usedPiece.isBlank()) goToNextRightPiece(partialWord + "ll", nextNode, cell, usedPiece);
+                        else goToNextRightPiece(partialWord + "LL", nextNode, cell, usedPiece);
+                    }
                 }
                 break;
             case 'C':
                 nextNode = entry.getValue().getSuccessor('H');
                 usedPiece = bot.hasPiece("CH");
                 if (nextNode != null && usedPiece != null && crossChecks.ableToPlace(cell.x, cell.y, "CH")) {
-                    if (nextNode.isEndOfWord()) checkWord(partialWord + "CH", cell);
-                    goToNextRightPiece(partialWord + "CH", nextNode, cell, usedPiece);
+                    if (nextNode.isEndOfWord()) {
+                        if(usedPiece.isBlank()) checkWord(partialWord + "ch", cell);
+                        else checkWord(partialWord + "CH", cell);
+                    }
+                    else {
+                        if(usedPiece.isBlank()) goToNextRightPiece(partialWord + "ch", nextNode, cell, usedPiece);
+                        else goToNextRightPiece(partialWord + "CH", nextNode, cell, usedPiece);
+                    }
                 }
                 break;
         }

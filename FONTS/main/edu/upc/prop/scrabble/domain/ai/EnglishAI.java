@@ -24,12 +24,14 @@ public class EnglishAI extends AI {
 
     @Override
     protected void processNextLeftPiece(String partialWord, int limit, Map.Entry<Character, Node> entry, Piece usedPiece) {
-        goToNextLeftPiece(partialWord + entry.getKey(), entry.getValue(), limit, usedPiece);
+        if(usedPiece.isBlank()) goToNextLeftPiece(partialWord + Character.toLowerCase(entry.getKey()), entry.getValue(), limit, usedPiece);
+        else goToNextLeftPiece(partialWord + entry.getKey(), entry.getValue(), limit, usedPiece);
     }
 
     @Override
     protected void extendToNextNewPieceRight(String partialWord, Vector2 cell, Map.Entry<Character, Node> entry, Piece usedPiece) {
-        goToNextRightPiece(partialWord + entry.getKey(), entry.getValue(), cell, usedPiece);
+        if(usedPiece.isBlank()) goToNextRightPiece(partialWord + Character.toLowerCase(entry.getKey()), entry.getValue(), cell, usedPiece);
+        else goToNextRightPiece(partialWord + entry.getKey(), entry.getValue(), cell, usedPiece);
     }
 
     @Override
