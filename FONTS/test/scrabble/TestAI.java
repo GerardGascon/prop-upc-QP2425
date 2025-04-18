@@ -40,7 +40,93 @@ public class TestAI {
     private Anchors anchors;
     private BoardViewStub boardViewStub;
     private WordPlacer wordPlacer;
-
+    private Piece[] valEng = {
+            new Piece("A", 1),
+            new Piece("B", 3),
+            new Piece("C", 3),
+            new Piece("D", 2),
+            new Piece("E", 1),
+            new Piece("F", 4),
+            new Piece("G", 2),
+            new Piece("H", 4),
+            new Piece("I", 1),
+            new Piece("J", 8),
+            new Piece("K", 5),
+            new Piece("L", 1),
+            new Piece("M", 3),
+            new Piece("N", 1),
+            new Piece("O", 1),
+            new Piece("P", 3),
+            new Piece("Q", 10),
+            new Piece("R", 1),
+            new Piece("S", 1),
+            new Piece("T", 1),
+            new Piece("U", 1),
+            new Piece("V", 4),
+            new Piece("W", 4),
+            new Piece("X", 8),
+            new Piece("Y", 4),
+            new Piece("Z", 10)
+    };
+    Piece[] valEsp = {
+            new Piece("A", 1),
+            new Piece("B", 3),
+            new Piece("C", 3),
+            new Piece("CH", 5),
+            new Piece("D", 2),
+            new Piece("E", 1),
+            new Piece("F", 4),
+            new Piece("G", 2),
+            new Piece("H", 4),
+            new Piece("I", 1),
+            new Piece("J", 8),
+            new Piece("L", 1),
+            new Piece("LL", 8),
+            new Piece("M", 3),
+            new Piece("N", 1),
+            new Piece("Ñ", 8),
+            new Piece("O", 1),
+            new Piece("P", 3),
+            new Piece("Q", 5),
+            new Piece("R", 1),
+            new Piece("RR", 8),
+            new Piece("S", 1),
+            new Piece("T", 1),
+            new Piece("U", 1),
+            new Piece("V", 4),
+            new Piece("X", 8),
+            new Piece("Y", 4),
+            new Piece("Z", 10)
+    };
+    Piece[] valCat = {
+            new Piece("A", 1),
+            new Piece("B", 3),
+            new Piece("C", 3),
+            new Piece("Ç", 10),
+            new Piece("D", 2),
+            new Piece("E", 1),
+            new Piece("F", 4),
+            new Piece("G", 2),
+            new Piece("H", 8),
+            new Piece("I", 1),
+            new Piece("J", 8),
+            new Piece("L", 1),
+            new Piece("L·L", 10),
+            new Piece("M", 3),
+            new Piece("N", 1),
+            new Piece("NY", 10),
+            new Piece("O", 1),
+            new Piece("P", 3),
+            new Piece("Q", 5),
+            new Piece("R", 1),
+            new Piece("S", 1),
+            new Piece("T", 1),
+            new Piece("U", 1),
+            new Piece("V", 4),
+            new Piece("X", 8),
+            new Piece("Y", 4),
+            new Piece("Z", 10)
+    };
     @Before
     public void setUp() {
         dawg = new DAWG();
@@ -305,7 +391,8 @@ public class TestAI {
     }
 
     @Test
-    public void catalanAIHorizontalNY() {
+    public void catalanAIHorizontalNYRETRUNSMAXMOVEPOINTS() {
+        adder.run("ANY");
         adder.run("PAZNYP");
 
         bot.addPiece(new Piece("P", 1));
@@ -313,7 +400,7 @@ public class TestAI {
         bot.addPiece(new Piece("Z", 1));
         bot.addPiece(new Piece("P", 1));
 
-        PiecesConverter converter = new CatalanPiecesConverter();
+        PiecesConverter converter = new CatalanPiecesConverter(valCat);
         AnchorUpdater anchorUpdater = new AnchorUpdater(anchors, board, converter);
         CrossChecks crossChecks = new CatalanCrossChecks(board, dawg);
         AI ai = new CatalanAI(converter, pointCalculator, dawg, board, bot, anchors, crossChecks);
@@ -496,7 +583,7 @@ public class TestAI {
         CrossChecks crossChecks = new CatalanCrossChecks(board, dawg);
         AI ai = new CatalanAI(converter, pointCalculator, dawg, board, bot, anchors, crossChecks);
 
-        Movement expectedMove = new Movement("TAyA", 7, 7, Direction.Horizontal);
+        Movement expectedMove = new Movement("TAYA", 7, 7, Direction.Horizontal);
         assertEquals(expectedMove, ai.run());
     }
 
