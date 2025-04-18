@@ -1,8 +1,16 @@
 package edu.upc.prop.scrabble.data.board;
 
-import edu.upc.prop.scrabble.data.pieces.Piece;
-
+/**
+ * Represents a Scrabble board configured for the Junior variant.
+ * Initializes an 11x11 board with specific premium tile positions.
+ *
+ * @author Gerard Gascón
+ */
 public class JuniorBoard extends Board {
+    /**
+     * Constructs a JuniorBoard with an 11x11 layout and
+     * sets all premium tile positions.
+     */
     public JuniorBoard() {
         super(11);
 
@@ -12,7 +20,7 @@ public class JuniorBoard extends Board {
         setTripleLetterTiles();
     }
 
-    private void setDoubleWordTiles(){
+    private void setDoubleWordTiles() {
         super.setPremiumTile(1, 1, PremiumTileType.DoubleWord);
         super.setPremiumTile(2, 2, PremiumTileType.DoubleWord);
         super.setPremiumTile(8, 8, PremiumTileType.DoubleWord);
@@ -24,7 +32,7 @@ public class JuniorBoard extends Board {
         super.setPremiumTile(9, 1, PremiumTileType.DoubleWord);
     }
 
-    private void setTripleWordTiles(){
+    private void setTripleWordTiles() {
         super.setPremiumTile(0, 0, PremiumTileType.TripleWord);
         super.setPremiumTile(0, 5, PremiumTileType.TripleWord);
         super.setPremiumTile(0, 10, PremiumTileType.TripleWord);
@@ -37,7 +45,7 @@ public class JuniorBoard extends Board {
         super.setPremiumTile(10, 10, PremiumTileType.TripleWord);
     }
 
-    private void setDoubleLetterTiles(){
+    private void setDoubleLetterTiles() {
         super.setPremiumTile(4, 1, PremiumTileType.DoubleLetter);
         super.setPremiumTile(6, 1, PremiumTileType.DoubleLetter);
 
@@ -62,7 +70,7 @@ public class JuniorBoard extends Board {
         super.setPremiumTile(6, 9, PremiumTileType.DoubleLetter);
     }
 
-    private void setTripleLetterTiles(){
+    private void setTripleLetterTiles() {
         super.setPremiumTile(3, 0, PremiumTileType.TripleLetter);
         super.setPremiumTile(7, 0, PremiumTileType.TripleLetter);
 

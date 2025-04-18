@@ -1,8 +1,16 @@
 package edu.upc.prop.scrabble.data.board;
 
-import edu.upc.prop.scrabble.data.pieces.Piece;
-
+/**
+ * Represents a 21x21 Scrabble board used in extended or custom game modes.
+ * This board includes additional premium tiles such as quadruple word and letter tiles.
+ *
+ * @author Gerard Gascón
+ */
 public class SuperBoard extends Board {
+    /**
+     * Constructs a SuperBoard with a 21x21 layout and
+     * sets all extended premium tile positions.
+     */
     public SuperBoard() {
         super(21);
 

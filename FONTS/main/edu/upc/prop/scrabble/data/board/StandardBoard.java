@@ -1,8 +1,16 @@
 package edu.upc.prop.scrabble.data.board;
 
-import edu.upc.prop.scrabble.data.pieces.Piece;
-
+/**
+ * Represents a Scrabble board configured with the standard 15x15 layout.
+ * Initializes all standard premium tile positions according to official Scrabble rules.
+ *
+ * @author Gerard Gascón
+ */
 public class StandardBoard extends Board {
+    /**
+     * Constructs a StandardBoard with a 15x15 layout and
+     * sets all standard premium tile positions.
+     */
     public StandardBoard() {
         super(15);
 
@@ -12,7 +20,7 @@ public class StandardBoard extends Board {
         setTripleLetterTiles();
     }
 
-    private void setDoubleWordTiles(){
+    private void setDoubleWordTiles() {
         super.setPremiumTile(1, 1, PremiumTileType.DoubleWord);
         super.setPremiumTile(2, 2, PremiumTileType.DoubleWord);
         super.setPremiumTile(3, 3, PremiumTileType.DoubleWord);
@@ -34,7 +42,7 @@ public class StandardBoard extends Board {
         super.setPremiumTile(10, 4, PremiumTileType.DoubleWord);
     }
 
-    private void setTripleWordTiles(){
+    private void setTripleWordTiles() {
         super.setPremiumTile(0, 0, PremiumTileType.TripleWord);
         super.setPremiumTile(0, 7, PremiumTileType.TripleWord);
         super.setPremiumTile(0, 14, PremiumTileType.TripleWord);
@@ -47,7 +55,7 @@ public class StandardBoard extends Board {
         super.setPremiumTile(14, 14, PremiumTileType.TripleWord);
     }
 
-    private void setDoubleLetterTiles(){
+    private void setDoubleLetterTiles() {
         super.setPremiumTile(3, 0, PremiumTileType.DoubleLetter);
         super.setPremiumTile(11, 0, PremiumTileType.DoubleLetter);
 
@@ -82,7 +90,7 @@ public class StandardBoard extends Board {
         super.setPremiumTile(11, 14, PremiumTileType.DoubleLetter);
     }
 
-    private void setTripleLetterTiles(){
+    private void setTripleLetterTiles() {
         super.setPremiumTile(5, 1, PremiumTileType.TripleLetter);
         super.setPremiumTile(9, 1, PremiumTileType.TripleLetter);
 
