@@ -11,6 +11,7 @@ import edu.upc.prop.scrabble.data.leaderboard.Leaderboard;
 import edu.upc.prop.scrabble.data.pieces.Bag;
 import edu.upc.prop.scrabble.data.properties.GameProperties;
 import edu.upc.prop.scrabble.data.properties.Language;
+import edu.upc.prop.scrabble.domain.actionmaker.DrawActionMaker;
 import edu.upc.prop.scrabble.domain.actionmaker.PlaceActionMaker;
 import edu.upc.prop.scrabble.domain.board.*;
 import edu.upc.prop.scrabble.domain.crosschecks.CrossCheckUpdater;
@@ -27,6 +28,7 @@ import edu.upc.prop.scrabble.domain.turns.Turn;
 import edu.upc.prop.scrabble.presenter.scenes.Scene;
 import edu.upc.prop.scrabble.presenter.terminal.BoardView;
 import edu.upc.prop.scrabble.presenter.terminal.PieceDisplay;
+import edu.upc.prop.scrabble.presenter.terminal.actionmaker.HandView;
 import edu.upc.prop.scrabble.presenter.terminal.players.AIPlayerObject;
 import edu.upc.prop.scrabble.presenter.terminal.players.HumanPlayerObject;
 import edu.upc.prop.scrabble.presenter.terminal.players.PlayerObject;
@@ -145,7 +147,8 @@ public class GameScene extends Scene {
         PlaceActionMaker placeActionMaker = new PlaceActionMaker(boundsChecker, wordValidator, piecesInHandGetter,
                 movementCleaner, wordPlacer, presentPiecesWordCompleter, crossCheckUpdater, stepper, piecesConverter,
                 board);
-        playerObject.configure(placeActionMaker, player);
+        DrawActionMaker drawActionMaker = new DrawActionMaker(bag, player, new Rand(), new HandView());
+        playerObject.configure(placeActionMaker, player, drawActionMaker);
     }
 
     private Board getBoard(GameProperties properties) {

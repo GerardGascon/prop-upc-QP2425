@@ -1,7 +1,9 @@
 package edu.upc.prop.scrabble.presenter.terminal.players;
 
 import edu.upc.prop.scrabble.data.Movement;
+import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.domain.turns.TurnResult;
+import edu.upc.prop.scrabble.presenter.terminal.movements.DrawParser;
 import edu.upc.prop.scrabble.presenter.terminal.movements.MovementParser;
 import edu.upc.prop.scrabble.presenter.terminal.utils.Reader;
 
@@ -44,7 +46,8 @@ public class HumanPlayerObject extends PlayerObject {
         }
 
         if (movementDesired == TurnResult.Draw){
-
+            Piece[] piecesToDraw = DrawParser.parse(movementRaw);
+            drawPieces(piecesToDraw);
         }
     }
 
@@ -65,6 +68,7 @@ public class HumanPlayerObject extends PlayerObject {
                 movementSelected = true;
                 System.out.println("Write the pieces you want to replace with some random ones.");
                 System.out.println("    Separate them by commas.");
+                printPieces();
             }
             case "pass" -> {
                 movementDesired = TurnResult.Skip;

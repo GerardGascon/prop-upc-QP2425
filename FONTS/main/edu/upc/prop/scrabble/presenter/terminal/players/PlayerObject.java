@@ -3,6 +3,7 @@ package edu.upc.prop.scrabble.presenter.terminal.players;
 import edu.upc.prop.scrabble.data.Movement;
 import edu.upc.prop.scrabble.data.Player;
 import edu.upc.prop.scrabble.data.pieces.Piece;
+import edu.upc.prop.scrabble.domain.actionmaker.DrawActionMaker;
 import edu.upc.prop.scrabble.domain.actionmaker.PlaceActionMaker;
 import edu.upc.prop.scrabble.domain.turns.IGamePlayer;
 import edu.upc.prop.scrabble.domain.turns.TurnResult;
@@ -13,10 +14,12 @@ public abstract class PlayerObject extends SceneObject implements IGamePlayer {
     protected Player player;
     private TurnResult turnResult;
     private PlaceActionMaker placeActionMaker;
+    private DrawActionMaker drawActionMaker;
 
-    public final void configure(PlaceActionMaker placeActionMaker, Player player) {
+    public final void configure(PlaceActionMaker placeActionMaker, Player player, DrawActionMaker drawActionMaker) {
         this.placeActionMaker = placeActionMaker;
         this.player = player;
+        this.drawActionMaker = drawActionMaker;
     }
 
     @Override
@@ -37,8 +40,9 @@ public abstract class PlayerObject extends SceneObject implements IGamePlayer {
         placeActionMaker.run(movement);
     }
 
-    protected final void drawPiece(Piece piece) {
+    protected final void drawPieces(Piece[] piece) {
         turnResult = TurnResult.Draw;
+        drawActionMaker.run(piece);
     }
 
     protected final void skipTurn() {
