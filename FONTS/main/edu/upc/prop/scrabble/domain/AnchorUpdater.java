@@ -18,6 +18,7 @@ public class AnchorUpdater {
         this.anchors = anchors;
         this.board = board;
         this.piecesConverter = piecesConverter;
+        this.anchors.addAnchor(board.getSize() / 2, board.getSize() / 2);
     }
 
     public void run(Movement move) {
