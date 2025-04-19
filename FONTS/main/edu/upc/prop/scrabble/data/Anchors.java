@@ -11,10 +11,7 @@ import static java.util.Collections.copy;
 public class Anchors {
     private final ArrayList<Vector2> anchors;
 
-    public Anchors(Board board) {
-        this.anchors = new ArrayList<>();
-        addAnchor(board.getSize() / 2, board.getSize() / 2);
-    }
+    public Anchors(Board board) { this.anchors = new ArrayList<>(); }
 
     public void addAnchor(int x, int y) {
         anchors.add(new Vector2(x, y));
@@ -45,8 +42,6 @@ public class Anchors {
     public Anchors rotate(Board board) {
         Anchors rotated = new Anchors(board);
         int boardSize = board.getSize();
-        //eliminamos la que se crea automaticamente
-        rotated.removeAnchor(boardSize / 2, boardSize / 2);
         for (Vector2 anchor : this.anchors) {
             int newX = anchor.y;
             int newY = (boardSize - 1) - anchor.x;
