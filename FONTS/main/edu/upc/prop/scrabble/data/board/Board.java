@@ -151,7 +151,7 @@ public abstract class Board {
     }
 
     /**
-     * Returns a rotated copy of the board (90 degrees clockwise).
+     * Returns a rotated copy of the board (90 degrees counterclockwise).
      *
      * @return a rotated copy of the board
      */
@@ -162,7 +162,7 @@ public abstract class Board {
     }
 
     /**
-     * Returns a rotated version of the placed pieces (90 degrees clockwise).
+     * Returns a rotated version of the placed pieces (90 degrees counterclockwise).
      *
      * @return the rotated pieces grid
      */
