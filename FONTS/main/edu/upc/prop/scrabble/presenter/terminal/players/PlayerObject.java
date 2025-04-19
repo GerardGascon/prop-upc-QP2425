@@ -7,13 +7,11 @@ import edu.upc.prop.scrabble.domain.actionmaker.DrawActionMaker;
 import edu.upc.prop.scrabble.domain.actionmaker.PlaceActionMaker;
 import edu.upc.prop.scrabble.domain.actionmaker.SkipActionMaker;
 import edu.upc.prop.scrabble.domain.turns.IGamePlayer;
-import edu.upc.prop.scrabble.domain.turns.TurnResult;
 import edu.upc.prop.scrabble.presenter.scenes.SceneObject;
 
 public abstract class PlayerObject extends SceneObject implements IGamePlayer {
     private boolean onTurn = false;
     protected Player player;
-    private TurnResult turnResult;
     private PlaceActionMaker placeActionMaker;
     private DrawActionMaker drawActionMaker;
     private SkipActionMaker skipActionMaker;
@@ -39,17 +37,14 @@ public abstract class PlayerObject extends SceneObject implements IGamePlayer {
     }
 
     protected final void placePiece(Movement movement) {
-        turnResult = TurnResult.Place;
         placeActionMaker.run(movement);
     }
 
     protected final void drawPieces(Piece[] piece) {
-        turnResult = TurnResult.Draw;
         drawActionMaker.run(piece);
     }
 
     protected final void skipTurn() {
-        turnResult = TurnResult.Skip;
         skipActionMaker.run();
     }
 
