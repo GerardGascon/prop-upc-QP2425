@@ -53,9 +53,9 @@ public abstract class Board {
      * @see Piece
      */
     public void placePiece(Piece piece, int x, int y) {
-        if (placedTiles[x][y] != null) return;
+        if (placedTiles[y][x] != null) return;
 
-        placedTiles[x][y] = piece;
+        placedTiles[y][x] = piece;
         empty = false;
     }
 
@@ -81,7 +81,7 @@ public abstract class Board {
     public boolean isCellEmpty(int x, int y) {
         if (!isCellValid(x, y))
             return false;
-        return placedTiles[x][y] == null;
+        return placedTiles[y][x] == null;
     }
 
     /**
@@ -92,7 +92,7 @@ public abstract class Board {
      * @return the piece at the given cell, or null if none
      */
     public Piece getCellPiece(int x, int y) {
-        return placedTiles[x][y];
+        return placedTiles[y][x];
     }
 
     /**
@@ -103,7 +103,7 @@ public abstract class Board {
      * @return true if the tile is a premium tile, false otherwise
      */
     public boolean isPremiumTile(int x, int y) {
-        return premiumTiles[x][y] != null;
+        return premiumTiles[y][x] != null;
     }
 
     /**
@@ -115,7 +115,7 @@ public abstract class Board {
      * @see PremiumTileType
      */
     public PremiumTileType getPremiumTileType(int x, int y) {
-        return premiumTiles[x][y];
+        return premiumTiles[y][x];
     }
 
     /**
@@ -127,7 +127,7 @@ public abstract class Board {
      * @see PremiumTileType
      */
     protected void setPremiumTile(int x, int y, PremiumTileType type) {
-        premiumTiles[x][y] = type;
+        premiumTiles[y][x] = type;
     }
 
     /**
@@ -170,7 +170,7 @@ public abstract class Board {
         Piece[][] rotatedPieces = new Piece[getSize()][getSize()];
         for (int row = 0; row < getSize(); row++) {
             for (int col = 0; col < getSize(); col++) {
-                rotatedPieces[col][getSize() - row - 1] = placedTiles[row][col];
+                rotatedPieces[getSize() - col - 1][row] = placedTiles[row][col];
             }
         }
         return rotatedPieces;
