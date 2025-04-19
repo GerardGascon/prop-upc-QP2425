@@ -6,6 +6,7 @@ import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.domain.exceptions.NotEnoughPiecesInBagException;
 import edu.upc.prop.scrabble.domain.game.GameStepper;
 import edu.upc.prop.scrabble.domain.pieces.PieceDrawer;
+import edu.upc.prop.scrabble.domain.turns.TurnResult;
 import edu.upc.prop.scrabble.utils.IRand;
 
 /***
@@ -50,6 +51,6 @@ public class DrawActionMaker {
         }
         pieceDrawer.run(PiecesToSwap);
         handDisplay.updateHand(player.getHand());
-        stepper.run();
+        stepper.run(TurnResult.Draw);
     }
 }
