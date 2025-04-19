@@ -1,15 +1,14 @@
 package edu.upc.prop.scrabble.data.crosschecks;
 
 import edu.upc.prop.scrabble.data.board.Board;
-import edu.upc.prop.scrabble.data.dawg.DAWG;
 
 public class CatalanCrossChecks extends CrossChecks {
     //CAT: letras normales + pos 27 para la ç, pos 28 para L.L, pos 29 para NY
     private final String[] letters;
     //private final String[] specialPieces;
 
-    public CatalanCrossChecks(Board board, DAWG dawg) {
-        super(board);
+    public CatalanCrossChecks(int boardSize) {
+        super(boardSize);
         letters = new String[]{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
                 "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "Ç", "L·L", "NY"};
         //specialPieces = new String[]{"Ç", "L·L", "NY"};
@@ -37,5 +36,10 @@ public class CatalanCrossChecks extends CrossChecks {
 
         if(getCrossCheckVer(x, y).get(numletter)) return false;
         else return !getCrossCheckHor(x, y).get(numletter);
+    }
+
+    @Override
+    protected CrossChecks copy() {
+        return new CatalanCrossChecks(boardSize);
     }
 }

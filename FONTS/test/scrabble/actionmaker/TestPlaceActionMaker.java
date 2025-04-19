@@ -67,7 +67,7 @@ public class TestPlaceActionMaker {
         PiecesInHandGetter piecesInHandGetter = new PiecesInHandGetter(bag, player, piecePrinterStub, rand);
         MovementCleaner movementCleaner = new MovementCleaner(board, piecesConverter);
         PresentPiecesWordCompleter presentPiecesWordCompleter = new PresentPiecesWordCompleter(wordGetter);
-        CrossChecks crossChecks = new EnglishCrossChecks(board, dawg);
+        CrossChecks crossChecks = new EnglishCrossChecks(board.getSize());
         CrossCheckUpdater crossCheckUpdater = new CrossCheckUpdater(piecesConverter, crossChecks, board, dawg);
         Turn turn = new Turn(new Endgame(new Player[]{player}), new IGamePlayer[]{new GamePlayerStub()});
         GameStepper stepper = new GameStepper(turn, new Leaderboard(), new Player[]{player});

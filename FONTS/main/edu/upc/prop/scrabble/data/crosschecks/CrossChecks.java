@@ -11,9 +11,9 @@ public abstract class CrossChecks {
     //por culpa de las palabras en Vertical
     private final BitSet[][] crossChecksHor;
     //lo mimsmo pero por culpa de las palabras en horizontal
-
-    public CrossChecks(Board board) {
-        int boardSize = board.getSize();
+    protected int boardSize;
+    public CrossChecks(int boardSize) {
+        this.boardSize = boardSize;
         crossChecksVer = new BitSet[boardSize][boardSize];
         crossChecksHor = new BitSet[boardSize][boardSize];
 
@@ -40,5 +40,27 @@ public abstract class CrossChecks {
     }
     public void setCrossCheckHor(int x, int y, int value) {
         crossChecksHor[x][y].set(value);
+    }
+
+    protected abstract CrossChecks copy();
+    public CrossChecks rotate() {
+        CrossChecks copy = copy();
+        BitSet[][] newCrossChecksHor = new BitSet[boardSize][boardSize];
+        BitSet[][] newCrossChecksVer = new BitSet[boardSize][boardSize];
+        for (int row = 0; row < boardSize; row++) {
+            for (int col = 0; col < boardSize; col++) {
+                int newRow = col;
+                int newCol = boardSize - 1 - row;
+                newCrossChecksHor[newRow][newCol] = getCrossCheckVer(row, col);
+                newCrossChecksVer[newRow][newCol] = getCrossCheckHor(row, col);
+            }
+        }
+        for (int i = 0; i < boardSize; i++) {
+            for (int j = 0; j < boardSize; j++) {
+                copy.crossChecksHor[i][j] = newCrossChecksHor[i][j];
+                copy.crossChecksVer[i][j] = newCrossChecksVer[i][j];
+            }
+        }
+        return copy;
     }
 }

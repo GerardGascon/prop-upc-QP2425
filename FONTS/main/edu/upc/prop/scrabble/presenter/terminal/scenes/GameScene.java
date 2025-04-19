@@ -40,9 +40,9 @@ public class GameScene extends Scene {
         Board board = getBoard(properties);
         DAWG dawg = new DAWG();
         CrossChecks crossChecks = switch (properties.language()) {
-            case Language.Catalan -> new CatalanCrossChecks(board, dawg);
-            case Language.Spanish -> new SpanishCrossChecks(board, dawg);
-            case Language.English -> new EnglishCrossChecks(board, dawg);
+            case Language.Catalan -> new CatalanCrossChecks(board.getSize());
+            case Language.Spanish -> new SpanishCrossChecks(board.getSize());
+            case Language.English -> new EnglishCrossChecks(board.getSize());
         };
         Leaderboard leaderboard = new Leaderboard();
 

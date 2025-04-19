@@ -1,27 +1,16 @@
 package scrabble.board;
 
 import edu.upc.prop.scrabble.data.Movement;
-import edu.upc.prop.scrabble.data.Player;
 import edu.upc.prop.scrabble.data.board.Board;
 import edu.upc.prop.scrabble.data.board.StandardBoard;
 import edu.upc.prop.scrabble.data.crosschecks.CrossChecks;
 import edu.upc.prop.scrabble.data.crosschecks.EnglishCrossChecks;
-import edu.upc.prop.scrabble.data.crosschecks.SpanishCrossChecks;
 import edu.upc.prop.scrabble.data.dawg.DAWG;
-import edu.upc.prop.scrabble.data.pieces.Piece;
-import edu.upc.prop.scrabble.domain.board.PointCalculator;
-import edu.upc.prop.scrabble.domain.board.WordGetter;
-import edu.upc.prop.scrabble.domain.board.WordPlacer;
 import edu.upc.prop.scrabble.domain.crosschecks.CrossCheckUpdater;
 import edu.upc.prop.scrabble.domain.dawg.WordAdder;
-import edu.upc.prop.scrabble.domain.dawg.WordValidator;
-import edu.upc.prop.scrabble.domain.pieces.CatalanPiecesConverter;
 import edu.upc.prop.scrabble.domain.pieces.PiecesConverter;
-import edu.upc.prop.scrabble.domain.pieces.PiecesInHandVerifier;
-import edu.upc.prop.scrabble.domain.pieces.SpanishPiecesConverter;
 import edu.upc.prop.scrabble.utils.Direction;
 import org.junit.Test;
-import scrabble.stubs.BoardViewStub;
 
 import java.util.BitSet;
 
@@ -33,7 +22,7 @@ public class TestCrossChecks {
     public void createCrossChecks() {
         Board board = new StandardBoard();
         DAWG dawg = new DAWG();
-        CrossChecks Ecrch = new EnglishCrossChecks(board,dawg);
+        CrossChecks Ecrch = new EnglishCrossChecks(board.getSize());
         BitSet allavaliable = new BitSet(26);
         //expected.set(0); es crea amb tot 0's
         assertEquals(allavaliable, Ecrch.getCrossCheckHor(0, 0));
@@ -48,7 +37,7 @@ public class TestCrossChecks {
         adder.run("COSA");
         adder.run("COSAS"); //ordenadas
 
-        CrossChecks Ecrch = new EnglishCrossChecks(board,dawg);
+        CrossChecks Ecrch = new EnglishCrossChecks(board.getSize());
         PiecesConverter converter = new PiecesConverter();
         //PiecesConverter converter2 = new CatalanPiecesConverter();
         //PiecesConverter converter3 = new SpanishPiecesConverter();

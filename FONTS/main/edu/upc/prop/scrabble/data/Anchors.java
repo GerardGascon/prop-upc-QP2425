@@ -6,6 +6,8 @@ import edu.upc.prop.scrabble.utils.Vector2;
 
 import java.util.ArrayList;
 
+import static java.util.Collections.copy;
+
 public class Anchors {
     private final ArrayList<Vector2> anchors;
 
@@ -38,5 +40,18 @@ public class Anchors {
     //de la mitad de board*board)
     public boolean exists(int x, int y) {
         return anchors.contains(new Vector2(x, y));
+    }
+
+    public Anchors rotate(Board board) {
+        Anchors rotated = new Anchors(board);
+        int boardSize = board.getSize();
+        //eliminamos la que se crea automaticamente
+        rotated.removeAnchor(boardSize / 2, boardSize / 2);
+        for (Vector2 anchor : this.anchors) {
+            int newX = anchor.y;
+            int newY = (boardSize - 1) - anchor.x;
+            rotated.addAnchor(newX, newY);
+        }
+        return rotated;
     }
 }
