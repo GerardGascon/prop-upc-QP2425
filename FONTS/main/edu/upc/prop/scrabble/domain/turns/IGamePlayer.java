@@ -19,7 +19,6 @@ public interface IGamePlayer {
      * This method is called when the player finishes their actions for the turn (e.g., places a word).
      * It returns the result of the turn, which could include details like points scored or the validity of the move.
      *
-     * @return The action made by the player, encapsulated in a TurnResult object.
      * @see TurnResult
      */
     void endTurn();
