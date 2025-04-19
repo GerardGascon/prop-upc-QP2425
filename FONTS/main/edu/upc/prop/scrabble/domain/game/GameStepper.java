@@ -4,6 +4,7 @@ import edu.upc.prop.scrabble.data.Player;
 import edu.upc.prop.scrabble.data.leaderboard.Leaderboard;
 import edu.upc.prop.scrabble.data.leaderboard.Score;
 import edu.upc.prop.scrabble.domain.turns.Turn;
+import edu.upc.prop.scrabble.domain.turns.TurnResult;
 
 /**
  * Class that check each if the game has ended,case in which it updates the leaderboard
@@ -20,8 +21,8 @@ public class GameStepper {
         this.player = players;
     }
 
-    public void run(){
-       boolean ended = turn.run();
+    public void run(TurnResult result){
+       boolean ended = turn.run(result);
        if (ended) {
            int maxScore = 0;
            //Check who is the winner
