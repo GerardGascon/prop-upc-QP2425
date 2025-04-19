@@ -147,7 +147,7 @@ public class GameScene extends Scene {
         PlaceActionMaker placeActionMaker = new PlaceActionMaker(boundsChecker, wordValidator, piecesInHandGetter,
                 movementCleaner, wordPlacer, presentPiecesWordCompleter, crossCheckUpdater, stepper, piecesConverter,
                 board);
-        DrawActionMaker drawActionMaker = new DrawActionMaker(bag, player, new Rand(), new HandView());
+        DrawActionMaker drawActionMaker = new DrawActionMaker(bag, player, new Rand(), new HandView(), stepper);
         playerObject.configure(placeActionMaker, player, drawActionMaker);
     }
 

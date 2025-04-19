@@ -4,6 +4,7 @@ import edu.upc.prop.scrabble.data.Player;
 import edu.upc.prop.scrabble.data.pieces.Bag;
 import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.domain.exceptions.NotEnoughPiecesInBagException;
+import edu.upc.prop.scrabble.domain.game.GameStepper;
 import edu.upc.prop.scrabble.domain.pieces.PieceDrawer;
 import edu.upc.prop.scrabble.utils.IRand;
 
@@ -17,6 +18,7 @@ public class DrawActionMaker {
     private PieceDrawer pieceDrawer;
     private final Bag bag;
     private final IHandDisplay handDisplay;
+    private final GameStepper stepper;
 
     /***
      * Default constructor of a DrawActionMaker with specific bag, player, rand and handDisplay.
@@ -25,11 +27,12 @@ public class DrawActionMaker {
      * @param rand
      * @param handDisplay Interface that represents the current hand of the player.
      */
-    public DrawActionMaker(Bag bag, Player player, IRand rand, IHandDisplay handDisplay) {
+    public DrawActionMaker(Bag bag, Player player, IRand rand, IHandDisplay handDisplay, GameStepper stepper) {
         this.player = player;
         this.bag = bag;
         this.handDisplay = handDisplay;
         this.pieceDrawer = new PieceDrawer(bag, player, rand);
+        this.stepper = stepper;
     }
 
     /***
@@ -47,5 +50,6 @@ public class DrawActionMaker {
         }
         pieceDrawer.run(PiecesToSwap);
         handDisplay.updateHand(player.getHand());
+        stepper.run();
     }
 }
