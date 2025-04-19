@@ -8,6 +8,7 @@ import edu.upc.prop.scrabble.data.crosschecks.CrossChecks;
 import edu.upc.prop.scrabble.data.dawg.DAWG;
 import edu.upc.prop.scrabble.data.dawg.Node;
 import edu.upc.prop.scrabble.data.pieces.Piece;
+import edu.upc.prop.scrabble.domain.AnchorUpdater;
 import edu.upc.prop.scrabble.domain.board.PointCalculator;
 import edu.upc.prop.scrabble.domain.pieces.PiecesConverter;
 import edu.upc.prop.scrabble.utils.Direction;
@@ -22,8 +23,8 @@ import java.util.*;
 public abstract class AI {
     private final DAWG dawg;
     protected Player bot;//para la mano
-    private final Board board;
-    private final Anchors anchors;
+    private Board board;
+    private Anchors anchors;
     protected CrossChecks crossChecks;
     private Vector2 currentAnchor;
     protected final PointCalculator pointCalculator;
@@ -52,6 +53,27 @@ public abstract class AI {
         bestScore = -1;
 
         // HORIZONTAL CHECKS
+        innerRun();
+
+        // VERTICAL CHECKS
+        // Rotation of needed components
+        Board storedBoard = board;
+        board = board.rotate();
+        Anchors storedAnchors = anchors;
+        anchors = anchors.rotate(board);
+        CrossChecks storedCrossChecks = crossChecks;
+        crossChecks = crossChecks.rotate();
+        innerRun();
+        // Restore rotations
+        board = storedBoard;
+        anchors = storedAnchors;
+        crossChecks = storedCrossChecks;
+
+        return bestMove;
+    }
+
+    private void innerRun() {
+
         // Iterate over every available anchor
         for (int i = 0; i < anchors.getSize(); ++i) {
             // Set current anchor
@@ -78,7 +100,6 @@ public abstract class AI {
             }
             else LeftPart("", dawg.getRoot(), limit); // Bot's pieces case
         }
-        return bestMove;
     }
 
     /**
