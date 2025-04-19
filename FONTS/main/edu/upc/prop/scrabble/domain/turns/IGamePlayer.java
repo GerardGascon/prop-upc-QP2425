@@ -22,7 +22,7 @@ public interface IGamePlayer {
      * @return The action made by the player, encapsulated in a TurnResult object.
      * @see TurnResult
      */
-    TurnResult endTurn();
+    void endTurn();
 
     /**
      * Check if the player is currently in a turn or not.

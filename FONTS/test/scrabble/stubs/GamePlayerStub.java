@@ -10,8 +10,7 @@ public class GamePlayerStub implements IGamePlayer {
     }
 
     @Override
-    public TurnResult endTurn() {
-        return null;
+    public void endTurn() {
     }
 
     @Override

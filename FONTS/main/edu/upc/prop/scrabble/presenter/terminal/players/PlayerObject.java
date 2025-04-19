@@ -5,6 +5,7 @@ import edu.upc.prop.scrabble.data.Player;
 import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.domain.actionmaker.DrawActionMaker;
 import edu.upc.prop.scrabble.domain.actionmaker.PlaceActionMaker;
+import edu.upc.prop.scrabble.domain.actionmaker.SkipActionMaker;
 import edu.upc.prop.scrabble.domain.turns.IGamePlayer;
 import edu.upc.prop.scrabble.domain.turns.TurnResult;
 import edu.upc.prop.scrabble.presenter.scenes.SceneObject;
@@ -15,11 +16,13 @@ public abstract class PlayerObject extends SceneObject implements IGamePlayer {
     private TurnResult turnResult;
     private PlaceActionMaker placeActionMaker;
     private DrawActionMaker drawActionMaker;
+    private SkipActionMaker skipActionMaker;
 
-    public final void configure(PlaceActionMaker placeActionMaker, Player player, DrawActionMaker drawActionMaker) {
+    public final void configure(PlaceActionMaker placeActionMaker, Player player, DrawActionMaker drawActionMaker, SkipActionMaker skipActionMaker) {
         this.placeActionMaker = placeActionMaker;
         this.player = player;
         this.drawActionMaker = drawActionMaker;
+        this.skipActionMaker = skipActionMaker;
     }
 
     @Override
@@ -47,12 +50,12 @@ public abstract class PlayerObject extends SceneObject implements IGamePlayer {
 
     protected final void skipTurn() {
         turnResult = TurnResult.Skip;
+        skipActionMaker.run();
     }
 
     @Override
-    public final TurnResult endTurn() {
+    public final void endTurn() {
         onTurn = false;
-        return turnResult;
     }
 
     @Override

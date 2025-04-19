@@ -17,6 +17,7 @@ import edu.upc.prop.scrabble.domain.pieces.PiecesConverter;
 import edu.upc.prop.scrabble.domain.pieces.PiecesInHandGetter;
 import edu.upc.prop.scrabble.domain.movement.MovementCleaner;
 import edu.upc.prop.scrabble.domain.movement.MovementBoundsChecker;
+import edu.upc.prop.scrabble.domain.turns.TurnResult;
 import edu.upc.prop.scrabble.utils.Pair;
 import edu.upc.prop.scrabble.utils.Vector2;
 
@@ -95,7 +96,7 @@ public class PlaceActionMaker {
         Piece[] piecesInHand = piecesInHandGetter.run(necessaryPieces);
         wordPlacer.run(piecesInHand, movement.x(), movement.y(), movement.direction());
         crossCheckUpdater.run(movement);
-        stepper.run();
+        stepper.run(TurnResult.Place);
     }
 
     private void assertWordIsConnected(Movement movement, Pair<Piece, Vector2>[] necessaryPiecesPositions) {

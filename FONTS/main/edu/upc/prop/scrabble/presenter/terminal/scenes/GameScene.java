@@ -13,6 +13,7 @@ import edu.upc.prop.scrabble.data.properties.GameProperties;
 import edu.upc.prop.scrabble.data.properties.Language;
 import edu.upc.prop.scrabble.domain.actionmaker.DrawActionMaker;
 import edu.upc.prop.scrabble.domain.actionmaker.PlaceActionMaker;
+import edu.upc.prop.scrabble.domain.actionmaker.SkipActionMaker;
 import edu.upc.prop.scrabble.domain.board.*;
 import edu.upc.prop.scrabble.domain.crosschecks.CrossCheckUpdater;
 import edu.upc.prop.scrabble.domain.dawg.WordAdder;
@@ -148,7 +149,8 @@ public class GameScene extends Scene {
                 movementCleaner, wordPlacer, presentPiecesWordCompleter, crossCheckUpdater, stepper, piecesConverter,
                 board);
         DrawActionMaker drawActionMaker = new DrawActionMaker(bag, player, new Rand(), new HandView(), stepper);
-        playerObject.configure(placeActionMaker, player, drawActionMaker);
+        SkipActionMaker skipActionMaker = new SkipActionMaker(stepper);
+        playerObject.configure(placeActionMaker, player, drawActionMaker, skipActionMaker);
     }
 
     private Board getBoard(GameProperties properties) {

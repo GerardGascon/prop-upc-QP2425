@@ -71,7 +71,7 @@ public class HumanPlayerObject extends PlayerObject {
                 printPieces();
             }
             case "pass" -> {
-                movementDesired = TurnResult.Skip;
+                skipTurn();
                 movementSelected = true;
             }
             default -> printInstructions();
