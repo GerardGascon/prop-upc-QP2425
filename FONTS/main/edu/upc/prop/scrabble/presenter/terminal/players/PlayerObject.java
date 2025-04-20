@@ -2,6 +2,7 @@ package edu.upc.prop.scrabble.presenter.terminal.players;
 
 import edu.upc.prop.scrabble.data.Movement;
 import edu.upc.prop.scrabble.data.Player;
+import edu.upc.prop.scrabble.data.exceptions.ScrabbleException;
 import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.domain.actionmaker.DrawActionMaker;
 import edu.upc.prop.scrabble.domain.actionmaker.PlaceActionMaker;
@@ -37,11 +38,21 @@ public abstract class PlayerObject extends SceneObject implements IGamePlayer {
     }
 
     protected final void placePiece(Movement movement) {
-        placeActionMaker.run(movement);
+        try {
+            placeActionMaker.run(movement);
+        } catch (ScrabbleException e) {
+            System.out.println("Invalid move (" + e.getClass().getSimpleName() + ") - Skipping move");
+            skipActionMaker.run();
+        }
     }
 
     protected final void drawPieces(Piece[] piece) {
-        drawActionMaker.run(piece);
+        try {
+            drawActionMaker.run(piece);
+        } catch (ScrabbleException e) {
+            System.out.println("Invalid move (" + e.getClass().getSimpleName() + ") - Skipping move");
+            skipActionMaker.run();
+        }
     }
 
     protected final void skipTurn() {
