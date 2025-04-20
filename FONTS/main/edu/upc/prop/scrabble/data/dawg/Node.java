@@ -38,8 +38,6 @@ public class Node {
         return parent;
     }
 
-    public Character getCharacter() {return character;}
-
     public boolean isEndOfWord() {
         return isEndOfWord;
     }
