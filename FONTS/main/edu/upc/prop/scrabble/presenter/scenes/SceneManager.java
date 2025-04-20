@@ -128,4 +128,8 @@ public class SceneManager {
     public boolean isRunning() {
         return scene != null;
     }
+
+    public Scene getActiveScene() {
+        return scene;
+    }
 }

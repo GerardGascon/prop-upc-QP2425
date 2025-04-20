@@ -73,14 +73,14 @@ public class TestCrossChecks {
         assertEquals(expected, Ecrch.getCrossCheck(4, 3));
     }
 
-    /*@Test
+    @Test
     public void rotateCrossChecks() {
         //WOIP
         Board board = new StandardBoard();
         DAWG dawg = new DAWG();
         WordAdder adder = new WordAdder(dawg);
         adder.run("ARO");
-        adder.run("CARO");//ordenadas
+        adder.run("CARO");
 
         CrossChecks Ecrch = new EnglishCrossChecks(board.getSize());
         PiecesConverter converter = new PiecesConverter();
@@ -105,8 +105,8 @@ public class TestCrossChecks {
 
         CrossChecks rotated = Ecrch.rotate();
 
-        assertEquals(expected, rotated.getCrossCheck(3, 4));
-        assertEquals(expected, rotated.getCrossCheck(4, 3));
-    }*/
+        assertEquals(expected, rotated.getCrossCheck(10, 3));
+        assertEquals(expected, rotated.getCrossCheck(11, 4));
+    }
 }
 

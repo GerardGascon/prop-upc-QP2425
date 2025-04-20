@@ -1,4 +1,4 @@
-package edu.upc.prop.scrabble.domain.localization;
+package edu.upc.prop.scrabble.presenter.localization;
 
 import java.io.File;
 import java.io.IOException;

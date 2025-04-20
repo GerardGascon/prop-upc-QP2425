@@ -9,17 +9,15 @@ public class TestPiece {
     @Test
     public void pieceCreator() {
         Piece sut = new Piece("a", 1);
-        assertEquals(sut.letter(), "a");
-        assertEquals(sut.value(), 1);
+        assertEquals("a", sut.letter());
+        assertEquals(1, sut.value());
     }
 
     @Test
     public void pieceComparator() {
         Piece sut1 = new Piece("a", 1);
         Piece sut2 = new Piece("b", 2);
-        assertFalse(sut1.equals(sut2));
-        assertTrue(sut1.equals(sut1));
-        assertTrue(sut2.equals(sut2));
+        assertNotEquals(sut1, sut2);
     }
 
     @Test
@@ -31,9 +29,9 @@ public class TestPiece {
     @Test
     public void setLetterBlankPiece() {
         Piece sut = new Piece(" ", 0, true);
-        assertEquals(sut.letter(), " ");
+        assertEquals(" ", sut.letter());
 
         sut.setLetter("a");
-        assertEquals(sut.letter(), "a");
+        assertEquals("a", sut.letter());
     }
 }

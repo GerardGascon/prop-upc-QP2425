@@ -1,4 +1,4 @@
-package edu.upc.prop.scrabble.domain.localization;
+package edu.upc.prop.scrabble.presenter.localization;
 
 import edu.upc.prop.scrabble.data.properties.Language;
 
@@ -13,7 +13,7 @@ import edu.upc.prop.scrabble.data.properties.Language;
  *
  * @author Gerard Gascón
  */
-public class PiecesReader extends LocaleReader implements IFileReader {
+public class PiecesReader extends LocaleReader {
     /**
      * Reads the piece file corresponding to the specified language.
      * <p>

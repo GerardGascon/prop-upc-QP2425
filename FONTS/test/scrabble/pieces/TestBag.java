@@ -4,8 +4,7 @@ import edu.upc.prop.scrabble.data.pieces.Bag;
 import edu.upc.prop.scrabble.data.pieces.Piece;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class TestBag {
     @Test
@@ -22,6 +21,7 @@ public class TestBag {
 
         assertEquals(1, sut.getSize());
     }
+
     @Test
     public void bagGetsOnePiece() {
         Bag sut = new Bag();
@@ -31,4 +31,17 @@ public class TestBag {
         assertEquals(piece, sut.draw(0));
     }
 
+    @Test
+    public void bagThrowsErrorIfTryGettingWhenEmpty() {
+        Bag sut = new Bag();
+
+        assertThrows(IllegalStateException.class, () -> sut.draw(0));
+    }
+
+    @Test
+    public void bagThrowsErrorIfTryAddingNullPiece() {
+        Bag sut = new Bag();
+
+        assertThrows(IllegalArgumentException.class, () -> sut.add(null));
+    }
 }
