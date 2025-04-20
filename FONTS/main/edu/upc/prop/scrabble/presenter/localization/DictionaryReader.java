@@ -1,4 +1,4 @@
-package edu.upc.prop.scrabble.domain.localization;
+package edu.upc.prop.scrabble.presenter.localization;
 
 import edu.upc.prop.scrabble.data.properties.Language;
 
@@ -11,7 +11,7 @@ import edu.upc.prop.scrabble.data.properties.Language;
  *
  * @author Gerard Gascón
  */
-public class DictionaryReader extends LocaleReader implements IFileReader {
+public class DictionaryReader extends LocaleReader {
     /**
      * Reads a dictionary file based on the specified language.
      * <p>
