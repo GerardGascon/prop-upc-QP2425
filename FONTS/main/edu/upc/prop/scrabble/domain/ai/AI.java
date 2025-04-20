@@ -31,6 +31,7 @@ public abstract class AI {
     protected final PiecesConverter piecesConverter;
     protected Movement bestMove;
     protected int bestScore;
+    protected Direction currentDirection;
 
     public AI(PiecesConverter piecesConverter, PointCalculator pointCalculator, DAWG dawg, Board board, Player bot, Anchors anchors, CrossChecks crossChecks) {
         this.dawg = dawg;
@@ -51,12 +52,14 @@ public abstract class AI {
         // Reset global variables
         bestMove = new Movement("", 0, 0, Direction.Horizontal);
         bestScore = -1;
+        currentDirection = Direction.Horizontal;
 
         // HORIZONTAL CHECKS
         innerRun();
 
         // VERTICAL CHECKS
         // Rotation of needed components
+        currentDirection = Direction.Vertical;
         Board storedBoard = board;
         board = board.rotate();
         Anchors storedAnchors = anchors;
@@ -80,6 +83,7 @@ public abstract class AI {
             currentAnchor = anchors.getAnchor(i); // Global variable
             int currentAnchorX = currentAnchor.x; // Variables to make code cleaner
             int currentAnchorY = currentAnchor.y;
+            if(currentDirection == Direction.Horizontal) System.out.println(currentAnchorX + " " + currentAnchorY + "\n");
             int limit = 0; // How far to the left can we go
             while (board.isCellValid(currentAnchorX - limit - 1, currentAnchorY) &&
                     board.isCellEmpty(currentAnchorX - limit - 1, currentAnchorY) &&
@@ -226,15 +230,6 @@ public abstract class AI {
         return current;
     }
 
-    protected Direction getWordDirection(Vector2[] positions) {
-        if (positions.length == 1)
-            return null;
-
-        if (positions[0].x == positions[1].x)
-            return Direction.Vertical;
-        return Direction.Horizontal;
-    }
-
     protected void checkWord(String word, Vector2 cell) {
         // Create needed variables
         Piece[] pieceArray = piecesConverter.run(word);
@@ -246,7 +241,13 @@ public abstract class AI {
         int points = pointCalculator.run(posVector, pieceArray);
         if (points > bestScore) {
             bestScore = points;
-            bestMove = new Movement(word, posVector[0].x, posVector[0].y, getWordDirection(posVector));
+            if(currentDirection == Direction.Vertical) { // Rotate if needed
+                System.out.println(posVector[0].x + " " + posVector[0].y + "\n");
+                int newY = posVector[0].x;
+                posVector[0].x = board.getSize() - posVector[0].y - 1;
+                posVector[0].y = newY;
+            }
+            bestMove = new Movement(word, posVector[0].x, posVector[0].y, currentDirection);
         }
     }
 }

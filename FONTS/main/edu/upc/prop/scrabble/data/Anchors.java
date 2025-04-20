@@ -42,7 +42,7 @@ public class Anchors {
     public Anchors rotate(Board board) {
         Anchors rotated = new Anchors(board);
         int boardSize = board.getSize();
-        for (Vector2 anchor : this.anchors) rotated.addAnchor(anchor.y - (boardSize - 1), anchor.x);
+        for (Vector2 anchor : this.anchors) rotated.addAnchor(boardSize - anchor.x - 1, anchor.y);
         return rotated;
     }
 }
