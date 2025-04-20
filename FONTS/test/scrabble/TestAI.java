@@ -618,4 +618,36 @@ public class TestAI {
         Movement expectedMove = new Movement("TArrA", 7, 7, Direction.Horizontal);
         assertEquals(expectedMove, ai.run());
     }
+
+    @Test
+    public void englishAIEmptyBoardV() {
+        adder.run("HELLO");
+        adder.run("SKIBIDI");
+
+        bot.addPiece(new Piece("S", 1));
+        bot.addPiece(new Piece("K", 1));
+        bot.addPiece(new Piece("I", 1));
+        bot.addPiece(new Piece("B", 1));
+
+        PiecesConverter converter = new PiecesConverter();
+        AnchorUpdater anchorUpdater = new AnchorUpdater(anchors, board, converter);
+        CrossChecks crossChecks = new EnglishCrossChecks(board.getSize());
+        AI ai = new EnglishAI(converter, pointCalculator, dawg, board, bot, anchors, crossChecks);
+        CrossCheckUpdater updater = new CrossCheckUpdater(converter, crossChecks, board, dawg);
+
+        Piece[] pieces = new Piece[]{
+                new Piece("I", 1),
+                new Piece("D", 1),
+                new Piece("I", 1)
+        };
+        Movement previousMove = new Movement("IDI", 7, 7, Direction.Vertical);
+        anchorUpdater.run(previousMove);
+        updater.run(previousMove);
+
+        wordPlacer.run(pieces, 7, 7, Direction.Vertical);
+
+        Movement expectedMove = new Movement("SKIBIDI", 7, 3, Direction.Vertical);
+        assertEquals(expectedMove, ai.run());
+    }
+
 }
