@@ -59,7 +59,7 @@ public abstract class AI {
 
         // VERTICAL CHECKS
         // Rotation of needed components
-        currentDirection = Direction.Vertical;
+        /*currentDirection = Direction.Vertical;
         Board storedBoard = board;
         board = board.rotate();
         Anchors storedAnchors = anchors;
@@ -70,7 +70,7 @@ public abstract class AI {
         // Restore rotations
         board = storedBoard;
         anchors = storedAnchors;
-        crossChecks = storedCrossChecks;
+        crossChecks = storedCrossChecks;*/
 
         return bestMove;
     }
