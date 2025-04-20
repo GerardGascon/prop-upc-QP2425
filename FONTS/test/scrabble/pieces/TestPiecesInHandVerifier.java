@@ -2,10 +2,7 @@ package scrabble.pieces;
 
 import edu.upc.prop.scrabble.data.Player;
 import edu.upc.prop.scrabble.data.pieces.Piece;
-import edu.upc.prop.scrabble.domain.pieces.CatalanPiecesConverter;
-import edu.upc.prop.scrabble.domain.pieces.PiecesConverter;
-import edu.upc.prop.scrabble.domain.pieces.PiecesInHandVerifier;
-import edu.upc.prop.scrabble.domain.pieces.SpanishPiecesConverter;
+import edu.upc.prop.scrabble.domain.pieces.*;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -18,7 +15,7 @@ public class TestPiecesInHandVerifier {
         player.addPiece(new Piece("A", 0));
         player.addPiece(new Piece("B", 0));
 
-        PiecesInHandVerifier sut = new PiecesInHandVerifier(player, new PiecesConverter());
+        PiecesInHandVerifier sut = new PiecesInHandVerifier(player, new EnglishPiecesConverter());
         Piece [] pieces = sut.run(word);
 
         assertEquals(new Piece("A", 0), pieces[0]);
@@ -34,7 +31,7 @@ public class TestPiecesInHandVerifier {
         player.addPiece(new Piece("C", 0));
         player.addPiece(new Piece("D", 0));
 
-        PiecesInHandVerifier sut = new PiecesInHandVerifier(player, new PiecesConverter());
+        PiecesInHandVerifier sut = new PiecesInHandVerifier(player, new EnglishPiecesConverter());
         Piece[] pieces = sut.run(word);
 
         assertEquals(new Piece("A", 0), pieces[0]);

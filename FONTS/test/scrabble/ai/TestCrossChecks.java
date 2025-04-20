@@ -8,6 +8,7 @@ import edu.upc.prop.scrabble.data.crosschecks.EnglishCrossChecks;
 import edu.upc.prop.scrabble.data.dawg.DAWG;
 import edu.upc.prop.scrabble.domain.ai.CrossCheckUpdater;
 import edu.upc.prop.scrabble.domain.dawg.WordAdder;
+import edu.upc.prop.scrabble.domain.pieces.EnglishPiecesConverter;
 import edu.upc.prop.scrabble.domain.pieces.PiecesConverter;
 import edu.upc.prop.scrabble.utils.Direction;
 import org.junit.Test;
@@ -35,7 +36,7 @@ public class TestCrossChecks {
         adder.run("COSAS"); //ordenadas
 
         CrossChecks Ecrch = new EnglishCrossChecks(board.getSize());
-        PiecesConverter converter = new PiecesConverter();
+        PiecesConverter converter = new EnglishPiecesConverter();
         CrossCheckUpdater crchU = new CrossCheckUpdater(converter, Ecrch,board,dawg);
 
         BitSet allavaliable = new BitSet(26);
@@ -78,7 +79,7 @@ public class TestCrossChecks {
         adder.run("CARO");
 
         CrossChecks Ecrch = new EnglishCrossChecks(board.getSize());
-        PiecesConverter converter = new PiecesConverter();
+        PiecesConverter converter = new EnglishPiecesConverter();
         CrossCheckUpdater crchU = new CrossCheckUpdater(converter, Ecrch,board,dawg);
 
         BitSet allavaliable = new BitSet(26);

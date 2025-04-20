@@ -2,6 +2,7 @@ package scrabble.pieces;
 
 import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.domain.pieces.CatalanPiecesConverter;
+import edu.upc.prop.scrabble.domain.pieces.EnglishPiecesConverter;
 import edu.upc.prop.scrabble.domain.pieces.PiecesConverter;
 import edu.upc.prop.scrabble.domain.pieces.SpanishPiecesConverter;
 import org.junit.Test;
@@ -12,7 +13,7 @@ public class TestPiecesConverter {
     @Test
     public void getLPieceFromLCharacter() {
         String letter = "L";
-        PiecesConverter sut = new PiecesConverter();
+        PiecesConverter sut = new EnglishPiecesConverter();
 
         Piece[] piece = sut.run(letter);
 
@@ -22,7 +23,7 @@ public class TestPiecesConverter {
     @Test
     public void getRPieceFromRCharacter() {
         String letter = "R";
-        PiecesConverter sut = new PiecesConverter();
+        PiecesConverter sut = new EnglishPiecesConverter();
 
         Piece[] piece = sut.run(letter);
 
@@ -32,7 +33,7 @@ public class TestPiecesConverter {
     @Test
     public void getPiecesFromWord() {
         String letter = "LA";
-        PiecesConverter sut = new PiecesConverter();
+        PiecesConverter sut = new EnglishPiecesConverter();
 
         Piece[] piece = sut.run(letter);
 
@@ -93,7 +94,7 @@ public class TestPiecesConverter {
     @Test
     public void getPieceAsBlankPieceWhenCharacterIsLowercase() {
         String letter = "a";
-        PiecesConverter sut = new PiecesConverter();
+        PiecesConverter sut = new EnglishPiecesConverter();
 
         Piece[] piece = sut.run(letter);
 
@@ -154,7 +155,7 @@ public class TestPiecesConverter {
     public void getPieceWithDictionaryConvertsItWithProperScore() {
         String letter = "A";
         Piece[] dictionary = new Piece[] { new Piece("A", 5) };
-        PiecesConverter sut = new PiecesConverter(dictionary);
+        PiecesConverter sut = new EnglishPiecesConverter(dictionary);
 
         Piece[] piece = sut.run(letter);
 

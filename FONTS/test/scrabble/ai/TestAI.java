@@ -22,6 +22,7 @@ import edu.upc.prop.scrabble.domain.board.WordPlacer;
 import edu.upc.prop.scrabble.domain.ai.CrossCheckUpdater;
 import edu.upc.prop.scrabble.domain.dawg.WordAdder;
 import edu.upc.prop.scrabble.domain.pieces.CatalanPiecesConverter;
+import edu.upc.prop.scrabble.domain.pieces.EnglishPiecesConverter;
 import edu.upc.prop.scrabble.domain.pieces.PiecesConverter;
 import edu.upc.prop.scrabble.domain.pieces.SpanishPiecesConverter;
 import edu.upc.prop.scrabble.utils.Direction;
@@ -96,7 +97,7 @@ public class TestAI {
         bot.addPiece(new Piece("D", 1));
         bot.addPiece(new Piece("I", 1));
 
-        PiecesConverter converter = new PiecesConverter();
+        PiecesConverter converter = new EnglishPiecesConverter();
         AnchorUpdater _ = new AnchorUpdater(anchors, board, converter);
         CrossChecks crossChecks = new EnglishCrossChecks(board.getSize());
         AI ai = new EnglishAI(converter, pointCalculator, dawg, board, bot, anchors, crossChecks);
@@ -318,7 +319,7 @@ public class TestAI {
         bot.addPiece(new Piece("D", 1));
         bot.addPiece(new Piece("I", 1));
 
-        PiecesConverter converter = new PiecesConverter();
+        PiecesConverter converter = new EnglishPiecesConverter();
         AnchorUpdater anchorUpdater = new AnchorUpdater(anchors, board, converter);
         CrossChecks crossChecks = new EnglishCrossChecks(board.getSize());
         AI ai = new EnglishAI(converter, pointCalculator, dawg, board, bot, anchors, crossChecks);
@@ -496,7 +497,7 @@ public class TestAI {
         bot.addPiece(new Piece("D", 1));
         bot.addPiece(new Piece("I", 1));
 
-        PiecesConverter converter = new PiecesConverter();
+        PiecesConverter converter = new EnglishPiecesConverter();
         AnchorUpdater anchorUpdater = new AnchorUpdater(anchors, board, converter);
         CrossChecks crossChecks = new EnglishCrossChecks(board.getSize());
         AI ai = new EnglishAI(converter, pointCalculator, dawg, board, bot, anchors, crossChecks);
@@ -572,7 +573,7 @@ public class TestAI {
         bot.addPiece(new Piece("I", 1));
         bot.addPiece(new Piece("B", 1));
 
-        PiecesConverter converter = new PiecesConverter();
+        PiecesConverter converter = new EnglishPiecesConverter();
         AnchorUpdater anchorUpdater = new AnchorUpdater(anchors, board, converter);
         CrossChecks crossChecks = new EnglishCrossChecks(board.getSize());
         AI ai = new EnglishAI(converter, pointCalculator, dawg, board, bot, anchors, crossChecks);

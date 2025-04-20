@@ -26,6 +26,7 @@ import edu.upc.prop.scrabble.domain.game.GameStepper;
 import edu.upc.prop.scrabble.domain.game.IEndScreen;
 import edu.upc.prop.scrabble.domain.movement.MovementBoundsChecker;
 import edu.upc.prop.scrabble.domain.movement.MovementCleaner;
+import edu.upc.prop.scrabble.domain.pieces.EnglishPiecesConverter;
 import edu.upc.prop.scrabble.domain.pieces.PiecesConverter;
 import edu.upc.prop.scrabble.domain.pieces.PiecesInHandGetter;
 import edu.upc.prop.scrabble.domain.turns.Endgame;
@@ -53,7 +54,7 @@ public class TestPlaceActionMaker {
         board = new StandardBoard();
         WordGetter wordGetter = new WordGetter(board);
         PointCalculator pointCalculator = new PointCalculator(board, wordGetter);
-        PiecesConverter piecesConverter = new PiecesConverter();
+        PiecesConverter piecesConverter = new EnglishPiecesConverter();
         player = new Player("name", false);
         WordPlacer wordPlacer = new WordPlacer(player, board, boardViewStub, pointCalculator);
         MovementBoundsChecker boundsChecker = new MovementBoundsChecker(board, piecesConverter);

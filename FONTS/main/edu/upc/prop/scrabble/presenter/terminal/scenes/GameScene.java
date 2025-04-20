@@ -59,7 +59,7 @@ public class GameScene extends Scene {
         PiecesConverter piecesConverter = switch (properties.language()) {
             case Language.Catalan -> new CatalanPiecesConverter();
             case Language.Spanish -> new SpanishPiecesConverter();
-            case Language.English -> new PiecesConverter();
+            case Language.English -> new EnglishPiecesConverter();
         };
 
         Bag bag = generateBag(properties.language());

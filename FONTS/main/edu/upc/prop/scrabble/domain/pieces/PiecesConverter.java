@@ -8,10 +8,10 @@ import java.util.Arrays;
 import java.util.HashSet;
 
 /***
- * Class that converts a string of letters into pieces in English.
+ * Class that converts a string of letters into pieces.
  * @author Gina Escofet González
  */
-public class PiecesConverter {
+public abstract class PiecesConverter {
     private final HashSet<Piece> pieces = new HashSet<>();
 
     public PiecesConverter() {
