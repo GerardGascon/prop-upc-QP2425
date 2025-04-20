@@ -1,13 +1,12 @@
 package edu.upc.prop.scrabble.domain.pieces;
 
 import edu.upc.prop.scrabble.data.Player;
+import edu.upc.prop.scrabble.data.exceptions.PlayerDoesNotHavePieceException;
 import edu.upc.prop.scrabble.data.pieces.Bag;
 import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.utils.IRand;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Vector;
+import java.util.*;
 
 /***
  * Manages the retrieval and verification of pieces from a player's hand.
@@ -16,19 +15,16 @@ import java.util.Vector;
 public class PiecesInHandGetter {
     private final Player player;
     private final Bag bag;
-    private final IPiecePrinter piecePrinter;
-    private IRand rand;
+    private final IRand rand;
 
     /***
      * Constructs a new PiecesInHandGetter with the specified bag, player and piecePrinter.
      * @param bag The game piece bag.
      * @param player The target player.
-     * @param piecePrinter The piece display handler.
      */
-    public PiecesInHandGetter(Bag bag, Player player, IPiecePrinter piecePrinter, IRand rand) {
+    public PiecesInHandGetter(Bag bag, Player player, IRand rand) {
         this.player = player;
         this.bag = bag;
-        this.piecePrinter = piecePrinter;
         this.rand = rand;
     }
 
@@ -40,6 +36,9 @@ public class PiecesInHandGetter {
      */
     public Piece[] run(Piece[] pieces) {
         List<Piece> piecesList = new Vector<>();
+        if (!hasPieces(pieces))
+            throw new PlayerDoesNotHavePieceException("Player " + player.getName() + " does not have all the pieces");
+
         for (Piece piece : pieces) {
             piecesList.add(player.removePiece(piece));
             if (!bag.isEmpty()) {
@@ -49,5 +48,36 @@ public class PiecesInHandGetter {
             }
         }
         return piecesList.toArray(Piece[]::new);
+    }
+
+    private boolean hasPieces(Piece[] pieces) {
+        List<Piece> hand = new ArrayList<>(Arrays.asList(player.getHand()));
+
+        for (Piece piece : pieces) {
+            if (!hasPiece(piece, hand))
+                return false;
+        }
+
+        return true;
+    }
+
+    private boolean hasPiece(Piece piece, List<Piece> pieces) {
+        if (piece.isBlank()){
+            for (int i = 0; i < pieces.size(); i++) {
+                if (pieces.get(i).isBlank()) {
+                    pieces.remove(i);
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        for (int i = 0; i < pieces.size(); i++) {
+            if (pieces.get(i).letter().equals(piece.letter())) {
+                pieces.remove(i);
+                return true;
+            }
+        }
+        return false;
     }
 }

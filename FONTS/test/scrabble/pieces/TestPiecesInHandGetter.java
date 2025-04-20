@@ -22,10 +22,9 @@ public class TestPiecesInHandGetter {
         for (int i = 0; i < 7; i++) {
             player.addPiece(new Piece("b", 10));
         }
-        IPiecePrinter piecePrinter = null;
         Piece[] word = new Piece[]{new Piece("b", 1)};
         RandStub rand = new RandStub(0);
-        PiecesInHandGetter sut = new PiecesInHandGetter(bag, player, piecePrinter, rand);
+        PiecesInHandGetter sut = new PiecesInHandGetter(bag, player, rand);
 
         Piece[] newPieces = sut.run(word);
 
@@ -44,10 +43,9 @@ public class TestPiecesInHandGetter {
             player.addPiece(new Piece("b", 10));
         }
         player.addPiece(new Piece("b", 0, true));
-        IPiecePrinter piecePrinter = null;
         Piece[] word = new Piece[]{new Piece("b", 1, true)};
         RandStub rand = new RandStub(0);
-        PiecesInHandGetter sut = new PiecesInHandGetter(bag, player, piecePrinter, rand);
+        PiecesInHandGetter sut = new PiecesInHandGetter(bag, player, rand);
 
         Piece[] newPieces = sut.run(word);
 
@@ -66,12 +64,25 @@ public class TestPiecesInHandGetter {
         for (int i = 0; i < 7; i++) {
             player.addPiece(new Piece("b", 10));
         }
-        IPiecePrinter piecePrinter = null;
         Piece[] word = new Piece[]{new Piece("b", 1, true)};
         RandStub rand = new RandStub(0);
-        PiecesInHandGetter sut = new PiecesInHandGetter(bag, player, piecePrinter, rand);
+        PiecesInHandGetter sut = new PiecesInHandGetter(bag, player, rand);
 
         sut.run(word);
+    }
+
+    @Test
+    public void rollbackWhenOnePieceNotFound() {
+        Bag bag = new Bag();
+        Player player = new Player("nom", false);
+        player.addPiece(new Piece("a", 10));
+        player.addPiece(new Piece("b", 10));
+        Piece[] word = new Piece[]{new Piece("a", 10), new Piece("b", 10, true)};
+        RandStub rand = new RandStub(0);
+        PiecesInHandGetter sut = new PiecesInHandGetter(bag, player, rand);
+
+        assertThrows(PlayerDoesNotHavePieceException.class, () -> sut.run(word));
+        assertEquals(new Piece("a", 10), player.getHand()[0]);
     }
 
     @Test
@@ -84,10 +95,9 @@ public class TestPiecesInHandGetter {
         for (int i = 0; i < 7; i++) {
             player.addPiece(new Piece("b", 1));
         }
-        IPiecePrinter piecePrinter = null;
         Piece[] word = new Piece[]{new Piece("b", 1)};
         RandStub rand = new RandStub(0);
-        PiecesInHandGetter sut = new PiecesInHandGetter(bag, player, piecePrinter, rand);
+        PiecesInHandGetter sut = new PiecesInHandGetter(bag, player, rand);
 
         sut.run(word);
 
@@ -107,10 +117,9 @@ public class TestPiecesInHandGetter {
             player.addPiece(new Piece("b", 1));
         }
 
-        IPiecePrinter piecePrinter = null;
         Piece[] word = new Piece[]{new Piece("b", 1), new Piece("b", 1)};
         RandStub rand = new RandStub(0);
-        PiecesInHandGetter sut = new PiecesInHandGetter(bag, player, piecePrinter, rand);
+        PiecesInHandGetter sut = new PiecesInHandGetter(bag, player, rand);
         Piece[] newPieces = sut.run(word);
 
         assertEquals("b", newPieces[0].letter());

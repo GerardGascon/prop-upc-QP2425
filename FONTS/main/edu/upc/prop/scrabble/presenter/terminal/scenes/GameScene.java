@@ -76,7 +76,7 @@ public class GameScene extends Scene {
         Turn turnManager = new Turn(endgame, players);
         GameStepper stepper = new GameStepper(turnManager, leaderboard, playersData);
 
-        configurePlayers(players, playersData, stepper, board, boardView, pointCalculator, bag, piecePrinter, boundsChecker,
+        configurePlayers(players, playersData, stepper, board, boardView, pointCalculator, bag, boundsChecker,
                 wordValidator, movementCleaner, presentPiecesWordCompleter, crossCheckUpdater, piecesConverter);
 
         HandFiller handFiller = new HandFiller(bag, playersData, new Rand());
@@ -126,12 +126,12 @@ public class GameScene extends Scene {
 
     private void configurePlayers(PlayerObject[] playerObjects, Player[] players, GameStepper stepper, Board board,
                                   BoardView boardView, PointCalculator pointCalculator, Bag bag,
-                                  IPiecePrinter piecePrinter, MovementBoundsChecker boundsChecker,
+                                  MovementBoundsChecker boundsChecker,
                                   WordValidator wordValidator, MovementCleaner movementCleaner,
                                   PresentPiecesWordCompleter presentPiecesWordCompleter,
                                   CrossCheckUpdater crossCheckUpdater, PiecesConverter piecesConverter) {
         for (int i = 0; i < players.length; i++) {
-            configurePlayer(playerObjects[i], players[i], stepper, board, boardView, pointCalculator, bag, piecePrinter,
+            configurePlayer(playerObjects[i], players[i], stepper, board, boardView, pointCalculator, bag,
                     boundsChecker, wordValidator, movementCleaner, presentPiecesWordCompleter, crossCheckUpdater,
                     piecesConverter);
         }
@@ -139,12 +139,12 @@ public class GameScene extends Scene {
 
     public void configurePlayer(PlayerObject playerObject, Player player, GameStepper stepper, Board board,
                                 BoardView boardView, PointCalculator pointCalculator, Bag bag,
-                                IPiecePrinter piecePrinter, MovementBoundsChecker boundsChecker,
+                                MovementBoundsChecker boundsChecker,
                                 WordValidator wordValidator, MovementCleaner movementCleaner,
                                 PresentPiecesWordCompleter presentPiecesWordCompleter,
                                 CrossCheckUpdater crossCheckUpdater, PiecesConverter piecesConverter) {
         WordPlacer wordPlacer = new WordPlacer(player, board, boardView, pointCalculator);
-        PiecesInHandGetter piecesInHandGetter = new PiecesInHandGetter(bag, player, piecePrinter, new Rand());
+        PiecesInHandGetter piecesInHandGetter = new PiecesInHandGetter(bag, player, new Rand());
         PlaceActionMaker placeActionMaker = new PlaceActionMaker(boundsChecker, wordValidator, piecesInHandGetter,
                 movementCleaner, wordPlacer, presentPiecesWordCompleter, crossCheckUpdater, stepper, piecesConverter,
                 board);

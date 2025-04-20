@@ -64,7 +64,7 @@ public class TestPlaceActionMaker {
         bag = new Bag();
         piecePrinterStub = new PiecePrinterStub();
         IRand rand = new RandStub(0);
-        PiecesInHandGetter piecesInHandGetter = new PiecesInHandGetter(bag, player, piecePrinterStub, rand);
+        PiecesInHandGetter piecesInHandGetter = new PiecesInHandGetter(bag, player, rand);
         MovementCleaner movementCleaner = new MovementCleaner(board, piecesConverter);
         PresentPiecesWordCompleter presentPiecesWordCompleter = new PresentPiecesWordCompleter(wordGetter);
         CrossChecks crossChecks = new EnglishCrossChecks(board.getSize());
