@@ -1,17 +1,12 @@
 package edu.upc.prop.scrabble.data.crosschecks;
 
-import edu.upc.prop.scrabble.data.board.Board;
-
 public class SpanishCrossChecks extends CrossChecks {
-    //ESP: letras normales + pos 27 para la ñ, pos 28 para la RR, 29 LL, 30 CH
-    private final String[] letters;
-    //private final String[] specialPieces;
+    // Letras normales + pos 27 para la Ñ, pos 28 para la RR, 29 LL, 30 CH
+    private final String[] letters = new String[]{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
+            "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "Ñ", "RR", "LL", "CH"};
 
     public SpanishCrossChecks(int boardSize) {
         super(boardSize);
-        letters = new String[]{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
-                "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "Ñ", "RR", "LL", "CH"};
-        //specialPieces = new String[]{"Ñ", "RR", "LL", "CH"};
     }
 
     @Override
@@ -26,16 +21,20 @@ public class SpanishCrossChecks extends CrossChecks {
 
     @Override
     public Boolean ableToPlace(int x, int y, String letter) {
-        int numletter;
-        if(letters.length == 1) {
-            if(letter.charAt(0) == 'Ñ') numletter = 27;
-            else numletter = letter.charAt(0) - 'A';
-        }
-        else if(letter.charAt(0) == 'R') numletter = 28;
-        else if(letter.charAt(0) == 'L') numletter = 29;
-        else numletter = 30;
+        return !getCrossCheck(x, y).get(getNumLetter(letter));
+    }
 
-        return !getCrossCheck(x, y).get(numletter);
+    private int getNumLetter(String letter) {
+        if (letter.length() == 1) {
+            if (letter.charAt(0) == 'Ñ')
+                return 27;
+            return letter.charAt(0) - 'A';
+        }
+        if (letter.charAt(0) == 'R')
+            return 28;
+        if (letter.charAt(0) == 'L')
+            return 29;
+        return 30;
     }
 
     @Override

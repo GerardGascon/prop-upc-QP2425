@@ -9,11 +9,10 @@ import edu.upc.prop.scrabble.utils.Direction;
 import edu.upc.prop.scrabble.utils.Pair;
 
 public class AnchorUpdater {
-    Anchors anchors;
-    Board board;
-    PiecesConverter piecesConverter;
+    private final Anchors anchors;
+    private final Board board;
+    private final PiecesConverter piecesConverter;
 
-    //poner piece converter segun el idioma
     public AnchorUpdater(Anchors anchors, Board board, PiecesConverter piecesConverter) {
         this.anchors = anchors;
         this.board = board;
@@ -22,28 +21,43 @@ public class AnchorUpdater {
     }
 
     public void run(Movement move) {
-
         int size = piecesConverter.run(move.word()).length;
-        int x = move.x();
-        int y = move.y();
 
-        if(move.direction() == Direction.Vertical) {
-            if(board.isCellValid(x, y - 1) && board.isCellEmpty(x, y - 1) ) anchors.addAnchor(x, y - 1); // Previous to first
-            if(board.isCellValid(x, y + size) && board.isCellEmpty(x, y + size)) anchors.addAnchor(x, y + size); // Next to last
-            for (int i_y = y; i_y < y+size; i_y++) {
-                if(board.isCellValid(x, i_y)  && anchors.exists(x, i_y)) anchors.removeAnchor(x, i_y);
-                if(board.isCellValid(x + 1, i_y) && board.isCellEmpty(x + 1, i_y)) anchors.addAnchor(x + 1, i_y);
-                if(board.isCellValid(x - 1, i_y) && board.isCellEmpty(x - 1, i_y)) anchors.addAnchor(x - 1, i_y);
-            }
+        if (move.direction() == Direction.Vertical)
+            updateVerticalAnchors(move.x(), move.y(), size);
+        if (move.direction() == Direction.Horizontal)
+            updateHorizontalAnchors(move.x(), move.y(), size);
+    }
+
+    private void updateHorizontalAnchors(int x, int y, int size) {
+        if (board.isCellValid(x - 1, y) && board.isCellEmpty(x - 1, y))
+            anchors.addAnchor(x - 1, y); // Previous to first
+        if (board.isCellValid(x + size, y) && board.isCellEmpty(x + size, y))
+            anchors.addAnchor(x + size, y); // Next to last
+
+        for (int i = x; i < x + size; i++) {
+            if (board.isCellValid(i, y) && anchors.exists(i, y))
+                anchors.removeAnchor(i, y);
+            if (board.isCellValid(i, y + 1) && board.isCellEmpty(i, y + 1))
+                anchors.addAnchor(i, y + 1);
+            if (board.isCellValid(i, y - 1) && board.isCellEmpty(i, y - 1))
+                anchors.addAnchor(i, y - 1);
         }
-        else if(move.direction() == Direction.Horizontal) {
-            if(board.isCellValid(x - 1, y) && board.isCellEmpty(x - 1, y) ) anchors.addAnchor(x - 1, y); // Previous to first
-            if(board.isCellValid(x + size, y) && board.isCellEmpty(x + size, y)) anchors.addAnchor(x + size, y); // Next to last
-            for (int i_x = x; i_x < x+size; i_x++) {
-                if(board.isCellValid(i_x, y) && anchors.exists(i_x, y)) anchors.removeAnchor(i_x, y);
-                if(board.isCellValid(i_x, y + 1) && board.isCellEmpty(i_x, y + 1)) anchors.addAnchor(i_x, y + 1);
-                if(board.isCellValid(i_x, y - 1) && board.isCellEmpty(i_x, y - 1)) anchors.addAnchor(i_x, y - 1);
-            }
+    }
+
+    private void updateVerticalAnchors(int x, int y, int size) {
+        if (board.isCellValid(x, y - 1) && board.isCellEmpty(x, y - 1))
+            anchors.addAnchor(x, y - 1);
+        if (board.isCellValid(x, y + size) && board.isCellEmpty(x, y + size))
+            anchors.addAnchor(x, y + size);
+
+        for (int i = y; i < y + size; i++) {
+            if (board.isCellValid(x, i) && anchors.exists(x, i))
+                anchors.removeAnchor(x, i);
+            if (board.isCellValid(x + 1, i) && board.isCellEmpty(x + 1, i))
+                anchors.addAnchor(x + 1, i);
+            if (board.isCellValid(x - 1, i) && board.isCellEmpty(x - 1, i))
+                anchors.addAnchor(x - 1, i);
         }
     }
 }
