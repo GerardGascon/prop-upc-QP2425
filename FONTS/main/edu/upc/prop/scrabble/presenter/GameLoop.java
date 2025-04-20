@@ -4,14 +4,13 @@ import edu.upc.prop.scrabble.presenter.scenes.Scene;
 import edu.upc.prop.scrabble.presenter.scenes.SceneManager;
 
 public class GameLoop {
-    private long lastTime;
 
     public GameLoop(Class<? extends Scene> initialScene) {
         SceneManager.getInstance().load(initialScene);
     }
 
     public void run() {
-        lastTime = System.nanoTime();
+        long lastTime = System.nanoTime();
         final double fps = 60.0;
         final double frameTime = 1e9 / fps;
 
