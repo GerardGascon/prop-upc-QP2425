@@ -19,6 +19,7 @@ import edu.upc.prop.scrabble.domain.crosschecks.CrossCheckUpdater;
 import edu.upc.prop.scrabble.domain.dawg.WordAdder;
 import edu.upc.prop.scrabble.domain.dawg.WordValidator;
 import edu.upc.prop.scrabble.domain.game.GameStepper;
+import edu.upc.prop.scrabble.domain.game.IEndScreen;
 import edu.upc.prop.scrabble.presenter.localization.DictionaryReader;
 import edu.upc.prop.scrabble.presenter.localization.PiecesReader;
 import edu.upc.prop.scrabble.domain.movement.MovementBoundsChecker;
@@ -28,6 +29,7 @@ import edu.upc.prop.scrabble.domain.turns.Endgame;
 import edu.upc.prop.scrabble.domain.turns.Turn;
 import edu.upc.prop.scrabble.presenter.scenes.Scene;
 import edu.upc.prop.scrabble.presenter.terminal.BoardView;
+import edu.upc.prop.scrabble.presenter.terminal.EndScreen;
 import edu.upc.prop.scrabble.presenter.terminal.PieceDisplay;
 import edu.upc.prop.scrabble.presenter.terminal.actionmaker.HandView;
 import edu.upc.prop.scrabble.presenter.terminal.players.AIPlayerObject;
@@ -74,7 +76,8 @@ public class GameScene extends Scene {
         PlayerObject[] players = instantiatePlayers(playersData);
         Endgame endgame = new Endgame(playersData);
         Turn turnManager = new Turn(endgame, players);
-        GameStepper stepper = new GameStepper(turnManager, leaderboard, playersData);
+        IEndScreen endScreen = new EndScreen();
+        GameStepper stepper = new GameStepper(turnManager, leaderboard, playersData, endScreen);
 
         configurePlayers(players, playersData, stepper, board, boardView, pointCalculator, bag, boundsChecker,
                 wordValidator, movementCleaner, presentPiecesWordCompleter, crossCheckUpdater, piecesConverter);

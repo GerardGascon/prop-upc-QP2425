@@ -23,6 +23,7 @@ import edu.upc.prop.scrabble.domain.exceptions.MovementOutsideOfBoardException;
 import edu.upc.prop.scrabble.domain.exceptions.WordDoesNotExistException;
 import edu.upc.prop.scrabble.domain.exceptions.WordNotConnectedToOtherWordsException;
 import edu.upc.prop.scrabble.domain.game.GameStepper;
+import edu.upc.prop.scrabble.domain.game.IEndScreen;
 import edu.upc.prop.scrabble.domain.movement.MovementBoundsChecker;
 import edu.upc.prop.scrabble.domain.movement.MovementCleaner;
 import edu.upc.prop.scrabble.domain.pieces.PiecesConverter;
@@ -34,10 +35,7 @@ import edu.upc.prop.scrabble.utils.Direction;
 import edu.upc.prop.scrabble.utils.IRand;
 import org.junit.Before;
 import org.junit.Test;
-import scrabble.stubs.BoardViewStub;
-import scrabble.stubs.GamePlayerStub;
-import scrabble.stubs.PiecePrinterStub;
-import scrabble.stubs.RandStub;
+import scrabble.stubs.*;
 
 import static org.junit.Assert.*;
 
@@ -71,7 +69,8 @@ public class TestPlaceActionMaker {
         CrossChecks crossChecks = new EnglishCrossChecks(board.getSize());
         CrossCheckUpdater crossCheckUpdater = new CrossCheckUpdater(piecesConverter, crossChecks, board, dawg);
         Turn turn = new Turn(new Endgame(new Player[]{player}), new IGamePlayer[]{new GamePlayerStub()});
-        GameStepper stepper = new GameStepper(turn, new Leaderboard(), new Player[]{player});
+        IEndScreen endScreen = new EndScreenStub();
+        GameStepper stepper = new GameStepper(turn, new Leaderboard(), new Player[]{player}, endScreen);
         sut = new PlaceActionMaker(boundsChecker, wordValidator, piecesInHandGetter, movementCleaner, wordPlacer,
                 presentPiecesWordCompleter, crossCheckUpdater, stepper, piecesConverter, board);
     }
