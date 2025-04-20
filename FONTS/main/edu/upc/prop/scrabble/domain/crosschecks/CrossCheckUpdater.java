@@ -62,7 +62,7 @@ public class CrossCheckUpdater {
         for (int j = 0; j < crossChecks.getLetters().length; ++j) {
             //probamos de ver si podemos avanzar en el dawg a esas letras
             if (!nextNodeTerminal(finalNode, crossChecks.getLetters()[j])) {
-                crossChecks.setCrossCheckHor(endOfAddedWord + 1, move.y(), j);
+                crossChecks.setCrossCheck(endOfAddedWord + 1, move.y(), j);
                 //pone a 1 la letra que ha salido que no hace una palabra valida
             }
         }
@@ -86,7 +86,7 @@ public class CrossCheckUpdater {
             //System.out.println("Current word" + word);
             //System.out.println(wordValidator.run(word));
             if (!wordValidator.run(word)) {
-                crossChecks.setCrossCheckHor(beginningOfAddedWord - 1, move.y(), i);
+                crossChecks.setCrossCheck(beginningOfAddedWord - 1, move.y(), i);
                 //pone a 1 la letra que ha salido que no hace una palabra valida
             }
         }
@@ -113,7 +113,7 @@ public class CrossCheckUpdater {
         for (int j = 0; j < crossChecks.getLetters().length; ++j) {
             //probamos de ver si podemos avanzar en el dawg a esas letras
             if (!nextNodeTerminal(finalNode, crossChecks.getLetters()[j])) {
-                crossChecks.setCrossCheckVer(move.x(), endOfAddedWord + 1, j);
+                crossChecks.setCrossCheck(move.x(), endOfAddedWord + 1, j);
                 //pone a 1 la letra que ha salido que no hace una palabra valida
             }
         }
@@ -135,7 +135,7 @@ public class CrossCheckUpdater {
                 word = word.concat(s);
 
             if (!wordValidator.run(word)) {
-                crossChecks.setCrossCheckVer(move.x(), beginningOfAddedWord - 1, i);
+                crossChecks.setCrossCheck(move.x(), beginningOfAddedWord - 1, i);
                 //pone a 1 la letra que ha salido que no hace una palabra valida
             }
         }

@@ -35,8 +35,7 @@ public class SpanishCrossChecks extends CrossChecks {
         else if(letter.charAt(0) == 'L') numletter = 29;
         else numletter = 30;
 
-        if(getCrossCheckVer(x, y).get(numletter)) return false;
-        else return !getCrossCheckHor(x, y).get(numletter);
+        return !getCrossCheck(x, y).get(numletter);
     }
 
     @Override

@@ -1,17 +1,14 @@
 package edu.upc.prop.scrabble.data;
 
 import edu.upc.prop.scrabble.data.board.Board;
-import edu.upc.prop.scrabble.utils.Pair;
 import edu.upc.prop.scrabble.utils.Vector2;
 
 import java.util.ArrayList;
 
-import static java.util.Collections.copy;
-
 public class Anchors {
     private final ArrayList<Vector2> anchors;
 
-    public Anchors(Board board) { this.anchors = new ArrayList<>(); }
+    public Anchors() { this.anchors = new ArrayList<>(); }
 
     public void addAnchor(int x, int y) {
         anchors.add(new Vector2(x, y));
@@ -39,10 +36,11 @@ public class Anchors {
         return anchors.contains(new Vector2(x, y));
     }
 
-    public Anchors rotate(Board board) {
-        Anchors rotated = new Anchors(board);
-        int boardSize = board.getSize();
-        for (Vector2 anchor : this.anchors) rotated.addAnchor(boardSize - anchor.x - 1, anchor.y);
+    public Anchors rotate(int boardSize) {
+        Anchors rotated = new Anchors();
+        for (Vector2 anchor : this.anchors){
+            rotated.addAnchor(boardSize - anchor.y - 1, anchor.x);
+        }
         return rotated;
     }
 }

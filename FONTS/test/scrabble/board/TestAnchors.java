@@ -5,8 +5,6 @@ import edu.upc.prop.scrabble.data.Movement;
 import edu.upc.prop.scrabble.data.board.Board;
 import edu.upc.prop.scrabble.data.board.StandardBoard;
 import edu.upc.prop.scrabble.domain.AnchorUpdater;
-import edu.upc.prop.scrabble.domain.board.WordGetter;
-import edu.upc.prop.scrabble.domain.dawg.WordAdder;
 import edu.upc.prop.scrabble.domain.pieces.PiecesConverter;
 import edu.upc.prop.scrabble.utils.Direction;
 import org.junit.Before;
@@ -17,12 +15,13 @@ import static org.junit.Assert.*;
 public class TestAnchors {
     private Anchors anchors;
     private AnchorUpdater anchorUpdater;
-
+    private int boardsize;
     @Before
     public void setUp() {
         Board board = new StandardBoard();
+        boardsize = board.getSize();
         PiecesConverter converter = new PiecesConverter();
-        anchors = new Anchors(board);
+        anchors = new Anchors();
         anchorUpdater = new AnchorUpdater(anchors, board, converter);
     }
 
@@ -62,5 +61,24 @@ public class TestAnchors {
         assertTrue(anchors.exists(8, 6));
         assertTrue(anchors.exists(8, 7));
         assertTrue(anchors.exists(8, 8));
+    }
+
+    @Test
+    public void rotateAnchors() {
+        Movement move = new Movement("PAN", 6, 7, Direction.Horizontal);
+
+        anchorUpdater.run(move);
+
+        Anchors rotated = anchors.rotate(boardsize);
+
+        assertFalse(rotated.exists(5, 7));
+        assertTrue(rotated.exists(7, 5));
+        assertTrue(rotated.exists(7, 9));
+        assertTrue(rotated.exists(6, 7));
+        assertTrue(rotated.exists(6, 6));
+        assertTrue(rotated.exists(6, 8));
+        assertTrue(rotated.exists(8, 6));
+        assertTrue(rotated.exists(8, 7));
+        assertTrue(rotated.exists(8, 8));
     }
 }

@@ -27,8 +27,7 @@ public class EnglishCrossChecks extends CrossChecks {
     public Boolean ableToPlace(int x, int y, String letter) {
         //en ingles no hay casos raros
         int numletter = letter.charAt(0)-'A';
-        if(getCrossCheckVer(x, y).get(numletter)) return false;
-        else return !getCrossCheckHor(x, y).get(numletter);
+        return !getCrossCheck(x, y).get(numletter);
     }
 
     @Override

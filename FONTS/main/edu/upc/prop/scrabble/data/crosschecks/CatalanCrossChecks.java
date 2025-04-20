@@ -34,8 +34,7 @@ public class CatalanCrossChecks extends CrossChecks {
         else if(letter.charAt(0) == 'L') numletter = 28;
         else numletter = 29;
 
-        if(getCrossCheckVer(x, y).get(numletter)) return false;
-        else return !getCrossCheckHor(x, y).get(numletter);
+        return !getCrossCheck(x, y).get(numletter);
     }
 
     @Override

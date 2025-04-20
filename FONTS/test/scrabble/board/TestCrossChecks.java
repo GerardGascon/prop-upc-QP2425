@@ -25,7 +25,7 @@ public class TestCrossChecks {
         CrossChecks Ecrch = new EnglishCrossChecks(board.getSize());
         BitSet allavaliable = new BitSet(26);
         //expected.set(0); es crea amb tot 0's
-        assertEquals(allavaliable, Ecrch.getCrossCheckHor(0, 0));
+        assertEquals(allavaliable, Ecrch.getCrossCheck(0, 0));
     }
     @Test
     public void updateCrossChecks() {
@@ -53,24 +53,60 @@ public class TestCrossChecks {
         Movement moveHb = new Movement("ARO", 4,4, Direction.Horizontal);
         Movement moveVb = new Movement("ARO", 4,4, Direction.Vertical);
         //HORIZONTAL END
-        assertEquals(allavaliable, Ecrch.getCrossCheckHor(4, 0));
+        assertEquals(allavaliable, Ecrch.getCrossCheck(4, 0));
         crchU.run(moveHe);
-        assertEquals(expected, Ecrch.getCrossCheckHor(4, 0));
+        assertEquals(expected, Ecrch.getCrossCheck(4, 0));
         //VERTICAL END
-        assertEquals(allavaliable, Ecrch.getCrossCheckVer(0, 4));
+        assertEquals(allavaliable, Ecrch.getCrossCheck(0, 4));
         crchU.run(moveVe);
-        assertEquals(expected, Ecrch.getCrossCheckVer(0, 4));
+        assertEquals(expected, Ecrch.getCrossCheck(0, 4));
 
         expected.set(18);//S
         expected.clear(2);//C
-        //HORIZONTAL END
-        assertEquals(allavaliable, Ecrch.getCrossCheckHor(3, 4));
+        //HORIZONTAL BEGGNINING
+        assertEquals(allavaliable, Ecrch.getCrossCheck(3, 4));
         crchU.run(moveHb);
-        assertEquals(expected, Ecrch.getCrossCheckHor(3, 4));
+        assertEquals(expected, Ecrch.getCrossCheck(3, 4));
         //VERTICAL BEGGINING
-        assertEquals(allavaliable, Ecrch.getCrossCheckVer(4, 3));
+        assertEquals(allavaliable, Ecrch.getCrossCheck(4, 3));
         crchU.run(moveVb);
-        assertEquals(expected, Ecrch.getCrossCheckVer(4, 3));
+        assertEquals(expected, Ecrch.getCrossCheck(4, 3));
     }
+
+    /*@Test
+    public void rotateCrossChecks() {
+        //WOIP
+        Board board = new StandardBoard();
+        DAWG dawg = new DAWG();
+        WordAdder adder = new WordAdder(dawg);
+        adder.run("ARO");
+        adder.run("CARO");//ordenadas
+
+        CrossChecks Ecrch = new EnglishCrossChecks(board.getSize());
+        PiecesConverter converter = new PiecesConverter();
+        CrossCheckUpdater crchU = new CrossCheckUpdater(converter, Ecrch,board,dawg);
+
+        BitSet allavaliable = new BitSet(26);
+        BitSet expected = new BitSet(26);
+        expected.set(0, 26, true);
+        expected.clear(2);//C
+
+        Movement moveHb = new Movement("ARO", 4,4, Direction.Horizontal);
+        Movement moveVb = new Movement("ARO", 4,4, Direction.Vertical);
+
+        //HORIZONTAL BEGGNINING
+        assertEquals(allavaliable, Ecrch.getCrossCheck(3, 4));
+        crchU.run(moveHb);
+        assertEquals(expected, Ecrch.getCrossCheck(3, 4));
+        //VERTICAL BEGGINING
+        assertEquals(allavaliable, Ecrch.getCrossCheck(4, 3));
+        crchU.run(moveVb);
+        assertEquals(expected, Ecrch.getCrossCheck(4, 3));
+
+        CrossChecks rotated = Ecrch.rotate();
+
+        assertEquals(expected, rotated.getCrossCheck(3, 4));
+        assertEquals(expected, rotated.getCrossCheck(4, 3));
+    }*/
 }
 

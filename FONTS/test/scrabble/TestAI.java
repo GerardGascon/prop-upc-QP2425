@@ -134,7 +134,7 @@ public class TestAI {
 
         adder = new WordAdder(dawg);
         board = new StandardBoard();
-        anchors = new Anchors(board);
+        anchors = new Anchors();
         WordGetter wordGetter = new WordGetter(board);
         pointCalculator = new PointCalculator(board, wordGetter);
 
