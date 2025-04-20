@@ -4,17 +4,20 @@ import edu.upc.prop.scrabble.domain.turns.IGamePlayer;
 import edu.upc.prop.scrabble.domain.turns.TurnResult;
 
 public class GamePlayerStub implements IGamePlayer {
+    private boolean onTurn = false;
+
     @Override
     public void startTurn() {
-
+        onTurn = true;
     }
 
     @Override
     public void endTurn() {
+        onTurn = false;
     }
 
     @Override
     public boolean isActive() {
-        return false;
+        return onTurn;
     }
 }
