@@ -175,7 +175,7 @@ public abstract class AI {
         if (board.isCellValid(cell.x, cell.y)) {
             // No placed piece in current cell
             if (board.isCellEmpty(cell.x, cell.y)) {
-                // Already valid word
+                // Already valid word and no adjacent piece
                 if (node.isEndOfWord()) checkWord(partialWord, new Vector2(cell.x - 1, cell.y));
                 // Get all possible successors and iterate over them
                 Map<Character, Node> nextNodes = node.getSuccessors();
@@ -195,6 +195,8 @@ public abstract class AI {
             // Already placed piece
             else extendToNextExistingPieceRight(partialWord, node, new Vector2(cell.x + 1, cell.y), board.getCellPiece(cell.x, cell.y));
         }
+        // Already valid word and end of board
+        else if (node.isEndOfWord()) checkWord(partialWord, new Vector2(cell.x - 1, cell.y));
     }
 
     protected abstract void processRightPartSpecialPieces(String partialWord, Node node, Vector2 cell, Map.Entry<Character, Node> entry);
