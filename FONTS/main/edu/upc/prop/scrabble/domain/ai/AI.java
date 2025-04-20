@@ -83,7 +83,6 @@ public abstract class AI {
             currentAnchor = anchors.getAnchor(i); // Global variable
             int currentAnchorX = currentAnchor.x; // Variables to make code cleaner
             int currentAnchorY = currentAnchor.y;
-            if(currentDirection == Direction.Horizontal) System.out.println(currentAnchorX + " " + currentAnchorY + "\n");
             int limit = 0; // How far to the left can we go
             while (board.isCellValid(currentAnchorX - limit - 1, currentAnchorY) &&
                     board.isCellEmpty(currentAnchorX - limit - 1, currentAnchorY) &&
@@ -242,7 +241,6 @@ public abstract class AI {
         if (points > bestScore) {
             bestScore = points;
             if(currentDirection == Direction.Vertical) { // Rotate if needed
-                System.out.println(posVector[0].x + " " + posVector[0].y + "\n");
                 int newY = posVector[0].x;
                 posVector[0].x = board.getSize() - posVector[0].y - 1;
                 posVector[0].y = newY;
