@@ -4,11 +4,13 @@ import edu.upc.prop.scrabble.data.Player;
 import edu.upc.prop.scrabble.data.leaderboard.Leaderboard;
 import edu.upc.prop.scrabble.domain.actionmaker.SkipActionMaker;
 import edu.upc.prop.scrabble.domain.game.GameStepper;
+import edu.upc.prop.scrabble.domain.game.IEndScreen;
 import edu.upc.prop.scrabble.domain.turns.Endgame;
 import edu.upc.prop.scrabble.domain.turns.IGamePlayer;
 import edu.upc.prop.scrabble.domain.turns.Turn;
 import org.junit.Before;
 import org.junit.Test;
+import scrabble.stubs.EndScreenStub;
 import scrabble.stubs.GamePlayerStub;
 
 import static org.junit.Assert.assertFalse;
@@ -28,7 +30,8 @@ public class TestSkipActionMaker {
 
         Endgame endgame = new Endgame(new Player[]{player1, player2});
         Turn turn = new Turn(endgame, new IGamePlayer[]{player1Stub, player2Stub});
-        GameStepper stepper = new GameStepper(turn, new Leaderboard(), new Player[]{player1, player2});
+        IEndScreen endScreen = new EndScreenStub();
+        GameStepper stepper = new GameStepper(turn, new Leaderboard(), new Player[]{player1, player2}, endScreen);
         skipActionMaker = new SkipActionMaker(stepper);
     }
 
