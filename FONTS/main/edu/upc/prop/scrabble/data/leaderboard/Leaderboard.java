@@ -9,7 +9,7 @@ import java.util.Collections;
  * @author Felipe Martínez Lassalle
  */
 public class Leaderboard {
-    private ArrayList<Score> leaderBoard;
+    private final ArrayList<Score> leaderBoard;
 
     public Leaderboard() { this.leaderBoard = new ArrayList<>(); }
 

@@ -9,7 +9,7 @@ import java.util.Objects;
 public final class Piece {
     private String letter;
     private final int value;
-    private boolean isBlank;
+    private final boolean isBlank;
 
     /***
      * Creates a regular piece with fixed letter and value.

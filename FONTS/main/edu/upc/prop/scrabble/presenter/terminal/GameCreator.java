@@ -29,8 +29,8 @@ public class GameCreator extends SceneObject {
     public void onProcess(float delta) {
 
         String action = Reader.getInstance().readLine();
-        if (action == null)
-            return;
+        if (action == null) {
+        }
         else if (action.equals("next")) {
             next();
         }

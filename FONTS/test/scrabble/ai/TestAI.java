@@ -40,7 +40,7 @@ public class TestAI {
     private Anchors anchors;
     private BoardViewStub boardViewStub;
     private WordPlacer wordPlacer;
-    private Piece[] valEng = {
+    private final Piece[] valEng = {
             new Piece("A", 1),
             new Piece("B", 3),
             new Piece("C", 3),

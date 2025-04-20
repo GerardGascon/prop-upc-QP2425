@@ -8,9 +8,9 @@ import java.util.List;
 
 public class PlayerSetter {
     private int numplay;
-    private List<String> nomPlayers = new ArrayList<>();
+    private final List<String> nomPlayers = new ArrayList<>();
     private int numbots;
-    private List<String> nomCpus = new ArrayList<>();
+    private final List<String> nomCpus = new ArrayList<>();
     private int mode;  //et diu si sumes a players o bots  Us visual
 
     public boolean hasEnded (){
