@@ -18,6 +18,7 @@ import edu.upc.prop.scrabble.domain.board.WordPlacer;
 import edu.upc.prop.scrabble.domain.crosschecks.CrossCheckUpdater;
 import edu.upc.prop.scrabble.domain.dawg.WordAdder;
 import edu.upc.prop.scrabble.domain.dawg.WordValidator;
+import edu.upc.prop.scrabble.domain.exceptions.InitialMoveNotInCenterException;
 import edu.upc.prop.scrabble.domain.exceptions.MovementOutsideOfBoardException;
 import edu.upc.prop.scrabble.domain.exceptions.WordDoesNotExistException;
 import edu.upc.prop.scrabble.domain.exceptions.WordNotConnectedToOtherWordsException;
@@ -275,5 +276,20 @@ public class TestPlaceActionMaker {
         assertEquals("O", board.getCellPiece(8, 7).letter());
         assertEquals("L", board.getCellPiece(9, 7).letter());
         assertEquals("A", board.getCellPiece(10, 7).letter());
+    }
+
+    @Test
+    public void placeFirstOutsideOfCenter() {
+        Movement movement = new Movement("HOlA", 1, 1, Direction.Horizontal);
+
+        WordAdder wordAdder = new WordAdder(dawg);
+        wordAdder.run("HOLA");
+
+        player.addPiece(new Piece("H", 1));
+        player.addPiece(new Piece("O", 1));
+        player.addPiece(new Piece("#", 1, true));
+        player.addPiece(new Piece("A", 1));
+
+        assertThrows(InitialMoveNotInCenterException.class, () -> sut.run(movement));
     }
 }
