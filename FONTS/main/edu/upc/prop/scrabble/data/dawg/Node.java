@@ -14,7 +14,7 @@ public class Node {
     public Node(Character character, int depth, Node parent, boolean isEndOfWord) {
         this.isEndOfWord = isEndOfWord;
         this.character = character;
-        this.successors = new HashMap<Character, Node>();
+        this.successors = new HashMap<>();
         this.depth = depth;
         this.parent = parent;
         calculateHashCode();

@@ -1,13 +1,9 @@
 package edu.upc.prop.scrabble.data.crosschecks;
 
-import edu.upc.prop.scrabble.data.board.Board;
-
 import java.util.BitSet;
 
 public abstract class CrossChecks {
-
     private final BitSet[][] crossChecks;
-
 
     protected int boardSize;
     public CrossChecks(int boardSize) {
