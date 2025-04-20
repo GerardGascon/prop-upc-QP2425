@@ -28,33 +28,33 @@ public class AnchorUpdater {
     }
 
     private void updateHorizontalAnchors(int x, int y, int size) {
-        if (board.isCellValid(x - 1, y) && board.isCellEmpty(x - 1, y) && !anchors.exists(x-1,y))
+        if (board.isCellValid(x - 1, y) && board.isCellEmpty(x - 1, y) )
             anchors.addAnchor(x - 1, y); // Previous to first
-        if (board.isCellValid(x + size, y) && board.isCellEmpty(x + size, y) && !anchors.exists(x-1,y))
+        if (board.isCellValid(x + size, y) && board.isCellEmpty(x + size, y))
             anchors.addAnchor(x + size, y); // Next to last
 
         for (int i = x; i < x + size; i++) {
             if (board.isCellValid(i, y) && anchors.exists(i, y))
                 anchors.removeAnchor(i, y);
-            if (board.isCellValid(i, y + 1) && board.isCellEmpty(i, y + 1) && !anchors.exists(i, y + 1))
+            if (board.isCellValid(i, y + 1) && board.isCellEmpty(i, y + 1))
                 anchors.addAnchor(i, y + 1);
-            if (board.isCellValid(i, y - 1) && board.isCellEmpty(i, y - 1) && !anchors.exists(i, y - 1))
+            if (board.isCellValid(i, y - 1) && board.isCellEmpty(i, y - 1))
                 anchors.addAnchor(i, y - 1);
         }
     }
 
     private void updateVerticalAnchors(int x, int y, int size) {
-        if (board.isCellValid(x, y - 1) && board.isCellEmpty(x, y - 1) && !anchors.exists(x, y - 1))
+        if (board.isCellValid(x, y - 1) && board.isCellEmpty(x, y - 1))
             anchors.addAnchor(x, y - 1);
-        if (board.isCellValid(x, y + size) && board.isCellEmpty(x, y + size) && !anchors.exists(x,y+size))
+        if (board.isCellValid(x, y + size) && board.isCellEmpty(x, y + size))
             anchors.addAnchor(x, y + size);
 
         for (int i = y; i < y + size; i++) {
             if (board.isCellValid(x, i) && anchors.exists(x, i))
                 anchors.removeAnchor(x, i);
-            if (board.isCellValid(x + 1, i) && board.isCellEmpty(x + 1, i) && !anchors.exists(x+1, i))
+            if (board.isCellValid(x + 1, i) && board.isCellEmpty(x + 1, i))
                 anchors.addAnchor(x + 1, i);
-            if (board.isCellValid(x - 1, i) && board.isCellEmpty(x - 1, i) && !anchors.exists(x-1,i))
+            if (board.isCellValid(x - 1, i) && board.isCellEmpty(x - 1, i))
                 anchors.addAnchor(x - 1, i);
         }
     }
