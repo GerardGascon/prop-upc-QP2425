@@ -13,13 +13,13 @@ import edu.upc.prop.scrabble.domain.turns.TurnResult;
 public class GameStepper {
     private final Turn turn;
     private final Leaderboard leaderboard;
-    private final Player[] player;
+    private final Player[] players;
     private final IEndScreen endScreen;
 
     public GameStepper(Turn turn, Leaderboard leaderboard,Player[] players,IEndScreen endScreen) {
         this.turn = turn;
         this.leaderboard = leaderboard;
-        this.player = players;
+        this.players = players;
         this.endScreen = endScreen;
     }
 
@@ -28,17 +28,17 @@ public class GameStepper {
        if (ended) {
            int maxScore = 0;
            //Check who is the winner
-           for (Player player : player) {
+           for (Player player : players) {
                 if (player.getScore() > maxScore) {
                     maxScore = player.getScore();
                 }
            }
 
-           for (Player player : player) {
+           for (Player player : players) {
                boolean winner = (player.getScore() == maxScore);
                leaderboard.addScore(new Score(player.getScore(),winner,player.getName()));
            }
-           endScreen.show();
+           endScreen.show(players);
        }
     }
 }
