@@ -14,11 +14,13 @@ public class GameStepper {
     private final Turn turn;
     private final Leaderboard leaderboard;
     private final Player[] player;
+    private final IEndScreen endScreen;
 
-    public GameStepper(Turn turn, Leaderboard leaderboard,Player[] players) {
+    public GameStepper(Turn turn, Leaderboard leaderboard,Player[] players,IEndScreen endScreen) {
         this.turn = turn;
         this.leaderboard = leaderboard;
         this.player = players;
+        this.endScreen = endScreen;
     }
 
     public void run(TurnResult result){
@@ -36,6 +38,7 @@ public class GameStepper {
                boolean winner = (player.getScore() == maxScore);
                leaderboard.addScore(new Score(player.getScore(),winner,player.getName()));
            }
+           endScreen.show();
        }
     }
 }
