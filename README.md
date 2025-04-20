@@ -2,11 +2,17 @@
 
 ## Autors
 
-Albert Usero Martinez: [albert.usero@estudiantat.upc.edu](mailto:albert.usero@estudiantat.upc.edu)\
-Biel Pérez Silvestre: [biel.perez@estudiantat.upc.edu](mailto:biel.perez@estudiantat.upc.edu)\
-Felipe Martínez Lassalle: [felipe.martinez.lassalle@estudiantat.upc.edu](mailto:felipe.martinez.lassalle@estudiantat.upc.edu)\
-Gerard Gascón Moliné: [gerard.gascon@estudiantat.upc.edu](mailto:gerard.gascon@estudiantat.upc.edu)\
-Gina Escofet González: [gina.escofet@estudiantat.upc.edu](mailto:gina.escofet@estudiantat.upc.edu)
+Escofet González, Gina\
+Gascón Moliné, Gerard\
+Martínez Lassalle, Felipe\
+Pérez Silvestre, Biel\
+Usero Martinez, Albert\
+
+[gina.escofet@estudiantat.upc.edu](mailto:gina.escofet@estudiantat.upc.edu)\
+[gerard.gascon@estudiantat.upc.edu](mailto:gerard.gascon@estudiantat.upc.edu)\
+[felipe.martinez.lassalle@estudiantat.upc.edu](mailto:felipe.martinez.lassalle@estudiantat.upc.edu)\
+[biel.perez@estudiantat.upc.edu](mailto:biel.perez@estudiantat.upc.edu)\
+[albert.usero@estudiantat.upc.edu](mailto:albert.usero@estudiantat.upc.edu)
 
 ## Executar
 
