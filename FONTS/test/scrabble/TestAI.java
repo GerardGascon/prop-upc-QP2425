@@ -619,10 +619,12 @@ public class TestAI {
         assertEquals(expectedMove, ai.run());
     }
 
-    /*@Test
+    @Test
     public void englishAIEmptyBoardV() {
         adder.run("HELLO");
         adder.run("SKIBIDI");
+        adder.run("KIBIDI");
+        adder.run("SKIBI");
 
         bot.addPiece(new Piece("S", 1));
         bot.addPiece(new Piece("K", 1));
@@ -648,6 +650,6 @@ public class TestAI {
 
         Movement expectedMove = new Movement("SKIBIDI", 7, 3, Direction.Vertical);
         assertEquals(expectedMove, ai.run());
-    }*/
+    }
 
 }

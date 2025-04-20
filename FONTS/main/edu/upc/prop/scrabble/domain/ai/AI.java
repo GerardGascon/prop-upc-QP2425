@@ -59,18 +59,18 @@ public abstract class AI {
 
         // VERTICAL CHECKS
         // Rotation of needed components
-        /*currentDirection = Direction.Vertical;
+        currentDirection = Direction.Vertical;
         Board storedBoard = board;
         board = board.rotate();
         Anchors storedAnchors = anchors;
-        anchors = anchors.rotate(board);
+        anchors = anchors.rotate(board.getSize());
         CrossChecks storedCrossChecks = crossChecks;
         crossChecks = crossChecks.rotate();
         innerRun();
         // Restore rotations
         board = storedBoard;
         anchors = storedAnchors;
-        crossChecks = storedCrossChecks;*/
+        crossChecks = storedCrossChecks;
 
         return bestMove;
     }
@@ -85,8 +85,8 @@ public abstract class AI {
             int currentAnchorY = currentAnchor.y;
             int limit = 0; // How far to the left can we go
             while (board.isCellValid(currentAnchorX - limit - 1, currentAnchorY) &&
-                    board.isCellEmpty(currentAnchorX - limit - 1, currentAnchorY) &&
-                    !anchors.exists(currentAnchorX - limit - 1, currentAnchorY)) ++limit;
+                   board.isCellEmpty(currentAnchorX - limit - 1, currentAnchorY) &&
+                   !anchors.exists(currentAnchorX - limit - 1, currentAnchorY)) ++limit;
 
             // LeftPart is composed by bot's pieces or already placed letters, never both
             // we can track in which case we are thanks to the limit variable
