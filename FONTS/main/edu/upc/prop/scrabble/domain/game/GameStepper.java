@@ -33,19 +33,14 @@ public class GameStepper {
                 .toArray(Player[]::new);
 
         boolean ended = turn.run(result);
-       if (ended) {
-           int maxScore = 0;
-           //TODO: No fa falta check en cada iteracio mirar qui es el winner, es el primer degut al sort:D
-           for (Player player : players) {
-                if (player.getScore() > maxScore) {
-                    maxScore = player.getScore();
-                }
-           }
+        if (ended) {
+           int maxScore = sortedPlayers[0].getScore();
 
            for (Player player : players) {
                boolean winner = (player.getScore() == maxScore);
                leaderboard.addScore(new Score(player.getScore(),winner,player.getName()));
            }
+
            EndScreen endScreen = new EndScreen();
            endScreen.show(sortedPlayers);
        }
