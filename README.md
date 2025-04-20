@@ -6,7 +6,7 @@ Escofet González, Gina\
 Gascón Moliné, Gerard\
 Martínez Lassalle, Felipe\
 Pérez Silvestre, Biel\
-Usero Martinez, Albert\
+Usero Martinez, Albert
 
 [gina.escofet@estudiantat.upc.edu](mailto:gina.escofet@estudiantat.upc.edu)\
 [gerard.gascon@estudiantat.upc.edu](mailto:gerard.gascon@estudiantat.upc.edu)\
