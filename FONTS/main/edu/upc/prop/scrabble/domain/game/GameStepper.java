@@ -40,8 +40,6 @@ public class GameStepper {
                boolean winner = (player.getScore() == maxScore);
                leaderboard.addScore(new Score(player.getScore(),winner,player.getName()));
            }
-
-           EndScreen endScreen = new EndScreen();
            endScreen.show(sortedPlayers);
        }
     }
