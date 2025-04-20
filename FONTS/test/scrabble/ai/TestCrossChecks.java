@@ -1,4 +1,4 @@
-package scrabble.board;
+package scrabble.ai;
 
 import edu.upc.prop.scrabble.data.Movement;
 import edu.upc.prop.scrabble.data.board.Board;
@@ -6,7 +6,7 @@ import edu.upc.prop.scrabble.data.board.StandardBoard;
 import edu.upc.prop.scrabble.data.crosschecks.CrossChecks;
 import edu.upc.prop.scrabble.data.crosschecks.EnglishCrossChecks;
 import edu.upc.prop.scrabble.data.dawg.DAWG;
-import edu.upc.prop.scrabble.domain.crosschecks.CrossCheckUpdater;
+import edu.upc.prop.scrabble.domain.ai.CrossCheckUpdater;
 import edu.upc.prop.scrabble.domain.dawg.WordAdder;
 import edu.upc.prop.scrabble.domain.pieces.PiecesConverter;
 import edu.upc.prop.scrabble.utils.Direction;

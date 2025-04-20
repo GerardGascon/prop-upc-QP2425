@@ -1,4 +1,4 @@
-package scrabble;
+package scrabble.ai;
 
 import edu.upc.prop.scrabble.data.Anchors;
 import edu.upc.prop.scrabble.data.Movement;
@@ -11,7 +11,7 @@ import edu.upc.prop.scrabble.data.crosschecks.EnglishCrossChecks;
 import edu.upc.prop.scrabble.data.crosschecks.SpanishCrossChecks;
 import edu.upc.prop.scrabble.data.dawg.DAWG;
 import edu.upc.prop.scrabble.data.pieces.Piece;
-import edu.upc.prop.scrabble.domain.AnchorUpdater;
+import edu.upc.prop.scrabble.domain.ai.AnchorUpdater;
 import edu.upc.prop.scrabble.domain.ai.AI;
 import edu.upc.prop.scrabble.domain.ai.CatalanAI;
 import edu.upc.prop.scrabble.domain.ai.EnglishAI;
@@ -19,7 +19,7 @@ import edu.upc.prop.scrabble.domain.ai.SpanishAI;
 import edu.upc.prop.scrabble.domain.board.PointCalculator;
 import edu.upc.prop.scrabble.domain.board.WordGetter;
 import edu.upc.prop.scrabble.domain.board.WordPlacer;
-import edu.upc.prop.scrabble.domain.crosschecks.CrossCheckUpdater;
+import edu.upc.prop.scrabble.domain.ai.CrossCheckUpdater;
 import edu.upc.prop.scrabble.domain.dawg.WordAdder;
 import edu.upc.prop.scrabble.domain.pieces.CatalanPiecesConverter;
 import edu.upc.prop.scrabble.domain.pieces.PiecesConverter;

@@ -1,4 +1,4 @@
-package edu.upc.prop.scrabble.domain.crosschecks;
+package edu.upc.prop.scrabble.domain.ai;
 
 import edu.upc.prop.scrabble.data.Movement;
 import edu.upc.prop.scrabble.data.board.Board;

@@ -1,10 +1,10 @@
-package scrabble.board;
+package scrabble.ai;
 
 import edu.upc.prop.scrabble.data.Anchors;
 import edu.upc.prop.scrabble.data.Movement;
 import edu.upc.prop.scrabble.data.board.Board;
 import edu.upc.prop.scrabble.data.board.StandardBoard;
-import edu.upc.prop.scrabble.domain.AnchorUpdater;
+import edu.upc.prop.scrabble.domain.ai.AnchorUpdater;
 import edu.upc.prop.scrabble.domain.pieces.PiecesConverter;
 import edu.upc.prop.scrabble.utils.Direction;
 import org.junit.Before;
