@@ -72,6 +72,10 @@ public abstract class AI {
         anchors = storedAnchors;
         crossChecks = storedCrossChecks;
 
+        if(bestMove.direction() == Direction.Vertical) { // Rotate if needed
+            int newY = bestMove.x();
+            bestMove = new Movement(bestMove.word(), board.getSize() - bestMove.y() -1, newY, Direction.Vertical);
+        }
         return bestMove;
     }
 
@@ -242,11 +246,6 @@ public abstract class AI {
         int points = pointCalculator.run(posVector, pieceArray);
         if (points > bestScore) {
             bestScore = points;
-            if(currentDirection == Direction.Vertical) { // Rotate if needed
-                int newY = posVector[0].x;
-                posVector[0].x = board.getSize() - posVector[0].y - 1;
-                posVector[0].y = newY;
-            }
             bestMove = new Movement(word, posVector[0].x, posVector[0].y, currentDirection);
         }
     }
