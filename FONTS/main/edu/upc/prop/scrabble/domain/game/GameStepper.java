@@ -5,6 +5,7 @@ import edu.upc.prop.scrabble.data.leaderboard.Leaderboard;
 import edu.upc.prop.scrabble.data.leaderboard.Score;
 import edu.upc.prop.scrabble.domain.turns.Turn;
 import edu.upc.prop.scrabble.domain.turns.TurnResult;
+import edu.upc.prop.scrabble.presenter.terminal.EndScreen;
 
 /**
  * Class that check each if the game has ended,case in which it updates the leaderboard
@@ -38,6 +39,7 @@ public class GameStepper {
                boolean winner = (player.getScore() == maxScore);
                leaderboard.addScore(new Score(player.getScore(),winner,player.getName()));
            }
+           EndScreen endScreen = new EndScreen();
            endScreen.show(players);
        }
     }
