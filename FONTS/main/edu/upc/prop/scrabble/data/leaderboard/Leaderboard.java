@@ -1,8 +1,6 @@
 package edu.upc.prop.scrabble.data.leaderboard;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 
 /**
  * Class used to store Score ArrayList

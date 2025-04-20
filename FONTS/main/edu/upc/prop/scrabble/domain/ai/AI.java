@@ -23,7 +23,7 @@ import java.util.*;
  */
 public abstract class AI {
     private final DAWG dawg;
-    protected Player bot;//para la mano
+    protected final Player bot;//para la mano
     private Board board;
     private Anchors anchors;
     protected CrossChecks crossChecks;
@@ -102,15 +102,15 @@ public abstract class AI {
             // we can track in which case we are thanks to the limit variable
             if (limit == 0) {
                 // Already placed letters case
-                String partialWord = "";
+                StringBuilder partialWord = new StringBuilder();
                 int j = 1;
                 while (board.isCellValid(currentAnchor.x - j, currentAnchor.y) &&
                         !board.isCellEmpty(currentAnchor.x - j, currentAnchor.y)) { // Check existing string
-                    partialWord = board.getCellPiece(currentAnchor.x - j, currentAnchor.y).letter() + partialWord;
+                    partialWord.insert(0, board.getCellPiece(currentAnchor.x - j, currentAnchor.y).letter());
                     ++j;
                 }
-                Node node = getFinalNode(partialWord);
-                if (node != null) ExtendRight(partialWord, node, currentAnchor); // Straight to the right part
+                Node node = getFinalNode(partialWord.toString());
+                if (node != null) ExtendRight(partialWord.toString(), node, currentAnchor); // Straight to the right part
             } else LeftPart("", dawg.getRoot(), limit); // Bot's pieces case
         }
     }
@@ -184,7 +184,7 @@ public abstract class AI {
                     checkWord(partialWord, new Vector2(cell.x - 1, cell.y));
                 Map<Character, Node> nextNodes = node.getSuccessors();
                 for (Map.Entry<Character, Node> entry : nextNodes.entrySet()) {
-                    processRightPartSpecialPieces(partialWord, node, cell, entry);
+                    processRightPartSpecialPieces(partialWord, cell, entry);
                     char c = entry.getKey();
                     Piece usedPiece = bot.hasPiece(String.valueOf(c));
 
@@ -199,7 +199,7 @@ public abstract class AI {
         }
     }
 
-    protected abstract void processRightPartSpecialPieces(String partialWord, Node node, Vector2 cell, Map.Entry<Character, Node> entry);
+    protected abstract void processRightPartSpecialPieces(String partialWord, Vector2 cell, Map.Entry<Character, Node> entry);
 
     protected abstract void extendToNextNewPieceRight(String partialWord, Vector2 cell, Map.Entry<Character, Node> entry, Piece usedPiece);
 

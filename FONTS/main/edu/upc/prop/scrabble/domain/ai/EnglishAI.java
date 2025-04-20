@@ -41,6 +41,6 @@ public class EnglishAI extends AI {
     }
 
     @Override
-    protected void processRightPartSpecialPieces(String partialWord, Node node, Vector2 cell, Map.Entry<Character, Node> entry) {
+    protected void processRightPartSpecialPieces(String partialWord, Vector2 cell, Map.Entry<Character, Node> entry) {
     }
 }

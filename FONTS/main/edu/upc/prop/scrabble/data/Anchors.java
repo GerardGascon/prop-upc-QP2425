@@ -32,6 +32,7 @@ public class Anchors {
     public Anchors rotate(int boardSize) {
         Anchors rotated = new Anchors();
         for (Vector2 anchor : this.anchors){
+            //noinspection SuspiciousNameCombination
             rotated.addAnchor(anchor.y, boardSize - anchor.x - 1);
         }
         return rotated;

@@ -3,9 +3,6 @@ package edu.upc.prop.scrabble.presenter.terminal;
 import edu.upc.prop.scrabble.data.Player;
 import edu.upc.prop.scrabble.domain.game.IEndScreen;
 
-import java.util.*;
-import java.util.stream.Stream;
-
 /***
  * Class that shows the endscreen of a game that has ended.
  * @author Gina Escofet González

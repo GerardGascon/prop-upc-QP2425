@@ -4,7 +4,6 @@ import edu.upc.prop.scrabble.data.Player;
 import edu.upc.prop.scrabble.data.exceptions.PlayerDoesNotHavePieceException;
 import edu.upc.prop.scrabble.data.pieces.Bag;
 import edu.upc.prop.scrabble.data.pieces.Piece;
-import edu.upc.prop.scrabble.domain.pieces.IPiecePrinter;
 import edu.upc.prop.scrabble.domain.pieces.PiecesInHandGetter;
 import org.junit.Test;
 import scrabble.stubs.RandStub;

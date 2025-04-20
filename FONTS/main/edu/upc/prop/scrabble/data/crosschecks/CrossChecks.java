@@ -5,7 +5,8 @@ import java.util.BitSet;
 public abstract class CrossChecks {
     private final BitSet[][] crossChecks;
 
-    protected int boardSize;
+    protected final int boardSize;
+
     public CrossChecks(int boardSize) {
         this.boardSize = boardSize;
         crossChecks = new BitSet[boardSize][boardSize];

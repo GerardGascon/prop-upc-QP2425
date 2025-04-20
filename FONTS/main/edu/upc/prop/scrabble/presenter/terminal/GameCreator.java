@@ -29,21 +29,16 @@ public class GameCreator extends SceneObject {
     public void onProcess(float delta) {
 
         String action = Reader.getInstance().readLine();
-        if (action == null) {
-        }
-        else if (action.equals("next")) {
-            next();
-        }
-        else if (action.equals("previous")) {
-            previous();
-        }
-        else if (action.equals("submit")) {
-            submit();
-        }
-        else {
-            if (state == State.Player && !playerSetter.hasEnded()) {
-                playerSetter.addPlayer(action);
-                playerSetter.print_interface();
+        if (action == null) return;
+        switch (action) {
+            case "next" -> next();
+            case "previous" -> previous();
+            case "submit" -> submit();
+            default -> {
+                if (state == State.Player && !playerSetter.hasEnded()) {
+                    playerSetter.addPlayer(action);
+                    playerSetter.print_interface();
+                }
             }
         }
     }

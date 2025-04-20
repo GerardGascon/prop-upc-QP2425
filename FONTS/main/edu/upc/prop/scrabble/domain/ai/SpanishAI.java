@@ -1,7 +1,6 @@
 package edu.upc.prop.scrabble.domain.ai;
 
 import edu.upc.prop.scrabble.data.Anchors;
-import edu.upc.prop.scrabble.data.Movement;
 import edu.upc.prop.scrabble.data.Player;
 import edu.upc.prop.scrabble.data.board.Board;
 import edu.upc.prop.scrabble.data.crosschecks.CrossChecks;
@@ -101,7 +100,7 @@ public class SpanishAI extends AI {
     }
 
     @Override
-    protected void processRightPartSpecialPieces(String partialWord, Node node, Vector2 cell, Map.Entry<Character, Node> entry) {
+    protected void processRightPartSpecialPieces(String partialWord, Vector2 cell, Map.Entry<Character, Node> entry) {
         char c = entry.getKey();
         Node nextNode;
         Piece usedPiece;

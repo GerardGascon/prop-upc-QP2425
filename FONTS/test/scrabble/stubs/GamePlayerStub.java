@@ -1,7 +1,6 @@
 package scrabble.stubs;
 
 import edu.upc.prop.scrabble.domain.turns.IGamePlayer;
-import edu.upc.prop.scrabble.domain.turns.TurnResult;
 
 public class GamePlayerStub implements IGamePlayer {
     private boolean onTurn = false;

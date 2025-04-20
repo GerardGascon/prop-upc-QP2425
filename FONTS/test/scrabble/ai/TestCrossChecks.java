@@ -15,16 +15,13 @@ import org.junit.Test;
 import java.util.BitSet;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 public class TestCrossChecks {
     @Test
     public void createCrossChecks() {
         Board board = new StandardBoard();
-        DAWG dawg = new DAWG();
         CrossChecks Ecrch = new EnglishCrossChecks(board.getSize());
         BitSet allavaliable = new BitSet(26);
-        //expected.set(0); es crea amb tot 0's
         assertEquals(allavaliable, Ecrch.getCrossCheck(0, 0));
     }
     @Test
@@ -39,8 +36,6 @@ public class TestCrossChecks {
 
         CrossChecks Ecrch = new EnglishCrossChecks(board.getSize());
         PiecesConverter converter = new PiecesConverter();
-        //PiecesConverter converter2 = new CatalanPiecesConverter();
-        //PiecesConverter converter3 = new SpanishPiecesConverter();
         CrossCheckUpdater crchU = new CrossCheckUpdater(converter, Ecrch,board,dawg);
 
         BitSet allavaliable = new BitSet(26);

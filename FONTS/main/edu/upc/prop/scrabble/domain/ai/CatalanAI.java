@@ -90,7 +90,7 @@ public class CatalanAI extends AI {
     }
 
     @Override
-    protected void processRightPartSpecialPieces(String partialWord, Node node, Vector2 cell, Map.Entry<Character, Node> entry) {
+    protected void processRightPartSpecialPieces(String partialWord, Vector2 cell, Map.Entry<Character, Node> entry) {
         char c = entry.getKey();
         Node nextNode;
         Piece usedPiece ;

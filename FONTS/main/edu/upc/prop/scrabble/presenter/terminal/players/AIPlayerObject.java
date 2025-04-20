@@ -1,10 +1,6 @@
 package edu.upc.prop.scrabble.presenter.terminal.players;
 
 import edu.upc.prop.scrabble.data.Movement;
-import edu.upc.prop.scrabble.data.Player;
-import edu.upc.prop.scrabble.domain.actionmaker.DrawActionMaker;
-import edu.upc.prop.scrabble.domain.actionmaker.PlaceActionMaker;
-import edu.upc.prop.scrabble.domain.actionmaker.SkipActionMaker;
 import edu.upc.prop.scrabble.domain.ai.AI;
 
 public class AIPlayerObject extends PlayerObject {

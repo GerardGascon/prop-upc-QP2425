@@ -45,7 +45,6 @@ public class TestPlaceActionMaker {
     private Bag bag;
     private DAWG dawg;
     private PlaceActionMaker sut;
-    private PiecePrinterStub piecePrinterStub;
     private Player player;
 
     @Before
@@ -61,7 +60,6 @@ public class TestPlaceActionMaker {
         dawg = new DAWG();
         WordValidator wordValidator = new WordValidator(dawg);
         bag = new Bag();
-        piecePrinterStub = new PiecePrinterStub();
         IRand rand = new RandStub(0);
         PiecesInHandGetter piecesInHandGetter = new PiecesInHandGetter(bag, player, rand);
         MovementCleaner movementCleaner = new MovementCleaner(board, piecesConverter);

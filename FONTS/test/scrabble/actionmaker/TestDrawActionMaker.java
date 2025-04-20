@@ -13,7 +13,6 @@ import edu.upc.prop.scrabble.domain.turns.IGamePlayer;
 import edu.upc.prop.scrabble.domain.turns.Turn;
 import edu.upc.prop.scrabble.presenter.terminal.actionmaker.HandView;
 import edu.upc.prop.scrabble.utils.IRand;
-import edu.upc.prop.scrabble.utils.Rand;
 import org.junit.Before;
 import org.junit.Test;
 import scrabble.stubs.EndScreenStub;

@@ -5,7 +5,6 @@ import edu.upc.prop.scrabble.data.leaderboard.Leaderboard;
 import edu.upc.prop.scrabble.data.leaderboard.Score;
 import edu.upc.prop.scrabble.domain.turns.Turn;
 import edu.upc.prop.scrabble.domain.turns.TurnResult;
-import edu.upc.prop.scrabble.presenter.terminal.EndScreen;
 
 import java.util.Arrays;
 import java.util.Comparator;

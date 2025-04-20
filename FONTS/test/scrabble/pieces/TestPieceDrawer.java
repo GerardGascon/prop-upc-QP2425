@@ -9,8 +9,6 @@ import edu.upc.prop.scrabble.utils.IRand;
 import org.junit.Test;
 import scrabble.stubs.RandStub;
 
-import java.util.*;
-
 import static org.junit.Assert.*;
 
 public class TestPieceDrawer {

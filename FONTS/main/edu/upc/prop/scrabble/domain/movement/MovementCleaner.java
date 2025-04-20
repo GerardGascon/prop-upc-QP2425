@@ -66,13 +66,6 @@ public class MovementCleaner {
             if (board.isCellEmpty(x + i, y)) {
                 requiredPieces.add(new Pair<>(allPieces[i], new Vector2(x + i, y)));
             }
-            else {
-                Piece pieceInCell = board.getCellPiece(x, y + i);
-                if (pieceInCell == allPieces[i]) {
-                    continue;
-                }
-                // else throw exception
-            }
         }
         return requiredPieces.toArray(Pair[]::new);
 
@@ -87,13 +80,6 @@ public class MovementCleaner {
         for (int i = 0; i < n; ++i) {
             if (board.isCellEmpty(x, y + i)) {
                 requiredPieces.add(new Pair<>(allPieces[i], new Vector2(x, y + i)));
-            }
-            else {
-                Piece pieceInCell = board.getCellPiece(x + i, y);
-                if (pieceInCell == allPieces[i]) {
-                    continue;
-                }
-                // else throw exception
             }
         }
         return requiredPieces.toArray(Pair[]::new);

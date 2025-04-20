@@ -30,7 +30,6 @@ import edu.upc.prop.scrabble.domain.turns.Turn;
 import edu.upc.prop.scrabble.presenter.scenes.Scene;
 import edu.upc.prop.scrabble.presenter.terminal.BoardView;
 import edu.upc.prop.scrabble.presenter.terminal.EndScreen;
-import edu.upc.prop.scrabble.presenter.terminal.PieceDisplay;
 import edu.upc.prop.scrabble.presenter.terminal.actionmaker.HandView;
 import edu.upc.prop.scrabble.presenter.terminal.players.AIPlayerObject;
 import edu.upc.prop.scrabble.presenter.terminal.players.HumanPlayerObject;
@@ -71,7 +70,6 @@ public class GameScene extends Scene {
         WordValidator wordValidator = new WordValidator(dawg);
         PresentPiecesWordCompleter presentPiecesWordCompleter = new PresentPiecesWordCompleter(wordGetter);
         CrossCheckUpdater crossCheckUpdater = new CrossCheckUpdater(piecesConverter, crossChecks, board, dawg);
-        IPiecePrinter piecePrinter = new PieceDisplay();
 
         PlayerObject[] players = instantiatePlayers(playersData);
         Endgame endgame = new Endgame(playersData);
