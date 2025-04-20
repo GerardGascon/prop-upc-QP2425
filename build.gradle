@@ -5,7 +5,7 @@ plugins {
 
 group = 'edu.upc.prop.scrabble'
 version = '1.0-SNAPSHOT'
-rootProject.layout.buildDirectory = 'EXE'
+layout.buildDirectory.set(file("EXE"))
 
 ext {
     javaMainClass = 'edu.upc.prop.scrabble.Main'
@@ -57,17 +57,19 @@ sourceSets {
 
 tasks.register('copyTextFiles', Copy) {
     from 'FONTS/main'
-    into "$rootProject.layout.buildDirectory/classes/java/main"
+    into layout.buildDirectory.dir("classes/java/main")
     include '**/*.txt'
 }
 
 tasks.register('generateRunFiles') {
     doLast {
-        def batchFile = file("${rootProject.layout.buildDirectory}/classes/java/main/scrabble.bat")
+        def outputDir = layout.buildDirectory.dir("classes/java/main").get().asFile
+
+        def batchFile = new File(outputDir, "scrabble.bat")
         batchFile.text = '@echo off\n' +
                 'java edu.upc.prop.scrabble.Main'
 
-        def shellFile = file("${rootProject.layout.buildDirectory}/classes/java/main/scrabble.sh")
+        def shellFile = new File(outputDir, "scrabble.sh")
         shellFile.text = '#!/bin/bash\n' +
                 'java edu.upc.prop.scrabble.Main'
     }
