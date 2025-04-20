@@ -1,5 +1,7 @@
 package edu.upc.prop.scrabble.domain.exceptions;
 
+import edu.upc.prop.scrabble.data.exceptions.ScrabbleException;
+
 /**
  * Exception thrown when a player does not have enough pieces in their hand to make a move.
  * This ensures that the game logic prevents invalid moves due to a lack of available pieces.

@@ -1,5 +1,7 @@
 package edu.upc.prop.scrabble.domain.exceptions;
 
+import edu.upc.prop.scrabble.data.exceptions.ScrabbleException;
+
 /**
  * Exception thrown when a movement is attempted outside the boundaries of the Scrabble board.
  * This exception ensures that players cannot place pieces beyond the playable area of the board.

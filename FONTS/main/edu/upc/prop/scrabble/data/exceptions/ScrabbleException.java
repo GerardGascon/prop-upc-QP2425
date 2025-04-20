@@ -1,4 +1,4 @@
-package edu.upc.prop.scrabble.domain.exceptions;
+package edu.upc.prop.scrabble.data.exceptions;
 
 /**
  * Abstract base class for all exceptions specific to the Scrabble game.

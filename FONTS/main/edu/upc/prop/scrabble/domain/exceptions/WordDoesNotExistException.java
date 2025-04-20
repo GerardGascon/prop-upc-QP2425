@@ -1,5 +1,7 @@
 package edu.upc.prop.scrabble.domain.exceptions;
 
+import edu.upc.prop.scrabble.data.exceptions.ScrabbleException;
+
 /**
  * Exception thrown to indicate that a word does not exist in the dictionary during a move.
  * <p>
