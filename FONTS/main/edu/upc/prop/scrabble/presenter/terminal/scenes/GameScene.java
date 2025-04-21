@@ -1,5 +1,6 @@
 package edu.upc.prop.scrabble.presenter.terminal.scenes;
 
+import edu.upc.prop.scrabble.data.Anchors;
 import edu.upc.prop.scrabble.data.Player;
 import edu.upc.prop.scrabble.data.board.*;
 import edu.upc.prop.scrabble.data.crosschecks.CatalanCrossChecks;
@@ -14,8 +15,8 @@ import edu.upc.prop.scrabble.data.properties.Language;
 import edu.upc.prop.scrabble.domain.actionmaker.DrawActionMaker;
 import edu.upc.prop.scrabble.domain.actionmaker.PlaceActionMaker;
 import edu.upc.prop.scrabble.domain.actionmaker.SkipActionMaker;
+import edu.upc.prop.scrabble.domain.ai.*;
 import edu.upc.prop.scrabble.domain.board.*;
-import edu.upc.prop.scrabble.domain.ai.CrossCheckUpdater;
 import edu.upc.prop.scrabble.domain.dawg.WordAdder;
 import edu.upc.prop.scrabble.domain.dawg.WordValidator;
 import edu.upc.prop.scrabble.domain.game.GameStepper;
@@ -70,7 +71,9 @@ public class GameScene extends Scene {
         PresentPiecesWordCompleter presentPiecesWordCompleter = new PresentPiecesWordCompleter(wordGetter);
         CrossCheckUpdater crossCheckUpdater = new CrossCheckUpdater(piecesConverter, crossChecks, board, dawg);
 
-        PlayerObject[] players = instantiatePlayers(playersData);
+        Anchors anchors = new Anchors();
+
+        PlayerObject[] players = instantiatePlayers(playersData, properties.language(), piecesConverter, pointCalculator, dawg, board, anchors, crossChecks);
         Endgame endgame = new Endgame(playersData);
         Turn turnManager = new Turn(endgame, players);
         IEndScreen endScreen = new EndScreen();
@@ -110,12 +113,18 @@ public class GameScene extends Scene {
         return players.toArray(Player[]::new);
     }
 
-    private PlayerObject[] instantiatePlayers(Player[] players) {
+    private PlayerObject[] instantiatePlayers(Player[] players, Language language, PiecesConverter piecesConverter, PointCalculator pointCalculator, DAWG dawg, Board board, Anchors anchors, CrossChecks crossChecks) {
         List<PlayerObject> playerObjects = new ArrayList<>();
         for (Player player : players) {
             if (player.getCPU()) {
                 AIPlayerObject playerObject = instantiate(AIPlayerObject.class);
                 playerObjects.add(playerObject);
+                AI ai = switch (language) {
+                    case Language.Catalan -> new CatalanAI(piecesConverter, pointCalculator, dawg, board, player, anchors, crossChecks);
+                    case Language.Spanish -> new SpanishAI(piecesConverter, pointCalculator, dawg, board, player, anchors, crossChecks);
+                    case Language.English -> new EnglishAI(piecesConverter, pointCalculator, dawg, board, player, anchors, crossChecks);
+                };
+                playerObject.configureAI(ai);
             } else {
                 HumanPlayerObject playerObject = instantiate(HumanPlayerObject.class);
                 playerObjects.add(playerObject);

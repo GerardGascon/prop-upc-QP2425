@@ -95,7 +95,7 @@ public class TestPiecesInHandVerifier {
     }
 
     @Test
-    public void getPieceNYCHRRLgeminadaInHandABNYCHRRLgeminada() {
+    public void getPieceNYCHRRInHandABNYCHRR() {
         String word = "CHRR";
         Player player = new Player("example", false);
         player.addPiece(new Piece("A", 0));
