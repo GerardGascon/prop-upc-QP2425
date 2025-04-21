@@ -192,24 +192,16 @@ public abstract class AI {
                     char c = entry.getKey();
                     Piece usedPiece = bot.hasPiece(String.valueOf(c));
 
-                    if (usedPiece != null && crossChecks.ableToPlace(cell.x, cell.y, String.valueOf(c)))
-                        if((board.isCellValid(cell.x, cell.y + 1) && !board.isCellEmpty(cell.x, cell.y + 1)) ||
-                           (board.isCellValid(cell.x, cell.y - 1) && !board.isCellEmpty(cell.x, cell.y - 1))) {
-                            String adjWord = String.valueOf(c);
-                            int i = 1;
-                            while(board.isCellValid(cell.x, cell.y - i) && !board.isCellEmpty(cell.x, cell.y - i)) {
-                                adjWord = board.getCellPiece(cell.x, cell.y - i) + adjWord;
-                                ++i;
+                    if (usedPiece != null && crossChecks.ableToPlace(cell.x, cell.y, String.valueOf(c))) {
+                        if ((board.isCellValid(cell.x, cell.y + 1) && !board.isCellEmpty(cell.x, cell.y + 1)) ||
+                            (board.isCellValid(cell.x, cell.y - 1) && !board.isCellEmpty(cell.x, cell.y - 1))) {
+                            if (validExistingWord(cell, board, c)) {
+                                extendToNextNewPieceRight(partialWord, cell, entry, usedPiece);
                             }
-                            i = 0;
-                            while(board.isCellValid(cell.x, cell.y + i) && !board.isCellEmpty(cell.x, cell.y - i)) {
-                                adjWord = adjWord + board.getCellPiece(cell.x, cell.y + i);
-                                ++i;
-                            }
-                            Node aux = getFinalNode(adjWord);
-                            if(aux != null && aux.isEndOfWord()) extendToNextNewPieceRight(partialWord, cell, entry, usedPiece);
+                        } else {
+                            extendToNextNewPieceRight(partialWord, cell, entry, usedPiece);
                         }
-                        else extendToNextNewPieceRight(partialWord, cell, entry, usedPiece);
+                    }
                 }
             } else {
                 extendToNextExistingPieceRight(partialWord, node, new Vector2(cell.x + 1, cell.y), board.getCellPiece(cell.x, cell.y));
@@ -241,7 +233,7 @@ public abstract class AI {
         bot.addPiece(usedPiece);
     }
 
-    private Node getFinalNode(String word) {
+    protected Node getFinalNode(String word) {
         Node current = dawg.getRoot();
         int i = 0;
         while (i < word.length() && current != null) {
@@ -250,6 +242,8 @@ public abstract class AI {
         }
         return current;
     }
+
+    protected abstract boolean validExistingWord(Vector2 cell, Board board, char c);
 
     protected void checkWord(String word, Vector2 cell) {
         if (bot.getHand().length == initialPieces)

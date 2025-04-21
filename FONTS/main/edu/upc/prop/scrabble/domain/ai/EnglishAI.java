@@ -43,4 +43,21 @@ public class EnglishAI extends AI {
     @Override
     protected void processRightPartSpecialPieces(String partialWord, Vector2 cell, Map.Entry<Character, Node> entry) {
     }
+
+    @Override
+    protected boolean validExistingWord(Vector2 cell, Board board, char c) {
+        String adjWord = String.valueOf(c);
+        int i = 1;
+        while(board.isCellValid(cell.x, cell.y - i) && !board.isCellEmpty(cell.x, cell.y - i)) {
+            adjWord = board.getCellPiece(cell.x, cell.y - i) + adjWord;
+            ++i;
+        }
+        i = 0;
+        while(board.isCellValid(cell.x, cell.y + i) && !board.isCellEmpty(cell.x, cell.y - i)) {
+            adjWord = adjWord + board.getCellPiece(cell.x, cell.y + i);
+            ++i;
+        }
+        Node aux = getFinalNode(adjWord);
+        return aux != null && aux.isEndOfWord();
+    }
 }
