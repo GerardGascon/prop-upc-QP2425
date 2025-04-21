@@ -1,6 +1,7 @@
 package edu.upc.prop.scrabble.presenter.localization;
 
 import edu.upc.prop.scrabble.data.properties.Language;
+import edu.upc.prop.scrabble.domain.pieces.IFileReader;
 
 /**
  * Class used to read piece files for different languages.
@@ -13,7 +14,7 @@ import edu.upc.prop.scrabble.data.properties.Language;
  *
  * @author Gerard Gascón
  */
-public class PiecesReader extends LocaleReader {
+public class PiecesReader extends LocaleReader implements IFileReader {
     /**
      * Reads the piece file corresponding to the specified language.
      * <p>
@@ -25,6 +26,7 @@ public class PiecesReader extends LocaleReader {
      * @return The contents of the selected piece file as a string.
      * @see Language
      */
+    @Override
     public String run(Language locale) {
         return switch (locale) {
             case Catalan -> readFileToString("letrasCAT.txt");

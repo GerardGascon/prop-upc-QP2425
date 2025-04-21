@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 public class TestPiecesConverterFactory {
     @Test
     public void generatePiecesConverterWithEnglishDictionary() {
-        PiecesReader piecesReader = new PiecesReaderStub("A 5 5");
+        IFileReader piecesReader = new PiecesReaderStub("A 5 5");
         PieceGenerator pieceGenerator = new PieceGenerator();
         PiecesConverterFactory sut = new PiecesConverterFactory(piecesReader, pieceGenerator);
 
@@ -23,7 +23,7 @@ public class TestPiecesConverterFactory {
 
     @Test
     public void generatePiecesConverterWithCatalanDictionary() {
-        PiecesReader piecesReader = new PiecesReaderStub("A 5 5");
+        IFileReader piecesReader = new PiecesReaderStub("A 5 5");
         PieceGenerator pieceGenerator = new PieceGenerator();
         PiecesConverterFactory sut = new PiecesConverterFactory(piecesReader, pieceGenerator);
 
@@ -34,7 +34,7 @@ public class TestPiecesConverterFactory {
 
     @Test
     public void generatePiecesConverterWithSpanishDictionary() {
-        PiecesReader piecesReader = new PiecesReaderStub("A 5 5");
+        IFileReader piecesReader = new PiecesReaderStub("A 5 5");
         PieceGenerator pieceGenerator = new PieceGenerator();
         PiecesConverterFactory sut = new PiecesConverterFactory(piecesReader, pieceGenerator);
 
@@ -45,7 +45,7 @@ public class TestPiecesConverterFactory {
 
     @Test
     public void newPiecesConverterParsingWithCorrectLanguageScore() {
-        PiecesReader piecesReader = new PiecesReaderStub("A 5 5");
+        IFileReader piecesReader = new PiecesReaderStub("A 5 5");
         PieceGenerator pieceGenerator = new PieceGenerator();
         PiecesConverterFactory sut = new PiecesConverterFactory(piecesReader, pieceGenerator);
 
@@ -56,7 +56,7 @@ public class TestPiecesConverterFactory {
 
     @Test
     public void newPiecesConverterParsingWithMultipleScores() {
-        PiecesReader piecesReader = new PiecesReaderStub("A 5 5\nB 3 2");
+        IFileReader piecesReader = new PiecesReaderStub("A 5 5\nB 3 2");
         PieceGenerator pieceGenerator = new PieceGenerator();
         PiecesConverterFactory sut = new PiecesConverterFactory(piecesReader, pieceGenerator);
 

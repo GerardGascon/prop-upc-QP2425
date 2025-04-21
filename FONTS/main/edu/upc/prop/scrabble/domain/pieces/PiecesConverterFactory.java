@@ -8,10 +8,10 @@ import edu.upc.prop.scrabble.utils.Pair;
 import java.util.Arrays;
 
 public class PiecesConverterFactory {
-    private final PiecesReader piecesReader;
+    private final IFileReader piecesReader;
     private final PieceGenerator pieceGenerator;
 
-    public PiecesConverterFactory(PiecesReader piecesReader, PieceGenerator pieceGenerator) {
+    public PiecesConverterFactory(IFileReader piecesReader, PieceGenerator pieceGenerator) {
         this.piecesReader = piecesReader;
         this.pieceGenerator = pieceGenerator;
     }
