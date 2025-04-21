@@ -667,7 +667,9 @@ public class TestAI {
         anchorUpdater.run(previousMove);
         updater.run(previousMove);
 
-        assertNotEquals(new Movement("VIOLIN", 3, 7, Direction.Horizontal), ai.run());
+        Movement result = ai.run();
+        assertNotEquals(new Movement("VIOLIN", 3, 7, Direction.Horizontal), result);
+        assertNull(result);
     }
 
 }
