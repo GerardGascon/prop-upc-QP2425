@@ -15,7 +15,7 @@ import edu.upc.prop.scrabble.domain.board.PointCalculator;
 import edu.upc.prop.scrabble.domain.board.PresentPiecesWordCompleter;
 import edu.upc.prop.scrabble.domain.board.WordGetter;
 import edu.upc.prop.scrabble.domain.board.WordPlacer;
-import edu.upc.prop.scrabble.domain.crosschecks.CrossCheckUpdater;
+import edu.upc.prop.scrabble.domain.ai.CrossCheckUpdater;
 import edu.upc.prop.scrabble.domain.dawg.WordAdder;
 import edu.upc.prop.scrabble.domain.dawg.WordValidator;
 import edu.upc.prop.scrabble.domain.exceptions.InitialMoveNotInCenterException;
@@ -23,8 +23,10 @@ import edu.upc.prop.scrabble.domain.exceptions.MovementOutsideOfBoardException;
 import edu.upc.prop.scrabble.domain.exceptions.WordDoesNotExistException;
 import edu.upc.prop.scrabble.domain.exceptions.WordNotConnectedToOtherWordsException;
 import edu.upc.prop.scrabble.domain.game.GameStepper;
+import edu.upc.prop.scrabble.domain.game.IEndScreen;
 import edu.upc.prop.scrabble.domain.movement.MovementBoundsChecker;
 import edu.upc.prop.scrabble.domain.movement.MovementCleaner;
+import edu.upc.prop.scrabble.domain.pieces.EnglishPiecesConverter;
 import edu.upc.prop.scrabble.domain.pieces.PiecesConverter;
 import edu.upc.prop.scrabble.domain.pieces.PiecesInHandGetter;
 import edu.upc.prop.scrabble.domain.turns.Endgame;
@@ -34,10 +36,7 @@ import edu.upc.prop.scrabble.utils.Direction;
 import edu.upc.prop.scrabble.utils.IRand;
 import org.junit.Before;
 import org.junit.Test;
-import scrabble.stubs.BoardViewStub;
-import scrabble.stubs.GamePlayerStub;
-import scrabble.stubs.PiecePrinterStub;
-import scrabble.stubs.RandStub;
+import scrabble.stubs.*;
 
 import static org.junit.Assert.*;
 
@@ -47,7 +46,6 @@ public class TestPlaceActionMaker {
     private Bag bag;
     private DAWG dawg;
     private PlaceActionMaker sut;
-    private PiecePrinterStub piecePrinterStub;
     private Player player;
 
     @Before
@@ -56,14 +54,13 @@ public class TestPlaceActionMaker {
         board = new StandardBoard();
         WordGetter wordGetter = new WordGetter(board);
         PointCalculator pointCalculator = new PointCalculator(board, wordGetter);
-        PiecesConverter piecesConverter = new PiecesConverter();
+        PiecesConverter piecesConverter = new EnglishPiecesConverter();
         player = new Player("name", false);
         WordPlacer wordPlacer = new WordPlacer(player, board, boardViewStub, pointCalculator);
         MovementBoundsChecker boundsChecker = new MovementBoundsChecker(board, piecesConverter);
         dawg = new DAWG();
         WordValidator wordValidator = new WordValidator(dawg);
         bag = new Bag();
-        piecePrinterStub = new PiecePrinterStub();
         IRand rand = new RandStub(0);
         PiecesInHandGetter piecesInHandGetter = new PiecesInHandGetter(bag, player, rand);
         MovementCleaner movementCleaner = new MovementCleaner(board, piecesConverter);
@@ -71,7 +68,8 @@ public class TestPlaceActionMaker {
         CrossChecks crossChecks = new EnglishCrossChecks(board.getSize());
         CrossCheckUpdater crossCheckUpdater = new CrossCheckUpdater(piecesConverter, crossChecks, board, dawg);
         Turn turn = new Turn(new Endgame(new Player[]{player}), new IGamePlayer[]{new GamePlayerStub()});
-        GameStepper stepper = new GameStepper(turn, new Leaderboard(), new Player[]{player});
+        IEndScreen endScreen = new EndScreenStub();
+        GameStepper stepper = new GameStepper(turn, new Leaderboard(), new Player[]{player}, endScreen);
         sut = new PlaceActionMaker(boundsChecker, wordValidator, piecesInHandGetter, movementCleaner, wordPlacer,
                 presentPiecesWordCompleter, crossCheckUpdater, stepper, piecesConverter, board);
     }
@@ -179,10 +177,6 @@ public class TestPlaceActionMaker {
     @Test
     public void placedPiecesGetPlacedUpdatesBoard() {
         Movement movement = new Movement("HOLA", 7, 7, Direction.Horizontal);
-        bag.add(new Piece("T", 1));
-        bag.add(new Piece("E", 1));
-        bag.add(new Piece("S", 1));
-        bag.add(new Piece("T", 1));
 
         WordAdder wordAdder = new WordAdder(dawg);
         wordAdder.run("HOLA");
@@ -194,11 +188,10 @@ public class TestPlaceActionMaker {
 
         sut.run(movement);
 
-        assertEquals(4, player.getHand().length);
-        assertEquals("T", player.getHand()[0].letter());
-        assertEquals("E", player.getHand()[1].letter());
-        assertEquals("S", player.getHand()[2].letter());
-        assertEquals("T", player.getHand()[3].letter());
+        assertEquals("H", board.getCellPiece(7, 7).letter());
+        assertEquals("O", board.getCellPiece(8, 7).letter());
+        assertEquals("L", board.getCellPiece(9, 7).letter());
+        assertEquals("A", board.getCellPiece(10, 7).letter());
     }
 
     @Test

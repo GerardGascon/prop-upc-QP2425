@@ -5,8 +5,7 @@ import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.domain.turns.Endgame;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.*;
 
 public class TestEndgame {
     @Test
@@ -20,7 +19,7 @@ public class TestEndgame {
 
         int skipCounter = 4;
 
-        assertEquals(false,endgame.run(skipCounter));
+        assertFalse(endgame.run(skipCounter));
     }
 
     @Test
@@ -37,7 +36,7 @@ public class TestEndgame {
 
         int skipCounter = 6;
 
-        assertEquals(true,endgame.run(skipCounter));
+        assertTrue(endgame.run(skipCounter));
     }
 
     @Test
@@ -54,7 +53,7 @@ public class TestEndgame {
 
         int skipCounter = 5;
 
-        assertEquals(false,endgame.run(skipCounter));
+        assertFalse(endgame.run(skipCounter));
     }
 
     @Test
@@ -70,7 +69,7 @@ public class TestEndgame {
 
         int skipCounter = 4;
 
-        assertEquals(true,endgame.run(skipCounter));
+        assertTrue(endgame.run(skipCounter));
     }
 
     @Test
@@ -86,7 +85,7 @@ public class TestEndgame {
 
         int skipCounter = 4;
 
-        assertEquals(false,endgame.run(skipCounter));
+        assertFalse(endgame.run(skipCounter));
     }
 
     @Test
@@ -106,7 +105,7 @@ public class TestEndgame {
 
         int skipCounter = 9;
 
-        assertEquals(true,endgame.run(skipCounter));
+        assertTrue(endgame.run(skipCounter));
     }
 
     @Test
@@ -126,7 +125,7 @@ public class TestEndgame {
 
         int skipCounter = 8;
 
-        assertEquals(false,endgame.run(skipCounter));
+        assertFalse(endgame.run(skipCounter));
     }
 
     @Test
@@ -145,7 +144,7 @@ public class TestEndgame {
 
         int skipCounter = 2;
 
-        assertEquals(true,endgame.run(skipCounter));
+        assertTrue(endgame.run(skipCounter));
     }
 
     @Test
@@ -163,7 +162,7 @@ public class TestEndgame {
 
         int skipCounter = 4;
 
-        assertEquals(false,endgame.run(skipCounter));
+        assertFalse(endgame.run(skipCounter));
     }
 
     @Test
@@ -186,7 +185,7 @@ public class TestEndgame {
 
         int skipCounter = 12;
 
-        assertEquals(true,endgame.run(skipCounter));
+        assertTrue(endgame.run(skipCounter));
     }
 
     @Test
@@ -209,7 +208,7 @@ public class TestEndgame {
 
         int skipCounter = 11;
 
-        assertEquals(false,endgame.run(skipCounter));
+        assertFalse(endgame.run(skipCounter));
     }
 
     @Test
@@ -231,6 +230,6 @@ public class TestEndgame {
 
         int skipCounter = 2;
 
-        assertEquals(true,endgame.run(skipCounter));
+        assertTrue(endgame.run(skipCounter));
     }
 }

@@ -4,8 +4,6 @@ import edu.upc.prop.scrabble.presenter.scenes.exceptions.SceneObjectWithParametr
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -67,7 +65,7 @@ public abstract class Scene {
      */
     public <T extends SceneObject> T instantiate(Class<T> o) {
         try {
-            Constructor<?> target = getObjectConstructor(o);
+            Constructor<?> target = o.getConstructor();
             T object;
             try {
                 object = o.cast(target.newInstance());
@@ -83,13 +81,6 @@ public abstract class Scene {
         } catch (Exception e) {
             throw new RuntimeException("Failed to instantiate scene: " + o.getName(), e);
         }
-    }
-
-    private static Constructor<?> getObjectConstructor(Class<? extends SceneObject> sceneClass) {
-        Constructor<?>[] constructors = sceneClass.getDeclaredConstructors();
-        return Arrays.stream(constructors)
-                .max(Comparator.comparingInt(Constructor::getParameterCount))
-                .orElseThrow(() -> new RuntimeException("No constructors found"));
     }
 
     /**

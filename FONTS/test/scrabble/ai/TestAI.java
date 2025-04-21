@@ -1,4 +1,4 @@
-package scrabble;
+package scrabble.ai;
 
 import edu.upc.prop.scrabble.data.Anchors;
 import edu.upc.prop.scrabble.data.Movement;
@@ -11,7 +11,7 @@ import edu.upc.prop.scrabble.data.crosschecks.EnglishCrossChecks;
 import edu.upc.prop.scrabble.data.crosschecks.SpanishCrossChecks;
 import edu.upc.prop.scrabble.data.dawg.DAWG;
 import edu.upc.prop.scrabble.data.pieces.Piece;
-import edu.upc.prop.scrabble.domain.AnchorUpdater;
+import edu.upc.prop.scrabble.domain.ai.AnchorUpdater;
 import edu.upc.prop.scrabble.domain.ai.AI;
 import edu.upc.prop.scrabble.domain.ai.CatalanAI;
 import edu.upc.prop.scrabble.domain.ai.EnglishAI;
@@ -19,9 +19,10 @@ import edu.upc.prop.scrabble.domain.ai.SpanishAI;
 import edu.upc.prop.scrabble.domain.board.PointCalculator;
 import edu.upc.prop.scrabble.domain.board.WordGetter;
 import edu.upc.prop.scrabble.domain.board.WordPlacer;
-import edu.upc.prop.scrabble.domain.crosschecks.CrossCheckUpdater;
+import edu.upc.prop.scrabble.domain.ai.CrossCheckUpdater;
 import edu.upc.prop.scrabble.domain.dawg.WordAdder;
 import edu.upc.prop.scrabble.domain.pieces.CatalanPiecesConverter;
+import edu.upc.prop.scrabble.domain.pieces.EnglishPiecesConverter;
 import edu.upc.prop.scrabble.domain.pieces.PiecesConverter;
 import edu.upc.prop.scrabble.domain.pieces.SpanishPiecesConverter;
 import edu.upc.prop.scrabble.utils.Direction;
@@ -38,66 +39,7 @@ public class TestAI {
     private Player bot;
     private PointCalculator pointCalculator;
     private Anchors anchors;
-    private BoardViewStub boardViewStub;
     private WordPlacer wordPlacer;
-    private Piece[] valEng = {
-            new Piece("A", 1),
-            new Piece("B", 3),
-            new Piece("C", 3),
-            new Piece("D", 2),
-            new Piece("E", 1),
-            new Piece("F", 4),
-            new Piece("G", 2),
-            new Piece("H", 4),
-            new Piece("I", 1),
-            new Piece("J", 8),
-            new Piece("K", 5),
-            new Piece("L", 1),
-            new Piece("M", 3),
-            new Piece("N", 1),
-            new Piece("O", 1),
-            new Piece("P", 3),
-            new Piece("Q", 10),
-            new Piece("R", 1),
-            new Piece("S", 1),
-            new Piece("T", 1),
-            new Piece("U", 1),
-            new Piece("V", 4),
-            new Piece("W", 4),
-            new Piece("X", 8),
-            new Piece("Y", 4),
-            new Piece("Z", 10)
-    };
-    Piece[] valEsp = {
-            new Piece("A", 1),
-            new Piece("B", 3),
-            new Piece("C", 3),
-            new Piece("CH", 5),
-            new Piece("D", 2),
-            new Piece("E", 1),
-            new Piece("F", 4),
-            new Piece("G", 2),
-            new Piece("H", 4),
-            new Piece("I", 1),
-            new Piece("J", 8),
-            new Piece("L", 1),
-            new Piece("LL", 8),
-            new Piece("M", 3),
-            new Piece("N", 1),
-            new Piece("Ñ", 8),
-            new Piece("O", 1),
-            new Piece("P", 3),
-            new Piece("Q", 5),
-            new Piece("R", 1),
-            new Piece("RR", 8),
-            new Piece("S", 1),
-            new Piece("T", 1),
-            new Piece("U", 1),
-            new Piece("V", 4),
-            new Piece("X", 8),
-            new Piece("Y", 4),
-            new Piece("Z", 10)
-    };
     Piece[] valCat = {
             new Piece("A", 1),
             new Piece("B", 3),
@@ -138,7 +80,7 @@ public class TestAI {
         WordGetter wordGetter = new WordGetter(board);
         pointCalculator = new PointCalculator(board, wordGetter);
 
-        boardViewStub = new BoardViewStub();
+        BoardViewStub boardViewStub = new BoardViewStub();
         wordPlacer = new WordPlacer(bot, board, boardViewStub, pointCalculator);
     }
 
@@ -155,8 +97,8 @@ public class TestAI {
         bot.addPiece(new Piece("D", 1));
         bot.addPiece(new Piece("I", 1));
 
-        PiecesConverter converter = new PiecesConverter();
-        AnchorUpdater anchorUpdater = new AnchorUpdater(anchors, board, converter);
+        PiecesConverter converter = new EnglishPiecesConverter();
+        AnchorUpdater _ = new AnchorUpdater(anchors, board, converter);
         CrossChecks crossChecks = new EnglishCrossChecks(board.getSize());
         AI ai = new EnglishAI(converter, pointCalculator, dawg, board, bot, anchors, crossChecks);
 
@@ -176,7 +118,7 @@ public class TestAI {
         bot.addPiece(new Piece("A", 1));
 
         PiecesConverter converter = new CatalanPiecesConverter();
-        AnchorUpdater anchorUpdater = new AnchorUpdater(anchors, board, converter);
+        AnchorUpdater _ = new AnchorUpdater(anchors, board, converter);
         CrossChecks crossChecks = new CatalanCrossChecks(board.getSize());
         AI ai = new CatalanAI(converter, pointCalculator, dawg, board, bot, anchors, crossChecks);
 
@@ -196,7 +138,7 @@ public class TestAI {
         bot.addPiece(new Piece("A", 1));
 
         PiecesConverter converter = new CatalanPiecesConverter();
-        AnchorUpdater anchorUpdater = new AnchorUpdater(anchors, board, converter);
+        AnchorUpdater _ = new AnchorUpdater(anchors, board, converter);
         CrossChecks crossChecks = new CatalanCrossChecks(board.getSize());
         AI ai = new CatalanAI(converter, pointCalculator, dawg, board, bot, anchors, crossChecks);
 
@@ -217,7 +159,7 @@ public class TestAI {
 
         PiecesConverter converter = new CatalanPiecesConverter();
         CrossChecks crossChecks = new CatalanCrossChecks(board.getSize());
-        AnchorUpdater anchorUpdater = new AnchorUpdater(anchors, board, converter);
+        AnchorUpdater _ = new AnchorUpdater(anchors, board, converter);
         AI ai = new CatalanAI(converter, pointCalculator, dawg, board, bot, anchors, crossChecks);
 
         Movement expectedMove = new Movement("TANY", 7, 7, Direction.Horizontal);
@@ -237,7 +179,7 @@ public class TestAI {
 
         PiecesConverter converter = new CatalanPiecesConverter();
         CrossChecks crossChecks = new CatalanCrossChecks(board.getSize());
-        AnchorUpdater anchorUpdater = new AnchorUpdater(anchors, board, converter);
+        AnchorUpdater _ = new AnchorUpdater(anchors, board, converter);
         AI ai = new CatalanAI(converter, pointCalculator, dawg, board, bot, anchors, crossChecks);
 
         Movement expectedMove = new Movement("TAL·L", 7, 7, Direction.Horizontal);
@@ -257,7 +199,7 @@ public class TestAI {
 
         PiecesConverter converter = new SpanishPiecesConverter();
         CrossChecks crossChecks = new SpanishCrossChecks(board.getSize());
-        AnchorUpdater anchorUpdater = new AnchorUpdater(anchors, board, converter);
+        AnchorUpdater _ = new AnchorUpdater(anchors, board, converter);
         AI ai = new SpanishAI(converter, pointCalculator, dawg, board, bot, anchors, crossChecks);
 
         Movement expectedMove = new Movement("TARRA", 7, 7, Direction.Horizontal);
@@ -277,7 +219,7 @@ public class TestAI {
 
         PiecesConverter converter = new SpanishPiecesConverter();
         CrossChecks crossChecks = new SpanishCrossChecks(board.getSize());
-        AnchorUpdater anchorUpdater = new AnchorUpdater(anchors, board, converter);
+        AnchorUpdater _ = new AnchorUpdater(anchors, board, converter);
         AI ai = new SpanishAI(converter, pointCalculator, dawg, board, bot, anchors, crossChecks);
 
         Movement expectedMove = new Movement("TARR", 7, 7, Direction.Horizontal);
@@ -297,7 +239,7 @@ public class TestAI {
 
         PiecesConverter converter = new SpanishPiecesConverter();
         CrossChecks crossChecks = new SpanishCrossChecks(board.getSize());
-        AnchorUpdater anchorUpdater = new AnchorUpdater(anchors, board, converter);
+        AnchorUpdater _ = new AnchorUpdater(anchors, board, converter);
         AI ai = new SpanishAI(converter, pointCalculator, dawg, board, bot, anchors, crossChecks);
 
         Movement expectedMove = new Movement("TALLA", 7, 7, Direction.Horizontal);
@@ -317,7 +259,7 @@ public class TestAI {
 
         PiecesConverter converter = new SpanishPiecesConverter();
         CrossChecks crossChecks = new SpanishCrossChecks(board.getSize());
-        AnchorUpdater anchorUpdater = new AnchorUpdater(anchors, board, converter);
+        AnchorUpdater _ = new AnchorUpdater(anchors, board, converter);
         AI ai = new SpanishAI(converter, pointCalculator, dawg, board, bot, anchors, crossChecks);
 
         Movement expectedMove = new Movement("TALL", 7, 7, Direction.Horizontal);
@@ -337,7 +279,7 @@ public class TestAI {
 
         PiecesConverter converter = new SpanishPiecesConverter();
         CrossChecks crossChecks = new SpanishCrossChecks(board.getSize());
-        AnchorUpdater anchorUpdater = new AnchorUpdater(anchors, board, converter);
+        AnchorUpdater _ = new AnchorUpdater(anchors, board, converter);
         AI ai = new SpanishAI(converter, pointCalculator, dawg, board, bot, anchors, crossChecks);
 
         Movement expectedMove = new Movement("TACHA", 7, 7, Direction.Horizontal);
@@ -357,7 +299,7 @@ public class TestAI {
 
         PiecesConverter converter = new SpanishPiecesConverter();
         CrossChecks crossChecks = new SpanishCrossChecks(board.getSize());
-        AnchorUpdater anchorUpdater = new AnchorUpdater(anchors, board, converter);
+        AnchorUpdater _ = new AnchorUpdater(anchors, board, converter);
         AI ai = new SpanishAI(converter, pointCalculator, dawg, board, bot, anchors, crossChecks);
 
         Movement expectedMove = new Movement("TACH", 7, 7, Direction.Horizontal);
@@ -377,7 +319,7 @@ public class TestAI {
         bot.addPiece(new Piece("D", 1));
         bot.addPiece(new Piece("I", 1));
 
-        PiecesConverter converter = new PiecesConverter();
+        PiecesConverter converter = new EnglishPiecesConverter();
         AnchorUpdater anchorUpdater = new AnchorUpdater(anchors, board, converter);
         CrossChecks crossChecks = new EnglishCrossChecks(board.getSize());
         AI ai = new EnglishAI(converter, pointCalculator, dawg, board, bot, anchors, crossChecks);
@@ -555,7 +497,7 @@ public class TestAI {
         bot.addPiece(new Piece("D", 1));
         bot.addPiece(new Piece("I", 1));
 
-        PiecesConverter converter = new PiecesConverter();
+        PiecesConverter converter = new EnglishPiecesConverter();
         AnchorUpdater anchorUpdater = new AnchorUpdater(anchors, board, converter);
         CrossChecks crossChecks = new EnglishCrossChecks(board.getSize());
         AI ai = new EnglishAI(converter, pointCalculator, dawg, board, bot, anchors, crossChecks);
@@ -592,7 +534,7 @@ public class TestAI {
 
         PiecesConverter converter = new CatalanPiecesConverter();
         CrossChecks crossChecks = new CatalanCrossChecks(board.getSize());
-        AnchorUpdater anchorUpdater = new AnchorUpdater(anchors, board, converter);
+        AnchorUpdater _ = new AnchorUpdater(anchors, board, converter);
         AI ai = new CatalanAI(converter, pointCalculator, dawg, board, bot, anchors, crossChecks);
 
         Movement expectedMove = new Movement("TAYA", 7, 7, Direction.Horizontal);
@@ -612,7 +554,7 @@ public class TestAI {
 
         PiecesConverter converter = new SpanishPiecesConverter();
         CrossChecks crossChecks = new SpanishCrossChecks(board.getSize());
-        AnchorUpdater anchorUpdater = new AnchorUpdater(anchors, board, converter);
+        AnchorUpdater _ = new AnchorUpdater(anchors, board, converter);
         AI ai = new SpanishAI(converter, pointCalculator, dawg, board, bot, anchors, crossChecks);
 
         Movement expectedMove = new Movement("TArrA", 7, 7, Direction.Horizontal);
@@ -631,7 +573,7 @@ public class TestAI {
         bot.addPiece(new Piece("I", 1));
         bot.addPiece(new Piece("B", 1));
 
-        PiecesConverter converter = new PiecesConverter();
+        PiecesConverter converter = new EnglishPiecesConverter();
         AnchorUpdater anchorUpdater = new AnchorUpdater(anchors, board, converter);
         CrossChecks crossChecks = new EnglishCrossChecks(board.getSize());
         AI ai = new EnglishAI(converter, pointCalculator, dawg, board, bot, anchors, crossChecks);

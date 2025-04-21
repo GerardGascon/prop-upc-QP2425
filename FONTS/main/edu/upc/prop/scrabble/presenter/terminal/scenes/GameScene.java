@@ -15,10 +15,11 @@ import edu.upc.prop.scrabble.domain.actionmaker.DrawActionMaker;
 import edu.upc.prop.scrabble.domain.actionmaker.PlaceActionMaker;
 import edu.upc.prop.scrabble.domain.actionmaker.SkipActionMaker;
 import edu.upc.prop.scrabble.domain.board.*;
-import edu.upc.prop.scrabble.domain.crosschecks.CrossCheckUpdater;
+import edu.upc.prop.scrabble.domain.ai.CrossCheckUpdater;
 import edu.upc.prop.scrabble.domain.dawg.WordAdder;
 import edu.upc.prop.scrabble.domain.dawg.WordValidator;
 import edu.upc.prop.scrabble.domain.game.GameStepper;
+import edu.upc.prop.scrabble.domain.game.IEndScreen;
 import edu.upc.prop.scrabble.presenter.localization.DictionaryReader;
 import edu.upc.prop.scrabble.presenter.localization.PiecesReader;
 import edu.upc.prop.scrabble.domain.movement.MovementBoundsChecker;
@@ -28,7 +29,7 @@ import edu.upc.prop.scrabble.domain.turns.Endgame;
 import edu.upc.prop.scrabble.domain.turns.Turn;
 import edu.upc.prop.scrabble.presenter.scenes.Scene;
 import edu.upc.prop.scrabble.presenter.terminal.BoardView;
-import edu.upc.prop.scrabble.presenter.terminal.PieceDisplay;
+import edu.upc.prop.scrabble.presenter.terminal.EndScreen;
 import edu.upc.prop.scrabble.presenter.terminal.actionmaker.HandView;
 import edu.upc.prop.scrabble.presenter.terminal.players.AIPlayerObject;
 import edu.upc.prop.scrabble.presenter.terminal.players.HumanPlayerObject;
@@ -55,11 +56,10 @@ public class GameScene extends Scene {
         WordGetter wordGetter = new WordGetter(board);
         PointCalculator pointCalculator = new PointCalculator(board, wordGetter);
 
-        PiecesConverter piecesConverter = switch (properties.language()) {
-            case Language.Catalan -> new CatalanPiecesConverter();
-            case Language.Spanish -> new SpanishPiecesConverter();
-            case Language.English -> new PiecesConverter();
-        };
+        PiecesReader piecesReader = new PiecesReader();
+        PieceGenerator pieceGenerator = new PieceGenerator();
+        PiecesConverterFactory piecesConverterFactory = new PiecesConverterFactory(piecesReader, pieceGenerator);
+        PiecesConverter piecesConverter = piecesConverterFactory.run(properties.language());
 
         Bag bag = generateBag(properties.language());
         fillDAWG(dawg, properties.language());
@@ -69,12 +69,12 @@ public class GameScene extends Scene {
         WordValidator wordValidator = new WordValidator(dawg);
         PresentPiecesWordCompleter presentPiecesWordCompleter = new PresentPiecesWordCompleter(wordGetter);
         CrossCheckUpdater crossCheckUpdater = new CrossCheckUpdater(piecesConverter, crossChecks, board, dawg);
-        IPiecePrinter piecePrinter = new PieceDisplay();
 
         PlayerObject[] players = instantiatePlayers(playersData);
         Endgame endgame = new Endgame(playersData);
         Turn turnManager = new Turn(endgame, players);
-        GameStepper stepper = new GameStepper(turnManager, leaderboard, playersData);
+        IEndScreen endScreen = new EndScreen();
+        GameStepper stepper = new GameStepper(turnManager, leaderboard, playersData, endScreen);
 
         configurePlayers(players, playersData, stepper, board, boardView, pointCalculator, bag, boundsChecker,
                 wordValidator, movementCleaner, presentPiecesWordCompleter, crossCheckUpdater, piecesConverter);

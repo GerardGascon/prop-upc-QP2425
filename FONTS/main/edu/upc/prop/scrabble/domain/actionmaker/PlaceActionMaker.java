@@ -6,7 +6,7 @@ import edu.upc.prop.scrabble.data.exceptions.PlayerDoesNotHavePieceException;
 import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.domain.board.PresentPiecesWordCompleter;
 import edu.upc.prop.scrabble.domain.board.WordPlacer;
-import edu.upc.prop.scrabble.domain.crosschecks.CrossCheckUpdater;
+import edu.upc.prop.scrabble.domain.ai.CrossCheckUpdater;
 import edu.upc.prop.scrabble.domain.dawg.WordValidator;
 import edu.upc.prop.scrabble.domain.exceptions.InitialMoveNotInCenterException;
 import edu.upc.prop.scrabble.domain.exceptions.MovementOutsideOfBoardException;

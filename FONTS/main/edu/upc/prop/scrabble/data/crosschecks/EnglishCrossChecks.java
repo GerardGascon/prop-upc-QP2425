@@ -1,16 +1,11 @@
 package edu.upc.prop.scrabble.data.crosschecks;
 
-import edu.upc.prop.scrabble.data.board.Board;
-
 public class EnglishCrossChecks extends CrossChecks {
-    //ENG: letras normales (hacer int(letra)- int('A')
-    private final String[] letters;
-    //private final String[] specialPieces;
+    private final String[] letters = new String[]{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
+            "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
+
     public EnglishCrossChecks(int boardSize) {
         super(boardSize);
-        letters = new String[]{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
-                "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
-        //specialPieces = new String[]{};
     }
 
     @Override
@@ -25,9 +20,11 @@ public class EnglishCrossChecks extends CrossChecks {
 
     @Override
     public Boolean ableToPlace(int x, int y, String letter) {
-        //en ingles no hay casos raros
-        int numletter = letter.charAt(0)-'A';
-        return !getCrossCheck(x, y).get(numletter);
+        return !getCrossCheck(x, y).get(getNumLetter(letter));
+    }
+
+    private int getNumLetter(String letter) {
+        return letter.charAt(0) - 'A';
     }
 
     @Override

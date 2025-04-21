@@ -6,6 +6,9 @@ import edu.upc.prop.scrabble.data.leaderboard.Score;
 import edu.upc.prop.scrabble.domain.turns.Turn;
 import edu.upc.prop.scrabble.domain.turns.TurnResult;
 
+import java.util.Arrays;
+import java.util.Comparator;
+
 /**
  * Class that check each if the game has ended,case in which it updates the leaderboard
  * @author  Biel Pérez Silvestre
@@ -13,29 +16,30 @@ import edu.upc.prop.scrabble.domain.turns.TurnResult;
 public class GameStepper {
     private final Turn turn;
     private final Leaderboard leaderboard;
-    private final Player[] player;
+    private final Player[] players;
+    private final IEndScreen endScreen;
 
-    public GameStepper(Turn turn, Leaderboard leaderboard,Player[] players) {
+    public GameStepper(Turn turn, Leaderboard leaderboard,Player[] players,IEndScreen endScreen) {
         this.turn = turn;
         this.leaderboard = leaderboard;
-        this.player = players;
+        this.players = players;
+        this.endScreen = endScreen;
     }
 
     public void run(TurnResult result){
-       boolean ended = turn.run(result);
-       if (ended) {
-           int maxScore = 0;
-           //Check who is the winner
-           for (Player player : player) {
-                if (player.getScore() > maxScore) {
-                    maxScore = player.getScore();
-                }
-           }
+        Player[] sortedPlayers = Arrays.stream(players)
+                .sorted(Comparator.comparingInt(Player::getScore).reversed())
+                .toArray(Player[]::new);
 
-           for (Player player : player) {
+        boolean ended = turn.run(result);
+        if (ended) {
+           int maxScore = sortedPlayers[0].getScore();
+
+           for (Player player : players) {
                boolean winner = (player.getScore() == maxScore);
                leaderboard.addScore(new Score(player.getScore(),winner,player.getName()));
            }
+           endScreen.show(sortedPlayers);
        }
     }
 }

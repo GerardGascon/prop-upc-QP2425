@@ -16,7 +16,7 @@ import edu.upc.prop.scrabble.utils.IRand;
  */
 public class DrawActionMaker {
     private final Player player;
-    private PieceDrawer pieceDrawer;
+    private final PieceDrawer pieceDrawer;
     private final Bag bag;
     private final IHandDisplay handDisplay;
     private final GameStepper stepper;
@@ -25,7 +25,7 @@ public class DrawActionMaker {
      * Default constructor of a DrawActionMaker with specific bag, player, rand and handDisplay.
      * @param bag The current piece bag of the game.
      * @param player The player who wants to draw pieces.
-     * @param rand
+     * @param rand The random number generator instance
      * @param handDisplay Interface that represents the current hand of the player.
      */
     public DrawActionMaker(Bag bag, Player player, IRand rand, IHandDisplay handDisplay, GameStepper stepper) {

@@ -1,7 +1,6 @@
 package scrabble.pieces;
 
 import edu.upc.prop.scrabble.data.dawg.DAWG;
-import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.domain.dawg.WordAdder;
 import edu.upc.prop.scrabble.domain.dawg.WordValidator;
 import org.junit.Test;

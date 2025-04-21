@@ -9,6 +9,7 @@ import edu.upc.prop.scrabble.domain.board.PointCalculator;
 import edu.upc.prop.scrabble.domain.board.WordGetter;
 import edu.upc.prop.scrabble.domain.board.WordPlacer;
 import edu.upc.prop.scrabble.domain.movement.MovementCleaner;
+import edu.upc.prop.scrabble.domain.pieces.EnglishPiecesConverter;
 import edu.upc.prop.scrabble.domain.pieces.PiecesConverter;
 import edu.upc.prop.scrabble.utils.Direction;
 import edu.upc.prop.scrabble.utils.Pair;
@@ -28,7 +29,7 @@ public class TestMovementCleaner {
     @Test
     public void test1PieceCleanerVertical() {
         Board board = new JuniorBoard();
-        PiecesConverter piecesConverter = new PiecesConverter();
+        PiecesConverter piecesConverter = new EnglishPiecesConverter();
         Player player = new Player("nom", false);
         BoardViewStub mock = new BoardViewStub();
         WordGetter wordGetter = new WordGetter(board);
@@ -47,7 +48,7 @@ public class TestMovementCleaner {
     @Test
     public void test2PiecesCleanerVertical() {
         Board board = new JuniorBoard();
-        PiecesConverter piecesConverter = new PiecesConverter();
+        PiecesConverter piecesConverter = new EnglishPiecesConverter();
         Player player = new Player("nom", false);
         BoardViewStub mock = new BoardViewStub();
         WordGetter wordGetter = new WordGetter(board);
@@ -72,7 +73,7 @@ public class TestMovementCleaner {
     @Test
     public void test3PiecesCleanerVertical() {
         Board board = new JuniorBoard();
-        PiecesConverter piecesConverter = new PiecesConverter();
+        PiecesConverter piecesConverter = new EnglishPiecesConverter();
         Player player = new Player("nom", false);
         BoardViewStub mock = new BoardViewStub();
         WordGetter wordGetter = new WordGetter(board);
@@ -96,7 +97,7 @@ public class TestMovementCleaner {
     @Test
     public void testAllPiecesCleanerVertical() {
         Board board = new JuniorBoard();
-        PiecesConverter piecesConverter = new PiecesConverter();
+        PiecesConverter piecesConverter = new EnglishPiecesConverter();
         Player player = new Player("nom", false);
         BoardViewStub mock = new BoardViewStub();
         WordGetter wordGetter = new WordGetter(board);
@@ -122,7 +123,7 @@ public class TestMovementCleaner {
     @Test
     public void test1PieceCleanerHorizontal() {
         Board board = new JuniorBoard();
-        PiecesConverter piecesConverter = new PiecesConverter();
+        PiecesConverter piecesConverter = new EnglishPiecesConverter();
         Player player = new Player("nom", false);
         BoardViewStub mock = new BoardViewStub();
         WordGetter wordGetter = new WordGetter(board);
@@ -141,7 +142,7 @@ public class TestMovementCleaner {
     @Test
     public void test2PiecesCleanerHorizontal() {
         Board board = new JuniorBoard();
-        PiecesConverter piecesConverter = new PiecesConverter();
+        PiecesConverter piecesConverter = new EnglishPiecesConverter();
         Player player = new Player("nom", false);
         BoardViewStub mock = new BoardViewStub();
         WordGetter wordGetter = new WordGetter(board);
@@ -166,7 +167,7 @@ public class TestMovementCleaner {
     @Test
     public void test3PiecesCleanerHorizontal() {
         Board board = new JuniorBoard();
-        PiecesConverter piecesConverter = new PiecesConverter();
+        PiecesConverter piecesConverter = new EnglishPiecesConverter();
         Player player = new Player("nom", false);
         BoardViewStub mock = new BoardViewStub();
         WordGetter wordGetter = new WordGetter(board);
@@ -190,7 +191,7 @@ public class TestMovementCleaner {
     @Test
     public void testAllPiecesCleanerHorizontal() {
         Board board = new JuniorBoard();
-        PiecesConverter piecesConverter = new PiecesConverter();
+        PiecesConverter piecesConverter = new EnglishPiecesConverter();
         Player player = new Player("nom", false);
         BoardViewStub mock = new BoardViewStub();
         WordGetter wordGetter = new WordGetter(board);

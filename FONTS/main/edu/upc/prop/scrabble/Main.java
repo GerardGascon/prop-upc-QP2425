@@ -1,8 +1,6 @@
 package edu.upc.prop.scrabble;
 
 import edu.upc.prop.scrabble.presenter.GameLoop;
-import edu.upc.prop.scrabble.presenter.scenes.SceneManager;
-import edu.upc.prop.scrabble.presenter.terminal.scenes.GameScene;
 import edu.upc.prop.scrabble.presenter.terminal.scenes.MenuScene;
 
 public class Main {

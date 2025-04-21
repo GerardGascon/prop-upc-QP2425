@@ -1,7 +1,6 @@
 package edu.upc.prop.scrabble.domain.ai;
 
 import edu.upc.prop.scrabble.data.Anchors;
-import edu.upc.prop.scrabble.data.Movement;
 import edu.upc.prop.scrabble.data.Player;
 import edu.upc.prop.scrabble.data.board.Board;
 import edu.upc.prop.scrabble.data.crosschecks.CrossChecks;
@@ -21,9 +20,9 @@ public class SpanishAI extends AI {
 
     @Override
     protected void processLeftPartSpecialPieces(String partialWord, int limit, Map.Entry<Character, Node> entry) {
-        char c = entry.getKey(); // Current char
-        Node nextNode = null; // Initialize
-        Piece usedPiece = null;
+        char c = entry.getKey();
+        Node nextNode;
+        Piece usedPiece;
         switch (c) {
             case 'R':
                 nextNode = entry.getValue().getSuccessor('R');
@@ -84,25 +83,26 @@ public class SpanishAI extends AI {
         if(!partialWord.isEmpty()) lastLetter = partialWord.charAt(partialWord.length() - 1);
         String placedLetter = placedPiece.letter();
         Node nextNode = node.getSuccessor(placedPiece.letter().charAt(0));
-        if(nextNode != null) { // Valid node
-            if (placedLetter.length() == 1) { // Regular piece
-                    if((((lastLetter != 'R')&&(lastLetter != 'r'))|| !placedLetter.equals("R")) && // Illegal combinations check
-                    (((lastLetter != 'L')&&(lastLetter != 'l')) || !placedLetter.equals("L")) &&
-                    (((lastLetter != 'C')&&(lastLetter != 'c')) || !placedLetter.equals("H"))){
-                    ExtendRight(partialWord + placedLetter, nextNode, cell);
-                }
+        if (nextNode == null)
+            return;
+
+        if (placedLetter.length() == 1) {
+                if((((lastLetter != 'R')&&(lastLetter != 'r'))|| !placedLetter.equals("R")) && // Illegal combinations check
+                (((lastLetter != 'L')&&(lastLetter != 'l')) || !placedLetter.equals("L")) &&
+                (((lastLetter != 'C')&&(lastLetter != 'c')) || !placedLetter.equals("H"))){
+                ExtendRight(partialWord + placedLetter, nextNode, cell);
             }
-            else { //Special piece
-                nextNode = nextNode.getSuccessor(placedPiece.letter().charAt(1));
-                if (nextNode != null) ExtendRight(partialWord + placedLetter, nextNode, cell);
-            }
+        }
+        else { //Special piece
+            nextNode = nextNode.getSuccessor(placedPiece.letter().charAt(1));
+            if (nextNode != null) ExtendRight(partialWord + placedLetter, nextNode, cell);
         }
     }
 
     @Override
-    protected void processRightPartSpecialPieces(String partialWord, Node node, Vector2 cell, Map.Entry<Character, Node> entry) {
-        char c = entry.getKey(); // Current char
-        Node nextNode; // Initialize
+    protected void processRightPartSpecialPieces(String partialWord, Vector2 cell, Map.Entry<Character, Node> entry) {
+        char c = entry.getKey();
+        Node nextNode;
         Piece usedPiece;
         switch (c) {
             case 'R':

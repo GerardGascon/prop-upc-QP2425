@@ -1,17 +1,12 @@
 package edu.upc.prop.scrabble.data.crosschecks;
 
-import edu.upc.prop.scrabble.data.board.Board;
-
 public class CatalanCrossChecks extends CrossChecks {
-    //CAT: letras normales + pos 27 para la ç, pos 28 para L.L, pos 29 para NY
-    private final String[] letters;
-    //private final String[] specialPieces;
+    // Letras normales + pos 27 para la ç, pos 28 para L.L, pos 29 para NY
+    private final String[] letters = new String[]{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
+            "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "Ç", "L·L", "NY"};
 
     public CatalanCrossChecks(int boardSize) {
         super(boardSize);
-        letters = new String[]{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
-                "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "Ç", "L·L", "NY"};
-        //specialPieces = new String[]{"Ç", "L·L", "NY"};
     }
 
     @Override
@@ -26,15 +21,19 @@ public class CatalanCrossChecks extends CrossChecks {
 
     @Override
     public Boolean ableToPlace(int x, int y, String letter) {
-        int numletter;
-        if(letters.length == 1) {
-            if(letter.charAt(0) == 'Ç') numletter = 27;
-            else numletter = letter.charAt(0) - 'A';
-        }
-        else if(letter.charAt(0) == 'L') numletter = 28;
-        else numletter = 29;
+        return !getCrossCheck(x, y).get(getNumLetter(letter));
+    }
 
-        return !getCrossCheck(x, y).get(numletter);
+    private int getNumLetter(String letter) {
+        if (letter.length() == 1) {
+            if (letter.charAt(0) == 'Ç')
+                return 27;
+            return letter.charAt(0) - 'A';
+        }
+
+        if (letter.charAt(0) == 'L')
+            return 28;
+        return 29;
     }
 
     @Override

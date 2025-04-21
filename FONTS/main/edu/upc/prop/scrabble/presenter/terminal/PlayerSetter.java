@@ -1,16 +1,13 @@
 package edu.upc.prop.scrabble.presenter.terminal;
 
-import edu.upc.prop.scrabble.presenter.terminal.utils.Reader;
-import edu.upc.prop.scrabble.utils.Pair;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerSetter {
     private int numplay;
-    private List<String> nomPlayers = new ArrayList<>();
+    private final List<String> nomPlayers = new ArrayList<>();
     private int numbots;
-    private List<String> nomCpus = new ArrayList<>();
+    private final List<String> nomCpus = new ArrayList<>();
     private int mode;  //et diu si sumes a players o bots  Us visual
 
     public boolean hasEnded (){
@@ -69,7 +66,7 @@ public class PlayerSetter {
 
     //Visualize
     public void print_interface(){
-        String instruction = "";
+        String instruction;
         if (mode == 0)
             instruction = "\nPlease insert a player name or type 'submit' to set the number of CPU's\n";
         else
@@ -85,42 +82,25 @@ public class PlayerSetter {
         System.out.println(instruction+Up+Up2+Players+Up3+Cpus+Up4+Up6);
     }
 
-    public void print_names(){
-        for (String nomPlayer : nomPlayers) {
-            System.out.println(nomPlayer);
-        }
-        for (String cpus : nomCpus) {
-            System.out.println(cpus);
-        }
-    }
-
     public String printPlayersName(){
-        String players = "";
+        StringBuilder players = new StringBuilder();
         for (String nomPlayer : nomPlayers) {
-            players = players + " | " + nomPlayer;
+            players.append(" | ").append(nomPlayer);
         }
-        return players;
+        return players.toString();
     }
 
     public String printCpusName(){
-        String cpus = "";
+        StringBuilder cpus = new StringBuilder();
         for (String nomCpus : nomCpus) {
-            cpus = cpus + " | " + nomCpus;
+            cpus.append(" | ").append(nomCpus);
         }
-        return cpus;
+        return cpus.toString();
     }
 
     public List<String> getPlayersNames(){return nomPlayers;}
 
     public List<String> getCpusNames(){return nomCpus;}
-
-    public int getRealPlayers(){
-        return numplay;
-    }
-
-    public int getCpuPlayers(){
-        return numbots;
-    }
 
     public int getTotalPlayer(){
         return  numplay + numbots;

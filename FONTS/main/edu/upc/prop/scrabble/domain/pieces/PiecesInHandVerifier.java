@@ -4,7 +4,6 @@ import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.data.Player;
 
 import java.util.ArrayList;
-import java.util.Vector;
 
 /***
  * Verifies if a player has the necessary pieces in their hand to form a given word.
@@ -46,9 +45,9 @@ public class PiecesInHandVerifier {
         ArrayList<Piece> piecesInHand = new ArrayList<>();
 
         for (Piece piece : piecesInWord) {
-            for (int j = 0; j < hand.length; j++) {
-                if (hand[j].equals(piece)) {
-                    piecesInHand.add(hand[j]);
+            for (Piece value : hand) {
+                if (value.equals(piece)) {
+                    piecesInHand.add(value);
                 }
             }
         }

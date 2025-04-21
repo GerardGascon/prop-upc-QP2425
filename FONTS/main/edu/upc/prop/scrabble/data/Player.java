@@ -4,7 +4,6 @@ import edu.upc.prop.scrabble.data.exceptions.PlayerDoesNotHavePieceException;
 import edu.upc.prop.scrabble.data.pieces.Piece;
 
 import java.util.ArrayList;
-import java.util.Vector;
 
 /**
  * Class that represents a player with it's attributes

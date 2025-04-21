@@ -1,11 +1,11 @@
 package edu.upc.prop.scrabble.domain.pieces;
+
 import edu.upc.prop.scrabble.data.Player;
 import edu.upc.prop.scrabble.data.pieces.Bag;
 import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.domain.exceptions.NotEnoughPiecesInBagException;
 import edu.upc.prop.scrabble.utils.IRand;
 
-import java.lang.reflect.InaccessibleObjectException;
 import java.util.*;
 
 /***

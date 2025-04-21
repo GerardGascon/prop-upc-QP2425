@@ -7,14 +7,15 @@ import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.domain.actionmaker.DrawActionMaker;
 import edu.upc.prop.scrabble.domain.exceptions.NotEnoughPiecesInBagException;
 import edu.upc.prop.scrabble.domain.game.GameStepper;
+import edu.upc.prop.scrabble.domain.game.IEndScreen;
 import edu.upc.prop.scrabble.domain.turns.Endgame;
 import edu.upc.prop.scrabble.domain.turns.IGamePlayer;
 import edu.upc.prop.scrabble.domain.turns.Turn;
 import edu.upc.prop.scrabble.presenter.terminal.actionmaker.HandView;
 import edu.upc.prop.scrabble.utils.IRand;
-import edu.upc.prop.scrabble.utils.Rand;
 import org.junit.Before;
 import org.junit.Test;
+import scrabble.stubs.EndScreenStub;
 import scrabble.stubs.GamePlayerStub;
 import scrabble.stubs.RandStub;
 
@@ -34,7 +35,8 @@ public class TestDrawActionMaker {
         IRand rand = new RandStub(0);
         HandView display = new HandView();
         Turn turn = new Turn(new Endgame(new Player[]{player}), new IGamePlayer[]{new GamePlayerStub()});
-        GameStepper stepper = new GameStepper(turn, new Leaderboard(), new Player[]{player});
+        IEndScreen endScreen = new EndScreenStub();
+        GameStepper stepper = new GameStepper(turn, new Leaderboard(), new Player[]{player}, endScreen);
         sut = new DrawActionMaker(bag, player, rand, display, stepper);
     }
 

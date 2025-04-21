@@ -1,15 +1,13 @@
 package edu.upc.prop.scrabble.data.leaderboard;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 
 /**
  * Class used to store Score ArrayList
  * @author Felipe Martínez Lassalle
  */
 public class Leaderboard {
-    private ArrayList<Score> leaderBoard;
+    private final ArrayList<Score> leaderBoard;
 
     public Leaderboard() { this.leaderBoard = new ArrayList<>(); }
 

@@ -1,4 +1,4 @@
-package scrabble.board;
+package scrabble.ai;
 
 import edu.upc.prop.scrabble.data.Movement;
 import edu.upc.prop.scrabble.data.board.Board;
@@ -6,8 +6,9 @@ import edu.upc.prop.scrabble.data.board.StandardBoard;
 import edu.upc.prop.scrabble.data.crosschecks.CrossChecks;
 import edu.upc.prop.scrabble.data.crosschecks.EnglishCrossChecks;
 import edu.upc.prop.scrabble.data.dawg.DAWG;
-import edu.upc.prop.scrabble.domain.crosschecks.CrossCheckUpdater;
+import edu.upc.prop.scrabble.domain.ai.CrossCheckUpdater;
 import edu.upc.prop.scrabble.domain.dawg.WordAdder;
+import edu.upc.prop.scrabble.domain.pieces.EnglishPiecesConverter;
 import edu.upc.prop.scrabble.domain.pieces.PiecesConverter;
 import edu.upc.prop.scrabble.utils.Direction;
 import org.junit.Test;
@@ -15,16 +16,13 @@ import org.junit.Test;
 import java.util.BitSet;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 public class TestCrossChecks {
     @Test
     public void createCrossChecks() {
         Board board = new StandardBoard();
-        DAWG dawg = new DAWG();
         CrossChecks Ecrch = new EnglishCrossChecks(board.getSize());
         BitSet allavaliable = new BitSet(26);
-        //expected.set(0); es crea amb tot 0's
         assertEquals(allavaliable, Ecrch.getCrossCheck(0, 0));
     }
     @Test
@@ -38,9 +36,7 @@ public class TestCrossChecks {
         adder.run("COSAS"); //ordenadas
 
         CrossChecks Ecrch = new EnglishCrossChecks(board.getSize());
-        PiecesConverter converter = new PiecesConverter();
-        //PiecesConverter converter2 = new CatalanPiecesConverter();
-        //PiecesConverter converter3 = new SpanishPiecesConverter();
+        PiecesConverter converter = new EnglishPiecesConverter();
         CrossCheckUpdater crchU = new CrossCheckUpdater(converter, Ecrch,board,dawg);
 
         BitSet allavaliable = new BitSet(26);
@@ -83,7 +79,7 @@ public class TestCrossChecks {
         adder.run("CARO");
 
         CrossChecks Ecrch = new EnglishCrossChecks(board.getSize());
-        PiecesConverter converter = new PiecesConverter();
+        PiecesConverter converter = new EnglishPiecesConverter();
         CrossCheckUpdater crchU = new CrossCheckUpdater(converter, Ecrch,board,dawg);
 
         BitSet allavaliable = new BitSet(26);

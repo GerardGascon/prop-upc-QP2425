@@ -1,6 +1,7 @@
 package edu.upc.prop.scrabble.presenter.localization;
 
 import edu.upc.prop.scrabble.data.properties.Language;
+import edu.upc.prop.scrabble.domain.pieces.IFileReader;
 
 /**
  * Class used to read dictionary files for different languages.
@@ -11,7 +12,7 @@ import edu.upc.prop.scrabble.data.properties.Language;
  *
  * @author Gerard Gascón
  */
-public class DictionaryReader extends LocaleReader {
+public class DictionaryReader extends LocaleReader implements IFileReader {
     /**
      * Reads a dictionary file based on the specified language.
      * <p>
@@ -23,6 +24,7 @@ public class DictionaryReader extends LocaleReader {
      * @return A string containing the contents of the dictionary in the selected language.
      * @see Language
      */
+    @Override
     public String run(Language locale) {
         return switch (locale) {
             case Catalan -> readFileToString("catalan.txt");
