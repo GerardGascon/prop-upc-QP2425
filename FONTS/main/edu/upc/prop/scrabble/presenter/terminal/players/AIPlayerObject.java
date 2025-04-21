@@ -24,7 +24,8 @@ public class AIPlayerObject extends PlayerObject {
         if(move != null) {
             int previousScore = player.getScore();
             placePiece(move);
-            System.out.println("Movement: " + move.word() + " " + move.y() + "," + move.x() + " " + (player.getScore() - previousScore));
+            System.out.println(move);
+//            System.out.println("Movement: " + move.word() + " " + move.y() + "," + move.x() + " " + (player.getScore() - previousScore));
         }
         else { // NOTE TO SELF: in a future this can depend on difficulty, letter rarity...
             if(new Rand().nextInt(4) == 3) skipTurn();

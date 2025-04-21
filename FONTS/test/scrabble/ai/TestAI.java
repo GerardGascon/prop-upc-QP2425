@@ -632,7 +632,45 @@ public class TestAI {
         wordPlacer.run(pieces, 7, 7, Direction.Horizontal);
 
         Movement expectedMove = new Movement("SKIBIDI", 7, 8, Direction.Horizontal);
+        //Movement debugging = ai.run();
         assertNotEquals(expectedMove, ai.run());
+    }
+
+    @Test
+    public void dontRepeatWords() {
+        adder.run("OUGLIED");
+        adder.run("VIOLIN");
+
+        bot.addPiece(new Piece("A", 1));
+        bot.addPiece(new Piece("A", 1));
+        bot.addPiece(new Piece("A", 1));
+        bot.addPiece(new Piece("R", 1));
+        bot.addPiece(new Piece("O", 1));
+        bot.addPiece(new Piece("S", 1));
+        bot.addPiece(new Piece("T", 1));
+
+        PiecesConverter converter = new EnglishPiecesConverter();
+        AnchorUpdater anchorUpdater = new AnchorUpdater(anchors, board, converter);
+        CrossChecks crossChecks = new EnglishCrossChecks(board.getSize());
+        AI ai = new EnglishAI(converter, pointCalculator, dawg, board, bot, anchors, crossChecks);
+        CrossCheckUpdater updater = new CrossCheckUpdater(converter, crossChecks, board, dawg);
+
+        Piece[] pieces = new Piece[]{
+                new Piece("V", 1),
+                new Piece("I", 1),
+                new Piece("O", 1),
+                new Piece("L", 1),
+                new Piece("I", 1),
+                new Piece("N", 1)
+        };
+        Movement previousMove = new Movement("VIOLIN", 3, 7, Direction.Horizontal);
+        wordPlacer.run(pieces, 3, 7, Direction.Horizontal);
+        anchorUpdater.run(previousMove);
+        updater.run(previousMove);
+
+        Movement result = ai.run();
+        assertNotEquals(new Movement("VIOLIN", 3, 7, Direction.Horizontal), result);
+        assertNull(result);
     }
 
 }
