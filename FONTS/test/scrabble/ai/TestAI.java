@@ -594,4 +594,45 @@ public class TestAI {
         assertEquals(expectedMove, ai.run());
     }
 
+    @Test
+    public void englishAIadjacent() {
+        adder.run("BLB");
+        adder.run("HELLO");
+        adder.run("ILI");
+        adder.run("IOI");
+        adder.run("KEK");
+        adder.run("SHS");
+        adder.run("SKIBIDI");
+
+        bot.addPiece(new Piece("S", 1));
+        bot.addPiece(new Piece("K", 1));
+        bot.addPiece(new Piece("I", 1));
+        bot.addPiece(new Piece("B", 1));
+        bot.addPiece(new Piece("I", 1));
+        bot.addPiece(new Piece("D", 1));
+        bot.addPiece(new Piece("I", 1));
+
+        PiecesConverter converter = new EnglishPiecesConverter();
+        AnchorUpdater anchorUpdater = new AnchorUpdater(anchors, board, converter);
+        CrossChecks crossChecks = new EnglishCrossChecks(board.getSize());
+        AI ai = new EnglishAI(converter, pointCalculator, dawg, board, bot, anchors, crossChecks);
+        CrossCheckUpdater updater = new CrossCheckUpdater(converter, crossChecks, board, dawg);
+
+        Piece[] pieces = new Piece[]{
+                new Piece("H", 1),
+                new Piece("E", 1),
+                new Piece("L", 1),
+                new Piece("L", 1),
+                new Piece("O", 1)
+        };
+        Movement previousMove = new Movement("HELLO", 7, 7, Direction.Horizontal);
+        anchorUpdater.run(previousMove);
+        updater.run(previousMove);
+
+        wordPlacer.run(pieces, 7, 7, Direction.Horizontal);
+
+        Movement expectedMove = new Movement("SKIBIDI", 7, 8, Direction.Horizontal);
+        assertEquals(expectedMove, ai.run());
+    }
+
 }
