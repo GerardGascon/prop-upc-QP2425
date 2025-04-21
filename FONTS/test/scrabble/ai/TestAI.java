@@ -127,7 +127,7 @@ public class TestAI {
     }
 
     @Test
-    public void catalanAIEmptyBoardLL() {
+    public void catalanAIEmptyBoardLGeminada() {
         adder.run("SKIBIDI");
         adder.run("TAL·LA");
 
@@ -524,7 +524,7 @@ public class TestAI {
     @Test
     public void catalanAIEmptyBoardNYwithBlank() {
         adder.run("SKIBIDI");
-        adder.run("TAYA");
+        adder.run("TANYA");
 
         bot.addPiece(new Piece("T", 1));
         bot.addPiece(new Piece("A", 1));
@@ -537,7 +537,7 @@ public class TestAI {
         AnchorUpdater _ = new AnchorUpdater(anchors, board, converter);
         AI ai = new CatalanAI(converter, pointCalculator, dawg, board, bot, anchors, crossChecks);
 
-        Movement expectedMove = new Movement("TAYA", 7, 7, Direction.Horizontal);
+        Movement expectedMove = new Movement("TAnyA", 7, 7, Direction.Horizontal);
         assertEquals(expectedMove, ai.run());
     }
 
@@ -562,7 +562,7 @@ public class TestAI {
     }
 
     @Test
-    public void englishAIEmptyBoardV() {
+    public void englishAIVertical() {
         adder.run("HELLO");
         adder.run("SKIBIDI");
         adder.run("KIBIDI");

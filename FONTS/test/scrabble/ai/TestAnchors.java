@@ -38,6 +38,7 @@ public class TestAnchors {
 
         anchorUpdater.run(move);
 
+        assertFalse(anchors.exists(7,7));
         assertTrue(anchors.exists(5, 7));
         assertTrue(anchors.exists(9, 7));
         assertTrue(anchors.exists(6, 6));
@@ -54,6 +55,7 @@ public class TestAnchors {
 
         anchorUpdater.run(move);
 
+        assertFalse(anchors.exists(7,7));
         assertTrue(anchors.exists(7, 5));
         assertTrue(anchors.exists(7, 9));
         assertTrue(anchors.exists(6, 6));
