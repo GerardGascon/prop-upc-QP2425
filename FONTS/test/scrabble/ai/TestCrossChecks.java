@@ -24,6 +24,7 @@ public class TestCrossChecks {
         CrossChecks Ecrch = new EnglishCrossChecks(board.getSize());
         BitSet allavaliable = new BitSet(26);
         assertEquals(allavaliable, Ecrch.getCrossCheck(0, 0));
+        assertEquals(allavaliable, Ecrch.getCrossCheck(14, 14));
     }
     @Test
     public void updateCrossChecks() {
