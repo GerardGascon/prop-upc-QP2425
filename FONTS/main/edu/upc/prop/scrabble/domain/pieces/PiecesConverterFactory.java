@@ -1,11 +1,14 @@
 package edu.upc.prop.scrabble.domain.pieces;
 
 import edu.upc.prop.scrabble.data.properties.Language;
+import edu.upc.prop.scrabble.presenter.localization.PiecesReader;
 
 public class PiecesConverterFactory {
+    private final PiecesReader piecesReader;
     private final PieceGenerator pieceGenerator;
 
-    public PiecesConverterFactory(PieceGenerator pieceGenerator) {
+    public PiecesConverterFactory(PiecesReader piecesReader, PieceGenerator pieceGenerator) {
+        this.piecesReader = piecesReader;
         this.pieceGenerator = pieceGenerator;
     }
 

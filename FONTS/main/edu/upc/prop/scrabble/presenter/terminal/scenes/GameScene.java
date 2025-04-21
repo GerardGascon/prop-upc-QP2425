@@ -56,8 +56,9 @@ public class GameScene extends Scene {
         WordGetter wordGetter = new WordGetter(board);
         PointCalculator pointCalculator = new PointCalculator(board, wordGetter);
 
+        PiecesReader piecesReader = new PiecesReader();
         PieceGenerator pieceGenerator = new PieceGenerator();
-        PiecesConverterFactory piecesConverterFactory = new PiecesConverterFactory(pieceGenerator);
+        PiecesConverterFactory piecesConverterFactory = new PiecesConverterFactory(piecesReader, pieceGenerator);
         PiecesConverter piecesConverter = piecesConverterFactory.run(properties.language());
 
         Bag bag = generateBag(properties.language());
