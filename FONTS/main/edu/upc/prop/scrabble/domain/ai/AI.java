@@ -259,7 +259,8 @@ public abstract class AI {
         boolean anchorTraversed = false;
         for (int i = 0; i < pieceArray.length; ++i) {
             posVector[i] = new Vector2(cell.x - pieceArray.length + 1 + i, cell.y);
-            if(posVector[i] == currentAnchor) anchorTraversed = true;
+            if(anchors.exists(posVector[i].x, posVector[i].y))
+                anchorTraversed = true;
         }
 
         if(anchorTraversed) recalculateMaxScoringWord(word, posVector, pieceArray);
