@@ -192,7 +192,11 @@ public abstract class AI {
                     char c = entry.getKey();
                     Piece usedPiece = bot.hasPiece(String.valueOf(c));
 
-                    if (usedPiece != null && crossChecks.ableToPlace(cell.x, cell.y, String.valueOf(c)))
+                    if (usedPiece != null && crossChecks.ableToPlace(cell.x, cell.y, String.valueOf(c)) &&
+                    ((board.isCellValid(cell.x,cell.y-1) && (board.isCellEmpty(cell.x, cell.y-1)))||
+                    (!board.isCellValid(cell.x, cell.y-1)))&&
+                    ((board.isCellValid(cell.x,cell.y+1) && (board.isCellEmpty(cell.x, cell.y+1)))||
+                    (!board.isCellValid(cell.x, cell.y+1))))
                         extendToNextNewPieceRight(partialWord, cell, entry, usedPiece);
                 }
             } else {
@@ -238,13 +242,15 @@ public abstract class AI {
     protected void checkWord(String word, Vector2 cell) {
         if (bot.getHand().length == initialPieces)
             return;
-        Piece[] pieceArray = piecesConverter.run(word);
-        Vector2[] posVector = new Vector2[pieceArray.length];
-        for (int i = 0; i < pieceArray.length; ++i) {
-            posVector[i] = new Vector2(cell.x - pieceArray.length + 1 + i, cell.y);
-        }
+        if(bot.getHand().length < 7) {
+            Piece[] pieceArray = piecesConverter.run(word);
+            Vector2[] posVector = new Vector2[pieceArray.length];
+            for (int i = 0; i < pieceArray.length; ++i) {
+                posVector[i] = new Vector2(cell.x - pieceArray.length + 1 + i, cell.y);
+            }
 
-        recalculateMaxScoringWord(word, posVector, pieceArray);
+            recalculateMaxScoringWord(word, posVector, pieceArray);
+        }
     }
 
     private void recalculateMaxScoringWord(String word, Vector2[] posVector, Piece[] pieceArray) {

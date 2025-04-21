@@ -632,6 +632,7 @@ public class TestAI {
         wordPlacer.run(pieces, 7, 7, Direction.Horizontal);
 
         Movement expectedMove = new Movement("SKIBIDI", 7, 8, Direction.Horizontal);
+        //Movement debugging = ai.run();
         assertNotEquals(expectedMove, ai.run());
     }
 
