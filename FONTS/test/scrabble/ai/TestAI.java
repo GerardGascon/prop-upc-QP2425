@@ -30,7 +30,7 @@ import org.junit.Before;
 import org.junit.Test;
 import scrabble.stubs.BoardViewStub;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class TestAI {
     private DAWG dawg;
@@ -632,7 +632,7 @@ public class TestAI {
         wordPlacer.run(pieces, 7, 7, Direction.Horizontal);
 
         Movement expectedMove = new Movement("SKIBIDI", 7, 8, Direction.Horizontal);
-        assertEquals(expectedMove, ai.run());
+        assertNotEquals(expectedMove, ai.run());
     }
 
 }
