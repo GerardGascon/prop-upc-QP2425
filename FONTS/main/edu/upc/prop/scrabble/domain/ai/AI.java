@@ -33,6 +33,7 @@ public abstract class AI {
     protected Movement bestMove;
     protected int bestScore;
     protected Direction currentDirection;
+    private int initialPieces;
 
     public AI(PiecesConverter piecesConverter, PointCalculator pointCalculator, DAWG dawg, Board board, Player bot, Anchors anchors, CrossChecks crossChecks) {
         this.dawg = dawg;
@@ -89,6 +90,7 @@ public abstract class AI {
     private void resetGlobals() {
         bestMove = new Movement("", 0, 0, Direction.Horizontal);
         bestScore = -1;
+        initialPieces = bot.getHand().length;
     }
 
     private void innerRun() {
@@ -234,6 +236,8 @@ public abstract class AI {
     }
 
     protected void checkWord(String word, Vector2 cell) {
+        if (bot.getHand().length == initialPieces)
+            return;
         Piece[] pieceArray = piecesConverter.run(word);
         Vector2[] posVector = new Vector2[pieceArray.length];
         for (int i = 0; i < pieceArray.length; ++i) {
