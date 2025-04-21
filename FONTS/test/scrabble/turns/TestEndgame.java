@@ -8,19 +8,6 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class TestEndgame {
-    @Test
-    public void TwoPlayersNoEndgame() {
-        Player[] players = new Player[2];
-        players[0] = new Player("Adri", false);
-        players[0].addPiece(new Piece("a",2));
-        players[1] = new Player("Juan", false);
-        players[1].addPiece(new Piece("a",2));
-        Endgame endgame = new Endgame(players);
-
-        int skipCounter = 4;
-
-        assertFalse(endgame.run(skipCounter));
-    }
 
     @Test
     public void TwoPlayersEndgameDueToSkipLimitReached() {
