@@ -177,10 +177,6 @@ public class TestPlaceActionMaker {
     @Test
     public void placedPiecesGetPlacedUpdatesBoard() {
         Movement movement = new Movement("HOLA", 7, 7, Direction.Horizontal);
-        bag.add(new Piece("T", 1));
-        bag.add(new Piece("E", 1));
-        bag.add(new Piece("S", 1));
-        bag.add(new Piece("T", 1));
 
         WordAdder wordAdder = new WordAdder(dawg);
         wordAdder.run("HOLA");
@@ -192,11 +188,10 @@ public class TestPlaceActionMaker {
 
         sut.run(movement);
 
-        assertEquals(4, player.getHand().length);
-        assertEquals("T", player.getHand()[0].letter());
-        assertEquals("E", player.getHand()[1].letter());
-        assertEquals("S", player.getHand()[2].letter());
-        assertEquals("T", player.getHand()[3].letter());
+        assertEquals("H", board.getCellPiece(7, 7).letter());
+        assertEquals("O", board.getCellPiece(8, 7).letter());
+        assertEquals("L", board.getCellPiece(9, 7).letter());
+        assertEquals("A", board.getCellPiece(10, 7).letter());
     }
 
     @Test
