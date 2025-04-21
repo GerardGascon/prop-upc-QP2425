@@ -56,11 +56,9 @@ public class GameScene extends Scene {
         WordGetter wordGetter = new WordGetter(board);
         PointCalculator pointCalculator = new PointCalculator(board, wordGetter);
 
-        PiecesConverter piecesConverter = switch (properties.language()) {
-            case Language.Catalan -> new CatalanPiecesConverter();
-            case Language.Spanish -> new SpanishPiecesConverter();
-            case Language.English -> new EnglishPiecesConverter();
-        };
+        PieceGenerator pieceGenerator = new PieceGenerator();
+        PiecesConverterFactory piecesConverterFactory = new PiecesConverterFactory(pieceGenerator);
+        PiecesConverter piecesConverter = piecesConverterFactory.run(properties.language());
 
         Bag bag = generateBag(properties.language());
         fillDAWG(dawg, properties.language());
