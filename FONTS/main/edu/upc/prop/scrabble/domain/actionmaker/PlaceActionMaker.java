@@ -4,6 +4,7 @@ import edu.upc.prop.scrabble.data.Movement;
 import edu.upc.prop.scrabble.data.board.Board;
 import edu.upc.prop.scrabble.data.exceptions.PlayerDoesNotHavePieceException;
 import edu.upc.prop.scrabble.data.pieces.Piece;
+import edu.upc.prop.scrabble.domain.ai.AnchorUpdater;
 import edu.upc.prop.scrabble.domain.board.PresentPiecesWordCompleter;
 import edu.upc.prop.scrabble.domain.board.WordPlacer;
 import edu.upc.prop.scrabble.domain.ai.CrossCheckUpdater;
@@ -41,6 +42,7 @@ public class PlaceActionMaker {
     private final GameStepper stepper;
     private final PiecesConverter piecesConverter;
     private final Board board;
+    private final AnchorUpdater anchorUpdater;
 
     /**
      * Constructs a PlaceActionMaker instance that will manage word placement actions.
@@ -60,7 +62,7 @@ public class PlaceActionMaker {
                             PiecesInHandGetter piecesInHandGetter, MovementCleaner movementCleaner,
                             WordPlacer wordPlacer, PresentPiecesWordCompleter presentPiecesWordCompleter,
                             CrossCheckUpdater crossCheckUpdater, GameStepper stepper, PiecesConverter piecesConverter,
-                            Board board) {
+                            Board board, AnchorUpdater anchorUpdater) {
         this.movementBoundsChecker = movementBoundsChecker;
         this.wordValidator = wordValidator;
         this.piecesInHandGetter = piecesInHandGetter;
@@ -71,6 +73,7 @@ public class PlaceActionMaker {
         this.stepper = stepper;
         this.piecesConverter = piecesConverter;
         this.board = board;
+        this.anchorUpdater = anchorUpdater;
     }
 
     /**
@@ -96,6 +99,7 @@ public class PlaceActionMaker {
         Piece[] piecesInHand = piecesInHandGetter.run(necessaryPieces);
         wordPlacer.run(piecesInHand, movement.x(), movement.y(), movement.direction());
         crossCheckUpdater.run(movement);
+        anchorUpdater.run(movement);
         stepper.run(TurnResult.Place);
     }
 

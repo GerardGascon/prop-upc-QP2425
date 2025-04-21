@@ -1,5 +1,6 @@
 package scrabble.actionmaker;
 
+import edu.upc.prop.scrabble.data.Anchors;
 import edu.upc.prop.scrabble.data.Movement;
 import edu.upc.prop.scrabble.data.Player;
 import edu.upc.prop.scrabble.data.board.Board;
@@ -11,6 +12,7 @@ import edu.upc.prop.scrabble.data.leaderboard.Leaderboard;
 import edu.upc.prop.scrabble.data.pieces.Bag;
 import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.domain.actionmaker.PlaceActionMaker;
+import edu.upc.prop.scrabble.domain.ai.AnchorUpdater;
 import edu.upc.prop.scrabble.domain.board.PointCalculator;
 import edu.upc.prop.scrabble.domain.board.PresentPiecesWordCompleter;
 import edu.upc.prop.scrabble.domain.board.WordGetter;
@@ -70,8 +72,10 @@ public class TestPlaceActionMaker {
         Turn turn = new Turn(new Endgame(new Player[]{player}), new IGamePlayer[]{new GamePlayerStub()});
         IEndScreen endScreen = new EndScreenStub();
         GameStepper stepper = new GameStepper(turn, new Leaderboard(), new Player[]{player}, endScreen);
+        Anchors anchors = new Anchors();
+        AnchorUpdater anchorUpdater = new AnchorUpdater(anchors, board, piecesConverter);
         sut = new PlaceActionMaker(boundsChecker, wordValidator, piecesInHandGetter, movementCleaner, wordPlacer,
-                presentPiecesWordCompleter, crossCheckUpdater, stepper, piecesConverter, board);
+                presentPiecesWordCompleter, crossCheckUpdater, stepper, piecesConverter, board, anchorUpdater);
     }
 
     @Test

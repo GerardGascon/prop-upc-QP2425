@@ -72,6 +72,7 @@ public class GameScene extends Scene {
         CrossCheckUpdater crossCheckUpdater = new CrossCheckUpdater(piecesConverter, crossChecks, board, dawg);
 
         Anchors anchors = new Anchors();
+        AnchorUpdater anchorUpdater = new AnchorUpdater(anchors, board, piecesConverter);
 
         PlayerObject[] players = instantiatePlayers(playersData, properties.language(), piecesConverter, pointCalculator, dawg, board, anchors, crossChecks);
         Endgame endgame = new Endgame(playersData);
@@ -80,7 +81,8 @@ public class GameScene extends Scene {
         GameStepper stepper = new GameStepper(turnManager, leaderboard, playersData, endScreen);
 
         configurePlayers(players, playersData, stepper, board, boardView, pointCalculator, bag, boundsChecker,
-                wordValidator, movementCleaner, presentPiecesWordCompleter, crossCheckUpdater, piecesConverter);
+                wordValidator, movementCleaner, presentPiecesWordCompleter, crossCheckUpdater, piecesConverter,
+                anchorUpdater);
 
         HandFiller handFiller = new HandFiller(bag, playersData, new Rand());
         handFiller.run();
@@ -138,11 +140,11 @@ public class GameScene extends Scene {
                                   MovementBoundsChecker boundsChecker,
                                   WordValidator wordValidator, MovementCleaner movementCleaner,
                                   PresentPiecesWordCompleter presentPiecesWordCompleter,
-                                  CrossCheckUpdater crossCheckUpdater, PiecesConverter piecesConverter) {
+                                  CrossCheckUpdater crossCheckUpdater, PiecesConverter piecesConverter, AnchorUpdater anchorUpdater) {
         for (int i = 0; i < players.length; i++) {
             configurePlayer(playerObjects[i], players[i], stepper, board, boardView, pointCalculator, bag,
                     boundsChecker, wordValidator, movementCleaner, presentPiecesWordCompleter, crossCheckUpdater,
-                    piecesConverter);
+                    piecesConverter, anchorUpdater);
         }
     }
 
@@ -151,12 +153,13 @@ public class GameScene extends Scene {
                                 MovementBoundsChecker boundsChecker,
                                 WordValidator wordValidator, MovementCleaner movementCleaner,
                                 PresentPiecesWordCompleter presentPiecesWordCompleter,
-                                CrossCheckUpdater crossCheckUpdater, PiecesConverter piecesConverter) {
+                                CrossCheckUpdater crossCheckUpdater, PiecesConverter piecesConverter,
+                                AnchorUpdater anchorUpdater) {
         WordPlacer wordPlacer = new WordPlacer(player, board, boardView, pointCalculator);
         PiecesInHandGetter piecesInHandGetter = new PiecesInHandGetter(bag, player, new Rand());
         PlaceActionMaker placeActionMaker = new PlaceActionMaker(boundsChecker, wordValidator, piecesInHandGetter,
                 movementCleaner, wordPlacer, presentPiecesWordCompleter, crossCheckUpdater, stepper, piecesConverter,
-                board);
+                board, anchorUpdater);
         DrawActionMaker drawActionMaker = new DrawActionMaker(bag, player, new Rand(), new HandView(), stepper);
         SkipActionMaker skipActionMaker = new SkipActionMaker(stepper);
         playerObject.configure(placeActionMaker, player, drawActionMaker, skipActionMaker);
