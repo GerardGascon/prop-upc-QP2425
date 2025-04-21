@@ -59,6 +59,8 @@ public abstract class AI {
             int newY = bestMove.x();
             bestMove = new Movement(bestMove.word(), board.getSize() - bestMove.y() - 1, newY, Direction.Vertical);
         }
+
+        if(bestScore == -1) return null;
         return bestMove;
     }
 

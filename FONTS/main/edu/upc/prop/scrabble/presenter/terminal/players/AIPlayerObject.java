@@ -30,9 +30,9 @@ public class AIPlayerObject extends PlayerObject {
             if(new Rand().nextInt(4) == 3) skipTurn();
             else {
                 Piece[] hand = player.getHand();
-                String draw = "";
-                for(Piece piece : hand) if(new Rand().nextInt(5) == 1) draw += piece;
-                Piece[] piecesToDraw = DrawParser.parse(draw);
+                StringBuilder draw = new StringBuilder();
+                for(Piece piece : hand) if(new Rand().nextInt(5) == 1) draw.append(piece).append(",");
+                Piece[] piecesToDraw = DrawParser.parse(draw.toString());
                 drawPieces(piecesToDraw);
             }
         }
