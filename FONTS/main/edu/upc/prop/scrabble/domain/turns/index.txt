@@ -1,0 +1,5 @@
+Directori que conte informacio de gestio de torns dels jugadors.
+
+En un torn es pot fer 3 accions: Draw, Put o Skip.
+
+Tambe es mante una gestio de final de partida.
