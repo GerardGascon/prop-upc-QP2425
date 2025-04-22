@@ -1,1 +1,1 @@
-Directori que conté les estructures de dades necessàries per emmagatzemnar el DAWG.
+Directori que conte les estructures de dades necessaries per emmagatzemnar el DAWG.
