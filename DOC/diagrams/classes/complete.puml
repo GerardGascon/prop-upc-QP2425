@@ -1,4 +1,0 @@
-@startuml
-!include data.puml
-!include domain.puml
-@enduml
