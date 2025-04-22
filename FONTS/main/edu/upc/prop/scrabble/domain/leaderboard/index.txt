@@ -1,4 +1,4 @@
 Directori que gestiona tota la informacio del ranquing de totes les partides.
 
-Es guarda el ratio de partides guanyades, la maxima puntuacio, la classificacio del jugador segons les partides jugades,
-la taxa de victories d'un jugador, etc.
+Es guarda el ratio de partides jugades, per victoria, per maxima puntuacio, per puntuacio total, per percentatge de
+victories.

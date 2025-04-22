@@ -1,4 +1,4 @@
-Directori que conte classes per poder gestionar els moviments i les peces posades del jugador.
+Directori que conte classes per poder gestionar els moviments i les peces posades pel jugador.
 
 Es verifica que un moviment estigui dins el rang del tauler.
 
