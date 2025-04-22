@@ -1,0 +1,1 @@
+Classes que s'ocupen de mostrar excepcions quan s'intenta crear un SceneObject amb parametres erronis
