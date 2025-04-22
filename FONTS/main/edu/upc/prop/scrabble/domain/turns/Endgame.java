@@ -24,7 +24,6 @@ public class Endgame {
 
         if (skiplimitreached)
             return true;
-
         for (Player player : players)
             if (player.getHand().length == 0)
                 return true;
