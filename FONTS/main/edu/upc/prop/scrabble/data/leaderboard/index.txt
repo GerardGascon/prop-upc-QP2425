@@ -1,0 +1,2 @@
+Directori que conte la informacio sobre el ranquing de puntuacions en forma de llista i tambe sobre
+una partida en concret.

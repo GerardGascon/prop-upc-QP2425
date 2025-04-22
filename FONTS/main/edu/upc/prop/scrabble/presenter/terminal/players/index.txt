@@ -1,0 +1,2 @@
+Classes que s'ocupen de la gestio dels objectes player i de mostrar per terminal les intruccions per a
+que l'usuari pugui jugar
