@@ -1,0 +1,3 @@
+Directori que conte totes les classes de gestio de peces.
+
+Classes per llegir les peces d'un fitxer, per generar-les com a Piece, per convertir un String a Piece, etc.
