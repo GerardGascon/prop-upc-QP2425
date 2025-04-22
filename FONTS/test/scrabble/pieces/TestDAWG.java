@@ -13,7 +13,7 @@ public class TestDAWG {
         DAWG dawg = new DAWG();
         WordValidator sut = new WordValidator(dawg);
         assertFalse(sut.run(""));
-        assertFalse(sut.run("hola"));
+        assertFalse(sut.run("HOLA"));
     }
 
     @Test
@@ -22,9 +22,9 @@ public class TestDAWG {
         WordAdder adder = new WordAdder(dawg);
         WordValidator sut = new WordValidator(dawg);
 
-        adder.run("hola");
+        adder.run("HOLA");
 
-        assertTrue(sut.run("hola"));
+        assertTrue(sut.run("HOLA"));
     }
     @Test
     public void addMultipleWords(){
@@ -32,12 +32,47 @@ public class TestDAWG {
         WordAdder adder = new WordAdder(dawg);
         WordValidator sut = new WordValidator(dawg);
 
-        adder.run("llave");
-        adder.run("llavero");
+        adder.run("LLAVE");
+        adder.run("LLAVERO");
 
-        assertTrue(sut.run("llave"));
-        assertTrue(sut.run("llavero"));
-        assertFalse(sut.run("llaver"));
+        assertTrue(sut.run("LLAVE"));
+        assertTrue(sut.run("LLAVERO"));
+        assertFalse(sut.run("LLAVER"));
+    }
+
+    @Test
+    public void addRareWords(){
+        DAWG dawg = new DAWG();
+        WordAdder adder = new WordAdder(dawg);
+        WordValidator sut = new WordValidator(dawg);
+
+        adder.run("CL·LAVE");
+        adder.run("CL·LAVERO");
+
+        assertTrue(sut.run("CL·LAVE"));
+        assertTrue(sut.run("CL·LAVERO"));
+        assertFalse(sut.run("CL·LAVER"));
+
+        adder.run("DCHAVE");
+        adder.run("DCHAVERO");
+
+        assertTrue(sut.run("DCHAVE"));
+        assertTrue(sut.run("DCHAVERO"));
+        assertFalse(sut.run("DCHAVER"));
+
+        adder.run("ÑAVE");
+        adder.run("ÑAVERO");
+
+        assertTrue(sut.run("ÑAVE"));
+        assertTrue(sut.run("ÑAVERO"));
+        assertFalse(sut.run("ÑAVER"));
+
+        adder.run("XÇAVE");
+        adder.run("XÇAVERO");
+
+        assertTrue(sut.run("XÇAVE"));
+        assertTrue(sut.run("XÇAVERO"));
+        assertFalse(sut.run("XÇAVER"));
     }
 
 }
