@@ -1,0 +1,2 @@
+Directori que contenen els objectes que s'ocupen de l'interaccio usuari partida
+

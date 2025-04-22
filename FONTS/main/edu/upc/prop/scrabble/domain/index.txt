@@ -1,0 +1,1 @@
+Classes que s'ocupen dels controladors de la capa de dades i de la seva coordinacio
