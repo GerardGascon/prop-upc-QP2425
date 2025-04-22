@@ -1,0 +1,2 @@
+Directori que conte excepcions creades per gestionar certes excepcions del joc com
+PlayerDoesNotHavePieceException o ScrabbleException.
