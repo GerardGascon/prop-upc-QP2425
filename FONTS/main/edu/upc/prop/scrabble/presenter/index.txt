@@ -1,2 +1,4 @@
-Directori que contenen els objectes que s'ocupen de l'interaccio usuari partida
+Directori que contenen els objectes que s'ocupen de l'interaccio usuari i/o el sistema.
+
+Es segueixen el principis de MVP Model-View-Presenter.
 
