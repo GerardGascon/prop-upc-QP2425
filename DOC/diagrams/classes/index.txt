@@ -1,0 +1,3 @@
+Directori que conte tots els diagrames de classes generat amb el programa PlantUML.
+
+Diagrama de classes de la capa de dades, de domini i tot junt.

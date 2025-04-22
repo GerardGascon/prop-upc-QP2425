@@ -1,0 +1,1 @@
+Directori que conte diagrames de classes i casos d'us del treball.
