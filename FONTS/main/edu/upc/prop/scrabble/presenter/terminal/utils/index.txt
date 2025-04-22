@@ -1,0 +1,2 @@
+Aquestes clases s'ocupen de llegir linees de la terminal per a
+permetre l'interacció amb el joc
