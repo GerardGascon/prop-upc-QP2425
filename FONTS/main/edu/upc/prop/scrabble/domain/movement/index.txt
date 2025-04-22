@@ -1,0 +1,5 @@
+Directori que conte classes per poder gestionar els moviments i les peces posades del jugador.
+
+Es verifica que un moviment estigui dins el rang del tauler.
+
+Es fa un filtratge de les peces ja presents al tauler al posar una paraula.
