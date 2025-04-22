@@ -1,0 +1,1 @@
+Aquestes classes s'ocupen de configuracio iniciailtzacio dels objectes i resolucio de les seves dependencies
