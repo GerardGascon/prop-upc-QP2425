@@ -5,7 +5,7 @@ import java.net.URISyntaxException;
 import java.nio.file.Path;
 
 abstract class SaveDataStreamer {
-    protected File getAbsolutePath() {
+    protected File getAbsolutePath(String fileName) {
         try {
             File programRootPath = new File(SaveWriter.class.getProtectionDomain().getCodeSource().getLocation().toURI());
             Path path = programRootPath.toPath()
@@ -15,7 +15,7 @@ abstract class SaveDataStreamer {
                     .resolve("scrabble")
                     .resolve("save");
 
-            return new File(path.toFile(), "save.json");
+            return new File(path.toFile(), fileName);
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }

@@ -6,5 +6,5 @@ public interface ISaveReader {
      *
      * @return null if file does not exist, String otherwise
      */
-    String read();
+    String read(String fileName);
 }

@@ -8,8 +8,8 @@ import java.nio.file.Files;
 
 public class SaveWriter extends SaveDataStreamer implements ISaveWriter {
     @Override
-    public void write(String data) {
-        File path = getAbsolutePath();
+    public void write(String data, String fileName) {
+        File path = getAbsolutePath(fileName);
 
         try {
             Files.writeString(path.toPath(), data);

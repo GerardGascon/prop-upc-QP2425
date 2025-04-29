@@ -9,8 +9,8 @@ import java.nio.file.Files;
 
 public class SaveReader extends SaveDataStreamer implements ISaveReader {
     @Override
-    public String read() {
-        File path = getAbsolutePath();
+    public String read(String fileName) {
+        File path = getAbsolutePath(fileName);
         if (!path.exists())
             return null;
 
