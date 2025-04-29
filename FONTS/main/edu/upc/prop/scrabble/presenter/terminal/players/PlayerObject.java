@@ -48,7 +48,11 @@ public abstract class PlayerObject extends SceneObject implements IGamePlayer {
 
     protected final void drawPieces(Piece[] piece) {
         try {
-            drawActionMaker.run(piece);
+            String[] word = new String[piece.length];
+            for (int i = 0; i < piece.length; i++) {
+                word[i] = piece[i].letter();
+            }
+            drawActionMaker.run(word);
         } catch (ScrabbleException e) {
             System.out.println("Invalid move (" + e.getClass().getSimpleName() + ") - Skipping move");
             skipActionMaker.run();

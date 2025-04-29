@@ -6,6 +6,7 @@ import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.domain.exceptions.NotEnoughPiecesInBagException;
 import edu.upc.prop.scrabble.domain.game.GameStepper;
 import edu.upc.prop.scrabble.domain.pieces.PieceDrawer;
+import edu.upc.prop.scrabble.domain.pieces.PiecesConverter;
 import edu.upc.prop.scrabble.domain.turns.TurnResult;
 import edu.upc.prop.scrabble.utils.IRand;
 
@@ -20,7 +21,7 @@ public class DrawActionMaker {
     private final Bag bag;
     private final IHandDisplay handDisplay;
     private final GameStepper stepper;
-
+    private final PiecesConverter piecesConverter;
     /***
      * Default constructor of a DrawActionMaker with specific bag, player, rand and handDisplay.
      * @param bag The current piece bag of the game.
@@ -28,27 +29,31 @@ public class DrawActionMaker {
      * @param rand The random number generator instance
      * @param handDisplay Interface that represents the current hand of the player.
      */
-    public DrawActionMaker(Bag bag, Player player, IRand rand, IHandDisplay handDisplay, GameStepper stepper) {
+    public DrawActionMaker(Bag bag, Player player, IRand rand, IHandDisplay handDisplay, GameStepper stepper, PiecesConverter piecesConverter) {
         this.player = player;
         this.bag = bag;
         this.handDisplay = handDisplay;
+        this.piecesConverter = piecesConverter;
         this.pieceDrawer = new PieceDrawer(bag, player, rand);
         this.stepper = stepper;
     }
 
     /***
      * Procedure that manages the exchange of pieces between the player's hand and the piece bag.
-     * @param PiecesToSwap Array of pieces to be exchanged with new drawn pieces from the bag.
+     * @param word Word to be exchanged with new drawn pieces from the bag.
      * @throws IllegalArgumentException if PiecesToSwap is null.
      * @throws NotEnoughPiecesInBagException if there are not enough pieces in the bag for completing the exchange.
      */
-    public void run(Piece[] PiecesToSwap) {
-        if (PiecesToSwap == null) {
-            throw new IllegalArgumentException("No pieces to swap");
+    public void run(String[] word) {
+        Piece[] PiecesToSwap = new Piece[word.length];
+        for (int i = 0; i < word.length; i++) {
+            Piece[] Piece = piecesConverter.run(word[i]);
+            PiecesToSwap[i] = Piece[0];
         }
         if (PiecesToSwap.length > bag.getSize()) {
             throw new NotEnoughPiecesInBagException("Not enough pieces in bag");
         }
+
         pieceDrawer.run(PiecesToSwap);
         handDisplay.updateHand(player.getHand());
         stepper.run(TurnResult.Draw);

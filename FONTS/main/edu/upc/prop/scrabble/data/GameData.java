@@ -1,6 +1,7 @@
 package edu.upc.prop.scrabble.data;
 
 import edu.upc.prop.scrabble.data.Player;
+import edu.upc.prop.scrabble.data.board.BoardType;
 import edu.upc.prop.scrabble.data.properties.Language;
 
 import java.util.ArrayList;
@@ -9,8 +10,10 @@ public class GameData {
 
         private int skipCounter = 0;
         private int turnNumber = 0;
+        private BoardType boardType;
         private Language language;
         private Player[] players;
+
 
         public GameData(Language lan, Player[] p) {
             language = lan;
@@ -60,5 +63,13 @@ public class GameData {
         public void setPlayers(Player[] players) {
             this.players = players;
         }
+
+    public void setBoardType(BoardType boardType) {
+        this.boardType = boardType;
+    }
+
+    public BoardType getBoardType() {
+        return boardType;
+    }
 }
 
