@@ -23,8 +23,6 @@ import edu.upc.prop.scrabble.domain.game.GameStepper;
 import edu.upc.prop.scrabble.domain.game.IEndScreen;
 import edu.upc.prop.scrabble.presenter.localization.DictionaryReader;
 import edu.upc.prop.scrabble.presenter.localization.PiecesReader;
-import edu.upc.prop.scrabble.domain.movement.MovementBoundsChecker;
-import edu.upc.prop.scrabble.domain.movement.MovementCleaner;
 import edu.upc.prop.scrabble.domain.pieces.*;
 import edu.upc.prop.scrabble.domain.turns.Endgame;
 import edu.upc.prop.scrabble.domain.turns.Turn;
@@ -63,12 +61,6 @@ public class GameScene extends Scene {
         Bag bag = generateBag(properties.language());
         fillDAWG(dawg, properties.language());
 
-        MovementBoundsChecker boundsChecker = new MovementBoundsChecker(board, piecesConverter);
-        MovementCleaner movementCleaner = new MovementCleaner(board, piecesConverter);
-        WordValidator wordValidator = new WordValidator(dawg);
-        PresentPiecesWordCompleter presentPiecesWordCompleter = new PresentPiecesWordCompleter(board);
-        CrossCheckUpdater crossCheckUpdater = new CrossCheckUpdater(piecesConverter, crossChecks, board, dawg);
-
         Anchors anchors = new Anchors();
         AnchorUpdater anchorUpdater = new AnchorUpdater(anchors, board, piecesConverter);
 
@@ -78,9 +70,8 @@ public class GameScene extends Scene {
         IEndScreen endScreen = new EndScreen();
         GameStepper stepper = new GameStepper(turnManager, leaderboard, playersData, endScreen);
 
-        configurePlayers(players, playersData, stepper, board, boardView, pointCalculator, bag, boundsChecker,
-                wordValidator, movementCleaner, presentPiecesWordCompleter, crossCheckUpdater, piecesConverter,
-                anchorUpdater);
+        configurePlayers(players, playersData, stepper, board, boardView, pointCalculator, bag, piecesConverter,
+                anchorUpdater, dawg, crossChecks);
 
         HandFiller handFiller = new HandFiller(bag, playersData, new Rand());
         handFiller.run();
@@ -135,29 +126,21 @@ public class GameScene extends Scene {
 
     private void configurePlayers(PlayerObject[] playerObjects, Player[] players, GameStepper stepper, Board board,
                                   BoardView boardView, PointCalculator pointCalculator, Bag bag,
-                                  MovementBoundsChecker boundsChecker,
-                                  WordValidator wordValidator, MovementCleaner movementCleaner,
-                                  PresentPiecesWordCompleter presentPiecesWordCompleter,
-                                  CrossCheckUpdater crossCheckUpdater, PiecesConverter piecesConverter, AnchorUpdater anchorUpdater) {
+                                  PiecesConverter piecesConverter, AnchorUpdater anchorUpdater, DAWG dawg,
+                                  CrossChecks crossChecks) {
         for (int i = 0; i < players.length; i++) {
             configurePlayer(playerObjects[i], players[i], stepper, board, boardView, pointCalculator, bag,
-                    boundsChecker, wordValidator, movementCleaner, presentPiecesWordCompleter, crossCheckUpdater,
-                    piecesConverter, anchorUpdater);
+                    piecesConverter, anchorUpdater, dawg, crossChecks);
         }
     }
 
     public void configurePlayer(PlayerObject playerObject, Player player, GameStepper stepper, Board board,
                                 BoardView boardView, PointCalculator pointCalculator, Bag bag,
-                                MovementBoundsChecker boundsChecker,
-                                WordValidator wordValidator, MovementCleaner movementCleaner,
-                                PresentPiecesWordCompleter presentPiecesWordCompleter,
-                                CrossCheckUpdater crossCheckUpdater, PiecesConverter piecesConverter,
-                                AnchorUpdater anchorUpdater) {
+                                PiecesConverter piecesConverter, AnchorUpdater anchorUpdater, DAWG dawg,
+                                CrossChecks crossChecks) {
         WordPlacer wordPlacer = new WordPlacer(player, board, boardView, pointCalculator);
-        PiecesInHandGetter piecesInHandGetter = new PiecesInHandGetter(bag, player, new Rand());
-        PlaceActionMaker placeActionMaker = new PlaceActionMaker(boundsChecker, wordValidator, piecesInHandGetter,
-                movementCleaner, wordPlacer, presentPiecesWordCompleter, crossCheckUpdater, stepper, piecesConverter,
-                board, anchorUpdater);
+        PlaceActionMaker placeActionMaker = new PlaceActionMaker(player, bag, wordPlacer, stepper, piecesConverter,
+                board, anchorUpdater, crossChecks, dawg, new Rand());
         DrawActionMaker drawActionMaker = new DrawActionMaker(bag, player, new Rand(), new HandView(), stepper, piecesConverter);
         SkipActionMaker skipActionMaker = new SkipActionMaker(stepper);
         playerObject.configure(placeActionMaker, player, drawActionMaker, skipActionMaker);

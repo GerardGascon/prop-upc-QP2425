@@ -14,10 +14,7 @@ import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.domain.actionmaker.PlaceActionMaker;
 import edu.upc.prop.scrabble.domain.ai.AnchorUpdater;
 import edu.upc.prop.scrabble.domain.board.PointCalculator;
-import edu.upc.prop.scrabble.domain.board.PresentPiecesWordCompleter;
-import edu.upc.prop.scrabble.domain.board.WordGetter;
 import edu.upc.prop.scrabble.domain.board.WordPlacer;
-import edu.upc.prop.scrabble.domain.ai.CrossCheckUpdater;
 import edu.upc.prop.scrabble.domain.dawg.WordAdder;
 import edu.upc.prop.scrabble.domain.dawg.WordValidator;
 import edu.upc.prop.scrabble.domain.exceptions.InitialMoveNotInCenterException;
@@ -26,11 +23,8 @@ import edu.upc.prop.scrabble.domain.exceptions.WordDoesNotExistException;
 import edu.upc.prop.scrabble.domain.exceptions.WordNotConnectedToOtherWordsException;
 import edu.upc.prop.scrabble.domain.game.GameStepper;
 import edu.upc.prop.scrabble.domain.game.IEndScreen;
-import edu.upc.prop.scrabble.domain.movement.MovementBoundsChecker;
-import edu.upc.prop.scrabble.domain.movement.MovementCleaner;
 import edu.upc.prop.scrabble.domain.pieces.EnglishPiecesConverter;
 import edu.upc.prop.scrabble.domain.pieces.PiecesConverter;
-import edu.upc.prop.scrabble.domain.pieces.PiecesInHandGetter;
 import edu.upc.prop.scrabble.domain.turns.Endgame;
 import edu.upc.prop.scrabble.domain.turns.IGamePlayer;
 import edu.upc.prop.scrabble.domain.turns.Turn;
@@ -58,23 +52,18 @@ public class TestPlaceActionMaker {
         PiecesConverter piecesConverter = new EnglishPiecesConverter();
         player = new Player("name", false);
         WordPlacer wordPlacer = new WordPlacer(player, board, boardViewStub, pointCalculator);
-        MovementBoundsChecker boundsChecker = new MovementBoundsChecker(board, piecesConverter);
         dawg = new DAWG();
         WordValidator wordValidator = new WordValidator(dawg);
         bag = new Bag();
         IRand rand = new RandStub(0);
-        PiecesInHandGetter piecesInHandGetter = new PiecesInHandGetter(bag, player, rand);
-        MovementCleaner movementCleaner = new MovementCleaner(board, piecesConverter);
-        PresentPiecesWordCompleter presentPiecesWordCompleter = new PresentPiecesWordCompleter(board);
         CrossChecks crossChecks = new EnglishCrossChecks(board.getSize());
-        CrossCheckUpdater crossCheckUpdater = new CrossCheckUpdater(piecesConverter, crossChecks, board, dawg);
         Turn turn = new Turn(new Endgame(new Player[]{player}), new IGamePlayer[]{new GamePlayerStub()});
         IEndScreen endScreen = new EndScreenStub();
         GameStepper stepper = new GameStepper(turn, new Leaderboard(), new Player[]{player}, endScreen);
         Anchors anchors = new Anchors();
         AnchorUpdater anchorUpdater = new AnchorUpdater(anchors, board, piecesConverter);
-        sut = new PlaceActionMaker(boundsChecker, wordValidator, piecesInHandGetter, movementCleaner, wordPlacer,
-                presentPiecesWordCompleter, crossCheckUpdater, stepper, piecesConverter, board, anchorUpdater);
+        sut = new PlaceActionMaker(player, bag, wordPlacer,
+                stepper, piecesConverter, board, anchorUpdater, crossChecks, dawg, rand);
     }
 
     @Test

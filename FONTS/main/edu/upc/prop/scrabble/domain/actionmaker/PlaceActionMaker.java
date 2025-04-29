@@ -1,8 +1,12 @@
 package edu.upc.prop.scrabble.domain.actionmaker;
 
 import edu.upc.prop.scrabble.data.Movement;
+import edu.upc.prop.scrabble.data.Player;
 import edu.upc.prop.scrabble.data.board.Board;
+import edu.upc.prop.scrabble.data.crosschecks.CrossChecks;
+import edu.upc.prop.scrabble.data.dawg.DAWG;
 import edu.upc.prop.scrabble.data.exceptions.PlayerDoesNotHavePieceException;
+import edu.upc.prop.scrabble.data.pieces.Bag;
 import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.domain.ai.AnchorUpdater;
 import edu.upc.prop.scrabble.domain.board.PresentPiecesWordCompleter;
@@ -19,6 +23,7 @@ import edu.upc.prop.scrabble.domain.pieces.PiecesInHandGetter;
 import edu.upc.prop.scrabble.domain.movement.MovementCleaner;
 import edu.upc.prop.scrabble.domain.movement.MovementBoundsChecker;
 import edu.upc.prop.scrabble.domain.turns.TurnResult;
+import edu.upc.prop.scrabble.utils.IRand;
 import edu.upc.prop.scrabble.utils.Pair;
 import edu.upc.prop.scrabble.utils.Vector2;
 
@@ -47,29 +52,24 @@ public class PlaceActionMaker {
     /**
      * Constructs a PlaceActionMaker instance that will manage word placement actions.
      *
-     * @param movementBoundsChecker A checker that ensures the movement stays within board boundaries.
-     * @param wordValidator A validator to check if the word exists in the dictionary.
-     * @param piecesInHandGetter A utility to get the pieces currently in the player's hand.
-     * @param movementCleaner A utility to clean and validate the pieces involved in the movement.
-     * @param wordPlacer A component that places the word on the board.
-     * @param presentPiecesWordCompleter A utility to check the completion of words formed by the current move.
-     * @param crossCheckUpdater Updates cross-checks for word validity after placement.
-     * @param stepper A stepper to proceed with the game logic after the move.
-     * @param piecesConverter A utility that converts a word to a set of pieces.
-     * @param board The current game board.
+     * @param wordPlacer         A component that places the word on the board.
+     * @param stepper            A stepper to proceed with the game logic after the move.
+     * @param piecesConverter    A utility that converts a word to a set of pieces.
+     * @param board              The current game board.
+     * @param crossChecks
+     * @param dawg
      */
-    public PlaceActionMaker(MovementBoundsChecker movementBoundsChecker, WordValidator wordValidator,
-                            PiecesInHandGetter piecesInHandGetter, MovementCleaner movementCleaner,
-                            WordPlacer wordPlacer, PresentPiecesWordCompleter presentPiecesWordCompleter,
-                            CrossCheckUpdater crossCheckUpdater, GameStepper stepper, PiecesConverter piecesConverter,
-                            Board board, AnchorUpdater anchorUpdater) {
-        this.movementBoundsChecker = movementBoundsChecker;
-        this.wordValidator = wordValidator;
-        this.piecesInHandGetter = piecesInHandGetter;
-        this.movementCleaner = movementCleaner;
+    public PlaceActionMaker(Player player, Bag bag,
+                            WordPlacer wordPlacer,
+                            GameStepper stepper, PiecesConverter piecesConverter,
+                            Board board, AnchorUpdater anchorUpdater, CrossChecks crossChecks, DAWG dawg, IRand rand) {
+        this.movementBoundsChecker = new MovementBoundsChecker(board, piecesConverter);
+        this.movementCleaner = new MovementCleaner(board, piecesConverter);
+        this.wordValidator = new WordValidator(dawg);
+        this.piecesInHandGetter = new PiecesInHandGetter(bag, player, rand);
         this.wordPlacer = wordPlacer;
-        this.presentPiecesWordCompleter = presentPiecesWordCompleter;
-        this.crossCheckUpdater = crossCheckUpdater;
+        this.presentPiecesWordCompleter = new PresentPiecesWordCompleter(board);
+        this.crossCheckUpdater = new CrossCheckUpdater(piecesConverter, crossChecks, board, dawg);
         this.stepper = stepper;
         this.piecesConverter = piecesConverter;
         this.board = board;
