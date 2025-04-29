@@ -6,7 +6,6 @@ import edu.upc.prop.scrabble.data.properties.Language;
 import java.util.ArrayList;
 
 public class GameData {
-    public class GameData {
 
         private int skipCounter = 0;
         private int turnNumber = 0;
@@ -62,5 +61,5 @@ public class GameData {
             this.players = players;
         }
 
-    }
 }
+
