@@ -10,6 +10,9 @@ public class PersistentDictionary extends PersistentObject{
         return dictionary;
     }
 
+    public PersistentDictionary() {
+        this(null);
+    }
     public PersistentDictionary(String name) {
         this(name, new HashMap<>());
     }
