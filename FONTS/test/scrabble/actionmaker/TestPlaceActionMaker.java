@@ -54,8 +54,7 @@ public class TestPlaceActionMaker {
     public void setup() {
         boardViewStub = new BoardViewStub();
         board = new StandardBoard();
-        WordGetter wordGetter = new WordGetter(board);
-        PointCalculator pointCalculator = new PointCalculator(board, wordGetter);
+        PointCalculator pointCalculator = new PointCalculator(board);
         PiecesConverter piecesConverter = new EnglishPiecesConverter();
         player = new Player("name", false);
         WordPlacer wordPlacer = new WordPlacer(player, board, boardViewStub, pointCalculator);
@@ -66,7 +65,7 @@ public class TestPlaceActionMaker {
         IRand rand = new RandStub(0);
         PiecesInHandGetter piecesInHandGetter = new PiecesInHandGetter(bag, player, rand);
         MovementCleaner movementCleaner = new MovementCleaner(board, piecesConverter);
-        PresentPiecesWordCompleter presentPiecesWordCompleter = new PresentPiecesWordCompleter(wordGetter);
+        PresentPiecesWordCompleter presentPiecesWordCompleter = new PresentPiecesWordCompleter(board);
         CrossChecks crossChecks = new EnglishCrossChecks(board.getSize());
         CrossCheckUpdater crossCheckUpdater = new CrossCheckUpdater(piecesConverter, crossChecks, board, dawg);
         Turn turn = new Turn(new Endgame(new Player[]{player}), new IGamePlayer[]{new GamePlayerStub()});

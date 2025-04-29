@@ -24,12 +24,11 @@ public class PointCalculator {
     /**
      * Constructs a PointCalculator instance with the given board and word getter.
      *
-     * @param board      The board where the game is being played.
-     * @param wordGetter An instance of WordGetter used to retrieve words formed by placed pieces.
+     * @param board The board where the game is being played.
      */
-    public PointCalculator(Board board, WordGetter wordGetter) {
+    public PointCalculator(Board board) {
         this.board = board;
-        this.wordGetter = wordGetter;
+        this.wordGetter = new WordGetter(board);
     }
 
     /**

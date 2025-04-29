@@ -27,8 +27,7 @@ public class TestPresentPiecesWordCompleter {
                 new Vector2(5, 0),
         };
 
-        WordGetter wordGetter = new WordGetter(board);
-        PresentPiecesWordCompleter sut = new PresentPiecesWordCompleter(wordGetter);
+        PresentPiecesWordCompleter sut = new PresentPiecesWordCompleter(board);
 
         String[] words = sut.run(positions, piecesArray);
 
@@ -56,8 +55,7 @@ public class TestPresentPiecesWordCompleter {
                 new Vector2(1, 3),
         };
 
-        WordGetter wordGetter = new WordGetter(board);
-        PresentPiecesWordCompleter sut = new PresentPiecesWordCompleter(wordGetter);
+        PresentPiecesWordCompleter sut = new PresentPiecesWordCompleter(board);
 
         String[] words = sut.run(positions, piecesArray);
 
@@ -83,8 +81,7 @@ public class TestPresentPiecesWordCompleter {
                 new Vector2(1, 0),
         };
 
-        WordGetter wordGetter = new WordGetter(board);
-        PresentPiecesWordCompleter sut = new PresentPiecesWordCompleter(wordGetter);
+        PresentPiecesWordCompleter sut = new PresentPiecesWordCompleter(board);
 
         String[] words = sut.run(positions, piecesArray);
 
@@ -114,8 +111,7 @@ public class TestPresentPiecesWordCompleter {
                 new Vector2(1, 3),
         };
 
-        WordGetter wordGetter = new WordGetter(board);
-        PresentPiecesWordCompleter sut = new PresentPiecesWordCompleter(wordGetter);
+        PresentPiecesWordCompleter sut = new PresentPiecesWordCompleter(board);
 
         String[] words = sut.run(positions, piecesArray);
 
@@ -146,8 +142,7 @@ public class TestPresentPiecesWordCompleter {
                 new Vector2(4, 1),
         };
 
-        WordGetter wordGetter = new WordGetter(board);
-        PresentPiecesWordCompleter sut = new PresentPiecesWordCompleter(wordGetter);
+        PresentPiecesWordCompleter sut = new PresentPiecesWordCompleter(board);
 
         String[] words = sut.run(positions, piecesArray);
 

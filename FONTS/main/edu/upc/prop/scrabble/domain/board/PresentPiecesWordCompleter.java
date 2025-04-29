@@ -1,5 +1,6 @@
 package edu.upc.prop.scrabble.domain.board;
 
+import edu.upc.prop.scrabble.data.board.Board;
 import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.utils.Direction;
 import edu.upc.prop.scrabble.utils.Vector2;
@@ -20,10 +21,10 @@ public class PresentPiecesWordCompleter {
     /**
      * Constructs a PresentPiecesWordCompleter instance using the provided word getter.
      *
-     * @param wordGetter An instance of WordGetter used to retrieve words formed by placed pieces.
+     * @param board The board where the game is being played.
      */
-    public PresentPiecesWordCompleter(WordGetter wordGetter) {
-        this.wordGetter = wordGetter;
+    public PresentPiecesWordCompleter(Board board) {
+        this.wordGetter = new WordGetter(board);
     }
 
     /**

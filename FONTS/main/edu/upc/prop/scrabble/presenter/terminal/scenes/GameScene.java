@@ -54,12 +54,10 @@ public class GameScene extends Scene {
         BoardView boardView = instantiate(BoardView.class);
         Player[] playersData = createPlayersData(properties);
 
-        WordGetter wordGetter = new WordGetter(board);
-        PointCalculator pointCalculator = new PointCalculator(board, wordGetter);
+        PointCalculator pointCalculator = new PointCalculator(board);
 
         PiecesReader piecesReader = new PiecesReader();
-        PieceGenerator pieceGenerator = new PieceGenerator();
-        PiecesConverterFactory piecesConverterFactory = new PiecesConverterFactory(piecesReader, pieceGenerator);
+        PiecesConverterFactory piecesConverterFactory = new PiecesConverterFactory(piecesReader);
         PiecesConverter piecesConverter = piecesConverterFactory.run(properties.language());
 
         Bag bag = generateBag(properties.language());
@@ -68,7 +66,7 @@ public class GameScene extends Scene {
         MovementBoundsChecker boundsChecker = new MovementBoundsChecker(board, piecesConverter);
         MovementCleaner movementCleaner = new MovementCleaner(board, piecesConverter);
         WordValidator wordValidator = new WordValidator(dawg);
-        PresentPiecesWordCompleter presentPiecesWordCompleter = new PresentPiecesWordCompleter(wordGetter);
+        PresentPiecesWordCompleter presentPiecesWordCompleter = new PresentPiecesWordCompleter(board);
         CrossCheckUpdater crossCheckUpdater = new CrossCheckUpdater(piecesConverter, crossChecks, board, dawg);
 
         Anchors anchors = new Anchors();

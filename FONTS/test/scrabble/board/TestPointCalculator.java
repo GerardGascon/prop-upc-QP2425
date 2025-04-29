@@ -34,7 +34,7 @@ public class TestPointCalculator {
         };
 
         WordGetter wordGetter = new WordGetter(board);
-        PointCalculator sut = new PointCalculator(board, wordGetter);
+        PointCalculator sut = new PointCalculator(board);
 
         int points = sut.run(positions, piecesArray);
 
@@ -59,7 +59,7 @@ public class TestPointCalculator {
         };
 
         WordGetter wordGetter = new WordGetter(board);
-        PointCalculator sut = new PointCalculator(board, wordGetter);
+        PointCalculator sut = new PointCalculator(board);
 
         int points = sut.run(positions, piecesArray);
 
@@ -86,7 +86,7 @@ public class TestPointCalculator {
         };
 
         WordGetter wordGetter = new WordGetter(board);
-        PointCalculator sut = new PointCalculator(board, wordGetter);
+        PointCalculator sut = new PointCalculator(board);
 
         int points = sut.run(positions, piecesArray);
 
@@ -116,7 +116,7 @@ public class TestPointCalculator {
         };
 
         WordGetter wordGetter = new WordGetter(board);
-        PointCalculator sut = new PointCalculator(board, wordGetter);
+        PointCalculator sut = new PointCalculator(board);
 
         int points = sut.run(positions, piecesArray);
 
@@ -146,7 +146,7 @@ public class TestPointCalculator {
         };
 
         WordGetter wordGetter = new WordGetter(board);
-        PointCalculator sut = new PointCalculator(board, wordGetter);
+        PointCalculator sut = new PointCalculator(board);
 
         int points = sut.run(positions, piecesArray);
 
@@ -185,7 +185,7 @@ public class TestPointCalculator {
         };
 
         WordGetter wordGetter = new WordGetter(board);
-        PointCalculator sut = new PointCalculator(board, wordGetter);
+        PointCalculator sut = new PointCalculator(board);
 
         int points = sut.run(positions, piecesArray);
 
@@ -219,7 +219,7 @@ public class TestPointCalculator {
         };
 
         WordGetter wordGetter = new WordGetter(board);
-        PointCalculator sut = new PointCalculator(board, wordGetter);
+        PointCalculator sut = new PointCalculator(board);
 
         int points = sut.run(positions, piecesArray);
 
@@ -248,7 +248,7 @@ public class TestPointCalculator {
         };
 
         WordGetter wordGetter = new WordGetter(board);
-        PointCalculator sut = new PointCalculator(board, wordGetter);
+        PointCalculator sut = new PointCalculator(board);
 
         int points = sut.run(positions, piecesArray);
 
@@ -295,7 +295,7 @@ public class TestPointCalculator {
         };
 
         WordGetter wordGetter = new WordGetter(board);
-        PointCalculator sut = new PointCalculator(board, wordGetter);
+        PointCalculator sut = new PointCalculator(board);
 
         int points = sut.run(positions, piecesArray);
 
@@ -334,7 +334,7 @@ public class TestPointCalculator {
         };
 
         WordGetter wordGetter = new WordGetter(board);
-        PointCalculator sut = new PointCalculator(board, wordGetter);
+        PointCalculator sut = new PointCalculator(board);
 
         int points = sut.run(positions, piecesArray);
 
@@ -372,7 +372,7 @@ public class TestPointCalculator {
         };
 
         WordGetter wordGetter = new WordGetter(board);
-        PointCalculator sut = new PointCalculator(board, wordGetter);
+        PointCalculator sut = new PointCalculator(board);
 
         int points = sut.run(positions, piecesArray);
 
@@ -405,7 +405,7 @@ public class TestPointCalculator {
         };
 
         WordGetter wordGetter = new WordGetter(board);
-        PointCalculator sut = new PointCalculator(board, wordGetter);
+        PointCalculator sut = new PointCalculator(board);
 
         int points = sut.run(positions, piecesArray);
 
@@ -454,7 +454,7 @@ public class TestPointCalculator {
         };
 
         WordGetter wordGetter = new WordGetter(board);
-        PointCalculator sut = new PointCalculator(board, wordGetter);
+        PointCalculator sut = new PointCalculator(board);
 
         int points = sut.run(positions, piecesArray);
 
@@ -495,7 +495,7 @@ public class TestPointCalculator {
         };
 
         WordGetter wordGetter = new WordGetter(board);
-        PointCalculator sut = new PointCalculator(board, wordGetter);
+        PointCalculator sut = new PointCalculator(board);
 
         int points = sut.run(positions, piecesArray);
 

@@ -78,7 +78,7 @@ public class TestAI {
         board = new StandardBoard();
         anchors = new Anchors();
         WordGetter wordGetter = new WordGetter(board);
-        pointCalculator = new PointCalculator(board, wordGetter);
+        pointCalculator = new PointCalculator(board);
 
         BoardViewStub boardViewStub = new BoardViewStub();
         wordPlacer = new WordPlacer(bot, board, boardViewStub, pointCalculator);

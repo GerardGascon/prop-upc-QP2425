@@ -33,7 +33,7 @@ public class TestMovementCleaner {
         Player player = new Player("nom", false);
         BoardViewStub mock = new BoardViewStub();
         WordGetter wordGetter = new WordGetter(board);
-        PointCalculator pointCalculator = new PointCalculator(board, wordGetter);
+        PointCalculator pointCalculator = new PointCalculator(board);
         WordPlacer wordPlacer = new WordPlacer(player, board, mock, pointCalculator);
         Piece[] pieces = new Piece[] {new Piece("T", 0)};
         wordPlacer.run(pieces, 0, 0, Direction.Vertical);
@@ -52,7 +52,7 @@ public class TestMovementCleaner {
         Player player = new Player("nom", false);
         BoardViewStub mock = new BoardViewStub();
         WordGetter wordGetter = new WordGetter(board);
-        PointCalculator pointCalculator = new PointCalculator(board, wordGetter);
+        PointCalculator pointCalculator = new PointCalculator(board);
         WordPlacer wordPlacer = new WordPlacer(player, board, mock, pointCalculator);
         Piece[] pieces = new Piece[] {
                 new Piece("T", 0),
@@ -77,7 +77,7 @@ public class TestMovementCleaner {
         Player player = new Player("nom", false);
         BoardViewStub mock = new BoardViewStub();
         WordGetter wordGetter = new WordGetter(board);
-        PointCalculator pointCalculator = new PointCalculator(board, wordGetter);
+        PointCalculator pointCalculator = new PointCalculator(board);
         WordPlacer wordPlacer = new WordPlacer(player, board, mock, pointCalculator);
         Piece[] pieces = new Piece[] {
                 new Piece("T", 0),
@@ -101,7 +101,7 @@ public class TestMovementCleaner {
         Player player = new Player("nom", false);
         BoardViewStub mock = new BoardViewStub();
         WordGetter wordGetter = new WordGetter(board);
-        PointCalculator pointCalculator = new PointCalculator(board, wordGetter);
+        PointCalculator pointCalculator = new PointCalculator(board);
         WordPlacer wordPlacer = new WordPlacer(player, board, mock, pointCalculator);
         Piece[] pieces = new Piece[] {
                 new Piece("T", 0),
@@ -127,7 +127,7 @@ public class TestMovementCleaner {
         Player player = new Player("nom", false);
         BoardViewStub mock = new BoardViewStub();
         WordGetter wordGetter = new WordGetter(board);
-        PointCalculator pointCalculator = new PointCalculator(board, wordGetter);
+        PointCalculator pointCalculator = new PointCalculator(board);
         WordPlacer wordPlacer = new WordPlacer(player, board, mock, pointCalculator);
         Piece[] pieces = new Piece[] {new Piece("T", 0)};
         wordPlacer.run(pieces, 0, 0, Direction.Horizontal);
@@ -146,7 +146,7 @@ public class TestMovementCleaner {
         Player player = new Player("nom", false);
         BoardViewStub mock = new BoardViewStub();
         WordGetter wordGetter = new WordGetter(board);
-        PointCalculator pointCalculator = new PointCalculator(board, wordGetter);
+        PointCalculator pointCalculator = new PointCalculator(board);
         WordPlacer wordPlacer = new WordPlacer(player, board, mock, pointCalculator);
         Piece[] pieces = new Piece[] {
                 new Piece("T", 0),
@@ -171,7 +171,7 @@ public class TestMovementCleaner {
         Player player = new Player("nom", false);
         BoardViewStub mock = new BoardViewStub();
         WordGetter wordGetter = new WordGetter(board);
-        PointCalculator pointCalculator = new PointCalculator(board, wordGetter);
+        PointCalculator pointCalculator = new PointCalculator(board);
         WordPlacer wordPlacer = new WordPlacer(player, board, mock, pointCalculator);
         Piece[] pieces = new Piece[] {
                 new Piece("T", 0),
@@ -195,7 +195,7 @@ public class TestMovementCleaner {
         Player player = new Player("nom", false);
         BoardViewStub mock = new BoardViewStub();
         WordGetter wordGetter = new WordGetter(board);
-        PointCalculator pointCalculator = new PointCalculator(board, wordGetter);
+        PointCalculator pointCalculator = new PointCalculator(board);
         WordPlacer wordPlacer = new WordPlacer(player, board, mock, pointCalculator);
         Piece[] pieces = new Piece[] {
                 new Piece("T", 0),

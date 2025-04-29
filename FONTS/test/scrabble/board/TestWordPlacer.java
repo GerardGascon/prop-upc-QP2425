@@ -25,7 +25,7 @@ public class TestWordPlacer {
                 new Piece("T", 1)
         };
         WordGetter wordGetter = new WordGetter(board);
-        PointCalculator pointCalculator = new PointCalculator(board, wordGetter);
+        PointCalculator pointCalculator = new PointCalculator(board);
         Player player = new Player("Test", false);
         WordPlacer sut = new WordPlacer(player, board, mock, pointCalculator);
 
@@ -48,7 +48,7 @@ public class TestWordPlacer {
                 new Piece("T", 1)
         };
         WordGetter wordGetter = new WordGetter(board);
-        PointCalculator pointCalculator = new PointCalculator(board, wordGetter);
+        PointCalculator pointCalculator = new PointCalculator(board);
         Player player = new Player("Test", false);
         WordPlacer sut = new WordPlacer(player, board, mock, pointCalculator);
 
@@ -65,7 +65,7 @@ public class TestWordPlacer {
         Board board = new StandardBoard();
         BoardViewStub mock = new BoardViewStub();
         WordGetter wordGetter = new WordGetter(board);
-        PointCalculator pointCalculator = new PointCalculator(board, wordGetter);
+        PointCalculator pointCalculator = new PointCalculator(board);
         Player player = new Player("Test", false);
         WordPlacer _ = new WordPlacer(player, board, mock, pointCalculator);
 
@@ -83,7 +83,7 @@ public class TestWordPlacer {
                 new Piece("T", 1)
         };
         WordGetter wordGetter = new WordGetter(board);
-        PointCalculator pointCalculator = new PointCalculator(board, wordGetter);
+        PointCalculator pointCalculator = new PointCalculator(board);
         Player player = new Player("Test", false);
         WordPlacer sut = new WordPlacer(player, board, mock, pointCalculator);
 

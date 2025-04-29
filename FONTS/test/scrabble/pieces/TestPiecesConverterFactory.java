@@ -3,7 +3,6 @@ package scrabble.pieces;
 import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.data.properties.Language;
 import edu.upc.prop.scrabble.domain.pieces.*;
-import edu.upc.prop.scrabble.presenter.localization.PiecesReader;
 import org.junit.Test;
 import scrabble.stubs.PiecesReaderStub;
 
@@ -14,7 +13,7 @@ public class TestPiecesConverterFactory {
     public void generatePiecesConverterWithEnglishDictionary() {
         IFileReader piecesReader = new PiecesReaderStub("A 5 5");
         PieceGenerator pieceGenerator = new PieceGenerator();
-        PiecesConverterFactory sut = new PiecesConverterFactory(piecesReader, pieceGenerator);
+        PiecesConverterFactory sut = new PiecesConverterFactory(piecesReader);
 
         PiecesConverter piecesConverter = sut.run(Language.English);
 
@@ -25,7 +24,7 @@ public class TestPiecesConverterFactory {
     public void generatePiecesConverterWithCatalanDictionary() {
         IFileReader piecesReader = new PiecesReaderStub("A 5 5");
         PieceGenerator pieceGenerator = new PieceGenerator();
-        PiecesConverterFactory sut = new PiecesConverterFactory(piecesReader, pieceGenerator);
+        PiecesConverterFactory sut = new PiecesConverterFactory(piecesReader);
 
         PiecesConverter piecesConverter = sut.run(Language.Catalan);
 
@@ -36,7 +35,7 @@ public class TestPiecesConverterFactory {
     public void generatePiecesConverterWithSpanishDictionary() {
         IFileReader piecesReader = new PiecesReaderStub("A 5 5");
         PieceGenerator pieceGenerator = new PieceGenerator();
-        PiecesConverterFactory sut = new PiecesConverterFactory(piecesReader, pieceGenerator);
+        PiecesConverterFactory sut = new PiecesConverterFactory(piecesReader);
 
         PiecesConverter piecesConverter = sut.run(Language.Spanish);
 
@@ -47,7 +46,7 @@ public class TestPiecesConverterFactory {
     public void newPiecesConverterParsingWithCorrectLanguageScore() {
         IFileReader piecesReader = new PiecesReaderStub("A 5 5");
         PieceGenerator pieceGenerator = new PieceGenerator();
-        PiecesConverterFactory sut = new PiecesConverterFactory(piecesReader, pieceGenerator);
+        PiecesConverterFactory sut = new PiecesConverterFactory(piecesReader);
 
         PiecesConverter piecesConverter = sut.run(Language.Catalan);
 
@@ -58,7 +57,7 @@ public class TestPiecesConverterFactory {
     public void newPiecesConverterParsingWithMultipleScores() {
         IFileReader piecesReader = new PiecesReaderStub("A 5 5\nB 3 2");
         PieceGenerator pieceGenerator = new PieceGenerator();
-        PiecesConverterFactory sut = new PiecesConverterFactory(piecesReader, pieceGenerator);
+        PiecesConverterFactory sut = new PiecesConverterFactory(piecesReader);
 
         PiecesConverter piecesConverter = sut.run(Language.English);
 
