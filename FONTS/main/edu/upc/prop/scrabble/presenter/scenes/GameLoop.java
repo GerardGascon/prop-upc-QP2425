@@ -1,7 +1,4 @@
-package edu.upc.prop.scrabble.presenter;
-
-import edu.upc.prop.scrabble.presenter.scenes.Scene;
-import edu.upc.prop.scrabble.presenter.scenes.SceneManager;
+package edu.upc.prop.scrabble.presenter.scenes;
 
 public class GameLoop {
 

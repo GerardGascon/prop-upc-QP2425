@@ -8,11 +8,8 @@ version = '1.0-SNAPSHOT'
 layout.buildDirectory.set(file("EXE"))
 
 ext {
-    javaMainClass = 'edu.upc.prop.scrabble.Main'
-}
-
-application {
-    mainClass = javaMainClass
+    terminalMainClass = 'edu.upc.prop.scrabble.presenter.terminal.Main'
+    swingMainClass = 'edu.upc.prop.scrabble.presenter.swing.Main'
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
@@ -74,8 +71,20 @@ tasks.named('build') {
     dependsOn generateRunFiles
 }
 
-tasks.named('run') {
+tasks.register('runTerminal', JavaExec) {
+    group = 'application'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass.set(terminalMainClass)
+    standardInput = System.in
     dependsOn copyTextFiles
     dependsOn generateRunFiles
+}
+
+tasks.register('runSwing', JavaExec) {
+    group = 'application'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass.set(swingMainClass)
     standardInput = System.in
+    dependsOn copyTextFiles
+    dependsOn generateRunFiles
 }
