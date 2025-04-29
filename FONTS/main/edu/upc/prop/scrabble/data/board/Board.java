@@ -1,6 +1,9 @@
 package edu.upc.prop.scrabble.data.board;
 
 import edu.upc.prop.scrabble.data.pieces.Piece;
+import edu.upc.prop.scrabble.persistence.runtime.data.PersistentDictionary;
+import edu.upc.prop.scrabble.persistence.runtime.data.PersistentObject;
+import edu.upc.prop.scrabble.persistence.runtime.interfaces.IPersistableObject;
 
 /**
  * Represents the game board for a Scrabble game.
@@ -10,7 +13,7 @@ import edu.upc.prop.scrabble.data.pieces.Piece;
  *
  * @author Gerard Gascón
  */
-public abstract class Board {
+public abstract class Board implements IPersistableObject {
     /**
      * Grid of letter tiles placed on the board. Empty cells contain null.
      */
@@ -183,4 +186,31 @@ public abstract class Board {
      * @return a copy of the board
      */
     protected abstract Board copy();
+
+    @Override
+    public PersistentDictionary encode() {
+        PersistentDictionary data = new PersistentDictionary();
+
+        data.add(new PersistentObject("placedTiles", placedTiles));
+
+        return data;
+    }
+
+    @Override
+    public void decode(PersistentDictionary data) {
+        PersistentObject placedTiles = data.get("placedTiles");
+        this.placedTiles = placedTiles.parse(Piece[][].class);
+        updateEmptyState();
+    }
+
+    private void updateEmptyState() {
+        for (int row = 0; row < getSize(); row++) {
+            for (int col = 0; col < getSize(); col++) {
+                if (this.placedTiles[row][col] != null){
+                    empty = false;
+                    return;
+                }
+            }
+        }
+    }
 }
