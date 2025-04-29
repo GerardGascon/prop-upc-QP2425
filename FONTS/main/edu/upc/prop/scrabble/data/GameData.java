@@ -4,16 +4,15 @@ import edu.upc.prop.scrabble.data.Player;
 import edu.upc.prop.scrabble.data.properties.Language;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class GameData {
 
         private int skipCounter = 0;
         private int turnNumber = 0;
         private Language language;
-        private List<Player> players = new ArrayList<>();
+        private Player[] players;
 
-        public GameData(Language lan, List<Player> p) {
+        public GameData(Language lan, Player[] p) {
             language = lan;
             players = p;
         }
@@ -54,16 +53,12 @@ public class GameData {
             this.language = language;
         }
 
-        public List<Player> getPlayers() {
+        public Player[] getPlayers() {
             return players;
         }
 
-        public void setPlayers(List<Player> players) {
+        public void setPlayers(Player[] players) {
             this.players = players;
-        }
-
-        public void addPlayer(Player player) {
-            players.add(player);
         }
 }
 
