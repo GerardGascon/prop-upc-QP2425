@@ -4,33 +4,34 @@ import edu.upc.prop.scrabble.data.Player;
 import edu.upc.prop.scrabble.data.properties.Language;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class GameData {
 
         private int skipCounter = 0;
         private int turnNumber = 0;
         private Language language;
-        private Player[] players;
+        private List<Player> players = new ArrayList<>();
 
-        public GameData(Language lan, Player[] p) {
+        public GameData(Language lan, List<Player> p) {
             language = lan;
             players = p;
         }
 
         public void incrementSkipCounter() {
-            skipCounter = skipCounter + 1;
+            this.skipCounter = this.skipCounter + 1;
         }
 
         public void resetSkipCounter() {
-            skipCounter = 0;
+            this.skipCounter = 0;
         }
 
         public void incrementTurnNumber(){
-            turnNumber = turnNumber + 1;
+            this.turnNumber = this.turnNumber + 1;
         }
 
         public int getSkipCounter() {
-            return skipCounter;
+            return this.skipCounter;
         }
 
         public void setSkipCounter(int skipCounter) {
@@ -53,13 +54,16 @@ public class GameData {
             this.language = language;
         }
 
-        public Player[] getPlayers() {
+        public List<Player> getPlayers() {
             return players;
         }
 
-        public void setPlayers(Player[] players) {
+        public void setPlayers(List<Player> players) {
             this.players = players;
         }
 
+        public void addPlayer(Player player) {
+            players.add(player);
+        }
 }
 
