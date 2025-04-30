@@ -1,5 +1,8 @@
 package edu.upc.prop.scrabble.presenter.swing.screens.game.board;
 
+import edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles.BoardEmptyTile;
+import edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles.BoardPieceTile;
+import edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles.BoardTile;
 import edu.upc.prop.scrabble.utils.Rand;
 
 import javax.swing.*;
@@ -17,7 +20,7 @@ public class BoardView extends JPanel {
             if (rand.nextInt() % 2 == 0)
                 cell = new BoardPieceTile();
             else
-                cell = new BoardTile();
+                cell = new BoardEmptyTile();
             int row = i / size;
             int col = i % size;
             cell.addActionListener(_ -> System.out.println("Clicked cell: " + row + ", " + col));

@@ -1,12 +1,18 @@
-package edu.upc.prop.scrabble.presenter.swing.screens.game.board;
+package edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 
 public class BoardPieceTile extends BoardTile {
+    private String letter = "L·L";
+
     public BoardPieceTile() {
         super();
-        setBackground(Color.white);
+        setBackground(new Color(0xff, 0xf9, 0xb5));
+    }
+
+    public void setLetter(String letter) {
+        this.letter = letter;
     }
 
     @Override
@@ -19,12 +25,11 @@ public class BoardPieceTile extends BoardTile {
     }
 
     private void drawLetter(Graphics2D g) {
-        String letter = "L·L";
         g.setColor(Color.BLACK);
 
         AffineTransform at = new AffineTransform();
-//        at.scale(1, 1);
-        at.scale(0.7, 1);
+        if (letter.length() > 1)
+            at.scale(0.7, 1);
 
         Font font = new Font("SansSerif", Font.BOLD, (int)(getHeight() * 0.7)).deriveFont(at);
         g.setFont(font);

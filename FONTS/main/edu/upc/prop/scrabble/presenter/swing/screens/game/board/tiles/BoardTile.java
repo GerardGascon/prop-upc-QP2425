@@ -1,10 +1,10 @@
-package edu.upc.prop.scrabble.presenter.swing.screens.game.board;
+package edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 
-public class BoardTile extends JButton {
+public abstract class BoardTile extends JButton {
     protected int cornerRadius = 16;
 
     public BoardTile() {
@@ -13,7 +13,6 @@ public class BoardTile extends JButton {
         setFocusPainted(false);
         setContentAreaFilled(false);
         setBorderPainted(false);
-        setBackground(new Color(0x56, 0xa8, 0x87));
     }
 
     @Override
@@ -21,7 +20,13 @@ public class BoardTile extends JButton {
         Graphics2D g2 = (Graphics2D) g.create();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        Color bgColor = getModel().isArmed() ? getBackground().darker() : getBackground();
+        Color bgColor;
+        if (model.isArmed())
+            bgColor = getBackground().darker();
+        else if (model.isRollover())
+            bgColor = getBackground().brighter();
+        else
+            bgColor = getBackground();
 
         drawTile(g2, bgColor, cornerRadius);
 
@@ -29,10 +34,7 @@ public class BoardTile extends JButton {
         g2.dispose();
     }
 
-    protected void drawTile(Graphics2D g, Color bg, int radius) {
-        g.setColor(bg);
-        g.fillRoundRect(0, 0, getWidth(), getHeight(), radius, radius);
-    }
+    protected abstract void drawTile(Graphics2D g, Color bg, int radius);
 
     @Override
     public boolean contains(int x, int y) {
