@@ -14,6 +14,10 @@ public class DataCollector {
         this.persistableObject.add(persistableObject);
     }
 
+    public void addPersistableObjects(final IPersistableObject... persistableObject) {
+        this.persistableObject.addAll(List.of(persistableObject));
+    }
+
     public PersistentDictionary run() {
         PersistentDictionary data = new PersistentDictionary(null);
         for (IPersistableObject persistableObject : persistableObject) {

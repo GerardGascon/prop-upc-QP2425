@@ -14,6 +14,10 @@ public class DataRestorer {
         this.persistableObject.add(persistableObject);
     }
 
+    public void addPersistableObjects(final IPersistableObject... persistableObject) {
+        this.persistableObject.addAll(List.of(persistableObject));
+    }
+
     public void run(PersistentDictionary dictionary) {
         for (IPersistableObject persistableObject : persistableObject) {
             PersistentObject object = dictionary.get(persistableObject.getClass().getSimpleName());
