@@ -1,4 +1,4 @@
-package edu.upc.prop.scrabble.presenter.swing.screens.game;
+package edu.upc.prop.scrabble.presenter.swing.screens.game.board;
 
 import javax.swing.*;
 import java.awt.*;

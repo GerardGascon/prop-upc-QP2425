@@ -1,9 +1,7 @@
-package edu.upc.prop.scrabble.presenter.swing.screens.game;
+package edu.upc.prop.scrabble.presenter.swing.screens.game.board;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.RoundRectangle2D;
 
 public class BoardPieceTile extends BoardTile {
     public BoardPieceTile() {
