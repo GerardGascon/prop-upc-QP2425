@@ -118,14 +118,14 @@ public class GameMock extends JPanel {
 
             String name = "Player " + (i + 1);
             g.setColor(Color.BLACK);
-            Font font = new Font("SansSerif", Font.BOLD, 50);
-            g.setFont(font);
-            g.drawString(name, sectionX + 20, sectionY + userSectionHeight / 2 + 50);
-
+            Font font = new Font("SansSerif", Font.BOLD, userSectionHeight / 9);
             FontMetrics metrics = g.getFontMetrics(font);
+            g.setFont(font);
+            g.drawString(name, sectionX + 20, sectionY + userSectionHeight / 2 + metrics.getHeight());
+
             String score = Integer.toString(i * 100);
             int textWidth = metrics.stringWidth(score);
-            g.drawString(score, sectionX + userSectionWidth - 20 - textWidth, sectionY + userSectionHeight / 2 + 50);
+            g.drawString(score, sectionX + userSectionWidth - 20 - textWidth, sectionY + userSectionHeight / 2 + metrics.getHeight());
         }
     }
 
