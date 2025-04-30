@@ -1,5 +1,7 @@
 package edu.upc.prop.scrabble.presenter.swing.screens.game;
 
+import edu.upc.prop.scrabble.utils.Rand;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -30,8 +32,12 @@ public class GameMock extends JPanel {
         boardPanel.setBackground(new Color(0x50, 0x84, 0x6e));
 
         for (int i = 0; i < BOARD_SIZE * BOARD_SIZE; i++) {
-            RoundedCornerButton cell = new RoundedCornerButton();
-            cell.setBackground(new Color(0x56, 0xa8, 0x87));
+            Rand rand = new Rand();
+            BoardTile cell;
+            if (rand.nextInt() % 2 == 0)
+                cell = new BoardPieceTile();
+            else
+                cell = new BoardTile();
             int row = i / BOARD_SIZE;
             int col = i % BOARD_SIZE;
             cell.addActionListener(_ -> System.out.println("Clicked cell: " + row + ", " + col));

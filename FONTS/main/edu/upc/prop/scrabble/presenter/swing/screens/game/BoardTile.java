@@ -4,15 +4,16 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 
-public class RoundedCornerButton extends JButton {
-    private int cornerRadius = 16;
+public class BoardTile extends JButton {
+    protected int cornerRadius = 16;
 
-    public RoundedCornerButton() {
+    public BoardTile() {
         super();
         setOpaque(false);
         setFocusPainted(false);
         setContentAreaFilled(false);
         setBorderPainted(false);
+        setBackground(new Color(0x56, 0xa8, 0x87));
     }
 
     @Override
@@ -22,11 +23,15 @@ public class RoundedCornerButton extends JButton {
 
         Color bgColor = getModel().isArmed() ? getBackground().darker() : getBackground();
 
-        g2.setColor(bgColor);
-        g2.fillRoundRect(0, 0, getWidth(), getHeight(), cornerRadius, cornerRadius);
+        drawTile(g2, bgColor, cornerRadius);
 
         super.paintComponent(g);
         g2.dispose();
+    }
+
+    protected void drawTile(Graphics2D g, Color bg, int radius) {
+        g.setColor(bg);
+        g.fillRoundRect(0, 0, getWidth(), getHeight(), radius, radius);
     }
 
     @Override
