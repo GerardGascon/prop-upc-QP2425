@@ -7,15 +7,11 @@ import java.awt.*;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Welcome to the Scrabble");
-
         SwingUtilities.invokeLater(() -> {
             JFrame window = createMainWindow();
             window.add(new GameMock());
             window.setVisible(true);
         });
-
-        System.out.println("Bye.");
     }
 
     private static JFrame createMainWindow() {

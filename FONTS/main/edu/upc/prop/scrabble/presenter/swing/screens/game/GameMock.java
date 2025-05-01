@@ -7,6 +7,7 @@ import edu.upc.prop.scrabble.presenter.swing.screens.game.board.BoardView;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 
 public class GameMock extends JPanel {
     private final int HAND_PIECES_COUNT = 7;
@@ -30,8 +31,23 @@ public class GameMock extends JPanel {
         boardPanel = new BoardView(BOARD_SIZE, null);
         add(boardPanel);
 
+        createPauseButton();
+
         PremiumTileTypeFiller filler = new PremiumTileTypeFiller(board, boardPanel);
         filler.run();
+    }
+
+    private void createPauseButton() {
+        InputMap inputMap = getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        ActionMap actionMap = getActionMap();
+
+        inputMap.put(KeyStroke.getKeyStroke("ESCAPE"), "PAUSE_BUTTON");
+        actionMap.put("PAUSE_BUTTON", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Escape key pressed!");
+            }
+        });
     }
 
     @Override
