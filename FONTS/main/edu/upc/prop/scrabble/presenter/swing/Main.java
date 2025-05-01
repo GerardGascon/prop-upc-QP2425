@@ -17,13 +17,17 @@ public class Main {
     private static JFrame createMainWindow() {
         JFrame window = new JFrame();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        window.setUndecorated(true);
 
         GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-        window.setUndecorated(true);
-        window.setResizable(false);
-        window.setSize(gd.getDisplayMode().getWidth(), gd.getDisplayMode().getHeight());
-        window.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        window.setLocationRelativeTo(null);
+
+        if (gd.isFullScreenSupported()) {
+            gd.setFullScreenWindow(window);
+        } else {
+            window.setSize(gd.getDisplayMode().getWidth(), gd.getDisplayMode().getHeight());
+            window.setLocationRelativeTo(null);
+        }
+
         return window;
     }
 }
