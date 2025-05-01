@@ -1,6 +1,7 @@
 package scrabble.swing.utils;
 
 import javax.swing.*;
+import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
 
 public class TestWindow<T extends JPanel> {
@@ -26,5 +27,17 @@ public class TestWindow<T extends JPanel> {
 
     public T getPanel() {
         return panel;
+    }
+
+    public <TComponent extends Component> TComponent getComponentOfType(Class<TComponent> clazz, int index) {
+        int count = 0;
+        for (Component comp : panel.getComponents()) {
+            if (clazz.isInstance(comp)) {
+                if (count == index)
+                    return clazz.cast(comp);
+                count++;
+            }
+        }
+        throw new RuntimeException("No component found for " + clazz.getName());
     }
 }
