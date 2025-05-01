@@ -1,6 +1,7 @@
 package edu.upc.prop.scrabble.presenter.terminal;
 
 import edu.upc.prop.scrabble.data.board.Board;
+import edu.upc.prop.scrabble.data.board.PremiumTileType;
 import edu.upc.prop.scrabble.domain.board.IBoard;
 import edu.upc.prop.scrabble.presenter.scenes.SceneObject;
 import edu.upc.prop.scrabble.utils.Pair;
@@ -22,6 +23,11 @@ public class BoardView extends SceneObject implements IBoard {
     @Override
     public void updateCell(String piece, int points, int x, int y) {
         board[y][x] = new Pair<>(piece, points);
+    }
+
+    @Override
+    public void setPremiumTile(PremiumTileType type, int x, int y) {
+
     }
 
     private String buildBoardString() {

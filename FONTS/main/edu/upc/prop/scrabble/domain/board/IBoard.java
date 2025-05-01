@@ -1,6 +1,7 @@
 package edu.upc.prop.scrabble.domain.board;
 
 import edu.upc.prop.scrabble.data.board.Board;
+import edu.upc.prop.scrabble.data.board.PremiumTileType;
 
 /**
  * Interface that facilitates communication between the domain and presentation layers for board updates.
@@ -17,4 +18,5 @@ public interface IBoard {
      */
     void updateBoard();
     void updateCell(String piece, int points, int x, int y);
+    void setPremiumTile(PremiumTileType type, int x, int y);
 }

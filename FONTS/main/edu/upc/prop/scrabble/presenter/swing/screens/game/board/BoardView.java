@@ -1,5 +1,6 @@
 package edu.upc.prop.scrabble.presenter.swing.screens.game.board;
 
+import edu.upc.prop.scrabble.data.board.PremiumTileType;
 import edu.upc.prop.scrabble.domain.board.IBoard;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles.BoardCell;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles.BoardEmptyTile;
@@ -46,5 +47,10 @@ public class BoardView extends JPanel implements IBoard {
     @Override
     public void updateCell(String piece, int points, int x, int y) {
         changeTile(new BoardPieceTile(piece, points, x, y, handView), x, y);
+    }
+
+    @Override
+    public void setPremiumTile(PremiumTileType type, int x, int y) {
+
     }
 }
