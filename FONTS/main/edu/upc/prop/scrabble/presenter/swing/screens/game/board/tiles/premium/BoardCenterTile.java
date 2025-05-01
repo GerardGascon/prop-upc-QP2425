@@ -24,7 +24,7 @@ public class BoardCenterTile extends BoardTile {
             yPoly[i] = (int)(yPoly[i] / 1.5f) + getHeight() / 6;
         }
 
-        g.setColor(new Color(0x2e, 0x3a, 0x3c));
+        g.setColor(new Color(0x80, 0x00, 0x00));
         g.fillPolygon(xPoly, yPoly, xPoly.length);
     }
 }
