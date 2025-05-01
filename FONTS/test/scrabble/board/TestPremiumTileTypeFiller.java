@@ -16,7 +16,7 @@ public class TestPremiumTileTypeFiller {
 
         filler.run();
 
-        assertEquals(60, stub.getSetTileTypeCallReceived());
+        assertEquals(61, stub.getSetTileTypeCallReceived());
     }
 
     @Test
@@ -27,7 +27,7 @@ public class TestPremiumTileTypeFiller {
 
         filler.run();
 
-        assertEquals(124, stub.getSetTileTypeCallReceived());
+        assertEquals(125, stub.getSetTileTypeCallReceived());
     }
 
     @Test
@@ -38,6 +38,6 @@ public class TestPremiumTileTypeFiller {
 
         filler.run();
 
-        assertEquals(44, stub.getSetTileTypeCallReceived());
+        assertEquals(45, stub.getSetTileTypeCallReceived());
     }
 }
