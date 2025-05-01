@@ -6,15 +6,24 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 
 public class BoardPieceTile extends BoardTile {
-    private String letter = "L·L";
+    private final String letter;
+    private final int points;
 
-    public BoardPieceTile(int x, int y, IHandView handView) {
+    public BoardPieceTile(String letter, int points, int x, int y, IHandView handView) {
         super(x, y, handView);
+
+        this.letter = letter;
+        this.points = points;
+
         setBackground(new Color(0xff, 0xf9, 0xb5));
     }
 
-    public void setLetter(String letter) {
-        this.letter = letter;
+    public String getLetter() {
+        return letter;
+    }
+
+    public int getPoints() {
+        return points;
     }
 
     @Override
@@ -46,7 +55,7 @@ public class BoardPieceTile extends BoardTile {
     }
 
     private void drawScore(Graphics2D g) {
-        String score = Integer.toString(0);
+        String score = Integer.toString(points);
         g.setColor(new Color(0xf5, 0x2e, 0x2e));
 
         Font font = new Font("SansSerif", Font.BOLD, (int)(getHeight() * 0.25));
