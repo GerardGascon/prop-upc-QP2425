@@ -11,7 +11,12 @@ public class BoardViewStub implements IBoard {
     }
 
     @Override
-    public void updateBoard(Board board) {
+    public void updateBoard() {
+        UpdateCallReceived = true;
+    }
+
+    @Override
+    public void updateCell(String piece, int points, int x, int y) {
         UpdateCallReceived = true;
     }
 }

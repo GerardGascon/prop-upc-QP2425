@@ -13,8 +13,8 @@ public interface IBoard {
      * Triggers a board refresh on the presenter to update the game board in the presentation layer.
      * This method will be called when the game state or the board changes and needs to be reflected in the UI.
      *
-     * @param board A reference to the current game board that needs to be updated in the presentation layer.
      * @see Board
      */
-    void updateBoard(Board board);
+    void updateBoard();
+    void updateCell(String piece, int points, int x, int y);
 }

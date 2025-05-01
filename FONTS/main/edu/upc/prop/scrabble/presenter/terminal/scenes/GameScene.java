@@ -50,6 +50,7 @@ public class GameScene extends Scene {
         Leaderboard leaderboard = new Leaderboard();
 
         BoardView boardView = instantiate(BoardView.class);
+        boardView.setSize(board.getSize());
         Player[] playersData = createPlayersData(properties);
 
         PointCalculator pointCalculator = new PointCalculator(board);
@@ -75,7 +76,7 @@ public class GameScene extends Scene {
 
         HandFiller handFiller = new HandFiller(bag, playersData, new Rand());
         handFiller.run();
-        boardView.updateBoard(board);
+        boardView.updateBoard();
 
         players[0].startTurn();
     }

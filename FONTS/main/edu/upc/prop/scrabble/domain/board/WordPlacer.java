@@ -55,7 +55,7 @@ public class WordPlacer {
         int points = pointCalculator.run(positions, pieces);
         player.addScore(points);
 
-        view.updateBoard(board);
+        view.updateBoard();
     }
 
     private Vector2[] placeWordVertical(Piece[] pieces, int x, int y) {
@@ -66,6 +66,7 @@ public class WordPlacer {
             if (board.getCellPiece(pos.x, pos.y) != null)
                 continue;
             board.placePiece(pieces[j], pos.x, pos.y);
+            view.updateCell(pieces[j].letter(), pieces[j].value(), pos.x, pos.y);
             positions[j] = pos;
             j++;
             if (j == pieces.length)
@@ -82,6 +83,7 @@ public class WordPlacer {
             if (board.getCellPiece(pos.x, pos.y) != null)
                 continue;
             board.placePiece(pieces[j], pos.x, pos.y);
+            view.updateCell(pieces[j].letter(), pieces[j].value(), pos.x, pos.y);
             positions[j] = pos;
             j++;
             if (j == pieces.length)
