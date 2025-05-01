@@ -1,6 +1,8 @@
 package edu.upc.prop.scrabble.presenter.swing.screens.game;
 
 import edu.upc.prop.scrabble.data.board.Board;
+import edu.upc.prop.scrabble.data.board.JuniorBoard;
+import edu.upc.prop.scrabble.data.board.StandardBoard;
 import edu.upc.prop.scrabble.data.board.SuperBoard;
 import edu.upc.prop.scrabble.domain.board.PremiumTileTypeFiller;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.BoardView;
@@ -20,7 +22,6 @@ public class GameMock extends JPanel {
     private final float USER_SECTION_WIDTH_PERCENTAGE = 0.8f;
 
     private final Board board = new SuperBoard();
-    private final int BOARD_SIZE = 21;
     private final float BOARD_VERTICAL_SIZE_PERCENTAGE = 0.8f;
     private final float BOARD_HORIZONTAL_OFFSET_PERCENTAGE = 0.4f;
     private final BoardView boardPanel;
@@ -28,7 +29,7 @@ public class GameMock extends JPanel {
     public GameMock() {
         setLayout(null);
         setBackground(new Color(0x50, 0x84, 0x6e));
-        boardPanel = new BoardView(BOARD_SIZE, null);
+        boardPanel = new BoardView(board.getSize(), null);
         add(boardPanel);
 
         createPauseButton();
