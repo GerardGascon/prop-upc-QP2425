@@ -1,13 +1,15 @@
 package edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles;
 
+import edu.upc.prop.scrabble.presenter.swing.screens.game.board.IHandView;
+
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 
 public class BoardPieceTile extends BoardTile {
     private String letter = "L·L";
 
-    public BoardPieceTile() {
-        super();
+    public BoardPieceTile(int x, int y, IHandView handView) {
+        super(x, y, handView);
         setBackground(new Color(0xff, 0xf9, 0xb5));
     }
 

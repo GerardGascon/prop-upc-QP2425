@@ -1,38 +1,37 @@
 package edu.upc.prop.scrabble.presenter.swing.screens.game.board;
 
+import edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles.BoardCell;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles.BoardEmptyTile;
-import edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles.BoardPieceTile;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles.BoardTile;
-import edu.upc.prop.scrabble.utils.Rand;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class BoardView extends JPanel {
-    private final IHandView handView;
+    private final int size;
 
     public BoardView(int size, IHandView handView) {
         super();
         setLayout(new GridLayout(size, size, 2, 2));
         setBackground(new Color(0x50, 0x84, 0x6e));
 
-        this.handView = handView;
+        this.size = size;
 
         for (int i = 0; i < size * size; i++) {
-            Rand rand = new Rand();
-            BoardTile cell;
-            if (rand.nextInt() % 2 == 0)
-                cell = new BoardPieceTile();
-            else
-                cell = new BoardEmptyTile();
             int row = i / size;
             int col = i % size;
-            cell.addActionListener(_ -> cellClicked(col, row));
+
+            BoardCell cell = new BoardCell();
+            BoardTile tile = new BoardEmptyTile(col, row, handView);
+            cell.setTile(tile);
+
             add(cell);
         }
     }
 
-    private void cellClicked(int x, int y) {
-        String piece = handView.getSelectedPiece();
+    public void changeTile(BoardTile tile, int x, int y) {
+        BoardCell cell = (BoardCell)(getComponent(x * size + y));
+
+        cell.setTile(tile);
     }
 }

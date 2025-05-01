@@ -1,18 +1,29 @@
 package edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles;
 
+import edu.upc.prop.scrabble.presenter.swing.screens.game.board.IHandView;
+import edu.upc.prop.scrabble.utils.Vector2;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.geom.RoundRectangle2D;
 
 public abstract class BoardTile extends JButton {
     protected int cornerRadius = 16;
 
-    public BoardTile() {
+    private final IHandView handView;
+    private final Vector2 position;
+
+    public BoardTile(int x, int y, IHandView handView) {
         super();
         setOpaque(false);
         setFocusPainted(false);
         setContentAreaFilled(false);
         setBorderPainted(false);
+
+        this.handView = handView;
+        this.position = new Vector2(x, y);
+        addActionListener(this::clicked);
     }
 
     @Override
@@ -45,5 +56,9 @@ public abstract class BoardTile extends JButton {
     public void setCornerRadius(int radius) {
         this.cornerRadius = radius;
         repaint();
+    }
+
+    private void clicked(ActionEvent actionEvent) {
+        String piece = handView.getSelectedPiece();
     }
 }
