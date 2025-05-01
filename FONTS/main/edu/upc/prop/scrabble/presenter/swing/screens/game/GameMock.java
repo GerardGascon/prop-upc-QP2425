@@ -1,8 +1,6 @@
 package edu.upc.prop.scrabble.presenter.swing.screens.game;
 
 import edu.upc.prop.scrabble.data.board.Board;
-import edu.upc.prop.scrabble.data.board.JuniorBoard;
-import edu.upc.prop.scrabble.data.board.StandardBoard;
 import edu.upc.prop.scrabble.data.board.SuperBoard;
 import edu.upc.prop.scrabble.domain.board.PremiumTileTypeFiller;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.BoardView;
@@ -14,7 +12,6 @@ import java.awt.event.ActionEvent;
 public class GameMock extends JPanel {
     private final int HAND_PIECES_COUNT = 7;
     private final int HAND_PIECES_SPACING = 10;
-    private final float HAND_PIECES_SIZE_PERCENTAGE = 0.08f;
 
     private final float SIDE_PANEL_WIDTH_PERCENTAGE = 0.25f;
     private final int NUM_USER_SECTIONS = 4;
@@ -57,7 +54,7 @@ public class GameMock extends JPanel {
 
         int boardSize = (int)(getHeight() * BOARD_VERTICAL_SIZE_PERCENTAGE);
         int xOffset = (int)(getWidth() * BOARD_HORIZONTAL_OFFSET_PERCENTAGE);
-        int yOffset = (getHeight() - boardSize) / 2;
+        int yOffset = (getHeight() - boardSize) / 4;
 
         boardPanel.setBounds(xOffset, yOffset, boardSize, boardSize);
     }

@@ -2,10 +2,7 @@ package edu.upc.prop.scrabble.presenter.swing.screens.game.board;
 
 import edu.upc.prop.scrabble.data.board.PremiumTileType;
 import edu.upc.prop.scrabble.domain.board.IBoard;
-import edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles.BoardCell;
-import edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles.BoardEmptyTile;
-import edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles.BoardPieceTile;
-import edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles.BoardTile;
+import edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles.*;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles.premium.*;
 
 import javax.swing.*;
@@ -17,27 +14,76 @@ public class BoardView extends JPanel implements IBoard {
 
     public BoardView(int size, IHandView handView) {
         super();
-        setLayout(new GridLayout(size, size, 2, 2));
-        setBackground(new Color(0x50, 0x84, 0x6e));
+        setOpaque(false);
+        setLayout(new GridLayout(size + 2, size + 2, 2, 2));
+        setBackground(new Color(0x51, 0x78, 0x85));
 
         this.size = size;
         this.handView = handView;
 
-        for (int i = 0; i < size * size; i++) {
-            int row = i / size;
-            int col = i % size;
+        for (int i = 0, j = 0; i < (size + 2) * (size + 2); i++) {
+            int borderRow = i / (size + 2);
+            int borderCol = i % (size + 2);
+
+            if (borderRow == 0 || borderRow == size + 1) {
+                add(new BoardCoordinateTile(getBorderCol(borderCol)));
+                continue;
+            }
+
+            if (borderCol == 0 || borderCol == size + 1) {
+                add(new BoardCoordinateTile(getBorderRow(borderRow)));
+                continue;
+            }
+
+            int row = j / size;
+            int col = j % size;
+            j++;
 
             BoardCell cell = new BoardCell();
-            BoardTile tile = new BoardEmptyTile(col, row, handView);
-            cell.setTile(tile);
-
+            cell.setTile(new BoardEmptyTile(col, row, handView));
             add(cell);
         }
     }
 
+    @Override
+    protected void paintComponent(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g.create();
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+        g.setColor(getBackground());
+        g.fillRoundRect(0, 0, getWidth(), getHeight(), 30, 30);
+
+        super.paintComponent(g);
+        g2.dispose();
+    }
+
+    private String getBorderRow(int row) {
+        if (row == 0 || row == size + 1)
+            return "";
+        return Integer.toString(row);
+    }
+
+    private String getBorderCol(int col) {
+        if (col == 0 || col == size + 1)
+            return "";
+        return String.valueOf((char)('A' + col - 1));
+    }
+
     public void changeTile(BoardTile tile, int x, int y) {
-        BoardCell cell = (BoardCell)(getComponent(y * size + x));
+        BoardCell cell = getComponentOfType(BoardCell.class, y * size + x);
         cell.setTile(tile);
+    }
+
+    public <TComponent extends Component> TComponent getComponentOfType(Class<TComponent> clazz, int index) {
+        int count = 0;
+        for (Component comp : getComponents()) {
+            if (clazz.isInstance(comp)) {
+                if (count == index)
+                    return clazz.cast(comp);
+                count++;
+            }
+        }
+        throw new RuntimeException("No component found for " + clazz.getName());
     }
 
     @Override
