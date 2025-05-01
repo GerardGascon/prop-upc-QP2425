@@ -6,6 +6,7 @@ import edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles.BoardCell;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles.BoardEmptyTile;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles.BoardPieceTile;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles.BoardTile;
+import edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles.premium.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -51,6 +52,18 @@ public class BoardView extends JPanel implements IBoard {
 
     @Override
     public void setPremiumTile(PremiumTileType type, int x, int y) {
+        if (x == y && x == size / 2){
+            changeTile(new BoardCenterTile(x, y, handView), x, y);
+            return;
+        }
 
+        switch (type) {
+            case QuadrupleWord -> changeTile(new BoardQuadrupleWordTile(x, y, handView), x, y);
+            case TripleWord -> changeTile(new BoardTripleWordTile(x, y, handView), x, y);
+            case DoubleWord -> changeTile(new BoardDoubleWordTile(x, y, handView), x, y);
+            case QuadrupleLetter -> changeTile(new BoardQuadrupleLetterTile(x, y, handView), x, y);
+            case TripleLetter -> changeTile(new BoardTripleLetterTile(x, y, handView), x, y);
+            case DoubleLetter -> changeTile(new BoardDoubleLetterTile(x, y, handView), x, y);
+        }
     }
 }

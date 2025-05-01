@@ -1,6 +1,7 @@
 package edu.upc.prop.scrabble.domain.board;
 
 import edu.upc.prop.scrabble.data.board.Board;
+import edu.upc.prop.scrabble.data.board.PremiumTileType;
 
 public class PremiumTileTypeFiller {
     private final Board board;
@@ -19,5 +20,7 @@ public class PremiumTileTypeFiller {
                 }
             }
         }
+
+        view.setPremiumTile(PremiumTileType.DoubleWord, board.getSize() / 2, board.getSize() / 2);
     }
 }
