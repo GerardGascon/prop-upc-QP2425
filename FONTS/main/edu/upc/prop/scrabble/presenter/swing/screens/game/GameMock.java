@@ -136,19 +136,21 @@ public class GameMock extends JPanel {
     private void drawHandPieces(Graphics g) {
         int boardSize = (int)(getHeight() * BOARD_VERTICAL_SIZE_PERCENTAGE);
         int xOffset = (int)(getWidth() * BOARD_HORIZONTAL_OFFSET_PERCENTAGE);
-        int yOffset = (getHeight() - boardSize) / 2;
+        int boardVerticalMargin = (getHeight() - boardSize) / 2;
 
-        int extraRowY = yOffset + boardSize + 20;
-        int extraSquareSize = (int)(getHeight() * HAND_PIECES_SIZE_PERCENTAGE);
+        int margin = (int)(boardVerticalMargin * 0.05f);
 
-        int totalExtraRowWidth = (HAND_PIECES_COUNT * extraSquareSize) + ((HAND_PIECES_COUNT - 1) * HAND_PIECES_SPACING);
+        int extraRowY = boardVerticalMargin + boardSize + margin;
+        int handPieceSize = (int)(boardVerticalMargin * 0.9f);
+
+        int totalExtraRowWidth = (HAND_PIECES_COUNT * handPieceSize) + ((HAND_PIECES_COUNT - 1) * HAND_PIECES_SPACING);
 
         int extraRowX = xOffset + (boardSize - totalExtraRowWidth) / 2;
 
         for (int i = 0; i < HAND_PIECES_COUNT; i++) {
-            int xPos = extraRowX + (i * (extraSquareSize + HAND_PIECES_SPACING));
+            int xPos = extraRowX + (i * (handPieceSize + HAND_PIECES_SPACING));
             g.setColor(Color.WHITE);
-            g.fillRoundRect(xPos, extraRowY, extraSquareSize, extraSquareSize, 16, 16);
+            g.fillRoundRect(xPos, extraRowY, handPieceSize, handPieceSize, handPieceSize * 20 / 100 * 2, handPieceSize * 20 / 100 * 2);
         }
     }
 }

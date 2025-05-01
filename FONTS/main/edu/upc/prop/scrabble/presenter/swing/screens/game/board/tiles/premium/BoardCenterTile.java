@@ -28,8 +28,8 @@ public class BoardCenterTile extends BoardTile {
         int[] yPoly = {getHeight() / 2, getHeight() / 2 - getHeight() / 8, 0, getHeight() / 2 - getHeight() / 8, getHeight() / 2, getHeight() / 2 + getHeight() / 8, getHeight(), getHeight() / 2 + getHeight() / 8, getHeight() / 2};
 
         for (int i = 0; i < xPoly.length; i++) {
-            xPoly[i] = (int)(xPoly[i] / 1.5f) + getWidth() / 6;
-            yPoly[i] = (int)(yPoly[i] / 1.5f) + getHeight() / 6;
+            xPoly[i] = (int)(xPoly[i] / 1.5f) + (int)(getWidth() - getWidth() / 1.5f) / 2;
+            yPoly[i] = (int)(yPoly[i] / 1.5f) + (int)(getHeight() - getHeight() / 1.5f) / 2;
         }
 
         g.setColor(new Color(0x80, 0x00, 0x00));

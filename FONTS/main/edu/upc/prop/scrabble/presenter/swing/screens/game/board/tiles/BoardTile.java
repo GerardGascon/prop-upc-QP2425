@@ -13,8 +13,6 @@ import java.awt.event.MouseMotionAdapter;
 import java.awt.geom.RoundRectangle2D;
 
 public abstract class BoardTile extends JButton {
-    protected int cornerRadius = 16;
-
     private final IHandView handView;
     private final Vector2 position;
 
@@ -27,6 +25,7 @@ public abstract class BoardTile extends JButton {
 
         this.handView = handView;
         this.position = new Vector2(x, y);
+
         addActionListener(this::clicked);
     }
 
@@ -43,7 +42,7 @@ public abstract class BoardTile extends JButton {
         else
             bgColor = getBackground();
 
-        drawTile(g2, bgColor, cornerRadius);
+        drawTile(g2, bgColor, getCornerRadius());
 
         super.paintComponent(g);
         g2.dispose();
@@ -53,13 +52,12 @@ public abstract class BoardTile extends JButton {
 
     @Override
     public boolean contains(int x, int y) {
-        Shape shape = new RoundRectangle2D.Float(0, 0, getWidth(), getHeight(), cornerRadius, cornerRadius);
+        Shape shape = new RoundRectangle2D.Float(0, 0, getWidth(), getHeight(), getCornerRadius(), getCornerRadius());
         return shape.contains(x, y);
     }
 
-    public void setCornerRadius(int radius) {
-        this.cornerRadius = radius;
-        repaint();
+    private int getCornerRadius() {
+        return getHeight() * 20 / 100 * 2;
     }
 
     private void clicked(ActionEvent actionEvent) {
