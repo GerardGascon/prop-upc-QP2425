@@ -9,6 +9,7 @@ public class BoardTripleWordTile extends BoardTile {
     public BoardTripleWordTile(int x, int y, IHandView handView) {
         super(x, y, handView);
         setBackground(new Color(0xb2, 0x22, 0x22));
+        createTooltip("Triple Word Score");
     }
 
     @Override

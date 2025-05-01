@@ -1,11 +1,15 @@
 package edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles;
 
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.IHandView;
+import edu.upc.prop.scrabble.presenter.swing.screens.game.utils.Tooltip;
 import edu.upc.prop.scrabble.utils.Vector2;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.awt.geom.RoundRectangle2D;
 
 public abstract class BoardTile extends JButton {
@@ -60,5 +64,29 @@ public abstract class BoardTile extends JButton {
 
     private void clicked(ActionEvent actionEvent) {
         String piece = handView.getSelectedPiece();
+    }
+
+    protected final void createTooltip(String text) {
+        Tooltip tooltip = new Tooltip(this, text);
+
+        addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                Point locationOnScreen = e.getLocationOnScreen();
+                tooltip.showAt(locationOnScreen.x + 10, locationOnScreen.y + 10);
+            }
+        });
+
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                tooltip.setVisible(true);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                tooltip.setVisible(false);
+            }
+        });
     }
 }

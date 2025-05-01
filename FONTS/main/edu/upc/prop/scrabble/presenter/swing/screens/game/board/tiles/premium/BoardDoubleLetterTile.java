@@ -9,6 +9,7 @@ public class BoardDoubleLetterTile extends BoardTile {
     public BoardDoubleLetterTile(int x, int y, IHandView handView) {
         super(x, y, handView);
         setBackground(new Color(0x87, 0xce, 0xeb));
+        createTooltip("Double Letter Score");
     }
 
     @Override

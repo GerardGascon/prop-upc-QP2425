@@ -9,6 +9,7 @@ public class BoardTripleLetterTile extends BoardTile {
     public BoardTripleLetterTile(int x, int y, IHandView handView) {
         super(x, y, handView);
         setBackground(new Color(0x41, 0x69, 0xe1));
+        createTooltip("Triple Letter Score");
     }
 
     @Override

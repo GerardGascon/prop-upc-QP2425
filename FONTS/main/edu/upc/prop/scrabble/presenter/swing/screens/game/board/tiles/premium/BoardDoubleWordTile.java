@@ -9,6 +9,7 @@ public class BoardDoubleWordTile extends BoardTile {
     public BoardDoubleWordTile(int x, int y, IHandView handView) {
         super(x, y, handView);
         setBackground(new Color(0xff, 0xc0, 0xcb));
+        createTooltip("Double Word Score");
     }
 
     @Override

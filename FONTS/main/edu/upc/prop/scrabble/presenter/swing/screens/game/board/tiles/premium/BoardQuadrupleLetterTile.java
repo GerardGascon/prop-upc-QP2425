@@ -9,6 +9,7 @@ public class BoardQuadrupleLetterTile extends BoardTile {
     public BoardQuadrupleLetterTile(int x, int y, IHandView handView) {
         super(x, y, handView);
         setBackground(new Color(30, 50, 152));
+        createTooltip("Quadruple Letter Score");
     }
 
     @Override
