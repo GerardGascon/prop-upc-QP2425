@@ -23,7 +23,7 @@ public class GameMock extends JPanel {
     public GameMock() {
         setLayout(null);
         setBackground(new Color(0x50, 0x84, 0x6e));
-        boardPanel = new BoardView(BOARD_SIZE);
+        boardPanel = new BoardView(BOARD_SIZE, null);
         add(boardPanel);
     }
 

@@ -9,10 +9,14 @@ import javax.swing.*;
 import java.awt.*;
 
 public class BoardView extends JPanel {
-    public BoardView(int size) {
+    private final IHandView handView;
+
+    public BoardView(int size, IHandView handView) {
         super();
         setLayout(new GridLayout(size, size, 2, 2));
         setBackground(new Color(0x50, 0x84, 0x6e));
+
+        this.handView = handView;
 
         for (int i = 0; i < size * size; i++) {
             Rand rand = new Rand();
@@ -23,8 +27,12 @@ public class BoardView extends JPanel {
                 cell = new BoardEmptyTile();
             int row = i / size;
             int col = i % size;
-            cell.addActionListener(_ -> System.out.println("Clicked cell: " + row + ", " + col));
+            cell.addActionListener(_ -> cellClicked(col, row));
             add(cell);
         }
+    }
+
+    private void cellClicked(int x, int y) {
+        String piece = handView.getSelectedPiece();
     }
 }
