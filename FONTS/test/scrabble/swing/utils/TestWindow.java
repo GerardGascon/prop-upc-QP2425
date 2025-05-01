@@ -6,13 +6,14 @@ import java.lang.reflect.InvocationTargetException;
 
 public class TestWindow<T extends JPanel> {
     private T panel;
+    private JDialog window;
 
     public TestWindow(int width, int height, T panel) {
         this.panel = panel;
 
         try {
             SwingUtilities.invokeAndWait(() -> {
-                JDialog window = new JDialog();
+                window = new JDialog();
                 window.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
                 window.setSize(width, height);
                 window.setResizable(false);
@@ -40,5 +41,9 @@ public class TestWindow<T extends JPanel> {
             }
         }
         throw new RuntimeException("No component found for " + clazz.getName());
+    }
+
+    public void close() {
+        window.dispose();
     }
 }

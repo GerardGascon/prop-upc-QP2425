@@ -16,6 +16,7 @@ import edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles.BoardPiece
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles.BoardTile;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles.premium.*;
 import edu.upc.prop.scrabble.utils.Direction;
+import org.junit.After;
 import org.junit.Test;
 import scrabble.swing.stubs.HandViewStub;
 import scrabble.swing.utils.SwingTest;
@@ -24,6 +25,8 @@ import scrabble.swing.utils.TestWindow;
 import static org.junit.Assert.*;
 
 public class TestBoardView extends SwingTest {
+    private TestWindow<BoardView> view;
+
     private static int getTileIndex(int x, int y, int boardSize) {
         return y * boardSize + x;
     }
@@ -32,10 +35,15 @@ public class TestBoardView extends SwingTest {
         return view.getComponentOfType(BoardCell.class, getTileIndex(x, y, boardSize)).getTile();
     }
 
+    @After
+    public void tearDown() {
+        view.close();
+    }
+
     @Test
     public void cellClickAsksHandForSelectedPiece() {
         HandViewStub handViewStub = new HandViewStub();
-        TestWindow<BoardView> view = new TestWindow<>(500, 500, new BoardView(21, handViewStub));
+        view = new TestWindow<>(500, 500, new BoardView(21, handViewStub));
         BoardTile c = getTile(view, 10, 10, 21);
 
         c.doClick();
@@ -46,7 +54,7 @@ public class TestBoardView extends SwingTest {
     @Test
     public void cellTileChangeReplacesTile() {
         HandViewStub handViewStub = new HandViewStub();
-        TestWindow<BoardView> view = new TestWindow<>(500, 500, new BoardView(21, handViewStub));
+        view = new TestWindow<>(500, 500, new BoardView(21, handViewStub));
 
         view.getPanel().changeTile(new BoardPieceTile("A", 1, 0, 0, handViewStub), 0, 0);
 
@@ -56,7 +64,7 @@ public class TestBoardView extends SwingTest {
     @Test
     public void cellTileIsEmptyByDefault() {
         HandViewStub handViewStub = new HandViewStub();
-        TestWindow<BoardView> view = new TestWindow<>(500, 500, new BoardView(21, handViewStub));
+        view = new TestWindow<>(500, 500, new BoardView(21, handViewStub));
 
         assertTrue(getTile(view, 0, 0, 21) instanceof BoardEmptyTile);
     }
@@ -64,7 +72,7 @@ public class TestBoardView extends SwingTest {
     @Test
     public void boardGetsUpdatedWhenPieceIsPlaced() {
         HandViewStub handViewStub = new HandViewStub();
-        TestWindow<BoardView> view = new TestWindow<>(500, 500, new BoardView(21, handViewStub));
+        view = new TestWindow<>(500, 500, new BoardView(21, handViewStub));
         Board board = new SuperBoard();
         Player player = new Player("test", false);
         PointCalculator pointCalculator = new PointCalculator(board);
@@ -84,7 +92,7 @@ public class TestBoardView extends SwingTest {
     @Test
     public void superBoardGetsGeneratedWithProperPremiumTiles() {
         HandViewStub handViewStub = new HandViewStub();
-        TestWindow<BoardView> view = new TestWindow<>(500, 500, new BoardView(21, handViewStub));
+        view = new TestWindow<>(500, 500, new BoardView(21, handViewStub));
 
         Board board = new SuperBoard();
         PremiumTileTypeFiller filler = new PremiumTileTypeFiller(board, view.getPanel());
@@ -100,7 +108,7 @@ public class TestBoardView extends SwingTest {
     @Test
     public void standardBoardGetsGeneratedWithProperPremiumTiles() {
         HandViewStub handViewStub = new HandViewStub();
-        TestWindow<BoardView> view = new TestWindow<>(500, 500, new BoardView(15, handViewStub));
+        view = new TestWindow<>(500, 500, new BoardView(15, handViewStub));
 
         Board board = new StandardBoard();
         PremiumTileTypeFiller filler = new PremiumTileTypeFiller(board, view.getPanel());
@@ -114,7 +122,7 @@ public class TestBoardView extends SwingTest {
     @Test
     public void juniorBoardGetsGeneratedWithProperPremiumTiles() {
         HandViewStub handViewStub = new HandViewStub();
-        TestWindow<BoardView> view = new TestWindow<>(500, 500, new BoardView(11, handViewStub));
+        view = new TestWindow<>(500, 500, new BoardView(11, handViewStub));
 
         Board board = new JuniorBoard();
         PremiumTileTypeFiller filler = new PremiumTileTypeFiller(board, view.getPanel());
@@ -128,7 +136,7 @@ public class TestBoardView extends SwingTest {
     @Test
     public void superBoardCenter() {
         HandViewStub handViewStub = new HandViewStub();
-        TestWindow<BoardView> view = new TestWindow<>(500, 500, new BoardView(21, handViewStub));
+        view = new TestWindow<>(500, 500, new BoardView(21, handViewStub));
 
         Board board = new SuperBoard();
         PremiumTileTypeFiller filler = new PremiumTileTypeFiller(board, view.getPanel());
@@ -141,7 +149,7 @@ public class TestBoardView extends SwingTest {
     @Test
     public void standardBoardCenter() {
         HandViewStub handViewStub = new HandViewStub();
-        TestWindow<BoardView> view = new TestWindow<>(500, 500, new BoardView(15, handViewStub));
+        view = new TestWindow<>(500, 500, new BoardView(15, handViewStub));
 
         Board board = new StandardBoard();
         PremiumTileTypeFiller filler = new PremiumTileTypeFiller(board, view.getPanel());
@@ -154,7 +162,7 @@ public class TestBoardView extends SwingTest {
     @Test
     public void juniorBoardCenter() {
         HandViewStub handViewStub = new HandViewStub();
-        TestWindow<BoardView> view = new TestWindow<>(500, 500, new BoardView(11, handViewStub));
+        view = new TestWindow<>(500, 500, new BoardView(11, handViewStub));
 
         Board board = new JuniorBoard();
         PremiumTileTypeFiller filler = new PremiumTileTypeFiller(board, view.getPanel());
