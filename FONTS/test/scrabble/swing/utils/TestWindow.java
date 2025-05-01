@@ -12,9 +12,10 @@ public class TestWindow<T extends JPanel> {
 
         try {
             SwingUtilities.invokeAndWait(() -> {
-                JFrame window = new JFrame("Test Window");
-                window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                JDialog window = new JDialog();
+                window.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
                 window.setSize(width, height);
+                window.setResizable(false);
                 window.setLocationRelativeTo(null);
                 this.panel = panel;
                 window.add(panel);
