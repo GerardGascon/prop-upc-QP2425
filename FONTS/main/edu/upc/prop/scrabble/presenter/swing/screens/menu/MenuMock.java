@@ -1,6 +1,4 @@
-package edu.upc.prop.scrabble.presenter.swing.screens.game;
-
-import edu.upc.prop.scrabble.presenter.swing.screens.menu.MenuButton;
+package edu.upc.prop.scrabble.presenter.swing.screens.menu;
 
 import javax.swing.*;
 import java.awt.*;
