@@ -27,6 +27,17 @@ public abstract class BoardTile extends JButton {
         this.position = new Vector2(x, y);
 
         addActionListener(this::clicked);
+
+        disableKeyboardInput();
+    }
+
+    private void disableKeyboardInput() {
+        InputMap inputMap = getInputMap(JComponent.WHEN_FOCUSED);
+        inputMap.put(KeyStroke.getKeyStroke("SPACE"), "none");
+        inputMap.put(KeyStroke.getKeyStroke("released SPACE"), "none");
+
+        inputMap.put(KeyStroke.getKeyStroke("ENTER"), "none");
+        inputMap.put(KeyStroke.getKeyStroke("released ENTER"), "none");
     }
 
     @Override

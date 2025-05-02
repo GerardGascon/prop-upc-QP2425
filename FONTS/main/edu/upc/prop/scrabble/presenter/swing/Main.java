@@ -4,15 +4,31 @@ import edu.upc.prop.scrabble.presenter.swing.screens.game.GameMock;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Collections;
 
 public class Main {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             JFrame window = createMainWindow();
 
+            disableTraversalKeys();
             window.add(new GameMock());
             window.setVisible(true);
         });
+    }
+
+    private static void disableTraversalKeys() {
+        KeyboardFocusManager.getCurrentKeyboardFocusManager()
+                .setDefaultFocusTraversalKeys(
+                        KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS,
+                        Collections.emptySet()
+                );
+
+        KeyboardFocusManager.getCurrentKeyboardFocusManager()
+                .setDefaultFocusTraversalKeys(
+                        KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS,
+                        Collections.emptySet()
+                );
     }
 
     private static JFrame createMainWindow() {

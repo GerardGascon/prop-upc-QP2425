@@ -1,11 +1,7 @@
 package edu.upc.prop.scrabble.presenter.swing.screens.menu;
 
-import edu.upc.prop.scrabble.presenter.swing.screens.game.board.IHandView;
-import edu.upc.prop.scrabble.utils.Vector2;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.AffineTransform;
 import java.awt.geom.RoundRectangle2D;
 
 public class MenuButton extends JButton {
@@ -19,6 +15,17 @@ public class MenuButton extends JButton {
         setBorderPainted(false);
 
         this.text = text;
+
+        disableKeyboardInput();
+    }
+
+    private void disableKeyboardInput() {
+        InputMap inputMap = getInputMap(JComponent.WHEN_FOCUSED);
+        inputMap.put(KeyStroke.getKeyStroke("SPACE"), "none");
+        inputMap.put(KeyStroke.getKeyStroke("released SPACE"), "none");
+
+        inputMap.put(KeyStroke.getKeyStroke("ENTER"), "none");
+        inputMap.put(KeyStroke.getKeyStroke("released ENTER"), "none");
     }
 
     @Override
