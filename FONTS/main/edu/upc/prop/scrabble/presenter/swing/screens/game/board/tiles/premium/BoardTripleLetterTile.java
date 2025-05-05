@@ -1,13 +1,14 @@
 package edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles.premium;
 
+import edu.upc.prop.scrabble.presenter.swing.screens.game.board.BoardView;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.IHandView;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles.BoardTile;
 
 import java.awt.*;
 
 public class BoardTripleLetterTile extends BoardTile {
-    public BoardTripleLetterTile(int x, int y, IHandView handView) {
-        super(x, y, handView);
+    public BoardTripleLetterTile(int x, int y, IHandView handView, BoardView boardView) {
+        super(x, y, handView, boardView);
         setBackground(new Color(0x41, 0x69, 0xe1));
         createTooltip("Triple Letter Score");
     }

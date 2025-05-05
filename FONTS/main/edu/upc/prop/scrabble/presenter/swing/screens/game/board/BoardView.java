@@ -21,6 +21,10 @@ public class BoardView extends JPanel implements IBoard {
         this.size = size;
         this.handView = handView;
 
+        generateEmptyTiles(size, handView);
+    }
+
+    private void generateEmptyTiles(int size, IHandView handView) {
         for (int i = 0, j = 0; i < (size + 2) * (size + 2); i++) {
             int borderRow = i / (size + 2);
             int borderCol = i % (size + 2);
@@ -40,7 +44,7 @@ public class BoardView extends JPanel implements IBoard {
             j++;
 
             BoardCell cell = new BoardCell();
-            cell.setTile(new BoardEmptyTile(col, row, handView));
+            cell.setTile(new BoardEmptyTile(col, row, handView, this));
             add(cell);
         }
     }
@@ -86,6 +90,10 @@ public class BoardView extends JPanel implements IBoard {
         throw new RuntimeException("No component found for " + clazz.getName());
     }
 
+    public void placeTemporalPiece(String piece, int x, int y) {
+
+    }
+
     @Override
     public void updateBoard() {
 
@@ -93,23 +101,23 @@ public class BoardView extends JPanel implements IBoard {
 
     @Override
     public void updateCell(String piece, int points, int x, int y) {
-        changeTile(new BoardPieceTile(piece, points, x, y, handView), x, y);
+        changeTile(new BoardPieceTile(piece, points, x, y, handView, this), x, y);
     }
 
     @Override
     public void setPremiumTile(PremiumTileType type, int x, int y) {
         if (x == y && x == size / 2){
-            changeTile(new BoardCenterTile(x, y, handView), x, y);
+            changeTile(new BoardCenterTile(x, y, handView, this), x, y);
             return;
         }
 
         switch (type) {
-            case QuadrupleWord -> changeTile(new BoardQuadrupleWordTile(x, y, handView), x, y);
-            case TripleWord -> changeTile(new BoardTripleWordTile(x, y, handView), x, y);
-            case DoubleWord -> changeTile(new BoardDoubleWordTile(x, y, handView), x, y);
-            case QuadrupleLetter -> changeTile(new BoardQuadrupleLetterTile(x, y, handView), x, y);
-            case TripleLetter -> changeTile(new BoardTripleLetterTile(x, y, handView), x, y);
-            case DoubleLetter -> changeTile(new BoardDoubleLetterTile(x, y, handView), x, y);
+            case QuadrupleWord -> changeTile(new BoardQuadrupleWordTile(x, y, handView, this), x, y);
+            case TripleWord -> changeTile(new BoardTripleWordTile(x, y, handView, this), x, y);
+            case DoubleWord -> changeTile(new BoardDoubleWordTile(x, y, handView, this), x, y);
+            case QuadrupleLetter -> changeTile(new BoardQuadrupleLetterTile(x, y, handView, this), x, y);
+            case TripleLetter -> changeTile(new BoardTripleLetterTile(x, y, handView, this), x, y);
+            case DoubleLetter -> changeTile(new BoardDoubleLetterTile(x, y, handView, this), x, y);
         }
     }
 }

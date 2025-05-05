@@ -56,7 +56,7 @@ public class TestBoardView extends SwingTest {
         HandViewStub handViewStub = new HandViewStub();
         view = new TestWindow<>(500, 500, new BoardView(21, handViewStub));
 
-        view.getPanel().changeTile(new BoardPieceTile("A", 1, 0, 0, handViewStub), 0, 0);
+        view.getPanel().changeTile(new BoardPieceTile("A", 1, 0, 0, handViewStub, null), 0, 0);
 
         assertTrue(getTile(view, 0, 0, 21) instanceof BoardPieceTile);
     }

@@ -1,5 +1,6 @@
 package edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles;
 
+import edu.upc.prop.scrabble.presenter.swing.screens.game.board.BoardView;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.IHandView;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.utils.Tooltip;
 import edu.upc.prop.scrabble.utils.Vector2;
@@ -15,8 +16,9 @@ import java.awt.geom.RoundRectangle2D;
 public abstract class BoardTile extends JButton {
     private final IHandView handView;
     private final Vector2 position;
+    private final BoardView board;
 
-    public BoardTile(int x, int y, IHandView handView) {
+    public BoardTile(int x, int y, IHandView handView, BoardView board) {
         super();
         setOpaque(false);
         setFocusPainted(false);
@@ -25,6 +27,7 @@ public abstract class BoardTile extends JButton {
 
         this.handView = handView;
         this.position = new Vector2(x, y);
+        this.board = board;
 
         addActionListener(this::clicked);
 
@@ -73,6 +76,20 @@ public abstract class BoardTile extends JButton {
 
     private void clicked(ActionEvent actionEvent) {
         String piece = handView.getSelectedPiece();
+        if (piece.isBlank() || piece.equals("#")){
+            openSelectBlankPieceLetterPopup();
+            return;
+        }
+
+        placePiece(piece);
+    }
+
+    private void openSelectBlankPieceLetterPopup() {
+        placePiece("#"); // TODO: Implement popup method
+    }
+
+    private void placePiece(String piece) {
+        board.placeTemporalPiece(piece, position.x, position.y);
     }
 
     protected final void createTooltip(String text) {

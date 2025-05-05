@@ -1,5 +1,6 @@
 package edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles;
 
+import edu.upc.prop.scrabble.presenter.swing.screens.game.board.BoardView;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.IHandView;
 
 import java.awt.*;
@@ -9,8 +10,8 @@ public class BoardPieceTile extends BoardTile {
     private final String letter;
     private final int points;
 
-    public BoardPieceTile(String letter, int points, int x, int y, IHandView handView) {
-        super(x, y, handView);
+    public BoardPieceTile(String letter, int points, int x, int y, IHandView handView, BoardView boardView) {
+        super(x, y, handView, boardView);
 
         this.letter = letter;
         this.points = points;

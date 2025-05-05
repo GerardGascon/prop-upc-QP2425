@@ -1,5 +1,6 @@
 package edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles.premium;
 
+import edu.upc.prop.scrabble.presenter.swing.screens.game.board.BoardView;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.IHandView;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles.BoardTile;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.utils.Tooltip;
@@ -13,8 +14,8 @@ import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseMotionListener;
 
 public class BoardCenterTile extends BoardTile {
-    public BoardCenterTile(int x, int y, IHandView handView) {
-        super(x, y, handView);
+    public BoardCenterTile(int x, int y, IHandView handView, BoardView boardView) {
+        super(x, y, handView, boardView);
         setBackground(new Color(0xff, 0xc0, 0xcb));
         createTooltip("Start here (Double Word Score)");
     }

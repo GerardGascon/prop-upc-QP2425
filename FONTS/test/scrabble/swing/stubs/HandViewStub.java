@@ -12,6 +12,6 @@ public class HandViewStub implements IHandView {
     @Override
     public String getSelectedPiece() {
         getPieceRequestCalled = true;
-        return null;
+        return "";
     }
 }
