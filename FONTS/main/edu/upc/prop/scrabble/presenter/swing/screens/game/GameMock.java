@@ -4,10 +4,11 @@ import edu.upc.prop.scrabble.data.board.Board;
 import edu.upc.prop.scrabble.data.board.SuperBoard;
 import edu.upc.prop.scrabble.domain.board.PremiumTileTypeFiller;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.BoardView;
+import edu.upc.prop.scrabble.presenter.swing.screens.game.pieceselector.PieceSelector;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
+import java.awt.event.*;
 
 public class GameMock extends JPanel {
     private final int HAND_PIECES_COUNT = 7;
@@ -22,6 +23,8 @@ public class GameMock extends JPanel {
     private final float BOARD_VERTICAL_SIZE_PERCENTAGE = 0.8f;
     private final float BOARD_HORIZONTAL_OFFSET_PERCENTAGE = 0.4f;
     private final BoardView boardPanel;
+
+    private JPanel overlay;
 
     public GameMock() {
         setLayout(null);
@@ -44,6 +47,7 @@ public class GameMock extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Escape key pressed!");
+                displayPopup();
             }
         });
     }
@@ -52,8 +56,8 @@ public class GameMock extends JPanel {
     public void doLayout() {
         super.doLayout();
 
-        int boardSize = (int)(getHeight() * BOARD_VERTICAL_SIZE_PERCENTAGE);
-        int xOffset = (int)(getWidth() * BOARD_HORIZONTAL_OFFSET_PERCENTAGE);
+        int boardSize = (int) (getHeight() * BOARD_VERTICAL_SIZE_PERCENTAGE);
+        int xOffset = (int) (getWidth() * BOARD_HORIZONTAL_OFFSET_PERCENTAGE);
         int yOffset = (getHeight() - boardSize) / 4;
 
         boardPanel.setBounds(xOffset, yOffset, boardSize, boardSize);
@@ -69,8 +73,20 @@ public class GameMock extends JPanel {
         drawSidePanel(g2);
     }
 
+    public void displayPopup() {
+        if (overlay != null) {
+            remove(overlay);
+        }
+
+        overlay = new PieceSelector(this);
+        add(overlay);
+        setComponentZOrder(overlay, 0);
+        revalidate();
+        repaint();
+    }
+
     private void drawSidePanel(Graphics g) {
-        int rectangleWidth = (int)(getWidth() * SIDE_PANEL_WIDTH_PERCENTAGE);
+        int rectangleWidth = (int) (getWidth() * SIDE_PANEL_WIDTH_PERCENTAGE);
         g.setColor(new Color(0x2e, 0x3a, 0x3c));
         g.fillRect(0, 0, rectangleWidth, getHeight());
 
@@ -81,7 +97,7 @@ public class GameMock extends JPanel {
     private void drawPlayerHighlight(Graphics g, int panelHeight, int rectangleWidth, int selectedPlayer) {
         panelHeight -= USER_MARGIN * 2;
 
-        int userSectionWidth = (int)(rectangleWidth * USER_SECTION_WIDTH_PERCENTAGE);
+        int userSectionWidth = (int) (rectangleWidth * USER_SECTION_WIDTH_PERCENTAGE);
         int userSectionHeight = panelHeight / NUM_USER_SECTIONS - USER_MARGIN * 2;
 
         int sectionY = selectedPlayer * (panelHeight / NUM_USER_SECTIONS) + USER_MARGIN * 2;
@@ -105,7 +121,7 @@ public class GameMock extends JPanel {
     private void drawPlayerInfo(Graphics g, int panelHeight, int rectangleWidth) {
         panelHeight -= USER_MARGIN * 2;
         for (int i = 0; i < NUM_USER_SECTIONS; i++) {
-            int userSectionWidth = (int)(rectangleWidth * USER_SECTION_WIDTH_PERCENTAGE);
+            int userSectionWidth = (int) (rectangleWidth * USER_SECTION_WIDTH_PERCENTAGE);
             int userSectionHeight = panelHeight / NUM_USER_SECTIONS - USER_MARGIN * 2;
 
             int sectionY = i * (panelHeight / NUM_USER_SECTIONS) + USER_MARGIN * 2;
@@ -132,14 +148,14 @@ public class GameMock extends JPanel {
     }
 
     private void drawHandPieces(Graphics g) {
-        int boardSize = (int)(getHeight() * BOARD_VERTICAL_SIZE_PERCENTAGE);
-        int xOffset = (int)(getWidth() * BOARD_HORIZONTAL_OFFSET_PERCENTAGE);
+        int boardSize = (int) (getHeight() * BOARD_VERTICAL_SIZE_PERCENTAGE);
+        int xOffset = (int) (getWidth() * BOARD_HORIZONTAL_OFFSET_PERCENTAGE);
         int boardVerticalMargin = (getHeight() - boardSize) / 2;
 
-        int margin = (int)(boardVerticalMargin * 0.05f);
+        int margin = (int) (boardVerticalMargin * 0.05f);
 
         int extraRowY = boardVerticalMargin + boardSize + margin;
-        int handPieceSize = (int)(boardVerticalMargin * 0.9f);
+        int handPieceSize = (int) (boardVerticalMargin * 0.9f);
 
         int totalExtraRowWidth = (HAND_PIECES_COUNT * handPieceSize) + ((HAND_PIECES_COUNT - 1) * HAND_PIECES_SPACING);
 

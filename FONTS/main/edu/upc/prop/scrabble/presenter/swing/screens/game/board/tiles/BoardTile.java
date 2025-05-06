@@ -79,7 +79,8 @@ public abstract class BoardTile extends JButton {
     }
 
     private void clicked(ActionEvent actionEvent) {
-        placePiece("A", 1);
+        openSelectBlankPieceLetterPopup();
+//        placePiece("A", 1);
 //        String piece = handView.getSelectedPiece();
 //        if (piece.isBlank() || piece.equals("#")){
 //            openSelectBlankPieceLetterPopup();
