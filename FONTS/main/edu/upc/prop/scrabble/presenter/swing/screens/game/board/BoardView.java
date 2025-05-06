@@ -4,13 +4,19 @@ import edu.upc.prop.scrabble.data.board.PremiumTileType;
 import edu.upc.prop.scrabble.domain.board.IBoard;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles.*;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles.premium.*;
+import edu.upc.prop.scrabble.utils.Direction;
+import edu.upc.prop.scrabble.utils.Vector2;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BoardView extends JPanel implements IBoard {
     private final int size;
     private final IHandView handView;
+
+    private final List<BoardTemporalPieceTile> temporalPieces = new ArrayList<BoardTemporalPieceTile>();
 
     public BoardView(int size, IHandView handView) {
         super();
@@ -96,9 +102,48 @@ public class BoardView extends JPanel implements IBoard {
 
     public void placeTemporalPiece(String piece, int points, int x, int y) {
         BoardCell cell = getCell(x, y);
-        if (cell.getTile().getClass() == BoardEmptyTile.class) {
-            cell.setTile(new BoardTemporalPieceTile(piece, points, x, y, handView, this));
+        if (isCellAvailable(cell) && isPositionValid(x, y)) {
+            BoardTemporalPieceTile boardTile = new BoardTemporalPieceTile(piece, points, x, y, handView, this);
+            temporalPieces.add(boardTile);
+            cell.setTile(boardTile);
         }
+    }
+
+    private boolean isPositionValid(int x, int y) {
+        if (temporalPieces.isEmpty())
+            return true;
+
+        if (isAdjacentToOther(x, y) && isInLineWithOthers(x, y))
+            return true;
+
+        return false;
+    }
+
+    private boolean isInLineWithOthers(int x, int y) {
+        if (temporalPieces.size() < 2)
+            return true;
+
+        Direction dir = temporalPieces.get(0).getPosition().x == temporalPieces.get(1).getPosition().x ? Direction.Vertical : Direction.Horizontal;
+
+        System.out.println(x + " " + y + " " + dir);
+        if (dir == Direction.Horizontal)
+            return temporalPieces.getFirst().getPosition().y == y;
+        return temporalPieces.getFirst().getPosition().x == x;
+    }
+
+    private boolean isAdjacentToOther(int x, int y) {
+        for (BoardTemporalPieceTile boardTile : temporalPieces) {
+            Vector2 pos = boardTile.getPosition();
+            if (pos.y == y && (pos.x - x == -1 || pos.x - x == 1))
+                return true;
+            if (pos.x == x && (pos.y - y == -1 || pos.y - y == 1))
+                return true;
+        }
+        return false;
+    }
+
+    private static boolean isCellAvailable(BoardCell cell) {
+        return cell.getTile().getClass() != BoardPieceTile.class && cell.getTile().getClass() != BoardTemporalPieceTile.class;
     }
 
     @Override

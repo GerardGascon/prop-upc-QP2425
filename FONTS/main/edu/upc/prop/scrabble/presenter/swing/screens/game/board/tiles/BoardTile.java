@@ -18,6 +18,10 @@ public abstract class BoardTile extends JButton {
     private final Vector2 position;
     private final BoardView board;
 
+    public Vector2 getPosition() {
+        return position;
+    }
+
     public BoardTile(int x, int y, IHandView handView, BoardView board) {
         super();
         setOpaque(false);
@@ -75,18 +79,19 @@ public abstract class BoardTile extends JButton {
     }
 
     private void clicked(ActionEvent actionEvent) {
-        String piece = handView.getSelectedPiece();
-        if (piece.isBlank() || piece.equals("#")){
-            openSelectBlankPieceLetterPopup();
-            return;
-        }
-
-        int points = handView.getSelectedPiecePoints();
-        placePiece(piece, points);
+        placePiece("A", 1);
+//        String piece = handView.getSelectedPiece();
+//        if (piece.isBlank() || piece.equals("#")){
+//            openSelectBlankPieceLetterPopup();
+//            return;
+//        }
+//
+//        int points = handView.getSelectedPiecePoints();
+//        placePiece(piece, points);
     }
 
     private void openSelectBlankPieceLetterPopup() {
-        placePiece("#"); // TODO: Implement popup method
+        placePiece("#", 0); // TODO: Implement popup method
     }
 
     private void placePiece(String piece, int points) {
