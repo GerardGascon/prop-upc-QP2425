@@ -74,8 +74,12 @@ public class BoardView extends JPanel implements IBoard {
     }
 
     public void changeTile(BoardTile tile, int x, int y) {
-        BoardCell cell = getComponentOfType(BoardCell.class, y * size + x);
+        BoardCell cell = getCell(x, y);
         cell.setTile(tile);
+    }
+
+    public BoardCell getCell(int x, int y) {
+        return getComponentOfType(BoardCell.class, y * size + x);
     }
 
     public <TComponent extends Component> TComponent getComponentOfType(Class<TComponent> clazz, int index) {
@@ -91,7 +95,10 @@ public class BoardView extends JPanel implements IBoard {
     }
 
     public void placeTemporalPiece(String piece, int x, int y) {
-
+        BoardCell cell = getCell(x, y);
+        if (cell.getTile().getClass() == BoardEmptyTile.class) {
+            cell.setTile(new BoardTemporalPieceTile(piece, 0, x, y, handView, this));
+        }
     }
 
     @Override
