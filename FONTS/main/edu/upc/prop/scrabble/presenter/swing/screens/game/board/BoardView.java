@@ -94,10 +94,10 @@ public class BoardView extends JPanel implements IBoard {
         throw new RuntimeException("No component found for " + clazz.getName());
     }
 
-    public void placeTemporalPiece(String piece, int x, int y) {
+    public void placeTemporalPiece(String piece, int points, int x, int y) {
         BoardCell cell = getCell(x, y);
         if (cell.getTile().getClass() == BoardEmptyTile.class) {
-            cell.setTile(new BoardTemporalPieceTile(piece, 0, x, y, handView, this));
+            cell.setTile(new BoardTemporalPieceTile(piece, points, x, y, handView, this));
         }
     }
 

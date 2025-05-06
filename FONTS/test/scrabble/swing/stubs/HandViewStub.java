@@ -14,4 +14,10 @@ public class HandViewStub implements IHandView {
         getPieceRequestCalled = true;
         return "";
     }
+
+    @Override
+    public int getSelectedPiecePoints() {
+        getPieceRequestCalled = true;
+        return 0;
+    }
 }

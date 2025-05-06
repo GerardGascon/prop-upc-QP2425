@@ -81,15 +81,16 @@ public abstract class BoardTile extends JButton {
             return;
         }
 
-        placePiece(piece);
+        int points = handView.getSelectedPiecePoints();
+        placePiece(piece, points);
     }
 
     private void openSelectBlankPieceLetterPopup() {
         placePiece("#"); // TODO: Implement popup method
     }
 
-    private void placePiece(String piece) {
-        board.placeTemporalPiece(piece, position.x, position.y);
+    private void placePiece(String piece, int points) {
+        board.placeTemporalPiece(piece, points, position.x, position.y);
     }
 
     protected final void createTooltip(String text) {
