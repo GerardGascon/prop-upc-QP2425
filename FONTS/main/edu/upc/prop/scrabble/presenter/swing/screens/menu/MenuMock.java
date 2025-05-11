@@ -1,5 +1,7 @@
 package edu.upc.prop.scrabble.presenter.swing.screens.menu;
 
+import edu.upc.prop.scrabble.presenter.swing.screens.menu.jugar.JugarButton;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -57,7 +59,8 @@ public class MenuMock extends JPanel {
     private JPanel addButtons(){
         JPanel buttonPanel = new JPanel();
         buttonPanel.setOpaque(false);
-        buttonPanel.add(new MenuButton("Jugar"));
+
+        buttonPanel.add(new JugarButton(buttonPanel));
         buttonPanel.add(new MenuButton("Continuar"));
         buttonPanel.add(new MenuButton("Rànquing"));
         MenuButton quitButton = new MenuButton("Sortir");
