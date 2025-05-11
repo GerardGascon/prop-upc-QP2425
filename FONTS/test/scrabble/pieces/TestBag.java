@@ -2,6 +2,8 @@ package scrabble.pieces;
 
 import edu.upc.prop.scrabble.data.pieces.Bag;
 import edu.upc.prop.scrabble.data.pieces.Piece;
+import edu.upc.prop.scrabble.persistence.runtime.data.PersistentDictionary;
+import edu.upc.prop.scrabble.persistence.runtime.data.PersistentObject;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -13,6 +15,7 @@ public class TestBag {
 
         assertTrue(sut.isEmpty());
     }
+
     @Test
     public void bagAddsOnePiece() {
         Bag sut = new Bag();
@@ -43,5 +46,35 @@ public class TestBag {
         Bag sut = new Bag();
 
         assertThrows(IllegalArgumentException.class, () -> sut.add(null));
+    }
+
+    @Test
+    public void testEncodeAndDecode() {
+        // Arrange: Create the original bag
+        Bag originalBag = new Bag();
+        Piece piece = new Piece("A", 0);
+        for (int i = 0; i < 2; ++i) {
+            originalBag.add(piece);
+        }
+
+        PersistentDictionary encodedData = originalBag.encode();
+        PersistentObject encodedBagObject = encodedData.get("bag");
+        Object[] encodedBagArray = (Object[]) encodedBagObject.getValue();
+
+        // sut encode
+        assertEquals(originalBag.getSize(), encodedBagArray.length);
+        assertEquals(piece.toString(), encodedBagArray[0].toString());
+        assertEquals(piece.toString(), encodedBagArray[1].toString());
+
+        Bag decodedBag = new Bag();
+        decodedBag.decode(encodedData);
+
+        // sut decode
+        assertEquals(originalBag.getSize(), decodedBag.getSize());
+        for (int i = 0; i < originalBag.getSize(); i++) {
+            Piece originalPiece = originalBag.draw(i);
+            Piece decodedPiece = decodedBag.draw(i);
+            assertEquals(originalPiece.toString(), decodedPiece.toString());
+        }
     }
 }

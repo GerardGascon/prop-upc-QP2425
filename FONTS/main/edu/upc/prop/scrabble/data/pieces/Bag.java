@@ -1,4 +1,7 @@
 package edu.upc.prop.scrabble.data.pieces;
+import edu.upc.prop.scrabble.persistence.runtime.data.PersistentDictionary;
+import edu.upc.prop.scrabble.persistence.runtime.data.PersistentObject;
+
 import java.util.*;
 
 /***
@@ -6,7 +9,7 @@ import java.util.*;
  * @author Gina Escofet González
  */
 public class Bag {
-    private final List<Piece> bag;
+    private List<Piece> bag;
 
     /***
      * Creates an empty bag.
@@ -55,5 +58,36 @@ public class Bag {
             throw new IllegalArgumentException("Cannot add null piece");
         }
         bag.add(piece);
+    }
+
+    public PersistentDictionary encode() {
+        PersistentDictionary data = new PersistentDictionary();
+
+        data.add(new PersistentObject("bag", bag.toArray()));
+
+        return data;
+    }
+
+    public void decode(PersistentDictionary data) {
+        PersistentObject bagData = data.get("bag");
+        if (bagData != null) {
+            Object[] parsedObjects = bagData.parse(Object[].class);
+
+            if (parsedObjects != null) {
+                this.bag = new ArrayList<>();
+                for (Object obj : parsedObjects) {
+                    if (obj instanceof Piece) {
+                        this.bag.add((Piece) obj);
+                    } else {
+                        System.err.println("Error: Found non-Piece object in decoded bag: " + obj);
+                    }
+                }
+            } else {
+                this.bag = new ArrayList<>();
+            }
+        }
+        else {
+            this.bag = new ArrayList<>();
+        }
     }
 }
