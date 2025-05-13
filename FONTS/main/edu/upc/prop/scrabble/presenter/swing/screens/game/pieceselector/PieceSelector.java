@@ -74,10 +74,10 @@ public class PieceSelector extends JPanel {
         int margin = 10;
         int inputSize = panelHeight / 2 - 2 * margin;
 
-        int buttonHeight = panelHeight / 8;
+        int buttonHeight = 48;
 
         int inputFieldX = (panelWidth - inputSize) / 2;
-        int inputFieldY = (panelHeight - inputSize - buttonHeight - margin) / 2;
+        int inputFieldY = (panelHeight - inputSize - margin) / 2;
 
         inputField.setBounds(inputFieldX, inputFieldY, inputSize, inputSize);
 
