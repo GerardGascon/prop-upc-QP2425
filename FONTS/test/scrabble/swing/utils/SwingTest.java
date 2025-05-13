@@ -44,4 +44,9 @@ public abstract class SwingTest {
             button.doClick();
         }
     }
+
+    protected static void finish() {
+        if (IS_RUN_TESTS)
+            JOptionPane.showMessageDialog(null, "Test Passed", "Test Passed", JOptionPane.INFORMATION_MESSAGE);
+    }
 }

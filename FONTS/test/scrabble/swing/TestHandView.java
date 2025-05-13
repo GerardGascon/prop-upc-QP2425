@@ -45,6 +45,7 @@ public class TestHandView extends SwingTest {
         HandPieceButton buttonB = getPieceButton(1);
         assertNotNull(buttonB);
         assertEquals("B", buttonB.getLetter());
+        finish();
     }
 
     @Test
@@ -69,6 +70,7 @@ public class TestHandView extends SwingTest {
         doClick(buttonB);
         assertEquals("B", view.getPanel().getSelectedPiece()); // Now it should be B
         assertEquals(2, view.getPanel().getSelectedPiecePoints());
+        finish();
     }
 
     @Test
@@ -91,5 +93,6 @@ public class TestHandView extends SwingTest {
 
         assertNull(view.getPanel().getSelectedPiece());
         assertEquals(0, view.getPanel().getSelectedPiecePoints());
+        finish();
     }
 }

@@ -50,6 +50,7 @@ public class TestBoardView extends SwingTest {
         doClick(c);
 
         assertTrue("Hand view getPiece() was not requested", handViewStub.getGetPieceRequestCalled());
+        finish();
     }
 
     @Test
@@ -60,6 +61,7 @@ public class TestBoardView extends SwingTest {
         view.getPanel().changeTile(new BoardPieceTile("A", 1, 0, 0, handViewStub, null, null), 0, 0);
 
         assertTrue(getTile(view, 0, 0, 21) instanceof BoardPieceTile);
+        finish();
     }
 
     @Test
@@ -68,6 +70,7 @@ public class TestBoardView extends SwingTest {
         view = new TestWindow<>(500, 500, new BoardView(21, handViewStub, null));
 
         assertTrue(getTile(view, 0, 0, 21) instanceof BoardEmptyTile);
+        finish();
     }
 
     @Test
@@ -88,6 +91,7 @@ public class TestBoardView extends SwingTest {
         assertTrue(getTile(view, 11, 10, 21) instanceof BoardPieceTile);
         assertEquals("B", ((BoardPieceTile) getTile(view, 11, 10, 21)).getLetter());
         assertEquals(2, ((BoardPieceTile) getTile(view, 11, 10, 21)).getPoints());
+        finish();
     }
 
     @Test
@@ -104,6 +108,7 @@ public class TestBoardView extends SwingTest {
         assertTrue(getTile(view, 0, 20, 21) instanceof BoardQuadrupleWordTile);
         assertTrue(getTile(view, 20, 0, 21) instanceof BoardQuadrupleWordTile);
         assertTrue(getTile(view, 20, 20, 21) instanceof BoardQuadrupleWordTile);
+        finish();
     }
 
     @Test
@@ -118,6 +123,7 @@ public class TestBoardView extends SwingTest {
 
         assertTrue(getTile(view, 1, 5, 15) instanceof BoardTripleLetterTile);
         assertTrue(getTile(view, 5, 1, 15) instanceof BoardTripleLetterTile);
+        finish();
     }
 
     @Test
@@ -132,6 +138,7 @@ public class TestBoardView extends SwingTest {
 
         assertTrue(getTile(view, 1, 4, 11) instanceof BoardDoubleLetterTile);
         assertTrue(getTile(view, 4, 1, 11) instanceof BoardDoubleLetterTile);
+        finish();
     }
 
     @Test
@@ -145,6 +152,7 @@ public class TestBoardView extends SwingTest {
         filler.run();
 
         assertTrue(getTile(view, 10, 10, 21) instanceof BoardCenterTile);
+        finish();
     }
 
     @Test
@@ -158,6 +166,7 @@ public class TestBoardView extends SwingTest {
         filler.run();
 
         assertTrue(getTile(view, 7, 7, 15) instanceof BoardCenterTile);
+        finish();
     }
 
     @Test
@@ -171,5 +180,6 @@ public class TestBoardView extends SwingTest {
         filler.run();
 
         assertTrue(getTile(view, 5, 5, 11) instanceof BoardCenterTile);
+        finish();
     }
 }
