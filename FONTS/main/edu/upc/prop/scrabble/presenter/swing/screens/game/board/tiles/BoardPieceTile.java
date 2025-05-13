@@ -5,6 +5,7 @@ import edu.upc.prop.scrabble.presenter.swing.screens.game.board.IBlankPieceSelec
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.IHandView;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.geom.AffineTransform;
 
 public class BoardPieceTile extends BoardTile {
@@ -54,6 +55,11 @@ public class BoardPieceTile extends BoardTile {
         int x = (getWidth() - textWidth) / 2;
         int y = (getHeight() + textHeight) / 2 - metrics.getDescent();
         g.drawString(letter, x, y);
+    }
+
+    @Override
+    protected void clicked(ActionEvent actionEvent) {
+        // Used to avoid calling parent
     }
 
     private void drawScore(Graphics2D g) {

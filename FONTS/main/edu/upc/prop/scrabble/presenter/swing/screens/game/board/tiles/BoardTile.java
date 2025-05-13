@@ -81,7 +81,7 @@ public abstract class BoardTile extends JButton {
         return getHeight() * 20 / 100 * 2;
     }
 
-    private void clicked(ActionEvent actionEvent) {
+    protected void clicked(ActionEvent actionEvent) {
         openSelectBlankPieceLetterPopup();
 //        placePiece("A", 1);
 //        String piece = handView.getSelectedPiece();
