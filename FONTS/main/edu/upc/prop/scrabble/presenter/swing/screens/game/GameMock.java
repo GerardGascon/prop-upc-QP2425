@@ -32,16 +32,18 @@ public class GameMock extends JPanel implements IBlankPieceSelector {
     public GameMock() {
         setLayout(null);
         setBackground(new Color(0x50, 0x84, 0x6e));
-        boardPanel = new BoardView(board.getSize(), null, this);
-        add(boardPanel);
 
         Player p = new Player("Player", true);
         p.addPiece(new Piece("A", 1));
         p.addPiece(new Piece("B", 2));
         p.addPiece(new Piece("C", 3));
         p.addPiece(new Piece("D", 4));
+        p.addPiece(new Piece("#", 0, true));
         handPanel = new HandView(p);
         add(handPanel);
+
+        boardPanel = new BoardView(board.getSize(), handPanel, this);
+        add(boardPanel);
 
         createPauseButton();
 
