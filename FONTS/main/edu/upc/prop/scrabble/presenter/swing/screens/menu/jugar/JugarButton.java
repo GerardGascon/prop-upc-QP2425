@@ -1,300 +1,164 @@
 package edu.upc.prop.scrabble.presenter.swing.screens.menu.jugar;
 
 
+import edu.upc.prop.scrabble.data.Player;
+import edu.upc.prop.scrabble.data.properties.GameProperties;
 import edu.upc.prop.scrabble.presenter.swing.screens.menu.MenuButton;
 
 
 import javax.swing.*;
 
 import java.awt.*;
-
+import java.awt.event.ActionEvent;
 
 public class JugarButton extends MenuButton {
 
     private JPanel parentPanel;
-
     private boolean menuActive = false;
 
     private JPanel settingsPanel;
 
+    private JComboBox<String> tableSizeComboBox;
     private JComboBox<String> languageComboBox;
-
     private JComboBox<String> player1Type;
-
     private JComboBox<String> player2Type;
-
     private JComboBox<String> player3Type;
-
     private JComboBox<String> player4Type;
 
+    private String p1Type;
+    private String p2Type;
+    private String p3Type;
+    private String p4Type;
+
     private JTextField player1Name;
-
     private JTextField player2Name;
-
     private JTextField player3Name;
-
     private JTextField player4Name;
 
-
-    private JComboBox<String> tableSizeComboBox;
+    private String p1Name;
+    private String p2Name;
+    private String p3Name;
+    private String p4Name;
 
     private String selectedLanguage = "English";
-
-    private int selectedRealPlayers = 2;
-
-    private int selectedCPUPlayers = 0;
-
     private String selectedTableSize = "Medium";
 
 
+    private int selectedRealPlayers = 2;
+    private int selectedCPUPlayers = 0;
+
     public JugarButton(JPanel parent) {
-
         super("Jugar");
-
         this.parentPanel = parent;
-
         addActionListener(_ -> {
-
             toggleSettingsPanel();
-
         });
-
     }
-
 
     private void toggleSettingsPanel() {
 
 // Retornar al mode original
-
         if (menuActive) {
-
             Container container = parentPanel.getParent();
-
             container.remove(settingsPanel);
-
             menuActive = false;
-
             container.revalidate();
-
             container.repaint();
-
             return;
-
         }
-
-
-// Guardme menu original
-
+// Guarda menu original
         menuActive = true;
-
         Container menuMockPanel = parentPanel.getParent();
-
-
 // Panel de settings
-
         settingsPanel = new JPanel() {
-
             @Override
-
             protected void paintComponent(Graphics g) {
-
-
                 super.paintComponent(g);
-
                 Graphics2D g2d = (Graphics2D) g.create();
-
                 g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
+                int width = getWidth();
+                int height = getHeight();
 
-// Create panel background with rounded corners
-
-                int panelX = getWidth() / 6;
-
-                int panelY = getHeight() / 40;
-
-                int panelWidth = getWidth() * 2 / 3;
-
-                int panelHeight = getHeight() * 16 / 17;
-
-
-// Sombra
-
-                g2d.setColor(new Color(50, 50, 50, 100));
-
-                g2d.fillRoundRect(panelX + 5, panelY + 5, panelWidth, panelHeight, 20, 20);
-
-
-// Fill
-
+                // Fill
                 GradientPaint gradient = new GradientPaint(
-
-                        panelX, panelY, new Color(240, 240, 250),
-
-                        panelX + panelWidth, panelY + panelHeight, new Color(210, 210, 230)
-
+                        (float) (width*0.4),(float)(height*0.15) ,
+                        new Color(240, 240, 250),
+                        (float)(width*0.8), (float)(height*0.95), new Color(210, 210, 230)
                 );
 
                 g2d.setPaint(gradient);
-
-                g2d.fillRoundRect(panelX, panelY, panelWidth, panelHeight, 20, 20);
-
-
-// Borde
-
-                g2d.setColor(new Color(180, 180, 200));
-
-                g2d.setStroke(new BasicStroke(2f));
-
-                g2d.drawRoundRect(panelX, panelY, panelWidth, panelHeight, 20, 20);
-
+                g2d.fillRoundRect((int)(width*0.05), (int)(height*0.05), (int)(width*0.9), (int)(height*0.9), 20, 20);
 
 // Títol
-
                 g2d.setFont(new Font("SansSerif", Font.BOLD, 30));
-
                 g2d.setColor(new Color(60, 60, 80));
-
                 String title = "Game Settings";
-
                 FontMetrics fm = g2d.getFontMetrics();
-
                 int titleWidth = fm.stringWidth(title);
+                g2d.drawString(title, (int) (width*0.4), (int)(height*0.15));
 
-                g2d.drawString(title, panelX + (panelWidth - titleWidth) / 2, panelY + 50);
-
-
-// Linea títol
-
+// Linea
+                // Linea títol
                 g2d.setColor(new Color(180, 180, 200));
-
-                g2d.drawLine(panelX + 20, panelY + 70, panelX + panelWidth - 20, panelY + 70);
-
+                g2d.drawLine((int)(width*0.1), (int)(height*0.2), (int)(width*0.9), (int)(height*0.2));
 
 // Settings títols
-
                 g2d.setFont(new Font("SansSerif", Font.BOLD, 20));
-
                 g2d.setColor(new Color(80, 80, 100));
 
+                g2d.drawString("Player 1", (int)(width*0.2), (int)(height*0.3));
+                g2d.drawString("Player 2", (int)(width*0.4), (int)(height*0.3));
+                g2d.drawString("Player 3", (int)(width*0.6), (int)(height*0.3));
+                g2d.drawString("Player 4", (int)(width*0.8), (int)(height*0.3));
 
-                int textX = panelX + 40;
+                g2d.drawString("Type: ", (int)(width*0.1), (int)(height*0.4));
+                g2d.drawString("Name: ", (int)(width*0.1), (int)(height*0.5));
 
-                int baseY = panelY + 120;
-
-                int sectionHeight = 80;
-
-
-
-                g2d.drawString("Player 1", textX + 100, baseY);
-
-                g2d.drawString("Player 2", textX + 300, baseY);
-
-                g2d.drawString("Player 3", textX + 500, baseY);
-
-                g2d.drawString("Player 4", textX + 700, baseY);
-
-
-                g2d.drawString("Type: ", textX, baseY + 35);
-
-                g2d.drawString("Name: ", textX, baseY + 85);
-
-
-                g2d.drawString("Language", textX, baseY + 2 * sectionHeight);
-
-                g2d.drawString("Table Size", textX, baseY + 3 * sectionHeight);
-
+                g2d.drawString("Language", (int)(width*0.1),(int)(height*0.6));
+                g2d.drawString("Table Size", (int)(width*0.1), (int)(height*0.7));
 
                 g2d.dispose();
-
             }
-
         };
 
-
-
         settingsPanel.setLayout(null);
-
         settingsPanel.setOpaque(false);
 
-
-// Dimensions del pannel
-
-        int panelX = settingsPanel.getWidth() / 6;
-
-        int panelY = settingsPanel.getHeight() / 40;
-
-        int panelWidth = settingsPanel.getWidth() * 2 / 3;
-
-
-// Afegir bottons d'opció multiple
-
-        addSettingsComponents();
-
-
-// Fusionar amb l'escena original
-
-        menuMockPanel.add(settingsPanel);
-
-
-// Ajustem a on es posa
-
+// SetBounds
         menuMockPanel.setLayout(null);
-
         int menuWidth = (int) (menuMockPanel.getWidth() * 0.6);
-
         settingsPanel.setBounds(
-
                 (int) (menuMockPanel.getWidth() * 0.4),
-
                 0,
-
                 menuWidth,
-
                 menuMockPanel.getHeight()
-
         );
 
+// Afegir bottons d'opció multiple
+        addSettingsComponents(settingsPanel.getWidth(), settingsPanel.getHeight());
+// Fusionar amb l'escena original
+        menuMockPanel.add(settingsPanel);
 
-// Refresh
-
+        // Refresh
         menuMockPanel.revalidate();
-
         menuMockPanel.repaint();
-
     }
 
-
-    private void addSettingsComponents() {
-
-
-        int panelX = settingsPanel.getWidth() / 6;
-
-        int panelY = settingsPanel.getHeight() / 40;
-
-        int panelWidth = settingsPanel.getWidth() * 2 / 3;
-
-
-        int componentX = panelX + 400;
-
-        int baseY = panelY + 120;
-
-        int sectionHeight = 80;
-
-        int componentWidth = 150;
-
-        int componentHeight = 30;
+    private void addSettingsComponents(int width, int height) {
 
 
 // Real Players ComboBox
+        String[] playerTypes = {"Real", "CPU", "NO"};
 
-        String[] playerTypes = {"Real", "CPU", " "};
-
+        int componentWidth = (int) (width * 0.1);
+        int componentHeight = (int) (height * 0.05);
 
         player1Type = new JComboBox<>(playerTypes);
 
         player1Type.setSelectedItem(selectedRealPlayers);
 
-        player1Type.setBounds(componentX, baseY + 50, componentWidth, componentHeight);
+        player1Type.setBounds((int)(width*0.2), (int)(height*0.365), componentWidth, componentHeight);
 
         player1Type.addActionListener(e -> selectedRealPlayers = (Integer) player1Type.getSelectedItem());
 
@@ -305,7 +169,7 @@ public class JugarButton extends MenuButton {
 
         player2Type.setSelectedItem(selectedRealPlayers);
 
-        player2Type.setBounds(componentX + 200, baseY + 50, componentWidth, componentHeight);
+        player2Type.setBounds((int)(width*0.4), (int)(height*0.365), componentWidth, componentHeight);
 
         player2Type.addActionListener(e -> selectedRealPlayers = (Integer) player2Type.getSelectedItem());
 
@@ -316,7 +180,7 @@ public class JugarButton extends MenuButton {
 
         player3Type.setSelectedItem(selectedRealPlayers);
 
-        player3Type.setBounds(componentX + 400, baseY + 50, componentWidth, componentHeight);
+        player3Type.setBounds((int)(width*0.6), (int)(height*0.365), componentWidth, componentHeight);
 
         player3Type.addActionListener(e -> selectedRealPlayers = (Integer) player3Type.getSelectedItem());
 
@@ -327,7 +191,7 @@ public class JugarButton extends MenuButton {
 
         player4Type.setSelectedItem(selectedRealPlayers);
 
-        player4Type.setBounds(componentX + 600, baseY + 50, componentWidth, componentHeight);
+        player4Type.setBounds((int)(width*0.8), (int)(height*0.365), componentWidth, componentHeight);
 
         player4Type.addActionListener(e -> selectedRealPlayers = (Integer) player4Type.getSelectedItem());
 
@@ -338,7 +202,7 @@ public class JugarButton extends MenuButton {
 
         player1Name.setEditable(true);
 
-        player1Name.setBounds(componentX, baseY + 100, componentWidth, componentHeight);
+        player1Name.setBounds((int)(width*0.2), (int)(height*0.47), componentWidth, componentHeight);
 
         player1Name.setColumns(10);
 
@@ -349,7 +213,7 @@ public class JugarButton extends MenuButton {
 
         player2Name.setEditable(true);
 
-        player2Name.setBounds(componentX+200, baseY + 100, componentWidth, componentHeight);
+        player2Name.setBounds((int)(width*0.4), (int)(height*0.47), componentWidth, componentHeight);
 
         player2Name.setColumns(10);
 
@@ -360,7 +224,7 @@ public class JugarButton extends MenuButton {
 
         player3Name.setEditable(true);
 
-        player3Name.setBounds(componentX+400, baseY + 100, componentWidth, componentHeight);
+        player3Name.setBounds((int)(width*0.6), (int)(height*0.47), componentWidth, componentHeight);
 
         player3Name.setColumns(10);
 
@@ -371,13 +235,11 @@ public class JugarButton extends MenuButton {
 
         player4Name.setEditable(true);
 
-        player4Name.setBounds(componentX+600, baseY + 100, componentWidth, componentHeight);
+        player4Name.setBounds((int)(width*0.8), (int)(height*0.47), componentWidth, componentHeight);
 
         player4Name.setColumns(10);
 
         settingsPanel.add(player4Name);
-
-
 
 
 // Language ComboBox
@@ -388,7 +250,7 @@ public class JugarButton extends MenuButton {
 
         languageComboBox.setSelectedItem(selectedLanguage);
 
-        languageComboBox.setBounds(componentX, baseY + 2 * sectionHeight + 50, componentWidth, componentHeight);
+        languageComboBox.setBounds((int)(width*0.225), (int)(height*0.575), (int)(width*0.4), componentHeight);
 
         languageComboBox.addActionListener(e -> selectedLanguage = (String) languageComboBox.getSelectedItem());
 
@@ -403,7 +265,7 @@ public class JugarButton extends MenuButton {
 
         tableSizeComboBox.setSelectedItem(selectedTableSize);
 
-        tableSizeComboBox.setBounds(componentX, baseY + 3 * sectionHeight + 50, componentWidth, componentHeight);
+        tableSizeComboBox.setBounds((int)(width*0.225), (int)(height*0.665), (int)(width*0.4), componentHeight);
 
         tableSizeComboBox.addActionListener(e -> selectedTableSize = (String) tableSizeComboBox.getSelectedItem());
 
@@ -414,7 +276,7 @@ public class JugarButton extends MenuButton {
 
         JButton startButton = new JButton("Start Game");
 
-        startButton.setBounds(panelX + 600, baseY + 13 * sectionHeight + 50, 150, 40);
+        startButton.setBounds((int)(width*0.1), (int)(height*0.85), (int)(width*0.2), componentHeight);
 
         startButton.setBackground(new Color(80, 130, 200));
 
@@ -431,7 +293,7 @@ public class JugarButton extends MenuButton {
 
         JButton cancelButton = new JButton("Cancel");
 
-        cancelButton.setBounds(panelX + 800, baseY + 13 * sectionHeight + 50, 150, 40);
+        cancelButton.setBounds((int)(width*0.7), (int)(height*0.85), (int)(width*0.2), componentHeight);
 
         cancelButton.setBackground(new Color(200, 100, 100));
 
@@ -444,13 +306,10 @@ public class JugarButton extends MenuButton {
         settingsPanel.add(cancelButton);
 
     }
-
-
     private void startGame() {
 
+        //GameProperties startGame = new GameProperties();
 // Collect all settings
-
-
         System.out.println("Starting game with:");
 
         System.out.println("Real Players: " + selectedRealPlayers);
@@ -461,13 +320,12 @@ public class JugarButton extends MenuButton {
 
         System.out.println("Table Size: " + selectedTableSize);
 
-
 // Close settings panel
 
         toggleSettingsPanel();
 
 
-// TODO: Implement game start logic here
+// TODO: RECOLECTA DE DADES
 
     }
 
