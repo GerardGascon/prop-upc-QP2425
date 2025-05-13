@@ -1,6 +1,7 @@
 package edu.upc.prop.scrabble.presenter.swing;
 
 import edu.upc.prop.scrabble.presenter.swing.screens.game.GameMock;
+import edu.upc.prop.scrabble.presenter.swing.screens.menu.MenuMock;
 
 import javax.swing.*;
 import java.awt.*;

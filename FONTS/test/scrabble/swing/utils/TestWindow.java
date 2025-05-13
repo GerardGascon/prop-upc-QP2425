@@ -11,9 +11,12 @@ public class TestWindow<T extends JPanel> {
     public TestWindow(int width, int height, T panel) {
         this.panel = panel;
 
+        String title = getCallingTestMethodName();
+
         try {
             SwingUtilities.invokeAndWait(() -> {
                 window = new JDialog();
+                window.setTitle(title);
                 window.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
                 window.setSize(width, height);
                 window.setResizable(false);
@@ -25,6 +28,20 @@ public class TestWindow<T extends JPanel> {
         } catch (InterruptedException | InvocationTargetException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private String getCallingTestMethodName() {
+        StackTraceElement[] stack = Thread.currentThread().getStackTrace();
+        for (StackTraceElement element : stack) {
+            String methodName = element.getMethodName();
+            if (!methodName.equals("getStackTrace") &&
+                    !methodName.equals("getCallingTestMethodName") &&
+                    !methodName.equals("<init>") &&
+                    !element.getClassName().equals(this.getClass().getName())) {
+                return methodName;
+            }
+        }
+        return "TestWindow";
     }
 
     public T getPanel() {

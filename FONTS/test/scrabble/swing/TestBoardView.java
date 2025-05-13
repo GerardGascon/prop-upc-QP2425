@@ -46,7 +46,8 @@ public class TestBoardView extends SwingTest {
         view = new TestWindow<>(500, 500, new BoardView(21, handViewStub, null));
         BoardTile c = getTile(view, 10, 10, 21);
 
-        c.doClick();
+        queueClick(c);
+        doClick(c);
 
         assertTrue("Hand view getPiece() was not requested", handViewStub.getGetPieceRequestCalled());
     }

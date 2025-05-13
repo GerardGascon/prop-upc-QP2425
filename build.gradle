@@ -32,17 +32,17 @@ dependencies {
 
 sourceSets {
     main {
-        java {
-            // Include FONTS/main as the main source directory
-            srcDir 'FONTS/main'
-        }
+        java.srcDir 'FONTS/main'
     }
 
     test {
-        java {
-            // Include FONTS/test as the test source directory
-            srcDir 'FONTS/test'
-        }
+        java.srcDir 'FONTS/test'
+    }
+
+    testrunner {
+        java.srcDir 'FONTS/testrunner'
+        compileClasspath += sourceSets.main.output + sourceSets.test.output + configurations.testRuntimeClasspath
+        runtimeClasspath += output + compileClasspath
     }
 }
 
@@ -88,3 +88,24 @@ tasks.register('runSwing', JavaExec) {
     dependsOn copyTextFiles
     dependsOn generateRunFiles
 }
+
+def executableClasses = ['RunHandTests', 'RunBoardTests']
+
+executableClasses.each { className ->
+    tasks.register("run${className}", JavaExec) {
+        group = 'verification'
+        description = "Runs ${className} using a custom test runner main method."
+        classpath = sourceSets.testrunner.runtimeClasspath
+        standardInput = System.in
+        mainClass.set(className)
+        jvmArgs "-Drun.origin=runTests"
+        dependsOn 'classes'
+    }
+}
+
+tasks.register('runTests', Task) {
+    group = 'verification'
+    description = 'Runs all the tests defined in runTest tasks.'
+    dependsOn executableClasses.collect { "run${it}" }
+}
+
