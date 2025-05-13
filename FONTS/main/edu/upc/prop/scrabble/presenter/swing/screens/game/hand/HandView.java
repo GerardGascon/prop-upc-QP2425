@@ -10,8 +10,7 @@ import java.util.List;
 
 public class HandView extends JPanel implements IHandView {
     private final List<HandPieceButton> pieceButtons = new ArrayList<>();
-    private String getSelectedPiece = null;
-    private int selectedPiecePoints = 0;
+    private HandPieceButton selectedPieceButton;
 
     public static final int HAND_PIECES_SPACING = 10;
 
@@ -25,17 +24,17 @@ public class HandView extends JPanel implements IHandView {
 
     private void displayPieces(Player player) {
         for (Piece piece : player.getHand()) {
-            HandPieceButton pieceButton = new HandPieceButton(piece.letter(), piece.value());
+            HandPieceButton pieceButton = piece.isBlank()
+                    ? new HandPieceButton("", piece.value())
+                    : new HandPieceButton(piece.letter(), piece.value());
 
             pieceButtons.add(pieceButton);
             pieceButton.addActionListener(e -> {
-                JButton clickedButton = (JButton) e.getSource();
-                if (getSelectedPiece != null && getSelectedPiece.equals(clickedButton.getText())) {
-                    getSelectedPiece = null;
-                    selectedPiecePoints = 0;
+                HandPieceButton clickedButton = (HandPieceButton) e.getSource();
+                if (selectedPieceButton != null && selectedPieceButton.equals(clickedButton)) {
+                    selectedPieceButton = null;
                 } else {
-                    getSelectedPiece = clickedButton.getText();
-                    selectedPiecePoints = 1;
+                    selectedPieceButton = clickedButton;
                 }
             });
 
@@ -45,12 +44,12 @@ public class HandView extends JPanel implements IHandView {
 
     @Override
     public String getSelectedPiece() {
-        return getSelectedPiece;
+        return selectedPieceButton == null ? "" : selectedPieceButton.getLetter();
     }
 
     @Override
     public int getSelectedPiecePoints() {
-        return selectedPiecePoints;
+        return selectedPieceButton == null ? 0 : selectedPieceButton.getPoints();
     }
 
     @Override
