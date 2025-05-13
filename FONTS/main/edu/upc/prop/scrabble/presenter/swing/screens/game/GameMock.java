@@ -7,6 +7,7 @@ import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.domain.board.PremiumTileTypeFiller;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.BoardView;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.IBlankPieceSelector;
+import edu.upc.prop.scrabble.presenter.swing.screens.game.board.sidepanel.SidePanel;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.hand.HandView;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.pieceselector.PieceSelector;
 
@@ -26,7 +27,7 @@ public class GameMock extends JPanel implements IBlankPieceSelector {
     private final float BOARD_HORIZONTAL_OFFSET_PERCENTAGE = 0.4f;
     private final BoardView boardPanel;
     private final HandView handPanel;
-
+    private final SidePanel sidePanel;
     private JPanel overlay;
 
     public GameMock() {
@@ -44,6 +45,10 @@ public class GameMock extends JPanel implements IBlankPieceSelector {
 
         boardPanel = new BoardView(board.getSize(), handPanel, this);
         add(boardPanel);
+
+        // Create and add the side panel as a proper component
+        sidePanel = new SidePanel();
+        add(sidePanel);
 
         createPauseButton();
 
@@ -68,8 +73,14 @@ public class GameMock extends JPanel implements IBlankPieceSelector {
     public void doLayout() {
         super.doLayout();
 
+        putSidePanel();
         putBoard();
         putHand();
+    }
+
+    private void putSidePanel() {
+        int sidePanelWidth = (int)(getWidth() * SIDE_PANEL_WIDTH_PERCENTAGE);
+        sidePanel.setBounds(0, 0, sidePanelWidth, getHeight());
     }
 
     private void putHand() {
@@ -90,27 +101,6 @@ public class GameMock extends JPanel implements IBlankPieceSelector {
         handPanel.setPieceSize(handPieceSize);
     }
 
-//    private void drawHandPieces(Graphics g) {
-//        int boardSize = (int) (getHeight() * BOARD_VERTICAL_SIZE_PERCENTAGE);
-//        int xOffset = (int) (getWidth() * BOARD_HORIZONTAL_OFFSET_PERCENTAGE);
-//        int boardVerticalMargin = (getHeight() - boardSize) / 2;
-//
-//        int margin = (int) (boardVerticalMargin * 0.05f);
-//
-//        int extraRowY = boardVerticalMargin + boardSize + margin;
-//        int handPieceSize = (int) (boardVerticalMargin * 0.9f);
-//
-//        int totalExtraRowWidth = (HAND_PIECES_COUNT * handPieceSize) + ((HAND_PIECES_COUNT - 1) * HAND_PIECES_SPACING);
-//
-//        int extraRowX = xOffset + (boardSize - totalExtraRowWidth) / 2;
-//
-//        for (int i = 0; i < HAND_PIECES_COUNT; i++) {
-//            int xPos = extraRowX + (i * (handPieceSize + HAND_PIECES_SPACING));
-//            g.setColor(Color.WHITE);
-//            g.fillRoundRect(xPos, extraRowY, handPieceSize, handPieceSize, handPieceSize * 20 / 100 * 2, handPieceSize * 20 / 100 * 2);
-//        }
-//    }
-
     private void putBoard() {
         int boardSize = (int) (getHeight() * BOARD_VERTICAL_SIZE_PERCENTAGE);
         int xOffset = (int) (getWidth() * BOARD_HORIZONTAL_OFFSET_PERCENTAGE);
@@ -125,8 +115,8 @@ public class GameMock extends JPanel implements IBlankPieceSelector {
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         super.paintComponent(g2);
-//        drawHandPieces(g2);
-        drawSidePanel(g2);
+        g2.dispose();
+        // We don't need to call sidePanel.drawSidePanel(g) anymore because sidePanel is a proper component
     }
 
     @Override
@@ -140,67 +130,5 @@ public class GameMock extends JPanel implements IBlankPieceSelector {
         setComponentZOrder(overlay, 0);
         revalidate();
         repaint();
-    }
-
-    private void drawSidePanel(Graphics g) {
-        int rectangleWidth = (int) (getWidth() * SIDE_PANEL_WIDTH_PERCENTAGE);
-        g.setColor(new Color(0x2e, 0x3a, 0x3c));
-        g.fillRect(0, 0, rectangleWidth, getHeight());
-
-        drawPlayerHighlight(g, getHeight(), rectangleWidth, 2);
-        drawPlayerInfo(g, getHeight(), rectangleWidth);
-    }
-
-    private void drawPlayerHighlight(Graphics g, int panelHeight, int rectangleWidth, int selectedPlayer) {
-        panelHeight -= USER_MARGIN * 2;
-
-        int userSectionWidth = (int) (rectangleWidth * USER_SECTION_WIDTH_PERCENTAGE);
-        int userSectionHeight = panelHeight / NUM_USER_SECTIONS - USER_MARGIN * 2;
-
-        int sectionY = selectedPlayer * (panelHeight / NUM_USER_SECTIONS) + USER_MARGIN * 2;
-
-        int sectionX = (rectangleWidth - userSectionWidth) / 2;
-
-        setPlayerColor(g, selectedPlayer);
-
-        g.fillRoundRect(sectionX - 10, sectionY - 10, userSectionWidth + 20, userSectionHeight + 20, 58, 58);
-    }
-
-    private void setPlayerColor(Graphics g, int selectedPlayer) {
-        switch (selectedPlayer) {
-            case 0 -> g.setColor(new Color(0xf5, 0x2e, 0x2e));
-            case 1 -> g.setColor(new Color(0x54, 0x63, 0xff));
-            case 2 -> g.setColor(new Color(0xff, 0xc7, 0x17));
-            case 3 -> g.setColor(new Color(0x1f, 0x9e, 0x40));
-        }
-    }
-
-    private void drawPlayerInfo(Graphics g, int panelHeight, int rectangleWidth) {
-        panelHeight -= USER_MARGIN * 2;
-        for (int i = 0; i < NUM_USER_SECTIONS; i++) {
-            int userSectionWidth = (int) (rectangleWidth * USER_SECTION_WIDTH_PERCENTAGE);
-            int userSectionHeight = panelHeight / NUM_USER_SECTIONS - USER_MARGIN * 2;
-
-            int sectionY = i * (panelHeight / NUM_USER_SECTIONS) + USER_MARGIN * 2;
-
-            int sectionX = (rectangleWidth - userSectionWidth) / 2;
-
-            g.setColor(Color.WHITE);
-            g.fillRoundRect(sectionX, sectionY, userSectionWidth, userSectionHeight, 48, 48);
-
-            setPlayerColor(g, i);
-            g.fillRoundRect(sectionX + 20, sectionY + 20, userSectionWidth - 40, userSectionHeight / 2 - 20, 28, 28);
-
-            String name = "Player " + (i + 1);
-            g.setColor(Color.BLACK);
-            Font font = new Font("SansSerif", Font.BOLD, userSectionHeight / 9);
-            FontMetrics metrics = g.getFontMetrics(font);
-            g.setFont(font);
-            g.drawString(name, sectionX + 20, sectionY + userSectionHeight / 2 + metrics.getHeight());
-
-            String score = Integer.toString(i * 100);
-            int textWidth = metrics.stringWidth(score);
-            g.drawString(score, sectionX + userSectionWidth - 20 - textWidth, sectionY + userSectionHeight / 2 + metrics.getHeight());
-        }
     }
 }
