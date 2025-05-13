@@ -42,7 +42,7 @@ public class TestBoardView extends SwingTest {
 
     @Test
     public void cellClickAsksHandForSelectedPiece() {
-        HandViewStub handViewStub = new HandViewStub();
+        HandViewStub handViewStub = new HandViewStub("A", 1);
         view = new TestWindow<>(500, 500, new BoardView(21, handViewStub, null));
         BoardTile c = getTile(view, 10, 10, 21);
 
@@ -53,7 +53,7 @@ public class TestBoardView extends SwingTest {
 
     @Test
     public void cellTileChangeReplacesTile() {
-        HandViewStub handViewStub = new HandViewStub();
+        HandViewStub handViewStub = new HandViewStub("A", 1);
         view = new TestWindow<>(500, 500, new BoardView(21, handViewStub, null));
 
         view.getPanel().changeTile(new BoardPieceTile("A", 1, 0, 0, handViewStub, null, null), 0, 0);
@@ -63,7 +63,7 @@ public class TestBoardView extends SwingTest {
 
     @Test
     public void cellTileIsEmptyByDefault() {
-        HandViewStub handViewStub = new HandViewStub();
+        HandViewStub handViewStub = new HandViewStub("A", 1);
         view = new TestWindow<>(500, 500, new BoardView(21, handViewStub, null));
 
         assertTrue(getTile(view, 0, 0, 21) instanceof BoardEmptyTile);
@@ -71,7 +71,7 @@ public class TestBoardView extends SwingTest {
 
     @Test
     public void boardGetsUpdatedWhenPieceIsPlaced() {
-        HandViewStub handViewStub = new HandViewStub();
+        HandViewStub handViewStub = new HandViewStub("A", 1);
         view = new TestWindow<>(500, 500, new BoardView(21, handViewStub, null));
         Board board = new SuperBoard();
         Player player = new Player("test", false);
@@ -91,7 +91,7 @@ public class TestBoardView extends SwingTest {
 
     @Test
     public void superBoardGetsGeneratedWithProperPremiumTiles() {
-        HandViewStub handViewStub = new HandViewStub();
+        HandViewStub handViewStub = new HandViewStub("A", 1);
         view = new TestWindow<>(500, 500, new BoardView(21, handViewStub, null));
 
         Board board = new SuperBoard();
@@ -107,7 +107,7 @@ public class TestBoardView extends SwingTest {
 
     @Test
     public void standardBoardGetsGeneratedWithProperPremiumTiles() {
-        HandViewStub handViewStub = new HandViewStub();
+        HandViewStub handViewStub = new HandViewStub("A", 1);
         view = new TestWindow<>(500, 500, new BoardView(15, handViewStub, null));
 
         Board board = new StandardBoard();
@@ -121,7 +121,7 @@ public class TestBoardView extends SwingTest {
 
     @Test
     public void juniorBoardGetsGeneratedWithProperPremiumTiles() {
-        HandViewStub handViewStub = new HandViewStub();
+        HandViewStub handViewStub = new HandViewStub("A", 1);
         view = new TestWindow<>(500, 500, new BoardView(11, handViewStub, null));
 
         Board board = new JuniorBoard();
@@ -135,7 +135,7 @@ public class TestBoardView extends SwingTest {
 
     @Test
     public void superBoardCenter() {
-        HandViewStub handViewStub = new HandViewStub();
+        HandViewStub handViewStub = new HandViewStub("A", 1);
         view = new TestWindow<>(500, 500, new BoardView(21, handViewStub, null));
 
         Board board = new SuperBoard();
@@ -148,7 +148,7 @@ public class TestBoardView extends SwingTest {
 
     @Test
     public void standardBoardCenter() {
-        HandViewStub handViewStub = new HandViewStub();
+        HandViewStub handViewStub = new HandViewStub("A", 1);
         view = new TestWindow<>(500, 500, new BoardView(15, handViewStub, null));
 
         Board board = new StandardBoard();
@@ -161,7 +161,7 @@ public class TestBoardView extends SwingTest {
 
     @Test
     public void juniorBoardCenter() {
-        HandViewStub handViewStub = new HandViewStub();
+        HandViewStub handViewStub = new HandViewStub("A", 1);
         view = new TestWindow<>(500, 500, new BoardView(11, handViewStub, null));
 
         Board board = new JuniorBoard();

@@ -2,6 +2,7 @@ package scrabble.swing;
 
 import edu.upc.prop.scrabble.data.Player;
 import edu.upc.prop.scrabble.data.pieces.Piece;
+import edu.upc.prop.scrabble.presenter.swing.screens.game.hand.HandPieceButton;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.hand.HandView;
 
 import org.junit.After;
@@ -17,8 +18,8 @@ public class TestHandView extends SwingTest {
     private TestWindow<HandView> view;
     private Player player;
 
-    private JButton getPieceButton(int index) {
-        return (JButton) view.getPanel().getComponent(index);
+    private HandPieceButton getPieceButton(int index) {
+        return (HandPieceButton) view.getPanel().getComponent(index);
     }
 
     @After
@@ -37,13 +38,13 @@ public class TestHandView extends SwingTest {
         view = new TestWindow<>(200, 100, new HandView(player));
         assertEquals(2, view.getPanel().getComponentCount());
 
-        JButton buttonA = getPieceButton(0);
+        HandPieceButton buttonA = getPieceButton(0);
         assertNotNull(buttonA);
-        assertEquals("A", buttonA.getText());
+        assertEquals("A", buttonA.getLetter());
 
-        JButton buttonB = getPieceButton(1);
+        HandPieceButton buttonB = getPieceButton(1);
         assertNotNull(buttonB);
-        assertEquals("B", buttonB.getText());
+        assertEquals("B", buttonB.getLetter());
     }
 
     @Test
