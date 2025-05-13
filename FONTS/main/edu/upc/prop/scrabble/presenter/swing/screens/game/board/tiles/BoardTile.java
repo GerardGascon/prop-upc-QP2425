@@ -1,6 +1,7 @@
 package edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles;
 
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.BoardView;
+import edu.upc.prop.scrabble.presenter.swing.screens.game.board.IBlankPieceSelector;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.IHandView;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.utils.Tooltip;
 import edu.upc.prop.scrabble.utils.Vector2;
@@ -15,6 +16,7 @@ import java.awt.geom.RoundRectangle2D;
 
 public abstract class BoardTile extends JButton {
     private final IHandView handView;
+    private final IBlankPieceSelector blankPieceSelector;
     private final Vector2 position;
     private final BoardView board;
 
@@ -22,7 +24,7 @@ public abstract class BoardTile extends JButton {
         return position;
     }
 
-    public BoardTile(int x, int y, IHandView handView, BoardView board) {
+    public BoardTile(int x, int y, IHandView handView, BoardView board, IBlankPieceSelector blankPieceSelector) {
         super();
         setOpaque(false);
         setFocusPainted(false);
@@ -32,6 +34,7 @@ public abstract class BoardTile extends JButton {
         this.handView = handView;
         this.position = new Vector2(x, y);
         this.board = board;
+        this.blankPieceSelector = blankPieceSelector;
 
         addActionListener(this::clicked);
 
@@ -92,7 +95,11 @@ public abstract class BoardTile extends JButton {
     }
 
     private void openSelectBlankPieceLetterPopup() {
-        placePiece("#", 0); // TODO: Implement popup method
+        blankPieceSelector.openSelectorPopUp(this::placeBlankPiece);
+    }
+
+    private void placeBlankPiece(String letter) {
+        placePiece(letter, 0);
     }
 
     private void placePiece(String piece, int points) {

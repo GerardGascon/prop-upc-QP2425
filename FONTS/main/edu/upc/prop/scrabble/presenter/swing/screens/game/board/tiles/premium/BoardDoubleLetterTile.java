@@ -1,14 +1,15 @@
 package edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles.premium;
 
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.BoardView;
+import edu.upc.prop.scrabble.presenter.swing.screens.game.board.IBlankPieceSelector;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.IHandView;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles.BoardTile;
 
 import java.awt.*;
 
 public class BoardDoubleLetterTile extends BoardTile {
-    public BoardDoubleLetterTile(int x, int y, IHandView handView, BoardView boardView) {
-        super(x, y, handView, boardView);
+    public BoardDoubleLetterTile(int x, int y, IHandView handView, BoardView boardView, IBlankPieceSelector blankPieceSelector) {
+        super(x, y, handView, boardView, blankPieceSelector);
         setBackground(new Color(0x87, 0xce, 0xeb));
         createTooltip("Double Letter Score");
     }

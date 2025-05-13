@@ -15,10 +15,11 @@ import java.util.List;
 public class BoardView extends JPanel implements IBoard {
     private final int size;
     private final IHandView handView;
+    private final IBlankPieceSelector blankPieceSelector;
 
     private final List<BoardTemporalPieceTile> temporalPieces = new ArrayList<BoardTemporalPieceTile>();
 
-    public BoardView(int size, IHandView handView) {
+    public BoardView(int size, IHandView handView, IBlankPieceSelector blankPieceSelector) {
         super();
         setOpaque(false);
         setLayout(new GridLayout(size + 2, size + 2, 2, 2));
@@ -26,6 +27,7 @@ public class BoardView extends JPanel implements IBoard {
 
         this.size = size;
         this.handView = handView;
+        this.blankPieceSelector = blankPieceSelector;
 
         generateEmptyTiles(size, handView);
     }
@@ -50,7 +52,7 @@ public class BoardView extends JPanel implements IBoard {
             j++;
 
             BoardCell cell = new BoardCell();
-            cell.setTile(new BoardEmptyTile(col, row, handView, this));
+            cell.setTile(new BoardEmptyTile(col, row, handView, this, blankPieceSelector));
             add(cell);
         }
     }
@@ -103,7 +105,7 @@ public class BoardView extends JPanel implements IBoard {
     public void placeTemporalPiece(String piece, int points, int x, int y) {
         BoardCell cell = getCell(x, y);
         if (isCellAvailable(cell) && isPositionValid(x, y)) {
-            BoardTemporalPieceTile boardTile = new BoardTemporalPieceTile(piece, points, x, y, handView, this);
+            BoardTemporalPieceTile boardTile = new BoardTemporalPieceTile(piece, points, x, y, handView, this, blankPieceSelector);
             temporalPieces.add(boardTile);
             cell.setTile(boardTile);
         }
@@ -153,23 +155,23 @@ public class BoardView extends JPanel implements IBoard {
 
     @Override
     public void updateCell(String piece, int points, int x, int y) {
-        changeTile(new BoardPieceTile(piece, points, x, y, handView, this), x, y);
+        changeTile(new BoardPieceTile(piece, points, x, y, handView, this, blankPieceSelector), x, y);
     }
 
     @Override
     public void setPremiumTile(PremiumTileType type, int x, int y) {
         if (x == y && x == size / 2){
-            changeTile(new BoardCenterTile(x, y, handView, this), x, y);
+            changeTile(new BoardCenterTile(x, y, handView, this, blankPieceSelector), x, y);
             return;
         }
 
         switch (type) {
-            case QuadrupleWord -> changeTile(new BoardQuadrupleWordTile(x, y, handView, this), x, y);
-            case TripleWord -> changeTile(new BoardTripleWordTile(x, y, handView, this), x, y);
-            case DoubleWord -> changeTile(new BoardDoubleWordTile(x, y, handView, this), x, y);
-            case QuadrupleLetter -> changeTile(new BoardQuadrupleLetterTile(x, y, handView, this), x, y);
-            case TripleLetter -> changeTile(new BoardTripleLetterTile(x, y, handView, this), x, y);
-            case DoubleLetter -> changeTile(new BoardDoubleLetterTile(x, y, handView, this), x, y);
+            case QuadrupleWord -> changeTile(new BoardQuadrupleWordTile(x, y, handView, this, blankPieceSelector), x, y);
+            case TripleWord -> changeTile(new BoardTripleWordTile(x, y, handView, this, blankPieceSelector), x, y);
+            case DoubleWord -> changeTile(new BoardDoubleWordTile(x, y, handView, this, blankPieceSelector), x, y);
+            case QuadrupleLetter -> changeTile(new BoardQuadrupleLetterTile(x, y, handView, this, blankPieceSelector), x, y);
+            case TripleLetter -> changeTile(new BoardTripleLetterTile(x, y, handView, this, blankPieceSelector), x, y);
+            case DoubleLetter -> changeTile(new BoardDoubleLetterTile(x, y, handView, this, blankPieceSelector), x, y);
         }
     }
 }

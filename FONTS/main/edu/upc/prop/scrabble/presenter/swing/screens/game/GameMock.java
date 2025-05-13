@@ -4,13 +4,15 @@ import edu.upc.prop.scrabble.data.board.Board;
 import edu.upc.prop.scrabble.data.board.SuperBoard;
 import edu.upc.prop.scrabble.domain.board.PremiumTileTypeFiller;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.BoardView;
+import edu.upc.prop.scrabble.presenter.swing.screens.game.board.IBlankPieceSelector;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.pieceselector.PieceSelector;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.function.Consumer;
 
-public class GameMock extends JPanel {
+public class GameMock extends JPanel implements IBlankPieceSelector {
     private final int HAND_PIECES_COUNT = 7;
     private final int HAND_PIECES_SPACING = 10;
 
@@ -29,7 +31,7 @@ public class GameMock extends JPanel {
     public GameMock() {
         setLayout(null);
         setBackground(new Color(0x50, 0x84, 0x6e));
-        boardPanel = new BoardView(board.getSize(), null);
+        boardPanel = new BoardView(board.getSize(), null, this);
         add(boardPanel);
 
         createPauseButton();
@@ -47,7 +49,6 @@ public class GameMock extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Escape key pressed!");
-                displayPopup();
             }
         });
     }
@@ -73,12 +74,13 @@ public class GameMock extends JPanel {
         drawSidePanel(g2);
     }
 
-    public void displayPopup() {
+    @Override
+    public void openSelectorPopUp(Consumer<String> selectPieceCallback) {
         if (overlay != null) {
             remove(overlay);
         }
 
-        overlay = new PieceSelector(this);
+        overlay = new PieceSelector(this, selectPieceCallback);
         add(overlay);
         setComponentZOrder(overlay, 0);
         revalidate();

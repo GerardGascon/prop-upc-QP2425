@@ -3,6 +3,7 @@ package edu.upc.prop.scrabble.presenter.swing.screens.game.pieceselector;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.InputEvent;
+import java.util.function.Consumer;
 
 public class PieceSelector extends JPanel {
     private final JPanel parent;
@@ -15,7 +16,7 @@ public class PieceSelector extends JPanel {
     private final JPanel popup;
     private final JLabel headerLabel;
 
-    public PieceSelector(JPanel parent) {
+    public PieceSelector(JPanel parent, Consumer<String> selectPieceCallback) {
         super(null);
         this.parent = parent;
 
@@ -43,6 +44,7 @@ public class PieceSelector extends JPanel {
             parent.remove(this);
             parent.revalidate();
             parent.repaint();
+            validatePieceAndPlace(selectPieceCallback);
         });
 
         cancelBtn.addActionListener(_ -> {
@@ -54,6 +56,10 @@ public class PieceSelector extends JPanel {
         addMouseWheelListener(InputEvent::consume);
 
         layoutComponents();
+    }
+
+    private void validatePieceAndPlace(Consumer<String> selectPieceCallback) {
+        selectPieceCallback.accept(inputField.getText());
     }
 
     private void layoutComponents() {
