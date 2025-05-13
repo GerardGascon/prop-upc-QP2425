@@ -1,4 +1,4 @@
-package edu.upc.prop.scrabble.presenter.swing.screens.game.board;
+package edu.upc.prop.scrabble.presenter.swing.screens.game.hand;
 
 public interface IHandView {
     String getSelectedPiece();

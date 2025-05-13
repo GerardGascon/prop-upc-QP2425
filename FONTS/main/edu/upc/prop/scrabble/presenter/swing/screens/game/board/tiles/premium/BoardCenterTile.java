@@ -2,17 +2,10 @@ package edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles.premium;
 
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.BoardView;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.IBlankPieceSelector;
-import edu.upc.prop.scrabble.presenter.swing.screens.game.board.IHandView;
+import edu.upc.prop.scrabble.presenter.swing.screens.game.hand.IHandView;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles.BoardTile;
-import edu.upc.prop.scrabble.presenter.swing.screens.game.utils.Tooltip;
 
-import javax.swing.*;
-import javax.swing.plaf.basic.BasicToolTipUI;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
-import java.awt.event.MouseMotionListener;
 
 public class BoardCenterTile extends BoardTile {
     public BoardCenterTile(int x, int y, IHandView handView, BoardView boardView, IBlankPieceSelector blankPieceSelector) {

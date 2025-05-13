@@ -1,10 +1,13 @@
 package edu.upc.prop.scrabble.presenter.swing.screens.game;
 
+import edu.upc.prop.scrabble.data.Player;
 import edu.upc.prop.scrabble.data.board.Board;
 import edu.upc.prop.scrabble.data.board.SuperBoard;
+import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.domain.board.PremiumTileTypeFiller;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.BoardView;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.IBlankPieceSelector;
+import edu.upc.prop.scrabble.presenter.swing.screens.game.hand.HandView;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.pieceselector.PieceSelector;
 
 import javax.swing.*;
@@ -13,9 +16,6 @@ import java.awt.event.*;
 import java.util.function.Consumer;
 
 public class GameMock extends JPanel implements IBlankPieceSelector {
-    private final int HAND_PIECES_COUNT = 7;
-    private final int HAND_PIECES_SPACING = 10;
-
     private final float SIDE_PANEL_WIDTH_PERCENTAGE = 0.25f;
     private final int NUM_USER_SECTIONS = 4;
     private final int USER_MARGIN = 10;
@@ -25,6 +25,7 @@ public class GameMock extends JPanel implements IBlankPieceSelector {
     private final float BOARD_VERTICAL_SIZE_PERCENTAGE = 0.8f;
     private final float BOARD_HORIZONTAL_OFFSET_PERCENTAGE = 0.4f;
     private final BoardView boardPanel;
+    private final HandView handPanel;
 
     private JPanel overlay;
 
@@ -33,6 +34,14 @@ public class GameMock extends JPanel implements IBlankPieceSelector {
         setBackground(new Color(0x50, 0x84, 0x6e));
         boardPanel = new BoardView(board.getSize(), null, this);
         add(boardPanel);
+
+        Player p = new Player("Player", true);
+        p.addPiece(new Piece("A", 1));
+        p.addPiece(new Piece("B", 2));
+        p.addPiece(new Piece("C", 3));
+        p.addPiece(new Piece("D", 4));
+        handPanel = new HandView(p);
+        add(handPanel);
 
         createPauseButton();
 
@@ -57,6 +66,50 @@ public class GameMock extends JPanel implements IBlankPieceSelector {
     public void doLayout() {
         super.doLayout();
 
+        putBoard();
+        putHand();
+    }
+
+    private void putHand() {
+        int boardSize = (int) (getHeight() * BOARD_VERTICAL_SIZE_PERCENTAGE);
+        int xOffset = (int) (getWidth() * BOARD_HORIZONTAL_OFFSET_PERCENTAGE);
+        int boardVerticalMargin = (getHeight() - boardSize) / 2;
+
+        int margin = (int) (boardVerticalMargin * 0.05f);
+
+        int extraRowY = boardVerticalMargin + boardSize + margin;
+        int handPieceSize = (int) (boardVerticalMargin * 0.9f);
+
+        int totalExtraRowWidth = (7 * handPieceSize) + (6 * HandView.HAND_PIECES_SPACING);
+
+        int extraRowX = xOffset + (boardSize - totalExtraRowWidth) / 2;
+
+        handPanel.setBounds(extraRowX, extraRowY, totalExtraRowWidth, handPieceSize);
+        handPanel.setPieceSize(handPieceSize);
+    }
+
+//    private void drawHandPieces(Graphics g) {
+//        int boardSize = (int) (getHeight() * BOARD_VERTICAL_SIZE_PERCENTAGE);
+//        int xOffset = (int) (getWidth() * BOARD_HORIZONTAL_OFFSET_PERCENTAGE);
+//        int boardVerticalMargin = (getHeight() - boardSize) / 2;
+//
+//        int margin = (int) (boardVerticalMargin * 0.05f);
+//
+//        int extraRowY = boardVerticalMargin + boardSize + margin;
+//        int handPieceSize = (int) (boardVerticalMargin * 0.9f);
+//
+//        int totalExtraRowWidth = (HAND_PIECES_COUNT * handPieceSize) + ((HAND_PIECES_COUNT - 1) * HAND_PIECES_SPACING);
+//
+//        int extraRowX = xOffset + (boardSize - totalExtraRowWidth) / 2;
+//
+//        for (int i = 0; i < HAND_PIECES_COUNT; i++) {
+//            int xPos = extraRowX + (i * (handPieceSize + HAND_PIECES_SPACING));
+//            g.setColor(Color.WHITE);
+//            g.fillRoundRect(xPos, extraRowY, handPieceSize, handPieceSize, handPieceSize * 20 / 100 * 2, handPieceSize * 20 / 100 * 2);
+//        }
+//    }
+
+    private void putBoard() {
         int boardSize = (int) (getHeight() * BOARD_VERTICAL_SIZE_PERCENTAGE);
         int xOffset = (int) (getWidth() * BOARD_HORIZONTAL_OFFSET_PERCENTAGE);
         int yOffset = (getHeight() - boardSize) / 4;
@@ -70,7 +123,7 @@ public class GameMock extends JPanel implements IBlankPieceSelector {
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         super.paintComponent(g2);
-        drawHandPieces(g2);
+//        drawHandPieces(g2);
         drawSidePanel(g2);
     }
 
@@ -146,27 +199,6 @@ public class GameMock extends JPanel implements IBlankPieceSelector {
             String score = Integer.toString(i * 100);
             int textWidth = metrics.stringWidth(score);
             g.drawString(score, sectionX + userSectionWidth - 20 - textWidth, sectionY + userSectionHeight / 2 + metrics.getHeight());
-        }
-    }
-
-    private void drawHandPieces(Graphics g) {
-        int boardSize = (int) (getHeight() * BOARD_VERTICAL_SIZE_PERCENTAGE);
-        int xOffset = (int) (getWidth() * BOARD_HORIZONTAL_OFFSET_PERCENTAGE);
-        int boardVerticalMargin = (getHeight() - boardSize) / 2;
-
-        int margin = (int) (boardVerticalMargin * 0.05f);
-
-        int extraRowY = boardVerticalMargin + boardSize + margin;
-        int handPieceSize = (int) (boardVerticalMargin * 0.9f);
-
-        int totalExtraRowWidth = (HAND_PIECES_COUNT * handPieceSize) + ((HAND_PIECES_COUNT - 1) * HAND_PIECES_SPACING);
-
-        int extraRowX = xOffset + (boardSize - totalExtraRowWidth) / 2;
-
-        for (int i = 0; i < HAND_PIECES_COUNT; i++) {
-            int xPos = extraRowX + (i * (handPieceSize + HAND_PIECES_SPACING));
-            g.setColor(Color.WHITE);
-            g.fillRoundRect(xPos, extraRowY, handPieceSize, handPieceSize, handPieceSize * 20 / 100 * 2, handPieceSize * 20 / 100 * 2);
         }
     }
 }

@@ -1,24 +1,55 @@
-package edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles;
+package edu.upc.prop.scrabble.presenter.swing.screens.game.hand;
 
-import edu.upc.prop.scrabble.presenter.swing.screens.game.board.BoardView;
-import edu.upc.prop.scrabble.presenter.swing.screens.game.board.IBlankPieceSelector;
-import edu.upc.prop.scrabble.presenter.swing.screens.game.hand.IHandView;
-
+import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.geom.AffineTransform;
 
-public class BoardPieceTile extends BoardTile {
+public class HandPieceButton extends JButton {
     private final String letter;
     private final int points;
 
-    public BoardPieceTile(String letter, int points, int x, int y, IHandView handView, BoardView boardView, IBlankPieceSelector blankPieceSelector) {
-        super(x, y, handView, boardView, blankPieceSelector);
+    public HandPieceButton(String letter, int points) {
+        super();
+        setOpaque(false);
+        setFocusPainted(false);
+        setContentAreaFilled(false);
+        setBorderPainted(false);
+        disableKeyboardInput();
 
         this.letter = letter;
         this.points = points;
+    }
 
-        setBackground(new Color(0xff, 0xf9, 0xb5));
+    private void disableKeyboardInput() {
+        InputMap inputMap = getInputMap(JComponent.WHEN_FOCUSED);
+        inputMap.put(KeyStroke.getKeyStroke("SPACE"), "none");
+        inputMap.put(KeyStroke.getKeyStroke("released SPACE"), "none");
+
+        inputMap.put(KeyStroke.getKeyStroke("ENTER"), "none");
+        inputMap.put(KeyStroke.getKeyStroke("released ENTER"), "none");
+    }
+
+    private int getCornerRadius() {
+        return getHeight() * 20 / 100 * 2;
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g.create();
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+        Color bgColor;
+        if (model.isArmed())
+            bgColor = getBackground().darker();
+        else if (model.isRollover())
+            bgColor = getBackground().brighter();
+        else
+            bgColor = getBackground();
+
+        drawTile(g2, bgColor, getCornerRadius());
+
+        super.paintComponent(g);
+        g2.dispose();
     }
 
     public String getLetter() {
@@ -29,7 +60,6 @@ public class BoardPieceTile extends BoardTile {
         return points;
     }
 
-    @Override
     protected void drawTile(Graphics2D g, Color bg, int radius) {
         g.setColor(bg);
         g.fillRoundRect(0, 0, getWidth(), getHeight(), radius, radius);
@@ -55,11 +85,6 @@ public class BoardPieceTile extends BoardTile {
         int x = (getWidth() - textWidth) / 2;
         int y = (getHeight() + textHeight) / 2 - metrics.getDescent();
         g.drawString(letter, x, y);
-    }
-
-    @Override
-    protected void clicked(ActionEvent actionEvent) {
-        // Used to avoid calling parent
     }
 
     private void drawScore(Graphics2D g) {
