@@ -44,7 +44,7 @@ public class HandView extends JPanel implements IHandView {
 
     @Override
     public String getSelectedPiece() {
-        return selectedPieceButton == null ? "" : selectedPieceButton.getLetter();
+        return selectedPieceButton == null ? null : selectedPieceButton.getLetter();
     }
 
     @Override
