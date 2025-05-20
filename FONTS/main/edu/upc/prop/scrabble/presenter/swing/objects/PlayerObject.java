@@ -12,6 +12,7 @@ import edu.upc.prop.scrabble.presenter.scenes.SceneObject;
 import edu.upc.prop.scrabble.domain.actionmaker.IHandView;
 
 public abstract class PlayerObject extends SceneObject implements IGamePlayer {
+    private int playerIndex;
     private boolean onTurn = false;
     protected Player player;
     private PlaceActionMaker placeActionMaker;
@@ -19,7 +20,8 @@ public abstract class PlayerObject extends SceneObject implements IGamePlayer {
     private SkipActionMaker skipActionMaker;
     private IHandView handView;
 
-    public final void configure(PlaceActionMaker placeActionMaker, Player player, DrawActionMaker drawActionMaker, SkipActionMaker skipActionMaker, IHandView handView) {
+    public final void configure(int playerIndex, PlaceActionMaker placeActionMaker, Player player, DrawActionMaker drawActionMaker, SkipActionMaker skipActionMaker, IHandView handView) {
+        this.playerIndex = playerIndex;
         this.placeActionMaker = placeActionMaker;
         this.player = player;
         this.drawActionMaker = drawActionMaker;

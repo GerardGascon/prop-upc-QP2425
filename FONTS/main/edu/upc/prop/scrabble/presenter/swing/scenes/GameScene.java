@@ -133,12 +133,12 @@ public class GameScene extends Scene {
                                   PiecesConverter piecesConverter, AnchorUpdater anchorUpdater, DAWG dawg,
                                   CrossChecks crossChecks, IHandView handView) {
         for (int i = 0; i < players.length; i++) {
-            configurePlayer(playerObjects[i], players[i], stepper, board, boardView, pointCalculator, bag,
+            configurePlayer(i, playerObjects[i], players[i], stepper, board, boardView, pointCalculator, bag,
                     piecesConverter, anchorUpdater, dawg, crossChecks, handView);
         }
     }
 
-    public void configurePlayer(PlayerObject playerObject, Player player, GameStepper stepper, Board board,
+    public void configurePlayer(int index, PlayerObject playerObject, Player player, GameStepper stepper, Board board,
                                 BoardView boardView, PointCalculator pointCalculator, Bag bag,
                                 PiecesConverter piecesConverter, AnchorUpdater anchorUpdater, DAWG dawg,
                                 CrossChecks crossChecks, IHandView handView) {
@@ -148,7 +148,7 @@ public class GameScene extends Scene {
         // TODO: hand view updater
         DrawActionMaker drawActionMaker = new DrawActionMaker(bag, player, new Rand(), handView, stepper, piecesConverter);
         SkipActionMaker skipActionMaker = new SkipActionMaker(stepper);
-        playerObject.configure(placeActionMaker, player, drawActionMaker, skipActionMaker, handView);
+        playerObject.configure(index, placeActionMaker, player, drawActionMaker, skipActionMaker, handView);
     }
 
     private Board getBoard(GameProperties properties) {
