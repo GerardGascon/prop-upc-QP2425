@@ -77,7 +77,7 @@ public class HandView extends JPanel implements IHandView {
                     }
                     else {
                         if (!selectedPieceButtons.isEmpty()) {      // cas des-seleccionar una altra peça
-                            selectedPieceButtons.get(0).setSelected(false);
+                            selectedPieceButtons.getFirst().setSelected(false);
                             selectedPieceButtons.clear();
                         }
                         clickedButton.setSelected(true);        // seleccionar la peça clickada

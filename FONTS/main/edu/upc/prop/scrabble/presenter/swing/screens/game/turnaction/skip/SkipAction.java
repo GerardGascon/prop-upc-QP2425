@@ -3,7 +3,6 @@ package edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction.skip;
 import edu.upc.prop.scrabble.domain.actionmaker.SkipActionMaker;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class SkipAction extends JPanel {
     private final JPanel parent;
