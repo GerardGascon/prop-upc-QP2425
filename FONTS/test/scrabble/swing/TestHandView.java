@@ -35,7 +35,9 @@ public class TestHandView extends SwingTest {
         player.addPiece(pieceA);
         player.addPiece(pieceB);
 
-        view = new TestWindow<>(200, 100, new HandView(player));
+        HandView handView = new HandView();
+        handView.showPieces(player);
+        view = new TestWindow<>(200, 100, handView);
         assertEquals(2, view.getPanel().getComponentCount());
 
         HandPieceButton buttonA = getPieceButton(0);
@@ -56,7 +58,9 @@ public class TestHandView extends SwingTest {
         player.addPiece(pieceA);
         player.addPiece(pieceB);
 
-        view = new TestWindow<>(200, 100, new HandView(player));
+        HandView handView = new HandView();
+        handView.showPieces(player);
+        view = new TestWindow<>(200, 100, handView);
 
         JButton buttonA = getPieceButton(0);
         JButton buttonB = getPieceButton(1);
@@ -78,7 +82,10 @@ public class TestHandView extends SwingTest {
         Piece pieceF = new Piece("F", 5);
         player = new Player("test", false);
         player.addPiece(pieceF);
-        view = new TestWindow<>(100, 100, new HandView(player));
+
+        HandView handView = new HandView();
+        handView.showPieces(player);
+        view = new TestWindow<>(200, 100, handView);
 
         JButton buttonF = getPieceButton(0);
         queueClick(buttonF);

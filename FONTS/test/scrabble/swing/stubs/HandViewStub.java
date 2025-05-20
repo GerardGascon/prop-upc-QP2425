@@ -1,5 +1,6 @@
 package scrabble.swing.stubs;
 
+import edu.upc.prop.scrabble.data.Player;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.hand.IHandView;
 
 public class HandViewStub implements IHandView {
@@ -26,5 +27,10 @@ public class HandViewStub implements IHandView {
     public int getSelectedPiecePoints() {
         getPieceRequestCalled = true;
         return pieceNumber;
+    }
+
+    @Override
+    public void showPieces(Player player) {
+
     }
 }

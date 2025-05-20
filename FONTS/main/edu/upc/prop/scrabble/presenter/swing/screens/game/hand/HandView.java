@@ -14,15 +14,24 @@ public class HandView extends JPanel implements IHandView {
 
     public static final int HAND_PIECES_SPACING = 10;
 
-    public HandView(Player player) {
+    public HandView() {
         setLayout(new FlowLayout(FlowLayout.CENTER, HAND_PIECES_SPACING, 0));
         setOpaque(false);
         setBackground(new Color(0, 0, 0, 0));
-
-        displayPieces(player);
     }
 
-    private void displayPieces(Player player) {
+    @Override
+    public String getSelectedPiece() {
+        return selectedPieceButton == null ? null : selectedPieceButton.getLetter();
+    }
+
+    @Override
+    public int getSelectedPiecePoints() {
+        return selectedPieceButton == null ? 0 : selectedPieceButton.getPoints();
+    }
+
+    @Override
+    public void showPieces(Player player) {
         for (Piece piece : player.getHand()) {
             HandPieceButton pieceButton = piece.isBlank()
                     ? new HandPieceButton("", piece.value())
@@ -40,16 +49,6 @@ public class HandView extends JPanel implements IHandView {
 
             add(pieceButton);
         }
-    }
-
-    @Override
-    public String getSelectedPiece() {
-        return selectedPieceButton == null ? null : selectedPieceButton.getLetter();
-    }
-
-    @Override
-    public int getSelectedPiecePoints() {
-        return selectedPieceButton == null ? 0 : selectedPieceButton.getPoints();
     }
 
     @Override
