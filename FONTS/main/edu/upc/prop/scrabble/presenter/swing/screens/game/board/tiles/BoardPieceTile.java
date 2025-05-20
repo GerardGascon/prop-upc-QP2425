@@ -2,7 +2,7 @@ package edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles;
 
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.BoardView;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.IBlankPieceSelector;
-import edu.upc.prop.scrabble.presenter.swing.screens.game.hand.IHandView;
+import edu.upc.prop.scrabble.domain.actionmaker.IHandView;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;

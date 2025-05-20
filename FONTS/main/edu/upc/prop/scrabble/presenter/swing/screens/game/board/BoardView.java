@@ -4,7 +4,7 @@ import edu.upc.prop.scrabble.data.board.PremiumTileType;
 import edu.upc.prop.scrabble.domain.board.IBoard;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles.*;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles.premium.*;
-import edu.upc.prop.scrabble.presenter.swing.screens.game.hand.IHandView;
+import edu.upc.prop.scrabble.domain.actionmaker.IHandView;
 import edu.upc.prop.scrabble.utils.Direction;
 import edu.upc.prop.scrabble.utils.Vector2;
 

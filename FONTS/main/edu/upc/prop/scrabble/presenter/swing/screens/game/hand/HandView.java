@@ -1,7 +1,7 @@
 package edu.upc.prop.scrabble.presenter.swing.screens.game.hand;
 
-import edu.upc.prop.scrabble.data.Player;
 import edu.upc.prop.scrabble.data.pieces.Piece;
+import edu.upc.prop.scrabble.domain.actionmaker.IHandView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -31,8 +31,8 @@ public class HandView extends JPanel implements IHandView {
     }
 
     @Override
-    public void showPieces(Player player) {
-        for (Piece piece : player.getHand()) {
+    public void showPieces(Piece[] pieces) {
+        for (Piece piece : pieces) {
             HandPieceButton pieceButton = piece.isBlank()
                     ? new HandPieceButton("", piece.value())
                     : new HandPieceButton(piece.letter(), piece.value());

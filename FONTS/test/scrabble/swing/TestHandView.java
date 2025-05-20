@@ -36,7 +36,7 @@ public class TestHandView extends SwingTest {
         player.addPiece(pieceB);
 
         HandView handView = new HandView();
-        handView.showPieces(player);
+        handView.showPieces(player.getHand());
         view = new TestWindow<>(200, 100, handView);
         assertEquals(2, view.getPanel().getComponentCount());
 
@@ -59,7 +59,7 @@ public class TestHandView extends SwingTest {
         player.addPiece(pieceB);
 
         HandView handView = new HandView();
-        handView.showPieces(player);
+        handView.showPieces(player.getHand());
         view = new TestWindow<>(200, 100, handView);
 
         JButton buttonA = getPieceButton(0);
@@ -84,7 +84,7 @@ public class TestHandView extends SwingTest {
         player.addPiece(pieceF);
 
         HandView handView = new HandView();
-        handView.showPieces(player);
+        handView.showPieces(player.getHand());
         view = new TestWindow<>(200, 100, handView);
 
         JButton buttonF = getPieceButton(0);

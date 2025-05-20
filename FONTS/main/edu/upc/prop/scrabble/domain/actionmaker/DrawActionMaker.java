@@ -19,7 +19,7 @@ public class DrawActionMaker {
     private final Player player;
     private final PieceDrawer pieceDrawer;
     private final Bag bag;
-    private final IHandDisplay handDisplay;
+    private final IHandView handView;
     private final GameStepper stepper;
     private final PiecesConverter piecesConverter;
     /***
@@ -27,12 +27,12 @@ public class DrawActionMaker {
      * @param bag The current piece bag of the game.
      * @param player The player who wants to draw pieces.
      * @param rand The random number generator instance
-     * @param handDisplay Interface that represents the current hand of the player.
+     * @param handView Interface that represents the current hand of the player.
      */
-    public DrawActionMaker(Bag bag, Player player, IRand rand, IHandDisplay handDisplay, GameStepper stepper, PiecesConverter piecesConverter) {
+    public DrawActionMaker(Bag bag, Player player, IRand rand, IHandView handView, GameStepper stepper, PiecesConverter piecesConverter) {
         this.player = player;
         this.bag = bag;
-        this.handDisplay = handDisplay;
+        this.handView = handView;
         this.piecesConverter = piecesConverter;
         this.pieceDrawer = new PieceDrawer(bag, player, rand);
         this.stepper = stepper;
@@ -55,7 +55,7 @@ public class DrawActionMaker {
         }
 
         pieceDrawer.run(PiecesToSwap);
-        handDisplay.updateHand(player.getHand());
+        handView.showPieces(player.getHand());
         stepper.run(TurnResult.Draw);
     }
 }
