@@ -14,6 +14,7 @@ import edu.upc.prop.scrabble.presenter.swing.screens.game.pieceselector.PieceSel
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 import java.util.function.Consumer;
 
 public class GameMock extends JPanel implements IBlankPieceSelector {
@@ -34,7 +35,9 @@ public class GameMock extends JPanel implements IBlankPieceSelector {
         setLayout(null);
         setBackground(new Color(0x50, 0x84, 0x6e));
 
-        Player p = new Player("Player", true);
+        ArrayList<Player> playersList = new ArrayList<>();
+
+        Player p = new Player("BOT", true);
         p.addPiece(new Piece("A", 1));
         p.addPiece(new Piece("B", 2));
         p.addPiece(new Piece("C", 3));
@@ -47,8 +50,21 @@ public class GameMock extends JPanel implements IBlankPieceSelector {
         boardPanel = new BoardView(board.getSize(), handPanel, this);
         add(boardPanel);
 
+        playersList.add(p);
+
+        Player h = new Player("Adri", true);
+        p.addPiece(new Piece("A", 1));
+        p.addPiece(new Piece("B", 2));
+        p.addPiece(new Piece("C", 3));
+        p.addPiece(new Piece("D", 4));
+        p.addPiece(new Piece("#", 0, true));
+        handPanel.showPieces(p.getHand());
+        add(handPanel);
+        add(boardPanel);
+
+        playersList.add(h);
         // Create and add the side panel as a proper component
-        sidePanel = new SidePanel();
+        sidePanel = new SidePanel(playersList);
         add(sidePanel);
 
         createPauseButton();

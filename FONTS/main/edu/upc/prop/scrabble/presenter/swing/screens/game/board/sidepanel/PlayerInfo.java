@@ -1,14 +1,17 @@
 package edu.upc.prop.scrabble.presenter.swing.screens.game.board.sidepanel;
 
+import edu.upc.prop.scrabble.data.Player;
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class PlayerInfo extends JPanel {
 
-    public void drawPlayerInfo(Graphics g, int panelHeight, int rectangleWidth) {
+    public void drawPlayerInfo(Graphics g, int panelHeight, int rectangleWidth, ArrayList<Player> players) {
         int USER_MARGIN = 10;
         panelHeight -= USER_MARGIN * 2;
-        int NUM_USER_SECTIONS = 4; //playersinfo.length()
+        int NUM_USER_SECTIONS = players.size(); //playersinfo.length()
         float USER_SECTION_WIDTH_PERCENTAGE = 0.8f;
 
         for (int i = 0; i < NUM_USER_SECTIONS; i++) {
@@ -30,13 +33,13 @@ public class PlayerInfo extends JPanel {
             g.setFont(font);
             FontMetrics metrics = g.getFontMetrics(font);
 
-            String name = "Player " + (i + 1); //playersinfo[i].name
+            String name = players.get(i).getName();
             int nameWidth = metrics.stringWidth(name);
             int nameX = sectionX  + ((userSectionWidth) - nameWidth) / 2;
             int nameY = sectionY  + ((colorRectHeight* 725)/ 1000) + (metrics.getAscent() / 2);
             g.drawString(name, nameX, nameY);
 
-            String score = Integer.toString(i * 100); //playersinfo.getScore()
+            String score = String.valueOf(players.get(i).getScore()); //playersinfo.getScore()
             int scoreWidth = metrics.stringWidth(score);
             int scoreX = sectionX + (userSectionWidth - scoreWidth) / 2;
             int scoreY = sectionY + (userSectionHeight * 190)/300 + colorRectHeight / 2;

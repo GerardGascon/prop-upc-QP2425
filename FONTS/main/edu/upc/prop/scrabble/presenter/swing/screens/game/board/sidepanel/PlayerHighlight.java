@@ -1,15 +1,17 @@
 package edu.upc.prop.scrabble.presenter.swing.screens.game.board.sidepanel;
 
+import edu.upc.prop.scrabble.data.Player;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class PlayerHighlight extends JPanel {
 
-    public void drawPlayerHighlight(Graphics g, int panelHeight, int rectangleWidth, int selectedPlayer) {
+    public void drawPlayerHighlight(Graphics g, int panelHeight, int rectangleWidth, int selectedPlayer, int numberOfPlayers) {
         int USER_MARGIN = 10;
         panelHeight -= USER_MARGIN * 2;
         float USER_SECTION_WIDTH_PERCENTAGE = 0.8f;
-        int NUM_USER_SECTIONS = 4; //playersinfo.lenght()
+        int NUM_USER_SECTIONS = numberOfPlayers;
 
         int userSectionWidth = (int)(rectangleWidth * USER_SECTION_WIDTH_PERCENTAGE);
 
