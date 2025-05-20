@@ -10,6 +10,7 @@ import edu.upc.prop.scrabble.presenter.swing.screens.game.board.IBlankPieceSelec
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.sidepanel.SidePanel;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.hand.HandView;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.pieceselector.PieceSelector;
+import edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction.draw.DrawAction;
 
 import javax.swing.*;
 import java.awt.*;
@@ -43,7 +44,7 @@ public class GameMock extends JPanel implements IBlankPieceSelector {
         p.addPiece(new Piece("C", 3));
         p.addPiece(new Piece("D", 4));
         p.addPiece(new Piece("#", 0, true));
-        handPanel = new HandView();
+        handPanel = new HandView(false);
         handPanel.showPieces(p.getHand());
         add(handPanel);
 
@@ -68,7 +69,9 @@ public class GameMock extends JPanel implements IBlankPieceSelector {
         add(sidePanel);
 
         createPauseButton();
-
+        createTurnActionButton("PUT", 1400, 500, 75, 50);
+        createTurnActionButton("DRAW", 1400, 575, 75, 50);
+        createTurnActionButton("SKIP", 1400, 650, 75, 50);
         PremiumTileTypeFiller filler = new PremiumTileTypeFiller(board, boardPanel);
         filler.run();
     }
@@ -147,5 +150,86 @@ public class GameMock extends JPanel implements IBlankPieceSelector {
         setComponentZOrder(overlay, 0);
         revalidate();
         repaint();
+    }
+
+    private void drawSidePanel(Graphics g) {
+        int rectangleWidth = (int) (getWidth() * SIDE_PANEL_WIDTH_PERCENTAGE);
+        g.setColor(new Color(0x2e, 0x3a, 0x3c));
+        g.fillRect(0, 0, rectangleWidth, getHeight());
+
+        drawPlayerHighlight(g, getHeight(), rectangleWidth, 2);
+        drawPlayerInfo(g, getHeight(), rectangleWidth);
+    }
+
+    private void drawPlayerHighlight(Graphics g, int panelHeight, int rectangleWidth, int selectedPlayer) {
+        panelHeight -= USER_MARGIN * 2;
+
+        int userSectionWidth = (int) (rectangleWidth * USER_SECTION_WIDTH_PERCENTAGE);
+        int userSectionHeight = panelHeight / NUM_USER_SECTIONS - USER_MARGIN * 2;
+
+        int sectionY = selectedPlayer * (panelHeight / NUM_USER_SECTIONS) + USER_MARGIN * 2;
+
+        int sectionX = (rectangleWidth - userSectionWidth) / 2;
+
+        setPlayerColor(g, selectedPlayer);
+
+        g.fillRoundRect(sectionX - 10, sectionY - 10, userSectionWidth + 20, userSectionHeight + 20, 58, 58);
+    }
+
+    private void setPlayerColor(Graphics g, int selectedPlayer) {
+        switch (selectedPlayer) {
+            case 0 -> g.setColor(new Color(0xf5, 0x2e, 0x2e));
+            case 1 -> g.setColor(new Color(0x54, 0x63, 0xff));
+            case 2 -> g.setColor(new Color(0xff, 0xc7, 0x17));
+            case 3 -> g.setColor(new Color(0x1f, 0x9e, 0x40));
+        }
+    }
+
+    private void drawPlayerInfo(Graphics g, int panelHeight, int rectangleWidth) {
+        panelHeight -= USER_MARGIN * 2;
+        for (int i = 0; i < NUM_USER_SECTIONS; i++) {
+            int userSectionWidth = (int) (rectangleWidth * USER_SECTION_WIDTH_PERCENTAGE);
+            int userSectionHeight = panelHeight / NUM_USER_SECTIONS - USER_MARGIN * 2;
+
+            int sectionY = i * (panelHeight / NUM_USER_SECTIONS) + USER_MARGIN * 2;
+
+            int sectionX = (rectangleWidth - userSectionWidth) / 2;
+
+            g.setColor(Color.WHITE);
+            g.fillRoundRect(sectionX, sectionY, userSectionWidth, userSectionHeight, 48, 48);
+
+            setPlayerColor(g, i);
+            g.fillRoundRect(sectionX + 20, sectionY + 20, userSectionWidth - 40, userSectionHeight / 2 - 20, 28, 28);
+
+            String name = "Player " + (i + 1);
+            g.setColor(Color.BLACK);
+            Font font = new Font("SansSerif", Font.BOLD, userSectionHeight / 9);
+            FontMetrics metrics = g.getFontMetrics(font);
+            g.setFont(font);
+            g.drawString(name, sectionX + 20, sectionY + userSectionHeight / 2 + metrics.getHeight());
+
+            String score = Integer.toString(i * 100);
+            int textWidth = metrics.stringWidth(score);
+            g.drawString(score, sectionX + userSectionWidth - 20 - textWidth, sectionY + userSectionHeight / 2 + metrics.getHeight());
+        }
+    }
+
+    private void createTurnActionButton(String text, int x, int y, int width, int height) {
+        JButton putButton = new JButton(text);
+        putButton.setFocusPainted(false);
+        putButton.setBackground(new Color(0xbc, 0xbc, 0xbc));
+        putButton.setForeground(Color.BLACK);
+        putButton.setBorder(BorderFactory.createEmptyBorder());
+        putButton.setFont(new Font("SansSerif", Font.BOLD, 12));
+        putButton.setBounds(x, y, width, height);
+
+        putButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println(text + " button clicked!");
+                // cridar a putActionMaker
+            }
+        });
+        add(putButton);
     }
 }

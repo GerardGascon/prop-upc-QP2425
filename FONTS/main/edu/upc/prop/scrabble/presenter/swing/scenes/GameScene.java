@@ -50,7 +50,7 @@ public class GameScene extends Scene {
         };
         Leaderboard leaderboard = new Leaderboard();
 
-        IHandView handView = new HandView();
+        IHandView handView = new HandView(false);
         IBlankPieceSelector blankPieceSelector = null;
         BoardView boardView = new BoardView(board.getSize(), handView, blankPieceSelector);
         window.add(boardView);

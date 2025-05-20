@@ -10,28 +10,49 @@ import java.util.List;
 
 public class HandView extends JPanel implements IHandView {
     private final List<HandPieceButton> pieceButtons = new ArrayList<>();
-    private HandPieceButton selectedPieceButton;
+    private final List<HandPieceButton> selectedPieceButtons = new ArrayList<>();
+    private boolean allowMultiple = false;
 
     public static final int HAND_PIECES_SPACING = 10;
 
-    public HandView() {
+    public HandView(boolean allowMultiple) {
+        this.allowMultiple = allowMultiple;
         setLayout(new FlowLayout(FlowLayout.CENTER, HAND_PIECES_SPACING, 0));
         setOpaque(false);
         setBackground(new Color(0, 0, 0, 0));
     }
 
     @Override
-    public String getSelectedPiece() {
-        return selectedPieceButton == null ? null : selectedPieceButton.getLetter();
+    public String[] getSelectedPiece() {
+        if (selectedPieceButtons.isEmpty()) {
+            return null;
+        } else {
+            ArrayList<String> letters = new ArrayList<>();
+            for (HandPieceButton button : selectedPieceButtons) {
+                letters.add(button.getLetter());
+            }
+            return letters.toArray(new String[0]);
+        }
     }
 
     @Override
     public int getSelectedPiecePoints() {
-        return selectedPieceButton == null ? 0 : selectedPieceButton.getPoints();
+        if (selectedPieceButtons.isEmpty()) {
+            return 0;
+        } else {
+            int count = 0;
+            for (HandPieceButton button : selectedPieceButtons) {
+                count += button.getPoints();
+            }
+            return count;
+        }
     }
 
     @Override
     public void showPieces(Piece[] pieces) {
+        pieceButtons.clear();
+        selectedPieceButtons.clear();
+        removeAll();
         for (Piece piece : pieces) {
             HandPieceButton pieceButton = piece.isBlank()
                     ? new HandPieceButton("", piece.value())
@@ -40,15 +61,35 @@ public class HandView extends JPanel implements IHandView {
             pieceButtons.add(pieceButton);
             pieceButton.addActionListener(e -> {
                 HandPieceButton clickedButton = (HandPieceButton) e.getSource();
-                if (selectedPieceButton != null && selectedPieceButton.equals(clickedButton)) {
-                    selectedPieceButton = null;
+                if (allowMultiple) {
+                    if (clickedButton.isSelected()) {       // cas peça ja selecionada -> des-seleccionar-la
+                        clickedButton.setSelected(false);
+                        selectedPieceButtons.remove(clickedButton);
+                    }
+                    else {
+                        clickedButton.setSelected(true);        // cas peça no seleccionada -> seleccionarla
+                        selectedPieceButtons.add(clickedButton);
+                    }
                 } else {
-                    selectedPieceButton = clickedButton;
+                    if (selectedPieceButtons.contains(clickedButton)) { // cas per des-seleccionar una peça que es torna a seleccionar
+                        clickedButton.setSelected(false);
+                        selectedPieceButtons.clear();
+                    }
+                    else {
+                        if (!selectedPieceButtons.isEmpty()) {      // cas des-seleccionar una altra peça
+                            selectedPieceButtons.get(0).setSelected(false);
+                            selectedPieceButtons.clear();
+                        }
+                        clickedButton.setSelected(true);        // seleccionar la peça clickada
+                        selectedPieceButtons.add(clickedButton);
+                    }
                 }
             });
 
             add(pieceButton);
         }
+        revalidate();
+        repaint();
     }
 
     @Override

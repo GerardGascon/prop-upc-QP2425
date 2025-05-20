@@ -5,8 +5,8 @@ import edu.upc.prop.scrabble.domain.actionmaker.IHandView;
 
 public class HandView implements IHandView {
     @Override
-    public String getSelectedPiece() {
-        return "";
+    public String[] getSelectedPiece() {
+        return new String[0];
     }
 
     @Override

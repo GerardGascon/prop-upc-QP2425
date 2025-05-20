@@ -82,17 +82,17 @@ public abstract class BoardTile extends JButton {
     }
 
     protected void clicked(ActionEvent actionEvent) {
-        String piece = handView.getSelectedPiece();
+        String[] piece = handView.getSelectedPiece();
         if (piece == null)
             return;
 
-        if (piece.isBlank() || piece.equals("#")){
+        if (piece[0].isBlank() || piece[0].equals("#")){
             openSelectBlankPieceLetterPopup();
             return;
         }
 
         int points = handView.getSelectedPiecePoints();
-        placePiece(piece, points);
+        placePiece(piece[0], points);
     }
 
     private void openSelectBlankPieceLetterPopup() {
