@@ -35,11 +35,12 @@ import edu.upc.prop.scrabble.presenter.swing.screens.game.hand.HandView;
 import edu.upc.prop.scrabble.domain.actionmaker.IHandView;
 import edu.upc.prop.scrabble.utils.Rand;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GameScene extends Scene {
-    public GameScene(GameProperties properties) {
+    public GameScene(GameProperties properties, JFrame window) {
         Board board = getBoard(properties);
         DAWG dawg = new DAWG();
         CrossChecks crossChecks = switch (properties.language()) {
@@ -51,8 +52,8 @@ public class GameScene extends Scene {
 
         IHandView handView = new HandView();
         IBlankPieceSelector blankPieceSelector = null;
-        // TODO: Create central screen type and attach all views there
         BoardView boardView = new BoardView(board.getSize(), handView, blankPieceSelector);
+        window.add(boardView);
         Player[] playersData = createPlayersData(properties);
 
         PointCalculator pointCalculator = new PointCalculator(board);
