@@ -20,17 +20,19 @@ import edu.upc.prop.scrabble.domain.board.PointCalculator;
 import edu.upc.prop.scrabble.domain.board.WordPlacer;
 import edu.upc.prop.scrabble.domain.dawg.WordAdder;
 import edu.upc.prop.scrabble.domain.game.GameStepper;
-import edu.upc.prop.scrabble.domain.game.IEndScreen;
 import edu.upc.prop.scrabble.domain.pieces.*;
 import edu.upc.prop.scrabble.domain.turns.Endgame;
 import edu.upc.prop.scrabble.domain.turns.Turn;
 import edu.upc.prop.scrabble.presenter.localization.DictionaryReader;
 import edu.upc.prop.scrabble.presenter.localization.PiecesReader;
 import edu.upc.prop.scrabble.presenter.scenes.Scene;
+import edu.upc.prop.scrabble.presenter.swing.objects.AIPlayerObject;
+import edu.upc.prop.scrabble.presenter.swing.objects.HumanPlayerObject;
+import edu.upc.prop.scrabble.presenter.swing.objects.PlayerObject;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.BoardView;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.IBlankPieceSelector;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.hand.HandView;
-import edu.upc.prop.scrabble.presenter.swing.screens.game.hand.IHandView;
+import edu.upc.prop.scrabble.domain.actionmaker.IHandView;
 import edu.upc.prop.scrabble.utils.Rand;
 
 import java.util.ArrayList;
@@ -47,7 +49,7 @@ public class GameScene extends Scene {
         };
         Leaderboard leaderboard = new Leaderboard();
 
-        IHandView handView = new HandView(null); // TODO: Change this -> Players should not be passed on constructor
+        IHandView handView = new HandView();
         IBlankPieceSelector blankPieceSelector = null;
         // TODO: Create central screen type and attach all views there
         BoardView boardView = new BoardView(board.getSize(), handView, blankPieceSelector);
@@ -65,21 +67,21 @@ public class GameScene extends Scene {
         Anchors anchors = new Anchors();
         AnchorUpdater anchorUpdater = new AnchorUpdater(anchors, board, piecesConverter);
 
-        // TODO: New player objects
-//        PlayerObject[] players = instantiatePlayers(playersData, properties.language(), piecesConverter, pointCalculator, dawg, board, anchors, crossChecks);
-//        Endgame endgame = new Endgame(playersData);
-//        Turn turnManager = new Turn(endgame, players);
+        PlayerObject[] players = instantiatePlayers(playersData, properties.language(), piecesConverter, pointCalculator, dawg, board, anchors, crossChecks);
+        Endgame endgame = new Endgame(playersData);
+        Turn turnManager = new Turn(endgame, players);
+        // TODO: New end screen
 //        IEndScreen endScreen = new EndScreen();
 //        GameStepper stepper = new GameStepper(turnManager, leaderboard, playersData, endScreen);
-
+//
 //        configurePlayers(players, playersData, stepper, board, boardView, pointCalculator, bag, piecesConverter,
-//                anchorUpdater, dawg, crossChecks);
+//                anchorUpdater, dawg, crossChecks, handView);
 
         HandFiller handFiller = new HandFiller(bag, playersData, new Rand());
         handFiller.run();
         boardView.updateBoard();
 
-//        players[0].startTurn();
+        players[0].startTurn();
     }
 
     private static void fillDAWG(DAWG dawg, Language language) {
@@ -106,47 +108,48 @@ public class GameScene extends Scene {
         return players.toArray(Player[]::new);
     }
 
-//    private PlayerObject[] instantiatePlayers(Player[] players, Language language, PiecesConverter piecesConverter, PointCalculator pointCalculator, DAWG dawg, Board board, Anchors anchors, CrossChecks crossChecks) {
-//        List<PlayerObject> playerObjects = new ArrayList<>();
-//        for (Player player : players) {
-//            if (player.getCPU()) {
-//                AIPlayerObject playerObject = instantiate(AIPlayerObject.class);
-//                playerObjects.add(playerObject);
-//                AI ai = switch (language) {
-//                    case Language.Catalan -> new CatalanAI(piecesConverter, pointCalculator, dawg, board, player, anchors, crossChecks);
-//                    case Language.Spanish -> new SpanishAI(piecesConverter, pointCalculator, dawg, board, player, anchors, crossChecks);
-//                    case Language.English -> new EnglishAI(piecesConverter, pointCalculator, dawg, board, player, anchors, crossChecks);
-//                };
-//                playerObject.configureAI(ai);
-//            } else {
-//                HumanPlayerObject playerObject = instantiate(HumanPlayerObject.class);
-//                playerObjects.add(playerObject);
-//            }
-//        }
-//        return playerObjects.toArray(PlayerObject[]::new);
-//    }
-//
-//    private void configurePlayers(PlayerObject[] playerObjects, Player[] players, GameStepper stepper, Board board,
-//                                  BoardView boardView, PointCalculator pointCalculator, Bag bag,
-//                                  PiecesConverter piecesConverter, AnchorUpdater anchorUpdater, DAWG dawg,
-//                                  CrossChecks crossChecks) {
-//        for (int i = 0; i < players.length; i++) {
-//            configurePlayer(playerObjects[i], players[i], stepper, board, boardView, pointCalculator, bag,
-//                    piecesConverter, anchorUpdater, dawg, crossChecks);
-//        }
-//    }
-//
-//    public void configurePlayer(PlayerObject playerObject, Player player, GameStepper stepper, Board board,
-//                                BoardView boardView, PointCalculator pointCalculator, Bag bag,
-//                                PiecesConverter piecesConverter, AnchorUpdater anchorUpdater, DAWG dawg,
-//                                CrossChecks crossChecks) {
-//        WordPlacer wordPlacer = new WordPlacer(player, board, boardView, pointCalculator);
-//        PlaceActionMaker placeActionMaker = new PlaceActionMaker(player, bag, wordPlacer, stepper, piecesConverter,
-//                board, anchorUpdater, crossChecks, dawg, new Rand());
-//        DrawActionMaker drawActionMaker = new DrawActionMaker(bag, player, new Rand(), new HandView(), stepper, piecesConverter);
-//        SkipActionMaker skipActionMaker = new SkipActionMaker(stepper);
-//        playerObject.configure(placeActionMaker, player, drawActionMaker, skipActionMaker);
-//    }
+    private PlayerObject[] instantiatePlayers(Player[] players, Language language, PiecesConverter piecesConverter, PointCalculator pointCalculator, DAWG dawg, Board board, Anchors anchors, CrossChecks crossChecks) {
+        List<PlayerObject> playerObjects = new ArrayList<>();
+        for (Player player : players) {
+            if (player.getCPU()) {
+                AIPlayerObject playerObject = instantiate(AIPlayerObject.class);
+                playerObjects.add(playerObject);
+                AI ai = switch (language) {
+                    case Language.Catalan -> new CatalanAI(piecesConverter, pointCalculator, dawg, board, player, anchors, crossChecks);
+                    case Language.Spanish -> new SpanishAI(piecesConverter, pointCalculator, dawg, board, player, anchors, crossChecks);
+                    case Language.English -> new EnglishAI(piecesConverter, pointCalculator, dawg, board, player, anchors, crossChecks);
+                };
+                playerObject.configureAI(ai);
+            } else {
+                HumanPlayerObject playerObject = instantiate(HumanPlayerObject.class);
+                playerObjects.add(playerObject);
+            }
+        }
+        return playerObjects.toArray(PlayerObject[]::new);
+    }
+
+    private void configurePlayers(PlayerObject[] playerObjects, Player[] players, GameStepper stepper, Board board,
+                                  BoardView boardView, PointCalculator pointCalculator, Bag bag,
+                                  PiecesConverter piecesConverter, AnchorUpdater anchorUpdater, DAWG dawg,
+                                  CrossChecks crossChecks, IHandView handView) {
+        for (int i = 0; i < players.length; i++) {
+            configurePlayer(playerObjects[i], players[i], stepper, board, boardView, pointCalculator, bag,
+                    piecesConverter, anchorUpdater, dawg, crossChecks, handView);
+        }
+    }
+
+    public void configurePlayer(PlayerObject playerObject, Player player, GameStepper stepper, Board board,
+                                BoardView boardView, PointCalculator pointCalculator, Bag bag,
+                                PiecesConverter piecesConverter, AnchorUpdater anchorUpdater, DAWG dawg,
+                                CrossChecks crossChecks, IHandView handView) {
+        WordPlacer wordPlacer = new WordPlacer(player, board, boardView, pointCalculator);
+        PlaceActionMaker placeActionMaker = new PlaceActionMaker(player, bag, wordPlacer, stepper, piecesConverter,
+                board, anchorUpdater, crossChecks, dawg, new Rand());
+        // TODO: hand view updater
+        DrawActionMaker drawActionMaker = new DrawActionMaker(bag, player, new Rand(), handView, stepper, piecesConverter);
+        SkipActionMaker skipActionMaker = new SkipActionMaker(stepper);
+        playerObject.configure(placeActionMaker, player, drawActionMaker, skipActionMaker, handView);
+    }
 
     private Board getBoard(GameProperties properties) {
         return switch (properties.boardType()) {
