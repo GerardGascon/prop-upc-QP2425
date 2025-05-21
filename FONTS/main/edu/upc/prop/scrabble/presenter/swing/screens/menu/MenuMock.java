@@ -62,7 +62,7 @@ public class MenuMock extends JPanel {
 
         buttonPanel.add(new JugarButton(buttonPanel));
         buttonPanel.add(new MenuButton("Continuar"));
-        buttonPanel.add(new MenuButton("Rànquing"));
+        buttonPanel.add(new RanquingButton(buttonPanel));
         MenuButton quitButton = new MenuButton("Sortir");
         quitButton.addActionListener(_ -> System.exit(0));
         buttonPanel.add(quitButton);
