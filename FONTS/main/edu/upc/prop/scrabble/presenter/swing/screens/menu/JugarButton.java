@@ -1,15 +1,9 @@
-package edu.upc.prop.scrabble.presenter.swing.screens.menu.jugar;
-
-
-import edu.upc.prop.scrabble.data.Player;
-import edu.upc.prop.scrabble.data.properties.GameProperties;
-import edu.upc.prop.scrabble.presenter.swing.screens.menu.MenuButton;
+package edu.upc.prop.scrabble.presenter.swing.screens.menu;
 
 
 import javax.swing.*;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
 
 public class JugarButton extends MenuButton {
 
@@ -55,7 +49,19 @@ public class JugarButton extends MenuButton {
         });
     }
 
-    private void toggleSettingsPanel() {
+    public void Close(){
+        Container container = parentPanel.getParent();
+        // TODO: Quitar esto es horrible inicializar para borrar
+        toggleSettingsPanel();
+        container.remove(settingsPanel);
+        menuActive = false;
+        container.revalidate();
+        container.repaint();
+        return;
+
+
+    }
+    public void toggleSettingsPanel() {
 
 // Retornar al mode original
         if (menuActive) {
