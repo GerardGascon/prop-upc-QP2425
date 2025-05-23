@@ -4,7 +4,8 @@ package edu.upc.prop.scrabble.data.crosschecks;
  * Implementació de CrossChecks pel castellà.
  * Inclou les peçes especials del castellà: Ñ, RR, LL i CH.
  *
- * @author Albert Usero && Felipe Martínez
+ * @author Albert Usero
+ * @author Felipe Martínez Lassalle
  */
 public class SpanishCrossChecks extends CrossChecks {
     /**

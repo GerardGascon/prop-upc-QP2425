@@ -8,7 +8,8 @@ import java.util.BitSet;
  * quines peces no es poden col·locar a aquella casella tenint
  * en compte els extrems de paraules al tauler i en els eixos
  * horitzontal i vertical.
- * @author Albert Usero && Felipe Martínez
+ * @author Albert Usero
+ * @author Felipe Martínez Lassalle
  */
 public abstract class CrossChecks {
     /**

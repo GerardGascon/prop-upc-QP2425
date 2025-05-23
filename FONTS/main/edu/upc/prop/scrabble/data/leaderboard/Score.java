@@ -1,10 +1,10 @@
 package edu.upc.prop.scrabble.data.leaderboard;
 
 /**
- * Record of relevant values of a game
- * @param scoreValue Total score achieved by the player in the game
- * @param isWinner True if the player won the game
- * @param playerName Name used by the player
+ * Record dels valors rellevants d'un jugador resultants d'una partida finalitzada
+ * @param scoreValue Puntuació total obtinguda
+ * @param isWinner Vertader en cas de ser el guanyador/a
+ * @param playerName Nom que identifica al jugador
  * @author Felipe Martínez Lassalle
  */
 public record Score(int scoreValue, boolean isWinner, String playerName) { }

@@ -4,7 +4,8 @@ package edu.upc.prop.scrabble.data.crosschecks;
  * Implementació de CrossChecks per l'anglès.
  * Inclou les peçes especials del català: Ç, L·L i NY.
  *
- * @author Albert Usero && Felipe Martínez
+ * @author Albert Usero
+ * @author Felipe Martínez Lassalle
  */
 public class EnglishCrossChecks extends CrossChecks {
     /**
