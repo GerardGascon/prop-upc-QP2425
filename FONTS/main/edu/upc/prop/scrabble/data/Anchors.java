@@ -8,7 +8,8 @@ import java.util.ArrayList;
 /**
  * Classe que representa les caselles anchors actuals del board
  * Una casella anchor és una casella sobre la qual es pot iniciar un moviment.
- * @author Albert Usero && Felipe Martínez
+ * @author Albert Usero
+ * @author Felipe Martínez Lassalle
  */
 
 public class Anchors {
