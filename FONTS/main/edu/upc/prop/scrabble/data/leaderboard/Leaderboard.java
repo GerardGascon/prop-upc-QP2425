@@ -9,22 +9,28 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * Class used to store Score ArrayList
+ * Classe utilitzada per emmagatzemar els Score
+ * de les diferents partides jugades
  * @author Felipe Martínez Lassalle
+ * @see Score
  */
 public class Leaderboard implements IPersistableObject {
+    /**
+     * Estructura utilitzada per l'emmagatzematge
+     */
     private ArrayList<Score> leaderBoard = new ArrayList<>();
 
     /**
-     * Transforms the ArrayList to a regular array to ease controllers functions
-     * @return array of the stored Score
+     * Transforma l'ArrayList leaderBoard en una array regular
+     * amb l'objectiu de facilitar la gestió als controladors
+     * @return array que conté tots els Score emmagatzemats
      * @see Score
      */
     public Score[] getScoreArray() { return leaderBoard.toArray(new Score[0]); }
 
     /**
-     * Adds a Score to the Leaderboard ArrayList
-     * @param score Score to add to Leaderboard
+     * Afegeix un Score a l'ArrayList leaderBoard
+     * @param score Score a afegir
      * @see Score
      */
     public void addScore(Score score) { leaderBoard.add(score); }
