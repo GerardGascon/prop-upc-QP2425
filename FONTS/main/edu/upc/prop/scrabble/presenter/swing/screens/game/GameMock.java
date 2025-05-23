@@ -80,9 +80,20 @@ public class GameMock extends JPanel implements IBlankPieceSelector {
         sidePanel = new SidePanel(playersList);
         add(sidePanel);
 
-        createTurnActionButton("PUT", 1400, 500, 75, 50);
-        createTurnActionButton("DRAW", 1400, 575, 75, 50);
-        createTurnActionButton("SKIP", 1400, 650, 75, 50);
+        // En aquest moment exacte no tenim acces a getWidth i Heigth.
+        // Invoke later s'asegura d'executarho mes tard, quan tinguem acces
+        SwingUtilities.invokeLater(() -> {
+            int width = getWidth();
+            int height = getHeight();
+            int xcoord = (int)(width * 0.3);
+            int compWidth = (int)(width * 0.065);
+            int compHeight = (int)(width * 0.035);
+            createTurnActionButton("PUT", xcoord, (int)(height*0.6), compWidth, compHeight);
+
+            createTurnActionButton("DRAW", xcoord, (int)(height*0.5), compWidth, compHeight);
+            createTurnActionButton("SKIP", xcoord, (int)(height*0.4), compWidth, compHeight);
+            // ...
+        });
         PremiumTileTypeFiller filler = new PremiumTileTypeFiller(board, boardPanel);
 
         // Create Pause button
