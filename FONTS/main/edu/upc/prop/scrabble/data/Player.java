@@ -6,15 +6,33 @@ import edu.upc.prop.scrabble.data.pieces.Piece;
 import java.util.ArrayList;
 
 /**
- * Class that represents a player with it's attributes
+ * Classe que representa un jugador/a amb els seus atributs
  * @author Albert Usero
  */
 public class Player {
+    /**
+     * Nom del jugador/a
+     */
     private final String name;
+    /**
+     * Puntuació actual del jugador/a
+     */
     private int score;
+
+    /**
+     * Indica si el jugador és controlat per la CPU (true) o per un humà (false)
+     */
     private final boolean CPU;
+    /**
+     * Llista de fitxes que té el jugador/a a la mà (màxim 7)
+     */
     private final ArrayList<Piece> hand = new ArrayList<>(7);
 
+    /**
+     * Crea un nou jugador/a amb score 0 per defecte
+     * @param name Nom del jugador/a a crear
+     * @param CPU Booleà que indica si el jugador/a a crear és controlat per un humà (false) o no (true)
+     */
     public Player(String name, boolean CPU) {
         this.name = name;
         this.CPU = CPU;
@@ -22,14 +40,14 @@ public class Player {
     }
 
     /**
-     * @return Name of the player
+     * @return Nom del jugador/a
      */
     public String getName() {
         return name;
     }
 
     /**
-     * @return True if it's CPU, False otherwise
+     * @return Cert si és CPU, fals altrament
      */
     public boolean getCPU() {
         return CPU;
@@ -37,16 +55,15 @@ public class Player {
 
     /**
      *
-     * @return Current score of the player
+     * @return Puntuació actual del jugador/a
      */
     public int getScore() {
         return score;
     }
 
     /**
-     * Adds given score to the one that the player already haves
-     * @param scoretoadd Score that we want to add to the current one of the pl
-     *                   player
+     * Afegeix la quantitat de puntuació de l'input a la puntuació actual del jugador/a
+     * @param scoretoadd Puntuació que volem afegir
      */
     public void addScore(int scoretoadd) {
         this.score += scoretoadd;
@@ -55,16 +72,16 @@ public class Player {
     public Piece[] getHand() {return hand.toArray(Piece[]::new);}
 
     /**
-     * Adds a given piece to the hand of the player
-     * @param piece Piece that that will be added
+     * Afegeix la peça donada a la mà del jugador/a
+     * @param piece Peça que serà afegida
      * @see Piece
      */
     public void addPiece(Piece piece) {
         hand.add(piece);
     }
     /**
-     * Removes a given piece to the hand of the player
-     * @param piece Piece that that will be removed
+     * Elimina la peça donada de la mà del jugador/a
+     * @param piece Peça que serà eliminada
      * @see Piece
      */
     public Piece removePiece(Piece piece) {
@@ -89,6 +106,13 @@ public class Player {
 
         throw new PlayerDoesNotHavePieceException("Player " + name + " does not have the piece " + piece.letter());
     }
+
+    /**
+     * Consulta si el jugador/a té certa peça a la mà i si és així la retorna.
+     * Si no tenim la peça, però sí que tenim comodí, es retornarà el comodí.
+     * @param piece Peça sobre la qual volem obtenir informació
+     * @return Peça en cas que sí que existeixi, null altrament
+     */
     public Piece hasPiece(String piece) {
         Piece blankPiece = null;
         for(Piece value : hand) {
