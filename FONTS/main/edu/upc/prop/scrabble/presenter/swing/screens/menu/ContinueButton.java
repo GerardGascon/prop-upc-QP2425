@@ -9,25 +9,34 @@ public class ContinueButton extends MenuButton {
     private boolean menuActive = false;
     private JPanel settingsPanel;
 
+    private JugarButton otherButton;
 
     public ContinueButton(JPanel parent) {
         super("Continuar");
         this.parentPanel = parent;
+
         addActionListener(_ -> {
+            if (otherButton != null) {
+                otherButton.Close();
+            }
             toggleSettingsPanel();
         });
     }
 
-    public void Close(){
+    public void setOtherButton(JugarButton otherButton) {
+        this.otherButton = otherButton;
+    }
+
+    public void Close() {
+        if (!menuActive) return; // No fem res si ja està tancat
+
         Container container = parentPanel.getParent();
-        // TODO: Quitar esto es horrible inicializar para borrar
-        toggleSettingsPanel();
         container.remove(settingsPanel);
         menuActive = false;
         container.revalidate();
         container.repaint();
-        return;
     }
+
 
     public void toggleSettingsPanel() {
         // Retornar al mode original
@@ -99,13 +108,56 @@ public class ContinueButton extends MenuButton {
         );
 
         // Afegir bottons d'opció multiple
-        //addSettingsComponents(settingsPanel.getWidth(), settingsPanel.getHeight());
+        addSettingsComponents(settingsPanel.getWidth(), settingsPanel.getHeight());
         // Fusionar amb l'escena original
         menuMockPanel.add(settingsPanel);
 
         // Refresh
         menuMockPanel.revalidate();
         menuMockPanel.repaint();
+    }
+
+    private void addSettingsComponents(int width, int height) {
+
+        int componentWidth = (int) (width * 0.15);
+        int componentHeight = (int) (height * 0.15);
+        // Load Game Button
+        JButton loadGameButton = new JButton("Load Game");
+
+        loadGameButton.setBounds((int)(width*0.25), (int)(height*0.45), componentWidth,componentHeight);
+
+        loadGameButton.setBackground(new Color(80, 130, 200));
+
+        loadGameButton.setForeground(Color.WHITE);
+
+        loadGameButton.setFocusPainted(false);
+
+        loadGameButton.addActionListener(e -> loadGame());
+
+        settingsPanel.add(loadGameButton);
+
+        // Cancel Button
+        JButton cancelButton = new JButton("Cancel");
+
+        cancelButton.setBounds((int)(width*0.55), (int)(height*0.45), componentWidth, componentHeight);
+
+        cancelButton.setBackground(new Color(200, 100, 100));
+
+        cancelButton.setForeground(Color.WHITE);
+
+        cancelButton.setFocusPainted(false);
+
+        cancelButton.addActionListener(e -> toggleSettingsPanel());
+
+        settingsPanel.add(cancelButton);
+    }
+
+    private void loadGame() {
+        //TODO: Afegir funcionalitat de carrega de joc
+
+
+
+        toggleSettingsPanel();
     }
 }
 

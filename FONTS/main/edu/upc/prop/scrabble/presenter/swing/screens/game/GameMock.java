@@ -11,6 +11,7 @@ import edu.upc.prop.scrabble.presenter.swing.screens.game.board.sidepanel.SidePa
 import edu.upc.prop.scrabble.presenter.swing.screens.game.hand.HandView;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.pieceselector.PieceSelector;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction.draw.DrawAction;
+import edu.upc.prop.scrabble.presenter.swing.screens.menu.PauseButton;
 
 import javax.swing.*;
 import java.awt.*;
@@ -31,6 +32,17 @@ public class GameMock extends JPanel implements IBlankPieceSelector {
     private final HandView handPanel;
     private final SidePanel sidePanel;
     private JPanel overlay;
+
+
+
+    // Coses per a Pause Button
+    private boolean menuActive = false;
+    private JPanel settingsPanel;
+    private JPanel saveConfirmPanel;
+    private final JButton continueButton = new JButton("Continuar");
+    private final JButton exitButton = new JButton("Salir");
+    private final JButton yesSaveButton = new JButton("Sí");
+    private final JButton noSaveButton = new JButton("No");
 
     public GameMock() {
         setLayout(null);
@@ -68,25 +80,16 @@ public class GameMock extends JPanel implements IBlankPieceSelector {
         sidePanel = new SidePanel(playersList);
         add(sidePanel);
 
-        createPauseButton();
         createTurnActionButton("PUT", 1400, 500, 75, 50);
         createTurnActionButton("DRAW", 1400, 575, 75, 50);
         createTurnActionButton("SKIP", 1400, 650, 75, 50);
         PremiumTileTypeFiller filler = new PremiumTileTypeFiller(board, boardPanel);
+
+        // Create Pause button
+        PauseButton pauseButton = new PauseButton(this);
+        add(pauseButton);
+
         filler.run();
-    }
-
-    private void createPauseButton() {
-        InputMap inputMap = getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
-        ActionMap actionMap = getActionMap();
-
-        inputMap.put(KeyStroke.getKeyStroke("ESCAPE"), "PAUSE_BUTTON");
-        actionMap.put("PAUSE_BUTTON", new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Escape key pressed!");
-            }
-        });
     }
 
     @Override
@@ -231,5 +234,6 @@ public class GameMock extends JPanel implements IBlankPieceSelector {
             }
         });
         add(putButton);
+
     }
 }

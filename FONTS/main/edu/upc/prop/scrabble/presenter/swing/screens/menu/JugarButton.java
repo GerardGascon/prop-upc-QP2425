@@ -9,8 +9,9 @@ public class JugarButton extends MenuButton {
 
     private JPanel parentPanel;
     private boolean menuActive = false;
-
     private JPanel settingsPanel;
+
+    private ContinueButton otherButton;
 
     private JComboBox<String> tableSizeComboBox;
     private JComboBox<String> languageComboBox;
@@ -45,21 +46,25 @@ public class JugarButton extends MenuButton {
         super("Jugar");
         this.parentPanel = parent;
         addActionListener(_ -> {
+            if (otherButton != null) {
+                otherButton.Close();
+            }
             toggleSettingsPanel();
         });
     }
 
-    public void Close(){
+    public void setOtherButton(ContinueButton otherButton) {
+        this.otherButton = otherButton;
+    }
+
+    public void Close() {
+        if (!menuActive) return;
+
         Container container = parentPanel.getParent();
-        // TODO: Quitar esto es horrible inicializar para borrar
-        toggleSettingsPanel();
         container.remove(settingsPanel);
         menuActive = false;
         container.revalidate();
         container.repaint();
-        return;
-
-
     }
     public void toggleSettingsPanel() {
 
