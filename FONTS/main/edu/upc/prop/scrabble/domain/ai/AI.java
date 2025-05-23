@@ -16,23 +16,60 @@ import edu.upc.prop.scrabble.utils.Vector2;
 import java.util.*;
 
 /**
- * AI class used to compute the move to make
+ * Intel·ligència artificial que computa el moviment a realitzar
+ * pel jugador controlat per la màquina
  *
  * @author Albert Usero
  * @author Felipe Martínez Lassalle
  */
 public abstract class AI {
+    /**
+     * Estructura que guarda les paraules vàlides per a la llengua amb la qual es juga
+     */
     private final DAWG dawg;
-    protected final Player bot;//para la mano
+    /**
+     * Jugador al qual la intel·ligència artificial computarà el moviment
+     */
+    protected final Player bot;
+    /**
+     * Board sobre el qual s'ha de buscar el moviment a realitzar
+     */
     private Board board;
+    /**
+     * Anchors sobre els quals es pot iniciar un moviment
+     */
     private Anchors anchors;
+    /**
+     * CrossChecks que senyalitzen les lletres vàlides a les diferents caselles
+     */
     protected CrossChecks crossChecks;
+    /**
+     * Representació de l'anchor sobre el qual actualment es busca un moviment
+     */
     private Vector2 currentAnchor;
+    /**
+     * Encarregada de calcular els punts donats pels moviments obtinguts
+     */
     protected final PointCalculator pointCalculator;
+    /**
+     * Encarregada de transformar les lletres dels moviments obtinguts en peces
+     */
     protected final PiecesConverter piecesConverter;
+    /**
+     * Millor moviment trobat
+     */
     protected Movement bestMove;
+    /**
+     * Puntuació donada pel millor moviment trobat
+     */
     protected int bestScore;
+    /**
+     * Direcció sobre la qual es busca el moviment (Horizontal/Vertical)
+     */
     protected Direction currentDirection;
+    /**
+     * Numero de peces que posseeix el jugador controlat
+     */
     private int initialPieces;
 
     public AI(PiecesConverter piecesConverter, PointCalculator pointCalculator, DAWG dawg, Board board, Player bot, Anchors anchors, CrossChecks crossChecks) {
