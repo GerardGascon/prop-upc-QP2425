@@ -3,11 +3,28 @@ package edu.upc.prop.scrabble.presenter.swing.screens.game.pieceselector;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Panell personalitzat amb fons rodó i estil específic per al selector de peces.
+ * Aquest panell no és opac i pinta un fons amb cantonades arrodonides i color personalitzat.
+ *
+ * @author Gerard Gascón
+ */
 class PieceSelectorPanel extends JPanel {
+
+    /**
+     * Crea un panell amb el LayoutManager indicat.
+     *
+     * @param layout LayoutManager que s'aplicarà al panell; pot ser null
+     */
     public PieceSelectorPanel(LayoutManager layout) {
         super(layout);
     }
 
+    /**
+     * Pinta el panell amb un fons de cantonades arrodonides i color personalitzat.
+     *
+     * @param g Context gràfic per pintar
+     */
     @Override
     protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g.create();
@@ -19,6 +36,11 @@ class PieceSelectorPanel extends JPanel {
         g2.dispose();
     }
 
+    /**
+     * Indica que aquest panell no és opac per permetre pintar fons personalitzats.
+     *
+     * @return false sempre
+     */
     @Override
     public boolean isOpaque() {
         return false;
