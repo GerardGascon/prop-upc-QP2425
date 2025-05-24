@@ -45,6 +45,11 @@ public abstract class BoardTile extends JButton {
     private final BoardView board;
 
     /**
+     * Text d'ajuda que surt en algunes caselles quan els hi passes el ratolí per sobre.
+     */
+    private Tooltip tooltip;
+
+    /**
      * Retorna la posició (x,y) de la fitxa.
      *
      * @return vector de la posició
@@ -165,7 +170,6 @@ public abstract class BoardTile extends JButton {
 
         int points = handView.getSelectedPiecePoints();
         placePiece(piece[0], points);
-        handView.piecePlaced();
     }
 
     /**
@@ -192,6 +196,10 @@ public abstract class BoardTile extends JButton {
      */
     private void placePiece(String piece, int points) {
         board.placeTemporalPiece(piece, points, position.x, position.y);
+        handView.piecePlaced();
+
+        if (tooltip != null)
+            tooltip.setVisible(false);
     }
 
     /**
@@ -200,7 +208,7 @@ public abstract class BoardTile extends JButton {
      * @param text text del tooltip
      */
     protected final void createTooltip(String text) {
-        Tooltip tooltip = new Tooltip(this, text);
+        tooltip = new Tooltip(this, text);
 
         addMouseMotionListener(new MouseMotionAdapter() {
             @Override
