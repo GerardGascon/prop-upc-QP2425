@@ -4,6 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 
 public class DrawActionButton extends JButton {
+    /***
+     * Construeix un botó personalitzat per l'acció de "Draw" (Robar).
+     * @param text El text que es mostrarà al botó.
+     */
     public DrawActionButton(String text) {
         super(text);
         setFocusPainted(false); // Removes the focus ring when the button is clicked
@@ -16,6 +20,10 @@ public class DrawActionButton extends JButton {
         disableKeyboardInput();
     }
 
+    /***
+     * Deshabilita l'entrada de teclat per a les tecles d'espai i enter,
+     * evitant que activin el botó.
+     */
     private void disableKeyboardInput() {
         InputMap inputMap = getInputMap(JComponent.WHEN_FOCUSED);
         inputMap.put(KeyStroke.getKeyStroke("SPACE"), "none");

@@ -11,6 +11,12 @@ public class DrawAction extends JPanel {
     private final DrawActionMaker drawActionMaker;
     private final HandView handView;
 
+    /***
+     * Construeix un objecte `DrawAction`.
+     * @param parent El panell pare on s'afegirà aquest component.
+     * @param drawActionMaker L'objecte responsable de gestionar la lògica de robar peces.
+     * @param handView La vista de la mà del jugador per interactuar amb les peces seleccionades.
+     */
     public DrawAction(JPanel parent, DrawActionMaker drawActionMaker, HandView handView) {
         this.drawActionMaker = drawActionMaker;
         this.parent = parent;
@@ -20,6 +26,11 @@ public class DrawAction extends JPanel {
         add(drawBtn);
     }
 
+    /***
+     * Crea i configura el botó "Draw" (Robar).
+     * Quan es prem, elimina el botó "Draw", afegeix un botó "Confirm" (Confirmar)
+     * i gestiona la lògica per treure peces de la bossa.
+     */
     private void createDrawButton() {
         drawBtn = new JButton("Draw");
         drawBtn.setBounds(1400, 575, 75, 50); //hardcoded

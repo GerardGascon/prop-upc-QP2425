@@ -4,7 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 
 public class DrawActionPanel extends JPanel {
-
+    /***
+     * Construeix un nou `DrawActionPanel` amb el gestor de disseny especificat.
+     * @param layout El `LayoutManager` que s'utilitzarà per a aquest panell.
+     */
     public DrawActionPanel (LayoutManager layout) {
         super(layout);
     }
