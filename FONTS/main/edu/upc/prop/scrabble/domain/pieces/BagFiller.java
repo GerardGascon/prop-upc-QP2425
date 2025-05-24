@@ -5,16 +5,16 @@ import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.utils.Pair;
 
 /***
- * Initializes and fills a bag with language-specific Scrabble pieces.
+ * Inicialitza i omple una bossa amb peces de Scrabble específiques de cada idioma.
  * @author Gina Escofet González
  */
 public class BagFiller {
     private final PieceGenerator pieceGenerator;
 
     /***
-     * Constructs a BagFiller with the specified piece generator.
-     * @param pieceGenerator The piece generator that creates language-specific pieces.
-     * @throws IllegalArgumentException if generator is null
+     * Construeix un BagFiller amb el generador de peces especificat.
+     * @param pieceGenerator El generador de peces que crea peces específiques de cada idioma.
+     * @throws IllegalArgumentException si el generador és nul.
      */
     public BagFiller(PieceGenerator pieceGenerator){
         if (pieceGenerator == null) {
@@ -24,11 +24,11 @@ public class BagFiller {
     }
 
     /***
-     * Fills a new bag with pieces according to the specified language configuration.
-     * @param piecesTxt The configuration string defining piece distribution
-     * @return A fully filled bag
-     * @throws IllegalArgumentException if languageConfig is null
-     * @throws IllegalStateException if piece generation fails
+     * Omple una nova bossa amb peces segons la configuració de l'idioma especificat.
+     * @param piecesTxt La cadena de configuració que defineix la distribució de les peces.
+     * @return Una bossa completament plena.
+     * @throws IllegalArgumentException si languageConfig és nul.
+     * @throws IllegalStateException si la generació de peces falla.
      */
     public Bag run(String piecesTxt) {
         if (piecesTxt == null) {
