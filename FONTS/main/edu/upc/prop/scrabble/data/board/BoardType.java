@@ -1,25 +1,25 @@
 package edu.upc.prop.scrabble.data.board;
 
 /**
- * Defines the available board types for a Scrabble game.
- * Each type may have a different size, layout, or set of rules:
+ * Defineix els tipus de tauler disponibles per al joc de Scrabble.
+ * Cada tipus pot tenir una mida, disposició o conjunt de regles diferents:
  * <ul>
- *   <li>{@code Junior} - A simplified version of size 11x11 for younger players.</li>
- *   <li>{@code Standard} - The official board of size 15x15 used in classic Scrabble.</li>
- *   <li>{@code Super} - An extended variant of size 21x21.</li>
+ *   <li>{@code Junior} - Una versió simplificada de mida 11x11 per a jugadors més joves.</li>
+ *   <li>{@code Standard} - El tauler oficial de mida 15x15 utilitzat en el Scrabble clàssic.</li>
+ *   <li>{@code Super} - Una variant ampliada de mida 21x21.</li>
  * </ul>
  */
 public enum BoardType {
     /**
-     * A simplified version of size 11x11 for younger players.
+     * Una versió simplificada de mida 11x11 per a jugadors més joves.
      */
     Junior,
     /**
-     * The official board of size 15x15 used in classic Scrabble.
+     * El tauler oficial de mida 15x15 utilitzat en el Scrabble clàssic.
      */
     Standard,
     /**
-     * An extended variant of size 21x21.
+     * Una variant ampliada de mida 21x21.
      */
     Super
 }
