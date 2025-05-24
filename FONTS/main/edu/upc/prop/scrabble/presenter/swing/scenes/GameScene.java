@@ -38,11 +38,11 @@ import edu.upc.prop.scrabble.presenter.swing.screens.game.board.IBlankPieceSelec
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.sidepanel.SidePanel;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.hand.HandView;
 import edu.upc.prop.scrabble.domain.actionmaker.IHandView;
+import edu.upc.prop.scrabble.presenter.swing.screens.game.pieceselector.BlankPieceSelector;
 import edu.upc.prop.scrabble.utils.Rand;
 
 import javax.swing.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class GameScene extends Scene {
@@ -56,8 +56,8 @@ public class GameScene extends Scene {
         };
         Leaderboard leaderboard = new Leaderboard();
 
-        IHandView handView = new HandView(false);
-        IBlankPieceSelector blankPieceSelector = null;
+        HandView handView = new HandView(false);
+        BlankPieceSelector blankPieceSelector = new BlankPieceSelector();
         BoardView boardView = new BoardView(board.getSize(), handView, blankPieceSelector);
         PremiumTileTypeFiller premiumTileTypeFiller = new PremiumTileTypeFiller(board, boardView);
         premiumTileTypeFiller.run();
@@ -91,16 +91,18 @@ public class GameScene extends Scene {
         boardView.updateBoard();
 
         SidePanel sidePanel = new SidePanel(playersData);
-        generateWindow(window, boardView, sidePanel);
+        generateWindow(window, boardView, sidePanel, handView, blankPieceSelector);
 
         players[0].startTurn();
     }
 
-    private static void generateWindow(JFrame window, BoardView boardView, SidePanel sidePanel) {
+    private static void generateWindow(JFrame window, BoardView boardView, SidePanel sidePanel, HandView handView, BlankPieceSelector blankPieceSelector) {
         GameScreen screen = new GameScreen();
 
         screen.addBoard(boardView);
         screen.addSidePanel(sidePanel);
+        screen.addHandView(handView);
+        screen.addBlankPieceSelector(blankPieceSelector);
 
         window.add(screen);
     }
