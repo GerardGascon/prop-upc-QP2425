@@ -20,6 +20,7 @@ import edu.upc.prop.scrabble.domain.board.PointCalculator;
 import edu.upc.prop.scrabble.domain.board.WordPlacer;
 import edu.upc.prop.scrabble.domain.dawg.WordAdder;
 import edu.upc.prop.scrabble.domain.game.GameStepper;
+import edu.upc.prop.scrabble.domain.game.IEndScreen;
 import edu.upc.prop.scrabble.domain.pieces.*;
 import edu.upc.prop.scrabble.domain.turns.Endgame;
 import edu.upc.prop.scrabble.domain.turns.Turn;
@@ -29,6 +30,7 @@ import edu.upc.prop.scrabble.presenter.scenes.Scene;
 import edu.upc.prop.scrabble.presenter.swing.objects.AIPlayerObject;
 import edu.upc.prop.scrabble.presenter.swing.objects.HumanPlayerObject;
 import edu.upc.prop.scrabble.presenter.swing.objects.PlayerObject;
+import edu.upc.prop.scrabble.presenter.swing.screens.game.EndScreen;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.BoardView;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.IBlankPieceSelector;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.hand.HandView;
@@ -71,12 +73,12 @@ public class GameScene extends Scene {
         PlayerObject[] players = instantiatePlayers(playersData, properties.language(), piecesConverter, pointCalculator, dawg, board, anchors, crossChecks);
         Endgame endgame = new Endgame(playersData);
         Turn turnManager = new Turn(endgame, players);
-        // TODO: New end screen
-//        IEndScreen endScreen = new EndScreen();
-//        GameStepper stepper = new GameStepper(turnManager, leaderboard, playersData, endScreen);
-//
-//        configurePlayers(players, playersData, stepper, board, boardView, pointCalculator, bag, piecesConverter,
-//                anchorUpdater, dawg, crossChecks, handView);
+
+        IEndScreen endScreen = new EndScreen();
+        GameStepper stepper = new GameStepper(turnManager, leaderboard, playersData, endScreen);
+
+        configurePlayers(players, playersData, stepper, board, boardView, pointCalculator, bag, piecesConverter,
+                anchorUpdater, dawg, crossChecks, handView);
 
         HandFiller handFiller = new HandFiller(bag, playersData, new Rand());
         handFiller.run();
