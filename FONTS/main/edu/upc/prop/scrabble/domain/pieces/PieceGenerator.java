@@ -4,27 +4,27 @@ import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.utils.Pair;
 
 /**
- * Class responsible for generating `Piece` objects based on the contents of a pieces file.
+ * Classe responsable de generar objectes {@code Piece} a partir del contingut d'un fitxer de fitxes.
  * <p>
- * The `PieceGenerator` class parses the contents of a pieces file (a string) to create `Piece` instances.
- * Each `Piece` represents a letter, its value, and the number of occurrences of that letter. The result is returned
- * as an array of `Pair&lt;Piece, Integer&gt;`, where `Piece` represents the letter and its properties, and the integer represents
- * the count of that piece.
+ * La classe {@code PieceGenerator} analitza el contingut d'un fitxer de fitxes (una cadena de text)
+ * per crear instàncies de {@code Piece}. Cada {@code Piece} representa una lletra, el seu valor i el nombre
+ * d’aparicions d’aquesta lletra. El resultat es retorna com un array de {@code Pair<Piece, Integer>},
+ * on {@code Piece} representa la lletra i les seves propietats, i l’enter representa el nombre d’unitats d’aquesta fitxa.
  * </p>
  *
  * @author Gerard Gascón
  */
 public class PieceGenerator {
     /**
-     * Converts the contents of a pieces file into an array of `Piece` objects and their respective counts.
+     * Converteix el contingut d’un fitxer de fitxes en un array d’objectes `Piece` i les seves quantitats.
      * <p>
-     * The file is parsed line by line, and each line is expected to contain information about a specific piece's
-     * character, count, and value. The result is an array of `Pair&lt;Piece, Integer&gt;`, where each pair contains a `Piece`
-     * object and the number of occurrences of that piece.
+     * El fitxer es processa línia per línia, on cada línia ha de contenir la informació sobre el caràcter,
+     * la quantitat i el valor de la fitxa. El resultat és un array de `Pair&lt;Piece, Integer&gt;`,
+     * on cada parella conté un objecte `Piece` i el nombre d’aparicions d’aquesta fitxa.
      * </p>
      *
-     * @param pieces The contents of the pieces file as a string.
-     * @return An array of pairs, where each pair contains a `Piece` and the number of occurrences of that piece.
+     * @param pieces El contingut del fitxer de fitxes com una cadena de text.
+     * @return Un array de parelles on cada parella conté una `Piece` i la seva quantitat.
      * @see Pair
      * @see Piece
      */
@@ -39,6 +39,12 @@ public class PieceGenerator {
         return result;
     }
 
+    /**
+     * Genera una parella de `Piece` i el seu nombre d’aparicions a partir d’una línia de text.
+     *
+     * @param piece La línia de text amb la informació de la fitxa.
+     * @return Una parella amb la `Piece` creada i la seva quantitat.
+     */
     private Pair<Piece, Integer> generatePiece(String piece) {
         String character = parseCharacter(piece);
         int value = parseValue(piece);
@@ -48,16 +54,34 @@ public class PieceGenerator {
         return new Pair<>(new Piece(character, value, isBlank), count);
     }
 
+    /**
+     * Extreu la quantitat d’unitats d’una fitxa a partir de la línia.
+     *
+     * @param piece La línia de text amb la informació de la fitxa.
+     * @return El nombre d’unitats d’aquesta fitxa.
+     */
     private int parseCount(String piece) {
         String[] values = piece.split("\\s+");
         return Integer.parseInt(values[1]);
     }
 
+    /**
+     * Extreu el valor de la fitxa a partir de la línia.
+     *
+     * @param piece La línia de text amb la informació de la fitxa.
+     * @return El valor de la fitxa.
+     */
     private int parseValue(String piece) {
         String[] values = piece.split("\\s+");
         return Integer.parseInt(values[2]);
     }
 
+    /**
+     * Extreu el caràcter que representa la fitxa a partir de la línia.
+     *
+     * @param piece La línia de text amb la informació de la fitxa.
+     * @return El caràcter de la fitxa.
+     */
     private String parseCharacter(String piece) {
         String[] values = piece.split("\\s+");
         return values[0];
