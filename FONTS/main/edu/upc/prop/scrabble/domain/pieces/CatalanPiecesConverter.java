@@ -1,9 +1,9 @@
 package edu.upc.prop.scrabble.domain.pieces;
 
 import edu.upc.prop.scrabble.data.pieces.Piece;
-/***
- * Class that converts a string of letters into pieces in Catalan.
- * It handles cases like L·L and NY
+/**
+ * Classe que converteix una cadena de lletres en peces en català.
+ * Gestiona casos com L·L i NY.
  * @author Gina Escofet González
  */
 public class CatalanPiecesConverter extends PiecesConverter {

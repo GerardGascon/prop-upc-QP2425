@@ -6,25 +6,31 @@ import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.utils.IRand;
 
 /**
- * Class responsible for filling each player's hand with pieces from the bag at the start of the game.
+ * Classe responsable d'omplir la mà de cada jugador amb fitxes de la bossa al començament de la partida.
  * <p>
- * The `HandFiller` class ensures that each player is given 7 pieces at the beginning of the game,
- * drawing randomly from the `Bag` of available pieces. It uses an `IRand` implementation for random selection.
+ * La classe {@code HandFiller} assegura que cada jugador rep 7 fitxes a l’inici del joc,
+ * extretes de manera aleatòria de la {@code Bag} de fitxes disponibles. Utilitza una implementació de {@code IRand}
+ * per a la selecció aleatòria.
  * </p>
  *
  * @author Gerard Gascón
  */
 public class HandFiller {
+    /** Bossa de fitxes d’on s’extreuen les fitxes per omplir les mans. */
     private final Bag bag;
+
+    /** Llista dels jugadors als quals cal omplir la mà. */
     private final Player[] players;
+
+    /** Generador de nombres aleatoris per seleccionar fitxes a l’atzar de la bossa. */
     private final IRand random;
 
     /**
-     * Constructs a new `HandFiller` instance.
+     * Crea una nova instància de `HandFiller`.
      *
-     * @param bag     The bag from which pieces are drawn.
-     * @param players The players to fill hands for.
-     * @param random  The random number generator used for selecting pieces.
+     * @param bag     La bossa d’on s’extreuen les fitxes.
+     * @param players Els jugadors als quals omplir la mà.
+     * @param random  El generador de nombres aleatoris usat per seleccionar les fitxes.
      */
     public HandFiller(Bag bag, Player[] players, IRand random) {
         this.bag = bag;
@@ -33,10 +39,10 @@ public class HandFiller {
     }
 
     /**
-     * Fills each player's hand with 7 pieces from the bag.
+     * Omple la mà de cada jugador amb 7 fitxes extretes de la bossa.
      * <p>
-     * This method ensures that each player receives 7 random pieces from the bag.
-     * It asserts that there are enough pieces in the bag to accommodate all players.
+     * Aquest mètode assegura que cada jugador rebi 7 fitxes aleatòries de la bossa.
+     * Fa una comprovació que hi hagi prou fitxes a la bossa per a tots els jugadors.
      * </p>
      */
     public void run() {
@@ -46,6 +52,11 @@ public class HandFiller {
             fillPlayerHand(player);
     }
 
+    /**
+     * Omple la mà d’un jugador amb 7 fitxes extretes de la bossa de forma aleatòria.
+     *
+     * @param player El jugador a qui s’omplirà la mà.
+     */
     private void fillPlayerHand(Player player) {
         for (int i = 0; i < 7; i++) {
             Piece piece = bag.draw(random.nextInt(bag.getSize()));
