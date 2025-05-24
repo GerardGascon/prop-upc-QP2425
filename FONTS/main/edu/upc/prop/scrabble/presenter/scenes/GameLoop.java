@@ -15,9 +15,10 @@ public class GameLoop {
      * Constructor que inicialitza el bucle carregant l'escena inicial.
      *
      * @param initialScene Classe de l'escena inicial que es vol carregar.
+     * @param dependencies Dependències que pugui tenir l'escena inicial.
      */
-    public GameLoop(Class<? extends Scene> initialScene) {
-        SceneManager.getInstance().load(initialScene);
+    public GameLoop(Class<? extends Scene> initialScene, Object... dependencies) {
+        SceneManager.getInstance().load(initialScene, dependencies);
     }
 
     /**

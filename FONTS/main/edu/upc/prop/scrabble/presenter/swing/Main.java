@@ -1,11 +1,17 @@
 package edu.upc.prop.scrabble.presenter.swing;
 
-import edu.upc.prop.scrabble.presenter.swing.screens.game.GameMock;
-import edu.upc.prop.scrabble.presenter.swing.screens.menu.MenuMock;
+import edu.upc.prop.scrabble.data.board.BoardType;
+import edu.upc.prop.scrabble.data.properties.GameProperties;
+import edu.upc.prop.scrabble.data.properties.Language;
+import edu.upc.prop.scrabble.presenter.scenes.GameLoop;
+import edu.upc.prop.scrabble.presenter.swing.scenes.GameScene;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * Punt d'entrada principal de l'aplicació Scrabble amb interfície Swing.
@@ -24,10 +30,15 @@ public class Main {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             JFrame window = createMainWindow();
-
-            disableTraversalKeys();
-            window.add(new GameMock());
             window.setVisible(true);
+            disableTraversalKeys();
+
+            GameProperties gameProperties = new GameProperties(Language.Catalan, BoardType.Standard,
+                    Arrays.asList("Geri", "Adri"),
+                    List.of("CPU 1"));
+            GameLoop gameLoop = new GameLoop(GameScene.class, gameProperties, window);
+//            window.add(new GameMock());
+            new Thread(gameLoop::run).start();
         });
     }
 

@@ -17,6 +17,7 @@ import edu.upc.prop.scrabble.domain.actionmaker.PlaceActionMaker;
 import edu.upc.prop.scrabble.domain.actionmaker.SkipActionMaker;
 import edu.upc.prop.scrabble.domain.ai.*;
 import edu.upc.prop.scrabble.domain.board.PointCalculator;
+import edu.upc.prop.scrabble.domain.board.PremiumTileTypeFiller;
 import edu.upc.prop.scrabble.domain.board.WordPlacer;
 import edu.upc.prop.scrabble.domain.dawg.WordAdder;
 import edu.upc.prop.scrabble.domain.game.GameStepper;
@@ -31,14 +32,17 @@ import edu.upc.prop.scrabble.presenter.swing.objects.AIPlayerObject;
 import edu.upc.prop.scrabble.presenter.swing.objects.HumanPlayerObject;
 import edu.upc.prop.scrabble.presenter.swing.objects.PlayerObject;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.EndScreen;
+import edu.upc.prop.scrabble.presenter.swing.screens.game.GameScreen;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.BoardView;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.IBlankPieceSelector;
+import edu.upc.prop.scrabble.presenter.swing.screens.game.board.sidepanel.SidePanel;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.hand.HandView;
 import edu.upc.prop.scrabble.domain.actionmaker.IHandView;
 import edu.upc.prop.scrabble.utils.Rand;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class GameScene extends Scene {
@@ -55,7 +59,9 @@ public class GameScene extends Scene {
         IHandView handView = new HandView(false);
         IBlankPieceSelector blankPieceSelector = null;
         BoardView boardView = new BoardView(board.getSize(), handView, blankPieceSelector);
-        window.add(boardView);
+        PremiumTileTypeFiller premiumTileTypeFiller = new PremiumTileTypeFiller(board, boardView);
+        premiumTileTypeFiller.run();
+
         Player[] playersData = createPlayersData(properties);
 
         PointCalculator pointCalculator = new PointCalculator(board);
@@ -84,7 +90,19 @@ public class GameScene extends Scene {
         handFiller.run();
         boardView.updateBoard();
 
+        SidePanel sidePanel = new SidePanel((ArrayList<Player>) Arrays.asList(playersData));
+        generateWindow(window, boardView, sidePanel);
+
         players[0].startTurn();
+    }
+
+    private static void generateWindow(JFrame window, BoardView boardView, SidePanel sidePanel) {
+        GameScreen screen = new GameScreen();
+
+        screen.addBoard(boardView);
+        screen.addSidePanel(sidePanel);
+
+        window.add(screen);
     }
 
     private static void fillDAWG(DAWG dawg, Language language) {
