@@ -4,19 +4,37 @@ import edu.upc.prop.scrabble.data.board.Board;
 import edu.upc.prop.scrabble.data.board.PremiumTileType;
 
 /**
- * Interface that facilitates communication between the domain and presentation layers for board updates.
- * It defines a method to trigger a refresh of the board in the presentation layer when the state of the game changes.
+ * Interfície que facilita la comunicació entre la capa de domini i la capa de presentació per a les actualitzacions del tauler.
+ * Defineix els mètodes per actualitzar el tauler quan l'estat del joc canvia.
  *
  * @author Gerard Gascón
  */
 public interface IBoard {
     /**
-     * Triggers a board refresh on the presenter to update the game board in the presentation layer.
-     * This method will be called when the game state or the board changes and needs to be reflected in the UI.
+     * Dispara una actualització del tauler a la capa de presentació per tal que es refresqui la vista del tauler.
+     * Aquest mètode s'invoca quan l'estat del joc o del tauler ha canviat i cal reflectir-ho en la UI.
      *
      * @see Board
      */
     void updateBoard();
+
+    /**
+     * Actualitza una cel·la específica del tauler amb la peça i els punts corresponents.
+     *
+     * @param piece La lletra o peça que s'ha col·locat.
+     * @param points Els punts assignats a aquesta peça.
+     * @param x La coordenada horitzontal de la cel·la.
+     * @param y La coordenada vertical de la cel·la.
+     */
     void updateCell(String piece, int points, int x, int y);
+
+    /**
+     * Estableix el tipus de casella especial (premium) en una posició determinada del tauler.
+     *
+     * @param type El tipus de casella premium (doble lletra, triple paraula, etc.).
+     * @param x La coordenada horitzontal de la cel·la.
+     * @param y La coordenada vertical de la cel·la.
+     */
     void setPremiumTile(PremiumTileType type, int x, int y);
 }
+

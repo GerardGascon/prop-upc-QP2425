@@ -6,25 +6,30 @@ import edu.upc.prop.scrabble.domain.pieces.PiecesConverter;
 import edu.upc.prop.scrabble.utils.Direction;
 
 /***
- * Class to verify if a given movement is within the bounds of a board.
- * It handles both vertical and horizontal word orientations.
+ * Classe per verificar si un moviment donat es troba dins dels límits d'un tauler.
+ * Gestiona tant l'orientació de paraules vertical com horitzontal.
  * @author Gina Escofet González
  */
 public class MovementBoundsChecker {
     private final Board board;
     private final PiecesConverter piecesConverter;
 
+    /**
+     * Construeix una nova instància de MovementBoundsChecker.
+     * @param board El tauler de joc en el qual es verificaran els límits.
+     * @param piecesConverter El convertidor utilitzat per transformar una paraula en un array de peces.
+     */
     public MovementBoundsChecker(Board board, PiecesConverter piecesConverter) {
         this.board = board;
         this.piecesConverter = piecesConverter;
     }
 
     /***
-     * Verifies whether a given movement is within the bounds of the game board.
-     * @param movement The movement to validate, containing the word, starting position (x, y),
-     *                  and direction (vertical/horizontal).
-     * @return True if the entire word fits within board bounds in the specified
- *              direction, False otherwise (including null input or null word).
+     * Verifica si un moviment donat es troba dins dels límits del tauler de joc.
+     * @param movement El moviment a validar, que conté la paraula, la posició inicial (x, y),
+     * i la direcció (vertical/horitzontal).
+     * @return Cert si la paraula sencera encaixa dins dels límits del tauler en la direcció
+     * especificada, Fals en cas contrari (incloent-hi entrada nul·la o paraula nul·la).
      */
     public boolean run(Movement movement) {
         if (movement == null || movement.word() == null) return false;

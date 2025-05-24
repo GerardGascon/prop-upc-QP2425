@@ -3,31 +3,26 @@ package edu.upc.prop.scrabble.domain.actionmaker;
 import edu.upc.prop.scrabble.data.pieces.Piece;
 
 /**
- * Interfície que representa la vista de la mà del jugador en el joc de Scrabble.
- * Permet consultar la peça actualment seleccionada i mostrar el conjunt de peces disponibles.
- *
- * @author Gina Escofet
+ * Interfície que defineix els mètodes necessaris per a la visualització i interacció
+ * amb les fitxes de la mà d'un jugador en un joc de scrabble.
+ * @author Gina Escofet González
  */
 public interface IHandView {
     /**
-     * Retorna la peça actualment seleccionada com un array de cadenes.
-     * El format de les cadenes depèn de la implementació (per exemple, lletra i marques especials).
-     *
-     * @return Un array de cadenes que representen la peça seleccionada.
+     * Obté les fitxes actualment seleccionades per l'usuari.
+     * @return Array de Strings amb la informació de la fitxa seleccionada.
      */
     String[] getSelectedPiece();
 
     /**
-     * Retorna el valor en punts de la peça actualment seleccionada.
-     *
-     * @return Els punts de la peça seleccionada.
+     * Obté els punts associats a les fitxes actualment seleccionades per l'usuari.
+     * @return Puntuació de les fitxes actualment seleccionades segons les regles del joc.
      */
     int getSelectedPiecePoints();
 
     /**
-     * Mostra el conjunt de peces proporcionat al jugador.
-     *
-     * @param pieces L'array de peces que s'han de mostrar.
+     * Actualitza la visualització de les fitxes disponibles.
+     * @param pieces Array de fitxes que s'han de mostrar a la mà de l'usuari.
      */
     void showPieces(Piece[] pieces);
 }
