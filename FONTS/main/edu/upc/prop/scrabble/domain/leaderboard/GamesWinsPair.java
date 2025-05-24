@@ -1,22 +1,32 @@
 package edu.upc.prop.scrabble.domain.leaderboard;
 
 /**
- * Aux class to help in win rate calculation
+ * Estructura de dades auxiliar utilitzada pels controladors de Leaderboard
  * @author Felipe Martínez Lassalle
  */
 public class GamesWinsPair {
+    /**
+     * Variable que emmagatzema el nombre de partides
+     */
     private int games;
+    /**
+     * Variable que emmagatzema el nombre de victòries
+     */
     private int wins;
 
+    /**
+     * Constructora
+     * @param isWinner Cert si la partida va ser guanyada
+     */
     public GamesWinsPair(boolean isWinner) {
         this.games = 1;
         if(isWinner) this.wins = 1;
     }
 
     /**
-     * Adds a game and may add a win depending on boolean param
-     * @param isWinner Marks whether the game was won or not
-     * @return Object itself to ease insertion in the map
+     * Afegeix una partida i victòria depenent del valor booleà
+     * @param isWinner Cert si la partida va ser guanyada
+     * @return El mateix objecte
      */
     public GamesWinsPair addGame(boolean isWinner) {
         this.games++;
@@ -25,8 +35,8 @@ public class GamesWinsPair {
     }
 
     /**
-     * Computes the win rate value
-     * @return % of victories
+     * Calcula el ratio de victòries
+     * @return % de victòries
      */
     public double getWinRate() { return (double) wins/games * 100; }
 

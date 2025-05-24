@@ -1,15 +1,16 @@
 package edu.upc.prop.scrabble.data.board;
 
 /**
- * Represents a Scrabble board configured for the Junior variant.
- * Initializes an 11x11 board with specific premium tile positions.
+ * Representa un tauler de Scrabble configurat per a la variant Junior.
+ * Inicialitza un tauler d'11x11 amb les posicions específiques de les caselles especials.
  *
  * @author Gerard Gascón
  */
 public class JuniorBoard extends Board {
+
     /**
-     * Constructs a JuniorBoard with an 11x11 layout and
-     * sets all premium tile positions.
+     * Crea una instància de {@code JuniorBoard} amb una disposició d'11x11
+     * i configura totes les caselles especials (doble/multiplicador de paraula o lletra).
      */
     public JuniorBoard() {
         super(11);
@@ -20,6 +21,9 @@ public class JuniorBoard extends Board {
         setTripleLetterTiles();
     }
 
+    /**
+     * Estableix les caselles de doble paraula (Double Word) al tauler Junior.
+     */
     private void setDoubleWordTiles() {
         super.setPremiumTile(1, 1, PremiumTileType.DoubleWord);
         super.setPremiumTile(2, 2, PremiumTileType.DoubleWord);
@@ -32,6 +36,9 @@ public class JuniorBoard extends Board {
         super.setPremiumTile(9, 1, PremiumTileType.DoubleWord);
     }
 
+    /**
+     * Estableix les caselles de triple paraula (Triple Word) al tauler Junior.
+     */
     private void setTripleWordTiles() {
         super.setPremiumTile(0, 0, PremiumTileType.TripleWord);
         super.setPremiumTile(0, 5, PremiumTileType.TripleWord);
@@ -45,6 +52,9 @@ public class JuniorBoard extends Board {
         super.setPremiumTile(10, 10, PremiumTileType.TripleWord);
     }
 
+    /**
+     * Estableix les caselles de doble lletra (Double Letter) al tauler Junior.
+     */
     private void setDoubleLetterTiles() {
         super.setPremiumTile(4, 1, PremiumTileType.DoubleLetter);
         super.setPremiumTile(6, 1, PremiumTileType.DoubleLetter);
@@ -70,6 +80,9 @@ public class JuniorBoard extends Board {
         super.setPremiumTile(6, 9, PremiumTileType.DoubleLetter);
     }
 
+    /**
+     * Estableix les caselles de triple lletra (Triple Letter) al tauler Junior.
+     */
     private void setTripleLetterTiles() {
         super.setPremiumTile(3, 0, PremiumTileType.TripleLetter);
         super.setPremiumTile(7, 0, PremiumTileType.TripleLetter);
@@ -88,6 +101,12 @@ public class JuniorBoard extends Board {
         super.setPremiumTile(7, 10, PremiumTileType.TripleLetter);
     }
 
+    /**
+     * Crea i retorna una còpia del tauler {@code JuniorBoard}.
+     * Aquesta còpia manté la mateixa configuració però no les fitxes col·locades.
+     *
+     * @return una nova instància de {@code JuniorBoard}
+     */
     @Override
     protected Board copy() {
         return new JuniorBoard();

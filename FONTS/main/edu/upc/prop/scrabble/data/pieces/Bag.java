@@ -5,41 +5,41 @@ import edu.upc.prop.scrabble.persistence.runtime.data.PersistentObject;
 import java.util.*;
 
 /***
- * Represents a bag of pieces of Scrabble game.
+ * Representa una bossa de peces del joc de taula Scrabble.
  * @author Gina Escofet González
  */
 public class Bag {
     private List<Piece> bag;
 
     /***
-     * Creates an empty bag.
+     * Creadora d'una bossa buida.
      */
     public Bag() {
         this.bag = new ArrayList<>();
     }
 
     /***
-     * Checks if a bag contains any pieces.
-     * @return True if the bag is empty, False otherwise.
+     * Revisa l'estat de la bossa.
+     * @return True si està buida, False altrament.
      */
     public boolean isEmpty() {
         return bag.isEmpty();
     }
 
     /***
-     * Gets the current number of pieces remaining of the bag.
-     * @return The count of remaining pieces.
+     * Revista l'estat de la bossa.
+     * @return La quantitat de peces que hi ha la bossa.
      */
     public int getSize() {
         return bag.size();
     }
 
-    /***
-     * Draws and removes a specific piece from the bag by its index position.
-     * @param index The zero-based position of the piece to retrieve (must be valid).
-     * @return The piece at the specified index.
-     * @throws IndexOutOfBoundsException if the index is invalid.
-     * @throws IllegalStateException if the bag is empty.
+    /**
+     * Roba i elimina una peça de la bossa.
+     * @param index La posició de la peça a agafar (ha de ser vàlida), començant des de zero.
+     * @return La peça en la posició especificada.
+     * @throws IndexOutOfBoundsException si l'index no és vàlid.
+     * @throws IllegalStateException si la bossa està buida.
      */
     public Piece draw(int index) {
         if (bag.isEmpty()) {
@@ -48,10 +48,10 @@ public class Bag {
         return bag.remove(index);
     }
 
-    /***
-     * Adds a piece to the bag.
-     * @param piece The piece to be added to the bag.
-     * @throws IllegalArgumentException if the piece is null
+    /**
+     * Afegeix una peça a la bossa.
+     * @param piece La peça que s'afegirà a la bossa.
+     * @throws IllegalArgumentException si la peça és nul·la.
      */
     public void add(Piece piece) {
         if (piece == null) {
@@ -60,6 +60,10 @@ public class Bag {
         bag.add(piece);
     }
 
+    /**
+     * Codifica l'estat actual de la bossa en un diccionari persistent.
+     * @return Diccionari persistent amb les dades de la bossa serialitzades.
+     */
     public PersistentDictionary encode() {
         PersistentDictionary data = new PersistentDictionary();
 
@@ -68,6 +72,11 @@ public class Bag {
         return data;
     }
 
+    /**
+     * Decodifica les dades d'un diccionari persistent per reconstruir l'estat de la bossa.
+     * Si les dades són invàlides o buides, inicialitza una bossa buida.
+     * @param data Diccionari persistent que conté les dades de la bossa serialitzades.
+     */
     public void decode(PersistentDictionary data) {
         PersistentObject bagData = data.get("bag");
         if (bagData != null) {
