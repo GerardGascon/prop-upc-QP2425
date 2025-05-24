@@ -92,7 +92,7 @@ public class GameMock extends JPanel implements IBlankPieceSelector {
 
             createTurnActionButton("DRAW", xcoord, (int)(height*0.5), compWidth, compHeight);
             createTurnActionButton("SKIP", xcoord, (int)(height*0.4), compWidth, compHeight);
-            // ...
+
         });
         PremiumTileTypeFiller filler = new PremiumTileTypeFiller(board, boardPanel);
 
