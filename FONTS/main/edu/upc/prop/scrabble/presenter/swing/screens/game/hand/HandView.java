@@ -10,13 +10,11 @@ import java.util.List;
 
 public class HandView extends JPanel implements IHandView {
     private final List<HandPieceButton> pieceButtons = new ArrayList<>();
-    private final List<HandPieceButton> selectedPieceButtons = new ArrayList<>();
-    private boolean allowMultiple = false;
+    private HandPieceButton selectedPieceButton;
 
     public static final int HAND_PIECES_SPACING = 10;
 
-    public HandView(boolean allowMultiple) {
-        this.allowMultiple = allowMultiple;
+    public HandView() {
         setLayout(new FlowLayout(FlowLayout.CENTER, HAND_PIECES_SPACING, 0));
         setOpaque(false);
         setBackground(new Color(0, 0, 0, 0));
@@ -24,34 +22,27 @@ public class HandView extends JPanel implements IHandView {
 
     @Override
     public String[] getSelectedPiece() {
-        if (selectedPieceButtons.isEmpty()) {
+        if (selectedPieceButton == null)
             return null;
-        } else {
-            ArrayList<String> letters = new ArrayList<>();
-            for (HandPieceButton button : selectedPieceButtons) {
-                letters.add(button.getLetter());
-            }
-            return letters.toArray(new String[0]);
-        }
+
+        ArrayList<String> letters = new ArrayList<>();
+        letters.add(selectedPieceButton.getLetter());
+        return letters.toArray(new String[0]);
     }
 
     @Override
     public int getSelectedPiecePoints() {
-        if (selectedPieceButtons.isEmpty()) {
+        if (selectedPieceButton == null)
             return 0;
-        } else {
-            int count = 0;
-            for (HandPieceButton button : selectedPieceButtons) {
-                count += button.getPoints();
-            }
-            return count;
-        }
+
+        return selectedPieceButton.getPoints();
     }
 
     @Override
     public void showPieces(Piece[] pieces) {
         pieceButtons.clear();
-        selectedPieceButtons.clear();
+        selectedPieceButton = null;
+
         removeAll();
         for (Piece piece : pieces) {
             HandPieceButton pieceButton = piece.isBlank()
@@ -61,33 +52,29 @@ public class HandView extends JPanel implements IHandView {
             pieceButtons.add(pieceButton);
             pieceButton.addActionListener(e -> {
                 HandPieceButton clickedButton = (HandPieceButton) e.getSource();
-                if (allowMultiple) {
-                    if (clickedButton.isSelected()) {       // cas peça ja selecionada -> des-seleccionar-la
-                        clickedButton.setSelected(false);
-                        selectedPieceButtons.remove(clickedButton);
-                    }
-                    else {
-                        clickedButton.setSelected(true);        // cas peça no seleccionada -> seleccionarla
-                        selectedPieceButtons.add(clickedButton);
-                    }
+                if (selectedPieceButton == clickedButton) { // cas per des-seleccionar una peça que es torna a seleccionar
+                    clickedButton.setSelected(false);
+                    selectedPieceButton = null;
                 } else {
-                    if (selectedPieceButtons.contains(clickedButton)) { // cas per des-seleccionar una peça que es torna a seleccionar
-                        clickedButton.setSelected(false);
-                        selectedPieceButtons.clear();
+                    if (selectedPieceButton != null) {      // cas des-seleccionar una altra peça
+                        selectedPieceButton.setSelected(false);
+                        selectedPieceButton = null;
                     }
-                    else {
-                        if (!selectedPieceButtons.isEmpty()) {      // cas des-seleccionar una altra peça
-                            selectedPieceButtons.getFirst().setSelected(false);
-                            selectedPieceButtons.clear();
-                        }
-                        clickedButton.setSelected(true);        // seleccionar la peça clickada
-                        selectedPieceButtons.add(clickedButton);
-                    }
+                    clickedButton.setSelected(true);        // seleccionar la peça clickada
+                    selectedPieceButton = pieceButton;
                 }
             });
 
             add(pieceButton);
         }
+        revalidate();
+        repaint();
+    }
+
+    @Override
+    public void piecePlaced() {
+        remove(selectedPieceButton);
+        selectedPieceButton = null;
         revalidate();
         repaint();
     }

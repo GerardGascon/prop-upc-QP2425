@@ -22,4 +22,9 @@ public class HandView implements IHandView {
         }
         System.out.println();
     }
+
+    @Override
+    public void piecePlaced() {
+
+    }
 }

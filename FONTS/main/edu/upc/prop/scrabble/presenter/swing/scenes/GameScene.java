@@ -56,7 +56,7 @@ public class GameScene extends Scene {
         };
         Leaderboard leaderboard = new Leaderboard();
 
-        HandView handView = new HandView(false);
+        HandView handView = new HandView();
         BlankPieceSelector blankPieceSelector = new BlankPieceSelector();
         BoardView boardView = new BoardView(board.getSize(), handView, blankPieceSelector);
         PremiumTileTypeFiller premiumTileTypeFiller = new PremiumTileTypeFiller(board, boardView);

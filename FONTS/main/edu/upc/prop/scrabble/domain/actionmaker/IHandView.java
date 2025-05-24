@@ -25,4 +25,6 @@ public interface IHandView {
      * @param pieces Array de fitxes que s'han de mostrar a la mà de l'usuari.
      */
     void showPieces(Piece[] pieces);
+
+    void piecePlaced();
 }

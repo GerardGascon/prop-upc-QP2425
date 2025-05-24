@@ -1,7 +1,6 @@
 package edu.upc.prop.scrabble.presenter.swing.screens.game;
 
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.BoardView;
-import edu.upc.prop.scrabble.presenter.swing.screens.game.board.IBlankPieceSelector;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.sidepanel.SidePanel;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.hand.HandView;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.pieceselector.BlankPieceSelector;
@@ -78,7 +77,7 @@ public class GameScreen extends JPanel {
         int extraRowY = boardVerticalMargin + boardSize + margin;
         int handPieceSize = (int) (boardVerticalMargin * 0.9f);
 
-        int totalExtraRowWidth = (7 * handPieceSize) + (6 * HandView.HAND_PIECES_SPACING);
+        int totalExtraRowWidth = (7 * handPieceSize) + (7 * HandView.HAND_PIECES_SPACING);
 
         int extraRowX = xOffset + (boardSize - totalExtraRowWidth) / 2;
 

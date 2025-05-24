@@ -165,6 +165,7 @@ public abstract class BoardTile extends JButton {
 
         int points = handView.getSelectedPiecePoints();
         placePiece(piece[0], points);
+        handView.piecePlaced();
     }
 
     /**

@@ -33,4 +33,9 @@ public class HandViewStub implements IHandView {
     public void showPieces(Piece[] pieces) {
 
     }
+
+    @Override
+    public void piecePlaced() {
+
+    }
 }
