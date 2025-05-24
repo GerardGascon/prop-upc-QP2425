@@ -90,7 +90,7 @@ public class GameScene extends Scene {
         handFiller.run();
         boardView.updateBoard();
 
-        SidePanel sidePanel = new SidePanel((ArrayList<Player>) Arrays.asList(playersData));
+        SidePanel sidePanel = new SidePanel(playersData);
         generateWindow(window, boardView, sidePanel);
 
         players[0].startTurn();
