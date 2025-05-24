@@ -3,20 +3,20 @@ package edu.upc.prop.scrabble.domain.exceptions;
 import edu.upc.prop.scrabble.data.exceptions.ScrabbleException;
 
 /**
- * Exception thrown to indicate that a word is not connected to any other words on the board.
+ * Excepció llençada quan una paraula no està connectada a cap altra paraula al tauler.
  * <p>
- * This exception is thrown when a player attempts to place a word on the board that is not
- * connected to any previously placed words, violating the rule that all new words must be
- * connected to existing words on the board.
+ * Aquesta excepció es llença quan un jugador intenta col·locar una paraula al tauler que no està
+ * connectada a cap paraula col·locada prèviament, violant la regla que totes les paraules noves
+ * han d’estar connectades a paraules ja existents al tauler.
  * </p>
  *
  * @author Gerard Gascón
  */
 public class WordNotConnectedToOtherWordsException extends ScrabbleException {
     /**
-     * Constructs a WordNotConnectedToOtherWordsException with the specified detail message.
+     * Crea una instància de WordNotConnectedToOtherWordsException amb un missatge detallat.
      *
-     * @param message The detail message explaining the cause of the exception.
+     * @param message El missatge que explica la causa de l’excepció.
      */
     public WordNotConnectedToOtherWordsException(String message) {
         super(message);

@@ -11,34 +11,38 @@ import java.util.HashSet;
 import java.util.List;
 
 /**
- * This class is responsible for identifying and retrieving the pieces that form a new word on the Scrabble board
- * after placing new pieces. It handles cases where the new pieces extend existing words or form new words.
+ * Aquesta classe s'encarrega d'identificar i recuperar les peces que formen una nova paraula
+ * al tauler de Scrabble després de col·locar-hi peces noves.
+ * Gestiona els casos en què les peces noves estenen paraules ja existents o formen paraules noves.
+ * <p>
+ * Permet obtenir la paraula completa (com a peces) en una direcció determinada després de la jugada.
  *
  * @author Gerard Gascón
  */
 public class WordGetter {
+    /** Tauler on es col·loquen les peces i es formen les paraules */
     private final Board board;
 
     /**
-     * Constructs a WordGetter instance that operates on the provided board.
+     * Constructor que crea un WordGetter per un tauler determinat.
      *
-     * @param board The board where pieces are placed and words are formed.
+     * @param board El tauler on es juguen les peces i es formen paraules
      */
     public WordGetter(Board board) {
         this.board = board;
     }
 
     /**
-     * Retrieves the pieces that form a new word on the board after placing new pieces.
+     * Recupera les peces que formen una nova paraula al tauler després de col·locar peces noves.
      * <p>
-     * This method is useful when placing pieces that extend an existing word or create new words.
-     * It checks both the newly added pieces and their positions on the board, and returns all the pieces that
-     * form a continuous word either horizontally or vertically.
+     * Aquest mètode és útil per quan es col·loquen peces que estenen una paraula existent o en formen de noves.
+     * Revisa tant les peces noves com les posicions al tauler i retorna totes les peces que formen una paraula
+     * contínua en la direcció indicada (horitzontal o vertical).
      *
-     * @param newPieces An array of the new pieces being added to the board.
-     * @param newPositions An array of positions for the new pieces on the board.
-     * @param direction The direction (horizontal or vertical) in which the new word is formed.
-     * @return An array of pieces that form the new word created on the board.
+     * @param newPieces Array de peces noves que s'estan col·locant
+     * @param newPositions Array de posicions on es col·loquen aquestes peces
+     * @param direction Direcció horitzontal o vertical on es forma la paraula
+     * @return Array de peces que formen la paraula resultant al tauler
      * @see Piece
      * @see Direction
      */
@@ -73,10 +77,26 @@ public class WordGetter {
         return pieces.toArray(new Piece[0]);
     }
 
+    /**
+     * Calcula la coordenada Y segons la direcció de la paraula i un offset.
+     *
+     * @param position Posició inicial de la paraula
+     * @param direction Direcció horitzontal o vertical
+     * @param offset Desplaçament per iterar per la paraula
+     * @return Coordenada Y corresponent
+     */
     private static int getYPosition(Vector2 position, Direction direction, int offset) {
         return direction == Direction.Horizontal ? position.y : offset;
     }
 
+    /**
+     * Calcula la coordenada X segons la direcció de la paraula i un offset.
+     *
+     * @param position Posició inicial de la paraula
+     * @param direction Direcció horitzontal o vertical
+     * @param offset Desplaçament per iterar per la paraula
+     * @return Coordenada X corresponent
+     */
     private static int getXPosition(Vector2 position, Direction direction, int offset) {
         return direction == Direction.Horizontal ? offset : position.x;
     }

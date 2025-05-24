@@ -11,20 +11,22 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * This class is responsible for calculating the points associated with a move on the Scrabble board.
- * It considers factors such as individual piece values, word multipliers, bonuses, and interactions with
- * previously placed pieces on the board.
+ * Classe responsable de calcular els punts associats a un moviment al tauler de Scrabble.
+ * Considera factors com el valor de cada peça, multiplicadors de paraula, bonificacions,
+ * i la interacció amb peces ja col·locades al tauler.
  *
  * @author Gerard Gascón
  */
 public class PointCalculator {
+    /** El tauler actual del joc */
     private final Board board;
+    /** Component per obtenir paraules a partir de peces i posicions */
     private final WordGetter wordGetter;
 
     /**
-     * Constructs a PointCalculator instance with the given board and word getter.
+     * Constructor que crea una instància de PointCalculator amb el tauler proporcionat.
      *
-     * @param board The board where the game is being played.
+     * @param board El tauler on es juga la partida
      */
     public PointCalculator(Board board) {
         this.board = board;
@@ -32,12 +34,12 @@ public class PointCalculator {
     }
 
     /**
-     * Calculates the total points of a move based on the positions and pieces placed on the board.
-     * It computes the score by considering factors such as piece points, word multipliers, and additional bonuses.
+     * Calcula el total de punts d'un moviment tenint en compte les posicions i les peces col·locades.
+     * Es té en compte el valor de les peces, multiplicadors de paraula i bonificacions addicionals.
      *
-     * @param positions The positions of the new pieces being placed on the board.
-     * @param pieces    The new pieces to be placed on the board.
-     * @return The total points the player would earn if those pieces were placed on the board.
+     * @param positions Les posicions on es col·loquen les noves peces
+     * @param pieces Les peces que es volen col·locar
+     * @return El total de punts que es guanyarien amb aquest moviment
      * @see Piece
      */
     public int run(Vector2[] positions, Piece[] pieces) {
@@ -55,6 +57,13 @@ public class PointCalculator {
         return newWordPoints + presentWordsPoints + bonus;
     }
 
+    /**
+     * Determina la direcció de la paraula a partir de les posicions donades.
+     * Retorna Vertical, Horitzontal o null si només hi ha una peça.
+     *
+     * @param positions Les posicions de les peces
+     * @return La direcció de la paraula
+     */
     private Direction getWordDirection(Vector2[] positions) {
         if (positions.length == 1)
             return null;
@@ -64,6 +73,14 @@ public class PointCalculator {
         return Direction.Horizontal;
     }
 
+    /**
+     * Calcula els punts de les paraules que es formen creuant la paraula principal.
+     *
+     * @param positions Posicions de les peces noves
+     * @param pieces Peces col·locades
+     * @param direction Direcció de la paraula principal
+     * @return Punts totals de les paraules creuades
+     */
     private int getPresentWordPoints(Vector2[] positions, Piece[] pieces, Direction direction) {
         int points = 0;
         for (int i = 0; i < positions.length; i++) {
@@ -77,6 +94,14 @@ public class PointCalculator {
         return points;
     }
 
+    /**
+     * Obté les peces presents en la direcció perpendicular per formar paraules creuades.
+     *
+     * @param position Posició de la peça nova
+     * @param piece Peça nova
+     * @param direction Direcció de la paraula principal
+     * @return Les peces que formen la paraula creuada
+     */
     private Piece[] getPresentPieces(Vector2 position, Piece piece, Direction direction) {
         Direction directionToCheck = direction == Direction.Horizontal ? Direction.Vertical : Direction.Horizontal;
 
@@ -85,12 +110,27 @@ public class PointCalculator {
         );
     }
 
+    /**
+     * Calcula els punts d'una paraula formada per les peces indicades.
+     *
+     * @param position Posició de la paraula
+     * @param pieces Peces de la paraula
+     * @return Punts totals de la paraula
+     */
     private int getPresentPoints(Vector2 position, Piece[] pieces) {
         int wordPoints = getPiecePoints(pieces);
         int multiplier = getWordMultiplier(position);
         return wordPoints * multiplier;
     }
 
+    /**
+     * Calcula els punts de les peces que ja estaven presents a la paraula abans d'afegir les noves peces.
+     *
+     * @param positions Posicions de les peces noves
+     * @param pieces Peces noves
+     * @param direction Direcció de la paraula
+     * @return Punts de les peces ja presents
+     */
     private int getAlreadyPresentWordPiecesPoints(Vector2[] positions, Piece[] pieces, Direction direction) {
         List<Piece> presentPieces = new ArrayList<>(Arrays.stream(wordGetter.run(pieces, positions, direction)).toList());
 
@@ -100,6 +140,13 @@ public class PointCalculator {
         return getPiecePoints(presentPieces.toArray(new Piece[0]));
     }
 
+    /**
+     * Calcula la suma de punts de les peces en les posicions indicades.
+     *
+     * @param positions Posicions de les peces
+     * @param pieces Peces col·locades
+     * @return Punts totals de les peces
+     */
     private int getPiecePoints(Vector2[] positions, Piece[] pieces) {
         int points = 0;
         for (int i = 0; i < positions.length; i++) {
@@ -110,16 +157,34 @@ public class PointCalculator {
         return points;
     }
 
+    /**
+     * Calcula la suma dels valors de les peces indicades.
+     *
+     * @param pieces Peces de les quals es vol obtenir el valor
+     * @return Suma dels punts de les peces
+     */
     private int getPiecePoints(Piece[] pieces) {
         return Arrays.stream(pieces).mapToInt(Piece::value).sum();
     }
 
+    /**
+     * Calcula el bonus per fer un bingo (col·locar 7 peces en un sol torn).
+     *
+     * @param positions Posicions de les peces col·locades
+     * @return 50 punts si són 7 peces, 0 en cas contrari
+     */
     private static int getBonus(Vector2[] positions) {
         if (positions.length == 7)
             return 50; // Bingo
         return 0;
     }
 
+    /**
+     * Calcula el multiplicador total de paraula a partir de les posicions.
+     *
+     * @param positions Posicions de les peces noves
+     * @return Multiplicador resultant
+     */
     private int getWordMultiplier(Vector2[] positions) {
         int multiplier = 1;
         for (Vector2 position : positions) {
@@ -129,11 +194,24 @@ public class PointCalculator {
         return multiplier;
     }
 
+    /**
+     * Calcula els punts d'una peça tenint en compte els multiplicadors de lletra.
+     *
+     * @param position Posició de la peça
+     * @param piece Peça que es vol puntuar
+     * @return Punts totals de la peça amb multiplicadors
+     */
     private int getPiecePoints(Vector2 position, Piece piece) {
         int letterMultiplier = getLetterMultiplier(position);
         return piece.value() * letterMultiplier;
     }
 
+    /**
+     * Obté el multiplicador de lletra segons el tipus de casella premium.
+     *
+     * @param position Posició al tauler
+     * @return Multiplicador de lletra (1 si no hi ha casella especial)
+     */
     private int getLetterMultiplier(Vector2 position) {
         PremiumTileType tileType = board.getPremiumTileType(position.x, position.y);
         if (tileType == null)
@@ -147,6 +225,13 @@ public class PointCalculator {
         };
     }
 
+    /**
+     * Obté el multiplicador de paraula segons el tipus de casella premium.
+     * La casella central també multiplica per 2.
+     *
+     * @param position Posició al tauler
+     * @return Multiplicador de paraula (1 si no hi ha casella especial)
+     */
     private int getWordMultiplier(Vector2 position) {
         if (board.isCenter(position.x, position.y))
             return 2;
