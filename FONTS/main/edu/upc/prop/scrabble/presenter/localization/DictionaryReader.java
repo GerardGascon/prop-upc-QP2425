@@ -4,24 +4,25 @@ import edu.upc.prop.scrabble.data.properties.Language;
 import edu.upc.prop.scrabble.domain.pieces.IFileReader;
 
 /**
- * Class used to read dictionary files for different languages.
+ * Classe que s'encarrega de llegir fitxers de diccionaris per diferents idiomes.
  * <p>
- * The `DictionaryReader` class is responsible for reading dictionary files based on the
- * selected language (locale). It supports reading dictionaries in Catalan, Spanish, and English.
+ * La classe {@code DictionaryReader} és responsable de llegir els fitxers de diccionaris
+ * segons l'idioma (locale) seleccionat. Suporta la lectura de diccionaris en català, castellà i anglès.
  * </p>
  *
  * @author Gerard Gascón
  */
 public class DictionaryReader extends LocaleReader implements IFileReader {
+
     /**
-     * Reads a dictionary file based on the specified language.
+     * Llegeix el fitxer de diccionari segons l'idioma especificat.
      * <p>
-     * The method checks the provided `locale` (language) and returns the corresponding dictionary
-     * file's contents as a string. The supported languages are Catalan, Spanish, and English.
+     * Aquest mètode comprova l'idioma donat i retorna el contingut del fitxer de diccionari
+     * corresponent com una cadena de text. Els idiomes suportats són català, castellà i anglès.
      * </p>
      *
-     * @param locale The language of the dictionary desired.
-     * @return A string containing the contents of the dictionary in the selected language.
+     * @param locale L'idioma del diccionari que es vol llegir.
+     * @return Una cadena amb el contingut del diccionari en l'idioma seleccionat.
      * @see Language
      */
     @Override

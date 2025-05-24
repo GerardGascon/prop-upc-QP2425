@@ -4,26 +4,27 @@ import edu.upc.prop.scrabble.data.properties.Language;
 import edu.upc.prop.scrabble.domain.pieces.IFileReader;
 
 /**
- * Class used to read piece files for different languages.
+ * Classe per llegir fitxers de peces per diferents idiomes.
  * <p>
- * The `PiecesReader` class extends the `LocaleReader` class and implements the `IFileReader` interface.
- * It is responsible for reading piece files (e.g., letters or tiles) based on the provided language.
- * The class offers a method to fetch the corresponding piece file based on the selected language and returns
- * the file contents as a string.
+ * La classe {@code PiecesReader} estén {@code LocaleReader} i implementa la
+ * interfície {@code IFileReader}. S'encarrega de llegir els fitxers de peces
+ * (per exemple, lletres o fitxes) segons l'idioma proporcionat.
+ * Proporciona un mètode per obtenir el contingut del fitxer de peces corresponent
+ * a l'idioma seleccionat i retorna el seu contingut en forma de cadena.
  * </p>
  *
  * @author Gerard Gascón
  */
 public class PiecesReader extends LocaleReader implements IFileReader {
     /**
-     * Reads the piece file corresponding to the specified language.
+     * Llegeix el fitxer de peces corresponent a l'idioma especificat.
      * <p>
-     * The method will return the contents of the piece file for the selected language. It will check the
-     * provided language (`locale`) and return the appropriate piece file's contents.
+     * Aquest mètode comprova l'idioma passat com a paràmetre i retorna el contingut
+     * del fitxer de peces associat a aquest idioma.
      * </p>
      *
-     * @param locale The language of the piece file to read.
-     * @return The contents of the selected piece file as a string.
+     * @param locale L'idioma del fitxer de peces que es vol llegir.
+     * @return El contingut del fitxer de peces seleccionat, en format cadena.
      * @see Language
      */
     @Override
