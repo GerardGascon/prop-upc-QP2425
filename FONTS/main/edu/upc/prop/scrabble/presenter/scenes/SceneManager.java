@@ -7,29 +7,43 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 /**
- * Class used to manage all the scenes present in the game and switch between them.
+ * Classe utilitzada per gestionar totes les escenes presents al joc i per canviar entre elles.
  * <p>
- * The SceneManager is responsible for loading and managing different scenes during the game.
- * It handles the transitions between scenes, the destruction of scenes when switching, and ensures
- * that the proper dependencies are passed when a new scene is loaded.
+ * El SceneManager és responsable de carregar i gestionar diferents escenes durant el joc.
+ * Gestiona les transicions entre escenes, la destrucció de les escenes en fer el canvi i assegura
+ * que es passen les dependències correctes quan es carrega una nova escena.
  * </p>
  *
  * @author Gerard Gascón
  */
 public class SceneManager {
+    /**
+     * Indica si ja hi ha una escena carregada.
+     */
     private boolean sceneLoaded = false;
+
+    /**
+     * Escena actual activa.
+     */
     private Scene scene;
+
+    /**
+     * Escena pendent de carregar (classe i dependències).
+     */
     private Pair<Class<? extends Scene>, Object[]> sceneToLoad;
 
+    /**
+     * Instància singleton de SceneManager.
+     */
     private static SceneManager instance;
 
     /**
-     * Get or instantiate an instance of SceneManager.
+     * Obté o crea la instància única de SceneManager.
      * <p>
-     * This method ensures that only one instance of the SceneManager exists at any time.
+     * Aquest mètode assegura que només existeixi una instància de SceneManager alhora.
      * </p>
      *
-     * @return The instance of SceneManager
+     * @return La instància de SceneManager
      */
     public static SceneManager getInstance() {
         if (instance == null) {
@@ -42,14 +56,14 @@ public class SceneManager {
     }
 
     /**
-     * Loads a new scene. If there's one active, it destroys that one before loading the new one.
+     * Carrega una nova escena. Si n'hi ha una activa, la destrueix abans de carregar la nova.
      * <p>
-     * This method is responsible for switching between scenes. If a scene is already active, it detaches
-     * that scene and loads the new one. If no scene is loaded, it simply loads the new scene.
+     * Aquest mètode s'encarrega de fer la transició entre escenes. Si ja hi ha una escena activa,
+     * la desenganxa i carrega la nova. Si no n'hi ha, simplement carrega la nova.
      * </p>
      *
-     * @param sceneClass   The class type of the new scene
-     * @param dependencies The dependencies of the new scene
+     * @param sceneClass   La classe de la nova escena a carregar
+     * @param dependencies Les dependències que necessita la nova escena
      * @see Scene
      */
     public void load(Class<? extends Scene> sceneClass, Object... dependencies) {
@@ -61,35 +75,52 @@ public class SceneManager {
         }
     }
 
+    /**
+     * Carrega la nova escena proporcionada, desenganxant l'escena actual si n'hi ha.
+     *
+     * @param sceneClass   La classe de la nova escena
+     * @param dependencies Les dependències per passar al constructor de l'escena
+     */
     private void loadScene(Class<? extends Scene> sceneClass, Object... dependencies) {
         try {
             if (scene != null)
                 scene.onDetach();
 
             scene = instantiateScene(sceneClass, dependencies);
-            System.out.println("Loaded scene: " + scene.getClass().getSimpleName());
         } catch (Exception e) {
             throw new RuntimeException("Failed to instantiate scene: " + sceneClass.getName(), e);
         }
     }
 
+    /**
+     * Instància l'escena amb el constructor que millor s'adapti a les dependències.
+     *
+     * @param sceneClass   Classe de l'escena a instanciar
+     * @param dependencies Paràmetres per passar al constructor
+     * @return La instància de l'escena creada
+     */
     private Scene instantiateScene(Class<? extends Scene> sceneClass, Object... dependencies) throws InstantiationException, IllegalAccessException, InvocationTargetException {
         Constructor<?> target = getSceneConstructor(sceneClass);
         return (Scene) target.newInstance(dependencies);
     }
 
+    /**
+     * Obté el constructor amb més paràmetres de la classe d'escena, que serà el que s'utilitzarà per instanciar.
+     *
+     * @param sceneClass La classe de l'escena
+     * @return El constructor amb més paràmetres
+     */
     private static Constructor<?> getSceneConstructor(Class<? extends Scene> sceneClass) {
         Constructor<?>[] constructors = sceneClass.getDeclaredConstructors();
         return Arrays.stream(constructors)
                 .max(Comparator.comparingInt(Constructor::getParameterCount))
-                .orElseThrow(() -> new RuntimeException("No constructors found"));
+                .orElseThrow(() -> new RuntimeException("No s'han trobat constructors"));
     }
 
     /**
-     * Closes the game and destroys the current active scene.
+     * Tanca el joc i destrueix l'escena activa.
      * <p>
-     * This method is responsible for cleaning up resources and closing the game, detaching the active
-     * scene before shutting down.
+     * Aquest mètode s'encarrega de netejar recursos i tancar el joc, desenganxant l'escena activa abans de tancar.
      * </p>
      */
     public void quit() {
@@ -98,13 +129,13 @@ public class SceneManager {
     }
 
     /**
-     * Updates the active scene and its objects.
+     * Actualitza l'escena activa i els seus objectes.
      * <p>
-     * This method is called continuously to update the current scene. If there is a scene queued to load,
-     * it will load it. Otherwise, it processes the current active scene.
+     * Aquest mètode s'executa contínuament per actualitzar l'escena actual. Si hi ha una escena pendent de carregar,
+     * la carrega. En cas contrari, processa l'escena activa.
      * </p>
      *
-     * @param delta Time difference from the last call
+     * @param delta Temps transcorregut des de l'última crida
      * @see Scene
      * @see SceneObject
      */
@@ -118,17 +149,22 @@ public class SceneManager {
     }
 
     /**
-     * Checks if there is an active scene currently running.
+     * Comprova si hi ha una escena activa en execució.
      * <p>
-     * This method allows the game or application to check if there is a scene to interact with.
+     * Aquest mètode permet al joc o aplicació saber si hi ha una escena activa amb la qual interactuar.
      * </p>
      *
-     * @return <b>true</b> if there is an active scene, <b>false</b> if no scene is active
+     * @return <b>true</b> si hi ha una escena activa, <b>false</b> si no n'hi ha cap
      */
     public boolean isRunning() {
         return scene != null;
     }
 
+    /**
+     * Obté l'escena activa actual.
+     *
+     * @return L'escena activa
+     */
     public Scene getActiveScene() {
         return scene;
     }
