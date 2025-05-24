@@ -2,8 +2,15 @@ package edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction.draw;
 
 import javax.swing.*;
 import java.awt.*;
-
+/**
+ * Classe per gestionar el botó de Draw (Robar) en una partida.
+ * @author Gina Escofet González
+ */
 public class DrawActionButton extends JButton {
+    /***
+     * Construeix un botó personalitzat per l'acció de "Draw" (Robar).
+     * @param text El text que es mostrarà al botó.
+     */
     public DrawActionButton(String text) {
         super(text);
         setFocusPainted(false); // Removes the focus ring when the button is clicked

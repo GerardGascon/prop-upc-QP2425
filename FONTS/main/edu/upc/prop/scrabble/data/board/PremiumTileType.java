@@ -1,35 +1,34 @@
 package edu.upc.prop.scrabble.data.board;
 
 /**
- * Enum representing the types of premium tiles on a Scrabble board.
- * These tiles multiply the value of either the letter placed or the entire word.
+ * Enum que representa els tipus de caselles especials en un tauler de Scrabble.
+ * Aquestes caselles multipliquen el valor de la lletra col·locada o de tota la paraula.
  *
  * @author Gerard Gascón
  */
 public enum PremiumTileType {
     /**
-     * Multiplies the word score by 4.
+     * Multiplica la puntuació de la paraula per 4.
      */
     QuadrupleWord,
     /**
-     * Multiplies the word score by 3.
+     * Multiplica la puntuació de la paraula per 3.
      */
     TripleWord,
     /**
-     * Multiplies the word score by 2.
+     * Multiplica la puntuació de la paraula per 2.
      */
     DoubleWord,
     /**
-     * Multiplies the letter score by 4.
+     * Multiplica la puntuació de la lletra per 4.
      */
     QuadrupleLetter,
     /**
-     * Multiplies the letter score by 3.
+     * Multiplica la puntuació de la lletra per 3.
      */
     TripleLetter,
     /**
-     * Multiplies the letter score by 2.
+     * Multiplica la puntuació de la lletra per 2.
      */
     DoubleLetter,
 }
-

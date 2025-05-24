@@ -5,7 +5,24 @@ import edu.upc.prop.scrabble.persistence.runtime.data.PersistentDictionary;
 
 import java.lang.reflect.Type;
 
+/**
+ * Serialitzador per a PersistentDictionary que utilitza Gson.
+ * <p>
+ * Aquesta classe converteix un PersistentDictionary en un objecte JSON on la clau és el
+ * nom del diccionari i el valor és un objecte JSON amb les entrades del diccionari serialitzades.
+ * </p>
+ *
+ * @author Gerard Gascón
+ */
 class PersistentDictionarySerializer implements JsonSerializer<PersistentDictionary> {
+    /**
+     * Serialitza un PersistentDictionary a un JsonElement.
+     *
+     * @param src L'objecte PersistentDictionary a serialitzar.
+     * @param typeOfSrc El tipus de l'objecte que s'està serialitzant.
+     * @param context El context de serialització Gson per serialitzar elements interns.
+     * @return Un JsonElement que representa el PersistentDictionary.
+     */
     @Override
     public JsonElement serialize(PersistentDictionary src, Type typeOfSrc, JsonSerializationContext context) {
         JsonObject json = new JsonObject();

@@ -1,6 +1,7 @@
 package edu.upc.prop.scrabble.domain.ai;
 
 import edu.upc.prop.scrabble.data.Anchors;
+import edu.upc.prop.scrabble.data.Movement;
 import edu.upc.prop.scrabble.data.Player;
 import edu.upc.prop.scrabble.data.board.Board;
 import edu.upc.prop.scrabble.data.crosschecks.CrossChecks;
@@ -13,37 +14,93 @@ import edu.upc.prop.scrabble.utils.Vector2;
 
 import java.util.Map;
 
+/**
+ * Intel·ligència artificial que computa el moviment a realitzar
+ * pel jugador controlat per la màquina i partides on la llengua seleccionada
+ * és l'anglès.
+ * @see Player
+ * @see Board
+ * @see Anchors
+ * @see CrossChecks
+ * @see Movement
+ * @see PointCalculator
+ * @see PiecesConverter
+ * @see DAWG
+ * @author Albert Usero
+ * @author Felipe Martínez
+ */
 public class EnglishAI extends AI {
     public EnglishAI(PiecesConverter piecesConverter, PointCalculator pointCalculator, DAWG dawg, Board board, Player bot, Anchors anchors, CrossChecks crossChecks) {
         super(piecesConverter, pointCalculator, dawg, board, bot, anchors, crossChecks);
     }
 
+    /**
+     * Cap treball en aquesta subclasse
+     * @param partialWord Tros de la paraula actual
+     * @param limit Com de lluny podem anar
+     * @param entry Caràcter/node següent que estem comprovant
+     */
     @Override
     protected void processLeftPartSpecialPieces(String partialWord, int limit, Map.Entry<Character, Node> entry) {
     }
 
+    /**
+     * Comprova que no hi ha cap combinació il·legal i afegeix la lletra utilitzada
+     * @param partialWord Tros de la paraula actual
+     * @param limit Com de lluny podem anar
+     * @param entry Caràcter/node següent que estem comprovant
+     * @param usedPiece Peça utilitzada a la iteració actual
+     */
     @Override
     protected void processNextLeftPiece(String partialWord, int limit, Map.Entry<Character, Node> entry, Piece usedPiece) {
         if(usedPiece.isBlank()) goToNextLeftPiece(partialWord + Character.toLowerCase(entry.getKey()), entry.getValue(), limit, usedPiece);
         else goToNextLeftPiece(partialWord + entry.getKey(), entry.getValue(), limit, usedPiece);
     }
 
+    /**
+     * Estén cap a la dreta fent servir una peça de la mà
+     * @param partialWord Tros de paraula actual
+     * @param cell Casella sobre la qual estem estenent
+     * @param entry Caràcter/Node següent que estem comprovant
+     * @param usedPiece Peça utilitzada
+     */
     @Override
     protected void extendToNextNewPieceRight(String partialWord, Vector2 cell, Map.Entry<Character, Node> entry, Piece usedPiece) {
         if(usedPiece.isBlank()) goToNextRightPiece(partialWord + Character.toLowerCase(entry.getKey()), entry.getValue(), cell, usedPiece);
         else goToNextRightPiece(partialWord + entry.getKey(), entry.getValue(), cell, usedPiece);
     }
 
+    /**
+     * Estén cap a la dreta amb una peça ja col·locada al tauler
+     * @param partialWord Tros de paraula actual
+     * @param node Node que referencia a la peça ja col·locada
+     * @param cell Casella sobre la qual estem estenent
+     * @param placedPiece Peça ja al tauler
+     */
     @Override
     protected void extendToNextExistingPieceRight(String partialWord, Node node, Vector2 cell, Piece placedPiece) {
         Node nextNode = node.getSuccessor(placedPiece.letter().charAt(0));
         if(nextNode != null) ExtendRight(partialWord + placedPiece.letter(), nextNode, cell);
     }
 
+    /**
+     * Cap treball en aquesta subclasse
+     * @param partialWord Tros de la paraula actual
+     * @param cell Posició a la qual ens trobem en expansió
+     * @param entry Caràcter/node següent que estem comprovant
+     */
     @Override
     protected void processRightPartSpecialPieces(String partialWord, Vector2 cell, Map.Entry<Character, Node> entry) {
     }
 
+    /**
+     * Validem si quan estenem la paraula actual no fem invàlides
+     * les paraules presents al board
+     * @param cell Casella on comença la paraula
+     * @param board Tauler actual
+     * @param c Caràcter a afegir
+     * @return Cert si la paraula és vàlida
+     */
     @Override
     protected boolean validExistingWord(Vector2 cell, Board board, char c) {
         String adjWord = String.valueOf(c);

@@ -1,33 +1,34 @@
 package edu.upc.prop.scrabble.domain.turns;
 
 /**
- * Interface to represent the player object from the presentation layer.
- * This interface defines the methods for managing a player's turn in the game.
+ * Interfície que representa l'objecte jugador des de la capa de presentació.
+ * Aquesta interfície defineix els mètodes per gestionar el torn d'un jugador dins del joc.
  *
  * @author Gerard Gascón
  */
 public interface IGamePlayer {
     /**
-     * Start the player's turn.
-     * This method is called when it is the player's turn to take an action (e.g., play a word on the board).
-     * The player can now perform actions during their turn.
+     * Inicia el torn del jugador.
+     * Aquest mètode es crida quan és el torn del jugador per realitzar una acció (per exemple,
+     * col·locar una paraula al tauler). A partir d'aquí, el jugador pot dur a terme les seves accions.
      */
     void startTurn();
 
     /**
-     * End the player's turn.
-     * This method is called when the player finishes their actions for the turn (e.g., places a word).
-     * It returns the result of the turn, which could include details like points scored or the validity of the move.
+     * Finalitza el torn del jugador.
+     * Aquest mètode es crida quan el jugador ha acabat les seves accions durant el torn
+     * (per exemple, ha col·locat una paraula). Retorna el resultat del torn, que pot incloure
+     * detalls com els punts obtinguts o la validesa del moviment.
      *
      * @see TurnResult
      */
     void endTurn();
 
     /**
-     * Check if the player is currently in a turn or not.
-     * This method is used to determine if the player is actively playing their turn.
+     * Comprova si el jugador està actualment jugant el seu torn.
+     * Aquest mètode s'utilitza per saber si el jugador està actiu en el torn o ja l'ha finalitzat.
      *
-     * @return <b>true</b> if the player is in a turn, <b>false</b> if the player has completed their turn or is not yet playing.
+     * @return <b>true</b> si el jugador està actiu jugant el seu torn, <b>false</b> si ha acabat o encara no ha començat.
      */
     boolean isActive();
 }

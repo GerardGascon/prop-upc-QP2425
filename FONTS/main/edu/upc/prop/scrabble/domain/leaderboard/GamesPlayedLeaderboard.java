@@ -6,11 +6,20 @@ import java.util.TreeMap;
 import java.util.Map;
 
 /**
- * Leaderboard controller to sort players based on the number of games played
+ * Controlador de Leaderboard encarregat d'ordenar als jugadors segons el nombre de partides jugades
  * @author Felipe Martínez Lassalle
+ * @see edu.upc.prop.scrabble.data.leaderboard.Leaderboard
  */
 public class GamesPlayedLeaderboard   {
 
+    /**
+     * Funció encarregada de complir la tasca del controlador
+     * @param scores Array de tots els Score a ordenar
+     * @return Array de PlayerValuePair que guarda de forma ordenada el nom del jugador i el nombre de partides jugades
+     * @see edu.upc.prop.scrabble.data.leaderboard.Leaderboard
+     * @see Score
+     * @see PlayerValuePair
+     */
     public PlayerValuePair[] run(Score[] scores) {
         // Group by player name and games played
         Map<String, Integer> gamesMap = new TreeMap<>();

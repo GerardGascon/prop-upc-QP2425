@@ -7,13 +7,39 @@ import edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles.BoardTile;
 
 import java.awt.*;
 
+/**
+ * Classe que representa la casella central del tauler de Scrabble.
+ * <p>
+ * Aquesta casella marca el punt inicial del joc i també és una casella de puntuació doble de paraula.
+ * Es dibuixa amb un fons rosa i una estrella central.
+ * </p>
+ *
+ * @author Gerard Gascón
+ */
 public class BoardCenterTile extends BoardTile {
+
+    /**
+     * Constructor per a la casella central.
+     *
+     * @param x                  coordenada X de la casella
+     * @param y                  coordenada Y de la casella
+     * @param handView           vista de la mà del jugador
+     * @param boardView          vista general del tauler
+     * @param blankPieceSelector selector de fitxes en blanc
+     */
     public BoardCenterTile(int x, int y, IHandView handView, BoardView boardView, IBlankPieceSelector blankPieceSelector) {
         super(x, y, handView, boardView, blankPieceSelector);
         setBackground(new Color(0xff, 0xc0, 0xcb));
         createTooltip("Start here (Double Word Score)");
     }
 
+    /**
+     * Dibuixa la casella amb un rectangle arrodonit i una estrella central.
+     *
+     * @param g      objecte gràfic
+     * @param bg     color de fons
+     * @param radius radi de les vores arrodonides
+     */
     @Override
     protected void drawTile(Graphics2D g, Color bg, int radius) {
         g.setColor(bg);

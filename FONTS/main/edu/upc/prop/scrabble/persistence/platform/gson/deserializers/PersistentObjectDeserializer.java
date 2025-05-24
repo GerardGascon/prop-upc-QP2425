@@ -6,7 +6,26 @@ import edu.upc.prop.scrabble.persistence.runtime.data.PersistentObject;
 import java.lang.reflect.Type;
 import java.util.Map.Entry;
 
+/**
+ * Deserialitzador personalitzat per a PersistentObject utilitzant Gson.
+ * <p>
+ * Aquesta classe implementa JsonDeserializer per deserialitzar un element JSON
+ * que representa un PersistentObject, convertint-lo en una instància de PersistentObject
+ * amb un nom i un valor associat.
+ * </p>
+ *
+ * @author Gerard Gascón
+ */
 class PersistentObjectDeserializer extends Deserializer implements JsonDeserializer<PersistentObject> {
+    /**
+     * Deserialitza un element JSON en un PersistentObject.
+     *
+     * @param json      L'element JSON que conté la representació de l'objecte persistent.
+     * @param typeOfT   El tipus de l'objecte a deserialitzar.
+     * @param context   El context de deserialització de Gson.
+     * @return Un PersistentObject amb el nom i el valor deserialitzat.
+     * @throws JsonParseException Si el JSON no conté exactament una propietat o si hi ha errors en la deserialització.
+     */
     @Override
     public PersistentObject deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
             throws JsonParseException {
@@ -14,7 +33,7 @@ class PersistentObjectDeserializer extends Deserializer implements JsonDeseriali
         JsonObject jsonObject = json.getAsJsonObject();
 
         if (jsonObject.entrySet().size() != 1) {
-            throw new JsonParseException("Expected exactly one property for PersistentObject");
+            throw new JsonParseException("S'esperava exactament una propietat per a PersistentObject");
         }
 
         Entry<String, JsonElement> entry = jsonObject.entrySet().iterator().next();

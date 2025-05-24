@@ -8,15 +8,22 @@ import java.util.Arrays;
 import java.util.HashSet;
 
 /***
- * Class that converts a string of letters into pieces.
+ * Classe que converteix una cadena de lletres en peces.
  * @author Gina Escofet González
  */
 public abstract class PiecesConverter {
     private final HashSet<Piece> pieces = new HashSet<>();
 
+    /**
+     * Constructor per defecte de PiecesConverter.
+     */
     public PiecesConverter() {
     }
 
+    /**
+     * Construeix un PiecesConverter amb un conjunt inicial de peces.
+     * @param pieces Un array de peces per inicialitzar el convertidor.
+     */
     public PiecesConverter(Piece[] pieces) {
         this.pieces.addAll(Arrays.asList(pieces));
     }

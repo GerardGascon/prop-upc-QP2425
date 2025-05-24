@@ -8,7 +8,33 @@ import edu.upc.prop.scrabble.persistence.runtime.data.PersistentObject;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe abstracta que facilita la deserialització d'elements JSON en objectes de tipus PersistentObject.
+ * <p>
+ * Aquesta classe conté un mètode que processa recursivament diferents tipus d'elements JSON
+ * (primitives, arrays, objectes) i els converteix en tipus Java equivalents o en instàncies de PersistentObject.
+ * </p>
+ *
+ * @author Gerard Gascón
+ */
 abstract class Deserializer {
+
+    /**
+     * Processa un element JSON i el converteix en un objecte Java equivalent.
+     * <p>
+     * Aquest mètode gestiona els següents casos:
+     * <ul>
+     *   <li>Si l'element és null, retorna null.</li>
+     *   <li>Si és una primitive, retorna el valor corresponent (boolean, string, int, long o double).</li>
+     *   <li>Si és un array JSON, crea una llista d'objectes PersistentObject a partir dels elements de l'array.</li>
+     *   <li>Si és un objecte JSON, el deserialitza com un PersistentObject.</li>
+     * </ul>
+     * </p>
+     *
+     * @param element L'element JSON a processar.
+     * @param context El context de deserialització de Gson.
+     * @return Un objecte Java equivalent a l'element JSON, o null si no és possible.
+     */
     protected Object parseJsonElement(JsonElement element, JsonDeserializationContext context) {
         if (element.isJsonNull()) return null;
         if (element.isJsonPrimitive()) {

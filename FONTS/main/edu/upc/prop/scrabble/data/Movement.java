@@ -3,55 +3,19 @@ package edu.upc.prop.scrabble.data;
 import edu.upc.prop.scrabble.utils.Direction;
 
 /**
- * Represents a movement of a word on the Scrabble board, including
- * its starting coordinates (x, y), the direction of the movement,
- * and the word itself.
+ * Representa un moviment d'una paraula sobre el tauler de Scrabble,
+ * incloent-hi les coordenades d'inici (x, y), la direcció del moviment,
+ * i la paraula en si.
  *
- * <p><b>Note:</b> The word must be provided in uppercase. Any lowercase letters
- * will be interpreted as blank pieces on the board.</p>
+ * <p><b>Nota:</b> La paraula ha d'estar en majúscules. Qualsevol lletra en minúscula
+ * es considerarà com una fitxa en blanc al tauler.</p>
  *
- * @param word      The word being placed on the board. It must be in uppercase.
- * @param x         The x-coordinate (horizontal position) where the word starts.
- * @param y         The y-coordinate (vertical position) where the word starts.
- * @param direction The direction in which the word is placed (Vertical or Horizontal).
+ * @param word      La paraula que es col·loca al tauler. Ha d'estar en majúscules.
+ * @param x         La coordenada x (posició horitzontal) on comença la paraula.
+ * @param y         La coordenada y (posició vertical) on comença la paraula.
+ * @param direction La direcció en què es col·loca la paraula (Vertical o Horitzontal).
  *
  * @author Gerard Gascón
  */
 public record Movement(String word, int x, int y, Direction direction) {
-
-    /**
-     * Returns the word being placed on the board in this movement.
-     *
-     * @return the word being placed
-     */
-    public String word() {
-        return word;
-    }
-
-    /**
-     * Returns the starting x-coordinate of the word.
-     *
-     * @return the x-coordinate
-     */
-    public int x() {
-        return x;
-    }
-
-    /**
-     * Returns the starting y-coordinate of the word.
-     *
-     * @return the y-coordinate
-     */
-    public int y() {
-        return y;
-    }
-
-    /**
-     * Returns the direction of the word placement.
-     *
-     * @return the direction of the word placement
-     */
-    public Direction direction() {
-        return direction;
-    }
 }

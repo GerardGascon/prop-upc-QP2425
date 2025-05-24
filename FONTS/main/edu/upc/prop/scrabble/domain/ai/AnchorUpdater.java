@@ -3,14 +3,43 @@ package edu.upc.prop.scrabble.domain.ai;
 import edu.upc.prop.scrabble.data.Anchors;
 import edu.upc.prop.scrabble.data.Movement;
 import edu.upc.prop.scrabble.data.board.Board;
+import edu.upc.prop.scrabble.data.crosschecks.CrossChecks;
 import edu.upc.prop.scrabble.domain.pieces.PiecesConverter;
 import edu.upc.prop.scrabble.utils.Direction;
 
+/**
+ * Classe feta per actualitzar els anchors
+ * @author Albert Usero
+ * @author Felipe Martínez
+ * @see Anchors
+ */
 public class AnchorUpdater {
+    /**
+     * Anchors a actualitzar
+     * @see Anchors
+     */
     private final Anchors anchors;
+    /**
+     * Board sobre la qual estan definits els anchors
+     * @see Board
+     */
     private final Board board;
+    /**
+     * Convertidor de peces
+     * @see PiecesConverter
+     */
     private final PiecesConverter piecesConverter;
 
+    /**
+     * Crea un nou actualitzador d'anchors. Afegeix l'anchor inicial
+     * al centre del tauler.
+     * @param anchors Anchors a actualitzar
+     * @param board Tauler sobre el qual s'han creat els anchors
+     * @param piecesConverter Convertidor de peces
+     * @see Anchors
+     * @see Board
+     * @see PiecesConverter
+     */
     public AnchorUpdater(Anchors anchors, Board board, PiecesConverter piecesConverter) {
         this.anchors = anchors;
         this.board = board;
@@ -18,6 +47,12 @@ public class AnchorUpdater {
         this.anchors.addAnchor(board.getSize() / 2, board.getSize() / 2);
     }
 
+    /**
+     * Actualitza els anchors segons el moviment realitzat
+     * @param move Moviment realitzat sobre el qual s'han d'actualitzar el anchors
+     * @see Movement
+     * @see Anchors
+     */
     public void run(Movement move) {
         int size = piecesConverter.run(move.word()).length;
 
@@ -27,6 +62,12 @@ public class AnchorUpdater {
             updateHorizontalAnchors(move.x(), move.y(), size);
     }
 
+    /**
+     * Actualitza els anchors per un moviment que s'ha efectuat en horitzontal
+     * @param x Coordenada x del moviment
+     * @param y Coordenada y del moviment
+     * @param size Quantitat de peces utilitzades al moviment
+     */
     private void updateHorizontalAnchors(int x, int y, int size) {
         if (board.isCellValid(x - 1, y) && board.isCellEmpty(x - 1, y) )
             anchors.addAnchor(x - 1, y); // Previous to first
@@ -43,6 +84,12 @@ public class AnchorUpdater {
         }
     }
 
+    /**
+     * Actualitza els anchors per un moviment que s'ha efectuat en vertical
+     * @param x Coordenada x del moviment
+     * @param y Coordenada y del moviment
+     * @param size Quantitat de peces utilitzades al moviment
+     */
     private void updateVerticalAnchors(int x, int y, int size) {
         if (board.isCellValid(x, y - 1) && board.isCellEmpty(x, y - 1))
             anchors.addAnchor(x, y - 1);

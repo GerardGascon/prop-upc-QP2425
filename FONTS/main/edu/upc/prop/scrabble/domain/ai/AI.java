@@ -18,9 +18,16 @@ import java.util.*;
 /**
  * Intel·ligència artificial que computa el moviment a realitzar
  * pel jugador controlat per la màquina
- *
+ * @see Player
+ * @see Board
+ * @see Anchors
+ * @see CrossChecks
+ * @see Movement
+ * @see PointCalculator
+ * @see PiecesConverter
+ * @see DAWG
  * @author Albert Usero
- * @author Felipe Martínez Lassalle
+ * @author Felipe Martínez
  */
 public abstract class AI {
     /**
@@ -40,7 +47,7 @@ public abstract class AI {
      */
     private Anchors anchors;
     /**
-     * CrossChecks que senyalitzen les lletres vàlides a les diferents caselles
+     * CrossChecks que senyalitzen les lletres vàlides a  determinades caselles
      */
     protected CrossChecks crossChecks;
     /**
@@ -72,6 +79,25 @@ public abstract class AI {
      */
     private int initialPieces;
 
+    /**
+     * Crea una nova intel·ligència artificial amb els paràmetres especificats. Per tenir
+     * un correcte funcionament cal que si els seus paràmetres poden adoptar diferents
+     * idiomes tots estiguin al mateix.
+     * @param piecesConverter Convertidor de peces
+     * @param pointCalculator Calculador de punts
+     * @param dawg DAWG que guarda els nodes que representen les possibles paraules
+     * @param board Tauler sobre el qual es calcularan els moviments
+     * @param bot Jugador al qual l'algorisme calcularà els moviments
+     * @param anchors Estructura de dades que emmagatzema caselles des de les quals es pot efectuar un moviment
+     * @param crossChecks Estructura de dades que senyalitza les lletres vàlides a determinades caselles
+     * @see Player
+     * @see Board
+     * @see Anchors
+     * @see CrossChecks
+     * @see DAWG
+     * @see PointCalculator
+     * @see PiecesConverter
+     */
     public AI(PiecesConverter piecesConverter, PointCalculator pointCalculator, DAWG dawg, Board board, Player bot, Anchors anchors, CrossChecks crossChecks) {
         this.dawg = dawg;
         this.bot = bot;
@@ -83,9 +109,8 @@ public abstract class AI {
     }
 
     /**
-     * Computes and returns the best possible move based on the highest point value.
-     *
-     * @return the move that yields the highest number of points. Null if no move possible.
+     * Computa i retorna el millor possible moviment que resulti en la quantitat més gran de punts.
+     * @return El moviment que efectua la quantitat més gran de punts. Null si no hi ha cap possible.
      */
     public Movement run() {
         resetGlobals();
@@ -101,7 +126,16 @@ public abstract class AI {
         if(bestScore == -1) return null;
         return bestMove;
     }
-
+    /**
+     * Actualitza la direcció actual a vertical i comprova possibles
+     * moviments en vertical. Això s'efectua comprovant moviments en
+     * horitzontal amb el tauler (i estructures de dades relacionades)
+     * amb una rotació en 90 del sentit horari. (després ja es desfarà
+     * la rotació si el millor moviment resulta ser en vertical)
+     * @see Board
+     * @see CrossChecks
+     * @see Anchors
+     */
     private void checkVertical() {
         Board originalBoard = board;
         CrossChecks originalCrossChecks = crossChecks;
@@ -119,17 +153,35 @@ public abstract class AI {
         crossChecks = originalCrossChecks;
     }
 
+    /**
+     * Actualitza la direcció actual a horitzontal i comprova possibles
+     * moviments en horitzontal amb el tauler en la posició original.
+     */
     private void checkHorizontal() {
         currentDirection = Direction.Horizontal;
         innerRun();
     }
 
+    /**
+     * Restableix els valors globals als valors inicials.
+     * @see Movement
+     * @see Player
+     */
     private void resetGlobals() {
         bestMove = new Movement("", 0, 0, Direction.Horizontal);
         bestScore = -1;
         initialPieces = bot.getHand().length;
     }
 
+    /**
+     * Comprova tots els moviments possibles vàlids amb les peces actuals del jugador
+     * en direcció horitzontal. Anirà actualitzant les dades globals bestMove i
+     * bestScore i el seu resultat quedarà emmagatzemat allà.
+     * @see Anchors
+     * @see Board
+     * @see Node
+     * @see DAWG
+     */
     private void innerRun() {
         for (int i = 0; i < anchors.getSize(); ++i) {
             currentAnchor = anchors.getAnchor(i);
@@ -157,13 +209,15 @@ public abstract class AI {
     }
 
     /**
-     * Backtracking function that iterates over every left part of possible words.
+     * Funció de backtracking que itera sobre cada part esquerra ("prefixos") de les possibles
+     * paraules a formar a les condicions actuals (peces a la mà, peces en joc etc.)
      *
-     * @param partialWord current word fragment.
-     * @param node        dawg node equivalent to the partialWord.
-     * @param limit       how far can we go.
+     * @param partialWord Tros de la paraula actual
+     * @param node Node del DAWG al qual s'arriba travessant-lo amb el tros de paraula actual
+     * @param limit Com de lluny podem anar
      * @see DAWG
      * @see Node
+     * @see Piece
      */
     protected void LeftPart(String partialWord, Node node, int limit) {
         ExtendRight(partialWord, node, currentAnchor);
@@ -181,36 +235,34 @@ public abstract class AI {
     }
 
     /**
-     * Processes special cases (may do nothing if language doesn't have any)
-     *
-     * @param partialWord current word fragment.
-     * @param limit       how far can we go.
-     * @param entry       current successor entry.
+     * Tracta casos especials cap a l'esquerra (potser no fa res si no existeixen al llenguatge)
+     * @param partialWord Tros de la paraula actual
+     * @param limit Com de lluny podem anar
+     * @param entry Caràcter/node següent que estem comprovant
      * @see DAWG
      * @see Node
      */
     protected abstract void processLeftPartSpecialPieces(String partialWord, int limit, Map.Entry<Character, Node> entry);
 
     /**
-     * Checks no illegal combination is done (may do nothing if language doesn't have any)
-     *
-     * @param partialWord current word fragment.
-     * @param limit       how far can we go.
-     * @param entry       current successor entry.
-     * @param usedPiece   piece used in current iteration.
+     * Comprova que no hi ha cap combinació il·legal (potser no fa res si no existeixen al llenguatge)
+     * @param partialWord Tros de la paraula actual
+     * @param limit Com de lluny podem anar
+     * @param entry Caràcter/node següent que estem comprovant
+     * @param usedPiece Peça utilitzada a la iteració actual
      * @see DAWG
      * @see Node
      */
     protected abstract void processNextLeftPiece(String partialWord, int limit, Map.Entry<Character, Node> entry, Piece usedPiece);
 
     /**
-     * Backtracking handler
-     *
-     * @param partialWord current word fragment.
-     * @param limit       how far can we go.
-     * @param usedPiece   piece used in current iteration.
+     * Gestor de backtracking
+     * @param partialWord Tros de la paraula actual
+     * @param limit Com de lluny podem anar
+     * @param usedPiece Peça utilitzada a la iteració actual
      * @see DAWG
      * @see Node
+     * @see Piece
      */
     protected void goToNextLeftPiece(String partialWord, Node node, int limit, Piece usedPiece) {
         bot.removePiece(usedPiece);
@@ -218,6 +270,14 @@ public abstract class AI {
         bot.addPiece(usedPiece);
     }
 
+    /**
+     * Crida a estendre cap a la dreta si és possible. Té en compte possibles
+     * els possibles casos els quals ens podem trobar en realitzar la crida.
+     * Comprova el tros de paraula que portem per veure si és vàlid.
+     * @param partialWord Tros de paraula actual
+     * @param node Node que representa el caràcter final del tros de paraula actual
+     * @param cell Casella actual sobre la qual estem estenent
+     */
     protected void ExtendRight(String partialWord, Node node, Vector2 cell) {
         if (board.isCellValid(cell.x, cell.y)) {
             if (board.isCellEmpty(cell.x, cell.y)) {
@@ -248,21 +308,43 @@ public abstract class AI {
         }
     }
 
+    /**
+     * Tracta casos especials cap a la dreta (potser no fa res si no existeixen al llenguatge)
+     * @param partialWord Tros de la paraula actual
+     * @param cell Posició a la qual ens trobem en expansió
+     * @param entry Caràcter/node següent que estem comprovant
+     * @see DAWG
+     * @see Node
+     */
     protected abstract void processRightPartSpecialPieces(String partialWord, Vector2 cell, Map.Entry<Character, Node> entry);
 
+    /**
+     * Estén cap a la dreta fent servir una peça de la mà i comprova casos especials
+     * @param partialWord Tros de paraula actual
+     * @param cell Casella sobre la qual estem estenent
+     * @param entry Caràcter/Node següent que estem comprovant
+     * @param usedPiece Peça utilitzada
+     */
     protected abstract void extendToNextNewPieceRight(String partialWord, Vector2 cell, Map.Entry<Character, Node> entry, Piece usedPiece);
 
+    /**
+     * Estén cap a la dreta amb una peça ja col·locada al tauler i comprova casos especials
+     * @param partialWord Tros de paraula actual
+     * @param node Node que referencia a la peça ja col·locada
+     * @param cell Casella sobre la qual estem estenent
+     * @param placedPiece Peça ja al tauler
+     */
     protected abstract void extendToNextExistingPieceRight(String partialWord, Node node, Vector2 cell, Piece placedPiece);
 
     /**
-     * Backtracking handler
-     *
-     * @param partialWord current word fragment.
-     * @param nextNode    current successor entry.
-     * @param cell        next iteration cell.
-     * @param usedPiece   piece used in current iteration.
+     * Gestor de backtracking
+     * @param partialWord Tros de paraula actual
+     * @param nextNode Caràcter/node següent que estem comprovant
+     * @param cell Casella de la següent iteració
+     * @param usedPiece Peça utilitzada a la iteració actual
      * @see DAWG
      * @see Node
+     * @see Piece
      */
     protected void goToNextRightPiece(String partialWord, Node nextNode, Vector2 cell, Piece usedPiece) {
         bot.removePiece(usedPiece);
@@ -270,6 +352,11 @@ public abstract class AI {
         bot.addPiece(usedPiece);
     }
 
+    /**
+     * @param word Paraula sobre la qual volem obtenir el node final
+     * @return Node que representa el caràcter final de la paraula donada.
+     * @see Node
+     */
     protected Node getFinalNode(String word) {
         Node current = dawg.getRoot();
         int i = 0;
@@ -280,8 +367,23 @@ public abstract class AI {
         return current;
     }
 
+    /**
+     * Validem si quan estenem la paraula actual no fem invàlides
+     * les paraules presents al board
+     * @param cell Casella on comença la paraula
+     * @param board Tauler actual
+     * @param c Caràcter a afegir
+     * @return Cert si la paraula és vàlida
+     */
     protected abstract boolean validExistingWord(Vector2 cell, Board board, char c);
 
+    /**
+     * Comprovem si hem fet servir com a mínim una peça de la mà i si passem
+     * per algun anchor abans de confirmar que hem trobat una possible jugada.
+     * Tractem d'actualitzar la millor jugada i puntuació en cas que sigui correcte.
+     * @param word Paraula que estem comprovant
+     * @param cell Casella d'inici del moviment (considerem direcció horitzontal)
+     */
     protected void checkWord(String word, Vector2 cell) {
         if (bot.getHand().length == initialPieces)
             return;
@@ -297,6 +399,13 @@ public abstract class AI {
         if(anchorTraversed) recalculateMaxScoringWord(word, posVector, pieceArray);
     }
 
+    /**
+     * Calcula la puntuació del nou moviment i en cas que sigui millor que l'actual
+     * actualitza les variables globals BestMove i BestScore.
+     * @param word Nova paraula trobada
+     * @param posVector Posició ón s'efectua el nou moviment
+     * @param pieceArray Peces que fem servir per realitzar el nou moviment
+     */
     private void recalculateMaxScoringWord(String word, Vector2[] posVector, Piece[] pieceArray) {
         int points = pointCalculator.run(posVector, pieceArray);
         if (points > bestScore) {

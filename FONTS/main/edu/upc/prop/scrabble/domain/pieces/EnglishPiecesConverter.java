@@ -3,8 +3,8 @@ package edu.upc.prop.scrabble.domain.pieces;
 
 import edu.upc.prop.scrabble.data.pieces.Piece;
 
-/***
- * Class that converts a string of letters into pieces in English.
+/**
+ * Classe que converteix una cadena de lletres en peces en anglès.
  * @author Gina Escofet González
  */
 public class EnglishPiecesConverter extends PiecesConverter {

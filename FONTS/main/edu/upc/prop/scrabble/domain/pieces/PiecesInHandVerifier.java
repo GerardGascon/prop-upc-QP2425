@@ -6,7 +6,7 @@ import edu.upc.prop.scrabble.data.Player;
 import java.util.ArrayList;
 
 /***
- * Verifies if a player has the necessary pieces in their hand to form a given word.
+ * Verifica si un jugador té les peces necessàries a la seva mà per formar una paraula donada.
  * @author Gina Escofet González
  */
 public class PiecesInHandVerifier {
@@ -14,10 +14,10 @@ public class PiecesInHandVerifier {
     private final PiecesConverter piecesConverter;
 
     /***
-     * Constructs a verifier for the specified player and piece converter.
-     * @param player The player whose hand will be verified.
-     * @param piecesConverter Converts words to piece arrays.
-     * @throws IllegalArgumentException if either parameter is null
+     * Construeix un verificador per al jugador i el convertidor de peces especificats.
+     * @param player El jugador la mà del qual serà verificada.
+     * @param piecesConverter Converteix paraules a arrays de peces.
+     * @throws IllegalArgumentException si algun dels paràmetres és nul.
      */
     public PiecesInHandVerifier(Player player, PiecesConverter piecesConverter) {
         if (player == null) {
@@ -31,10 +31,10 @@ public class PiecesInHandVerifier {
     }
 
     /***
-     * Finds and returns the pieces from the player's hand that match a given word.
-     * @param word The word to verify against the player's pieces.
-     * @return Array of matching pieces found in the player's hand
-     * @throws IllegalArgumentException if the word is null
+     * Troba i retorna les peces de la mà del jugador que coincideixen amb una paraula donada.
+     * @param word La paraula a verificar amb les peces del jugador.
+     * @return Array de peces coincidents trobades a la mà del jugador.
+     * @throws IllegalArgumentException si la paraula és nul·la.
      */
     public Piece[] run(String word) {
         if (word == null) {

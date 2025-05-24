@@ -1,15 +1,15 @@
 package edu.upc.prop.scrabble.data.board;
 
 /**
- * Represents a 21x21 Scrabble board used in extended or custom game modes.
- * This board includes additional premium tiles such as quadruple word and letter tiles.
+ * Representa un tauler de Scrabble de 21x21 utilitzat en modes de joc ampliats o personalitzats.
+ * Aquest tauler inclou caselles premium addicionals com les de paraula i lletra quadruplicada.
  *
  * @author Gerard Gascón
  */
 public class SuperBoard extends Board {
     /**
-     * Constructs a SuperBoard with a 21x21 layout and
-     * sets all extended premium tile positions.
+     * Construeix un SuperBoard amb un disseny de 21x21 i
+     * estableix totes les posicions de caselles prèmium extenses.
      */
     public SuperBoard() {
         super(21);
@@ -22,6 +22,9 @@ public class SuperBoard extends Board {
         setQuadrupleLetterTiles();
     }
 
+    /**
+     * Estableix les posicions de les caselles que dupliquen el valor de la paraula.
+     */
     private void setDoubleWordTiles() {
         super.setPremiumTile(1, 1, PremiumTileType.DoubleWord);
         super.setPremiumTile(8, 1, PremiumTileType.DoubleWord);
@@ -80,6 +83,9 @@ public class SuperBoard extends Board {
         super.setPremiumTile(19, 19, PremiumTileType.DoubleWord);
     }
 
+    /**
+     * Estableix les posicions de les caselles que tripliquen el valor de la paraula.
+     */
     private void setTripleWordTiles() {
         super.setPremiumTile(7, 0, PremiumTileType.TripleWord);
         super.setPremiumTile(13, 0, PremiumTileType.TripleWord);
@@ -105,6 +111,9 @@ public class SuperBoard extends Board {
         super.setPremiumTile(13, 20, PremiumTileType.TripleWord);
     }
 
+    /**
+     * Estableix les posicions de les caselles que quadrupliquen el valor de la paraula.
+     */
     private void setQuadrupleWordTiles() {
         super.setPremiumTile(0, 0, PremiumTileType.QuadrupleWord);
         super.setPremiumTile(0, 20, PremiumTileType.QuadrupleWord);
@@ -112,6 +121,9 @@ public class SuperBoard extends Board {
         super.setPremiumTile(20, 20, PremiumTileType.QuadrupleWord);
     }
 
+    /**
+     * Estableix les posicions de les caselles que dupliquen el valor de la lletra.
+     */
     private void setDoubleLetterTiles() {
         super.setPremiumTile(3, 0, PremiumTileType.DoubleLetter);
         super.setPremiumTile(10, 0, PremiumTileType.DoubleLetter);
@@ -161,6 +173,9 @@ public class SuperBoard extends Board {
         super.setPremiumTile(17, 20, PremiumTileType.DoubleLetter);
     }
 
+    /**
+     * Estableix les posicions de les caselles que tripliquen el valor de la lletra.
+     */
     private void setTripleLetterTiles() {
         super.setPremiumTile(4, 1, PremiumTileType.TripleLetter);
         super.setPremiumTile(16, 1, PremiumTileType.TripleLetter);
@@ -189,6 +204,9 @@ public class SuperBoard extends Board {
         super.setPremiumTile(16, 19, PremiumTileType.TripleLetter);
     }
 
+    /**
+     * Estableix les posicions de les caselles que quadrupliquen el valor de la lletra.
+     */
     private void setQuadrupleLetterTiles() {
         super.setPremiumTile(5, 2, PremiumTileType.QuadrupleLetter);
         super.setPremiumTile(15, 2, PremiumTileType.QuadrupleLetter);
@@ -203,6 +221,11 @@ public class SuperBoard extends Board {
         super.setPremiumTile(15, 18, PremiumTileType.QuadrupleLetter);
     }
 
+    /**
+     * Crea una còpia d'aquest tauler.
+     *
+     * @return una nova instància de SuperBoard amb la mateixa configuració.
+     */
     @Override
     protected Board copy() {
         return new SuperBoard();

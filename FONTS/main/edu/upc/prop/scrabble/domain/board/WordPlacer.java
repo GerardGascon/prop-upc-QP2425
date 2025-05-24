@@ -7,24 +7,28 @@ import edu.upc.prop.scrabble.utils.Direction;
 import edu.upc.prop.scrabble.utils.Vector2;
 
 /**
- * The WordPlacer class is responsible for placing words (pieces) on the board and updating the scores.
- * It triggers a refresh on the view after the word is placed.
+ * La classe WordPlacer és responsable de col·locar paraules (peces) al tauler i actualitzar la puntuació.
+ * També notifica a la vista per refrescar el tauler després de col·locar la paraula.
  *
  * @author Gerard Gascón
  */
 public class WordPlacer {
+    /** El tauler de joc on es col·loquen les peces */
     private final Board board;
+    /** La vista que s'actualitza després de cada jugada */
     private final IBoard view;
+    /** Calculador de punts per a la jugada */
     private final PointCalculator pointCalculator;
+    /** Jugador que fa la jugada */
     private final Player player;
 
     /**
-     * Constructs a WordPlacer instance with the specified player, board, view, and point calculator.
+     * Constructor que inicialitza el WordPlacer amb el jugador, tauler, vista i calculador de punts.
      *
-     * @param player          The player who is making the move.
-     * @param board           The game board where the pieces will be placed.
-     * @param view            The view that will be updated after the move.
-     * @param pointCalculator The point calculator used to calculate the score for the move.
+     * @param player          Jugador que realitza la jugada
+     * @param board           Tauler on es col·loquen les peces
+     * @param view            Vista que s'actualitzarà després de la jugada
+     * @param pointCalculator Calculador de punts per a la jugada
      */
     public WordPlacer(Player player, Board board, IBoard view, PointCalculator pointCalculator) {
         this.player = player;
@@ -34,16 +38,14 @@ public class WordPlacer {
     }
 
     /**
-     * Places the given pieces on the board and updates the player's score and the view.
-     * <p>
-     * This method calculates the positions for each piece based on the starting position and direction
-     * (horizontal or vertical), places the pieces on the board, calculates the score using the PointCalculator,
-     * and updates the board view.
+     * Col·loca les peces al tauler segons la posició inicial i la direcció.
+     * Calcula la puntuació resultant i l'afegeix al jugador.
+     * Actualitza la vista per reflectir el canvi al tauler.
      *
-     * @param pieces    An array of the new pieces to place on the board.
-     * @param x         The X position of the start of the word.
-     * @param y         The Y position of the start of the word.
-     * @param direction The direction in which the word will be placed (horizontal or vertical).
+     * @param pieces    Array de peces noves a col·locar
+     * @param x         Posició X d'inici de la paraula
+     * @param y         Posició Y d'inici de la paraula
+     * @param direction Direcció horitzontal o vertical per col·locar la paraula
      */
     public void run(Piece[] pieces, int x, int y, Direction direction) {
         Vector2[] positions;
@@ -58,6 +60,15 @@ public class WordPlacer {
         view.updateBoard();
     }
 
+    /**
+     * Col·loca les peces verticalment a partir de la posició (x, y).
+     * Ignora les cel·les ja ocupades.
+     *
+     * @param pieces Peces a col·locar
+     * @param x      Posició X fixa (columnes)
+     * @param y      Posició Y inicial (files)
+     * @return Array amb les posicions on s'han col·locat les peces
+     */
     private Vector2[] placeWordVertical(Piece[] pieces, int x, int y) {
         Vector2[] positions = new Vector2[pieces.length];
 
@@ -75,6 +86,15 @@ public class WordPlacer {
         return positions;
     }
 
+    /**
+     * Col·loca les peces horitzontalment a partir de la posició (x, y).
+     * Ignora les cel·les ja ocupades.
+     *
+     * @param pieces Peces a col·locar
+     * @param x      Posició X inicial (columnes)
+     * @param y      Posició Y fixa (files)
+     * @return Array amb les posicions on s'han col·locat les peces
+     */
     private Vector2[] placeWordHorizontal(Piece[] pieces, int x, int y) {
         Vector2[] positions = new Vector2[pieces.length];
 

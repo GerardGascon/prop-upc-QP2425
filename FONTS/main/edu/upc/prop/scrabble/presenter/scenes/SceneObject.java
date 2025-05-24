@@ -1,31 +1,38 @@
 package edu.upc.prop.scrabble.presenter.scenes;
 
 /**
- * Abstract base class representing an object within a scene.
+ * Classe base abstracta que representa un objecte dins d'una escena.
  * <p>
- * This class provides basic functionality for enabling, disabling, and processing scene objects.
- * It also handles the integration with the scene management system, allowing scene objects
- * to be instantiated and destroyed as needed.
+ * Aquesta classe proporciona funcionalitats bàsiques per habilitar, deshabilitar i processar objectes
+ * dins l'escena. També gestiona la integració amb el sistema de gestió d'escenes, cosa que permet la instanciació
+ * i destrucció d'objectes segons sigui necessari.
  * </p>
  *
  * @author Gerard Gascón
  */
 public abstract class SceneObject {
+    /**
+     * Indica si l'objecte està habilitat (actiu) o no.
+     */
     private boolean enabled;
+
+    /**
+     * Escena a la qual pertany aquest objecte.
+     */
     private Scene scene;
 
     /**
-     * Sets the scene that this object belongs to.
+     * Assigna l'escena a la qual pertany aquest objecte.
      *
-     * @param scene The scene to associate with this object
+     * @param scene L'escena a associar amb aquest objecte
      */
     void setScene(Scene scene) {
         this.scene = scene;
     }
 
     /**
-     * Disables the object and performs any additional logic when the object is disabled.
-     * This method is called when the object is disabled from the scene.
+     * Deshabilita l'objecte i executa la lògica associada a la deshabilitació.
+     * Aquest mètode es crida quan l'objecte és deshabilitat des de l'escena.
      *
      * @see #onDisable()
      */
@@ -35,8 +42,8 @@ public abstract class SceneObject {
     }
 
     /**
-     * Enables the object and performs any additional logic when the object is enabled.
-     * This method is called when the object is enabled in the scene.
+     * Habilita l'objecte i executa la lògica associada a l'habilitació.
+     * Aquest mètode es crida quan l'objecte és habilitat dins l'escena.
      *
      * @see #onEnable()
      */
@@ -46,50 +53,50 @@ public abstract class SceneObject {
     }
 
     /**
-     * Checks if the object is enabled.
+     * Comprova si l'objecte està habilitat.
      *
-     * @return <b>true</b> if the object is enabled, <b>false</b> otherwise
+     * @return <b>true</b> si l'objecte està habilitat, <b>false</b> en cas contrari
      */
     public final boolean isEnabled() {
         return enabled;
     }
 
     /**
-     * The method that is called to process the object during the scene update.
-     * This can be overridden by subclasses to implement specific behavior.
+     * Mètode que es crida per processar l'objecte durant l'actualització de l'escena.
+     * Pot ser sobreescrit per les subclasses per implementar comportaments específics.
      *
-     * @param delta Time difference from the last call (in seconds)
+     * @param delta Diferència de temps respecte a la darrera crida (en segons)
      */
     public void onProcess(float delta) {
     }
 
     /**
-     * Called when the object is detached from the scene.
-     * Subclasses can override this method to handle the detachment process.
+     * Mètode cridat quan l'objecte és desenganxat de l'escena.
+     * Les subclasses poden sobreescriure aquest mètode per gestionar el procés de desenganxament.
      */
     public void onDetach() {
     }
 
     /**
-     * Called when the object is enabled. Can be overridden by subclasses to implement
-     * custom behavior when the object is enabled in the scene.
+     * Mètode cridat quan l'objecte és habilitat. Pot ser sobreescrit per implementar
+     * comportaments personalitzats quan l'objecte s'habilita dins l'escena.
      */
     protected void onEnable() {
     }
 
     /**
-     * Called when the object is disabled. Can be overridden by subclasses to implement
-     * custom behavior when the object is disabled in the scene.
+     * Mètode cridat quan l'objecte és deshabilitat. Pot ser sobreescrit per implementar
+     * comportaments personalitzats quan l'objecte es deshabilita dins l'escena.
      */
     protected void onDisable() {
     }
 
     /**
-     * Instantiates a new scene object within the current scene.
+     * Instància un nou objecte d'escena dins de l'escena actual.
      *
-     * @param <T> The type of scene object to instantiate
-     * @param o The class of the scene object to instantiate
-     * @return The newly instantiated scene object
+     * @param <T> Tipus de l'objecte d'escena a instanciar
+     * @param o   La classe de l'objecte d'escena a instanciar
+     * @return L'objecte d'escena acabat d'instanciar
      * @see Scene#instantiate(Class)
      */
     protected <T extends SceneObject> T instantiate(Class<T> o) {
@@ -97,9 +104,9 @@ public abstract class SceneObject {
     }
 
     /**
-     * Destroys a scene object and removes it from the current scene.
+     * Destrueix un objecte d'escena i el elimina de l'escena actual.
      *
-     * @param o The scene object to destroy
+     * @param o L'objecte d'escena a destruir
      * @see Scene#destroy(SceneObject)
      */
     protected final void destroy(SceneObject o) {

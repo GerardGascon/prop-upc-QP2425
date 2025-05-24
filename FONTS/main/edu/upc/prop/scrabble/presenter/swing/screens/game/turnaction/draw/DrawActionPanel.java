@@ -2,9 +2,15 @@ package edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction.draw;
 
 import javax.swing.*;
 import java.awt.*;
-
+/**
+ * Classe per gestionar el disseny del botó de Draw (Robar) en una partida.
+ * @author Gina Escofet González
+ */
 public class DrawActionPanel extends JPanel {
-
+    /***
+     * Construeix un nou `DrawActionPanel` amb el gestor de disseny especificat.
+     * @param layout El `LayoutManager` que s'utilitzarà per a aquest panell.
+     */
     public DrawActionPanel (LayoutManager layout) {
         super(layout);
     }

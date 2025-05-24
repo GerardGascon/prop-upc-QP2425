@@ -7,7 +7,27 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 
+/**
+ * Classe encarregada de llegir dades des de fitxers de guardat de la partida.
+ * <p>
+ * Estén la classe abstracta SaveDataStreamer per obtenir la ruta absoluta
+ * i implementa la interfície ISaveReader per a la lectura de fitxers.
+ * </p>
+ *
+ * @author Gerard Gascón
+ */
 public class SaveReader extends SaveDataStreamer implements ISaveReader {
+    /**
+     * Llegeix el contingut d'un fitxer de guardat en format text.
+     * <p>
+     * Utilitza la codificació UTF-8 per llegir el fitxer. Si el fitxer no existeix,
+     * retorna null. En cas d'error durant la lectura, imprimeix un missatge d'error
+     * i retorna null.
+     * </p>
+     *
+     * @param fileName Nom del fitxer que es vol llegir.
+     * @return El contingut del fitxer com a cadena, o null si no existeix o hi ha un error.
+     */
     @Override
     public String read(String fileName) {
         File path = getAbsolutePath(fileName);
@@ -17,7 +37,7 @@ public class SaveReader extends SaveDataStreamer implements ISaveReader {
         try {
             return Files.readString(path.toPath(), StandardCharsets.UTF_8);
         } catch (IOException e) {
-            System.err.println("Error reading file: " + path + " - " + e.getMessage());
+            System.err.println("Error llegint el fitxer: " + path + " - " + e.getMessage());
             return null;
         }
     }

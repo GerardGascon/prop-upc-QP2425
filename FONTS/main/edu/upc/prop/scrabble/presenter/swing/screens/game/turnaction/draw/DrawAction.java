@@ -5,12 +5,22 @@ import edu.upc.prop.scrabble.presenter.terminal.actionmaker.HandView;
 
 import javax.swing.*;
 
+/**
+ * Classe per gestionar la lògica del botó de Draw (Robar) en una partida.
+ * @author Gina Escofet González
+ */
 public class DrawAction extends JPanel {
     private final JPanel parent;
     private JButton drawBtn;
     private final DrawActionMaker drawActionMaker;
     private final HandView handView;
 
+    /***
+     * Construeix un objecte `DrawAction`.
+     * @param parent El panell pare on s'afegirà aquest component.
+     * @param drawActionMaker L'objecte responsable de gestionar la lògica de robar peces.
+     * @param handView La vista de la mà del jugador per interactuar amb les peces seleccionades.
+     */
     public DrawAction(JPanel parent, DrawActionMaker drawActionMaker, HandView handView) {
         this.drawActionMaker = drawActionMaker;
         this.parent = parent;

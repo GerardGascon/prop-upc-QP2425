@@ -5,17 +5,43 @@ import java.awt.*;
 import java.awt.event.InputEvent;
 import java.util.function.Consumer;
 
+/**
+ * Panell que mostra un popup per seleccionar una peça (lletra) en forma d’entrada.
+ * Conté un camp d’entrada i botons per confirmar o cancel·lar.
+ *
+ * @author Gerard Gascón
+ */
 public class PieceSelector extends JPanel {
+    /** Panell pare on es mostrarà aquest selector */
     private final JPanel parent;
+
+    /** Percentatge de l’alçada del popup respecte al panell pare */
     private final float POPUP_PANEL_HEIGHT_PERCENTAGE = 0.2f;
+
+    /** Relació d’aspecte (ample/alçada) del popup */
     private final float POPUP_PANEL_ASPECT_RATIO = 1.5f;
 
+    /** Camp d’entrada per introduir la lletra */
     private final PieceWriter inputField;
+
+    /** Botó per confirmar la selecció */
     private final PieceSelectorButton putBtn;
+
+    /** Botó per cancel·lar la selecció */
     private final PieceSelectorButton cancelBtn;
+
+    /** Panell que conté l’input i els botons (popup) */
     private final JPanel popup;
+
+    /** Etiqueta de capçalera que indica què fer */
     private final JLabel headerLabel;
 
+    /**
+     * Crea un nou selector de peça amb botons de confirmació i cancel·lació.
+     *
+     * @param parent Panell pare on s’afegeix aquest selector
+     * @param selectPieceCallback Funció que s’executa quan es valida i es confirma la lletra introduïda
+     */
     public PieceSelector(JPanel parent, Consumer<String> selectPieceCallback) {
         super(null);
         this.parent = parent;
@@ -58,10 +84,19 @@ public class PieceSelector extends JPanel {
         layoutComponents();
     }
 
+    /**
+     * Valida la peça introduïda i crida el callback per processar-la.
+     * Actualment, només passa el text introduït sense fer validacions.
+     *
+     * @param selectPieceCallback Callback que s'executa amb la peça introduïda
+     */
     private void validatePieceAndPlace(Consumer<String> selectPieceCallback) {
         selectPieceCallback.accept(inputField.getText());
     }
 
+    /**
+     * Calcula i estableix la posició i mida dels components del popup.
+     */
     private void layoutComponents() {
         int panelHeight = (int)(parent.getHeight() * POPUP_PANEL_HEIGHT_PERCENTAGE);
         int panelWidth = (int)(panelHeight * POPUP_PANEL_ASPECT_RATIO);
@@ -92,6 +127,12 @@ public class PieceSelector extends JPanel {
         cancelBtn.setBounds(2 * margin + buttonWidth, buttonY, buttonWidth, buttonHeight);
     }
 
+    /**
+     * Pinta el fons translúcid per donar un efecte de popup sobre el contingut
+     * principal.
+     *
+     * @param g Context gràfic per pintar
+     */
     @Override
     protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g.create();
@@ -103,6 +144,11 @@ public class PieceSelector extends JPanel {
         g2.dispose();
     }
 
+    /**
+     * Indica que el panell no és completament opac.
+     *
+     * @return false sempre, ja que es vol un fons translúcid
+     */
     @Override
     public boolean isOpaque() {
         return false;

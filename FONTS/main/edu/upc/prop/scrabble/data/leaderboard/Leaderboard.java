@@ -35,6 +35,11 @@ public class Leaderboard implements IPersistableObject {
      */
     public void addScore(Score score) { leaderBoard.add(score); }
 
+    /**
+     * Transforma les dades que emmagatzema la leaderBoard per ser guardades
+     * @return Dades que poden ser afegides al diccionari persistent
+     * @see PersistentDictionary
+     */
     @Override
     public PersistentDictionary encode() {
         PersistentDictionary data = new PersistentDictionary();
@@ -42,6 +47,10 @@ public class Leaderboard implements IPersistableObject {
         return data;
     }
 
+    /**
+     * Emmagatzema les dades relacionades guardades al diccionari persistent a la leaderBoard
+     * @see PersistentDictionary
+     */
     @Override
     public void decode(PersistentDictionary data) {
         PersistentObject leaderboard = data.get("leaderboard");

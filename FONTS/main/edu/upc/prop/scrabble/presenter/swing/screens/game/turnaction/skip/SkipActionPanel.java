@@ -2,9 +2,15 @@ package edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction.skip;
 
 import javax.swing.*;
 import java.awt.*;
-
+/**
+ * Classe per gestionar el disseny del botó de Skip (Saltar) en una partida.
+ * @author Gina Escofet González
+ */
 public class SkipActionPanel extends JPanel {
-
+    /***
+     * Construeix un nou `SkipActionPanel` amb el gestor de disseny especificat.
+     * @param layout El `LayoutManager` que s'utilitzarà per a aquest panell.
+     */
     public SkipActionPanel (LayoutManager layout) {
         super(layout);
     }

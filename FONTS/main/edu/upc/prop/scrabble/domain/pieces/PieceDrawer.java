@@ -8,20 +8,21 @@ import edu.upc.prop.scrabble.utils.IRand;
 
 import java.util.*;
 
-/***
- * Handles the exchange of pieces between a player's hand and the game bag. It returns unwanted pieces to the bag and
- * draw new random pieces from the bag.
- * @author Gina Escofet GonzÃ¡lez
+/**
+ * Gestiona l'intercanvi de peces entre la mà d'un jugador i la bossa del joc.
+ * Retorna les peces no desitjades a la bossa i treu noves peces aleatòries de la bossa.
+ * @author Gina Escofet González
  */
 public class PieceDrawer {
     private final Bag bag;
     private final Player player;
     private final IRand rand;
 
-    /***
-     * Creates a PieceDrawer for the specified game bag and player.
-     * @param bag The game piece bag.
-     * @param player The player making the exchange.
+    /**
+     * Crea un PieceDrawer per a la bossa de joc i el jugador especificats.
+     * @param bag La bossa de peces del joc.
+     * @param player El jugador que realitza l'intercanvi.
+     * @param rand La interfície per a la generació de nombres aleatoris.
      */
     public PieceDrawer(Bag bag, Player player, IRand rand) {
         this.bag = bag;
@@ -29,9 +30,9 @@ public class PieceDrawer {
         this.rand = rand;
     }
 
-    /***
-     * Exchanges pieces between the player's hand and the bag.
-     * @param piecesToSwap Pieces to return to the bag.
+    /**
+     * Intercanvia peces entre la mà del jugador i la bossa.
+     * @param piecesToSwap Peces a retornar a la bossa.
      */
     public void run(Piece[] piecesToSwap) {
         if (bag.getSize() < piecesToSwap.length)

@@ -10,30 +10,35 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * This class is responsible for identifying and completing words formed by the newly placed pieces
- * on the Scrabble board, as well as adjacent words formed by interacting with existing pieces.
+ * Aquesta classe s'encarrega d'identificar i completar les paraules que es formen amb les peces
+ * noves col·locades al tauler de Scrabble, així com les paraules adjacents que es formen per la interacció
+ * amb peces ja existents.
+ * <p>
+ * Permet obtenir totes les paraules resultants després d'una jugada.
  *
  * @author Gerard Gascón
  */
 public class PresentPiecesWordCompleter {
+    /** Instància que obté les peces que formen paraules al tauler */
     private final WordGetter wordGetter;
 
     /**
-     * Constructs a PresentPiecesWordCompleter instance using the provided word getter.
+     * Constructor que crea un PresentPiecesWordCompleter a partir del tauler on es juga.
      *
-     * @param board The board where the game is being played.
+     * @param board El tauler on es vol detectar i completar les paraules
      */
     public PresentPiecesWordCompleter(Board board) {
         this.wordGetter = new WordGetter(board);
     }
 
     /**
-     * Runs the word completion logic for the given positions and pieces. It first determines the direction of the word
-     * (either horizontal or vertical) and then retrieves any present words formed by the new pieces placed on the board.
+     * Executa la lògica per obtenir totes les paraules formades amb les peces col·locades
+     * a les posicions indicades. Primer determina la direcció de la paraula (horitzontal o vertical)
+     * i després obté les paraules que s'han format tant en aquesta direcció com en la perpendicular.
      *
-     * @param positions The positions of the newly placed pieces on the board.
-     * @param pieces    The newly placed pieces.
-     * @return An array of strings representing the words formed, both horizontally and vertically.
+     * @param positions Les posicions de les peces noves col·locades al tauler
+     * @param pieces Les peces noves col·locades
+     * @return Un array de Strings amb totes les paraules formades (horitzontals i verticals)
      * @see Piece
      */
     public String[] run(Vector2[] positions, Piece[] pieces) {
@@ -41,6 +46,15 @@ public class PresentPiecesWordCompleter {
         return getPresentWords(positions, pieces, direction);
     }
 
+    /**
+     * Retorna totes les paraules presents en la direcció indicada, o en ambdues direccions
+     * si la direcció és null (jugada amb una sola peça).
+     *
+     * @param positions Posicions de les peces col·locades
+     * @param pieces Peces col·locades
+     * @param direction Direcció de la paraula principal (horitzontal, vertical o null)
+     * @return Array de paraules formades
+     */
     private String[] getPresentWords(Vector2[] positions, Piece[] pieces, Direction direction) {
         List<String> words = new ArrayList<>();
         if (direction == null) {
@@ -57,6 +71,15 @@ public class PresentPiecesWordCompleter {
         return words.toArray(String[]::new);
     }
 
+    /**
+     * Obté la paraula principal formada a la direcció donada, i completa amb les paraules adjacents.
+     *
+     * @param positions Posicions de les peces col·locades
+     * @param pieces Peces col·locades
+     * @param direction Direcció de la paraula principal
+     * @param words Llista on afegir les paraules trobades
+     * @return Array de paraules formades
+     */
     private String[] getWords(Vector2[] positions, Piece[] pieces, Direction direction, List<String> words) {
         String word = getWord(positions, pieces, direction);
         if (word != null)
@@ -66,6 +89,15 @@ public class PresentPiecesWordCompleter {
         return words.toArray(String[]::new);
     }
 
+    /**
+     * Completa i obté les paraules adjacents formades per la interacció amb les peces ja presents
+     * perpendicularment a la direcció de la paraula principal.
+     *
+     * @param positions Posicions de les peces col·locades
+     * @param pieces Peces col·locades
+     * @param direction Direcció de la paraula principal
+     * @return Array de paraules adjacents formades
+     */
     private String[] completeAdjacentWords(Vector2[] positions, Piece[] pieces, Direction direction) {
         List<String> words = new ArrayList<>();
         for (int i = 0; i < positions.length; i++) {
@@ -82,6 +114,15 @@ public class PresentPiecesWordCompleter {
         return words.toArray(String[]::new);
     }
 
+    /**
+     * Obté les peces que formen una paraula en la direcció perpendicular a la direcció principal,
+     * a partir de la peça i la seva posició.
+     *
+     * @param position Posició de la peça
+     * @param piece Peça col·locada
+     * @param direction Direcció principal de la paraula
+     * @return Array de peces que formen la paraula perpendicular
+     */
     private Piece[] getPresentPieces(Vector2 position, Piece piece, Direction direction) {
         Direction directionToCheck = direction == Direction.Horizontal ? Direction.Vertical : Direction.Horizontal;
 
@@ -90,6 +131,15 @@ public class PresentPiecesWordCompleter {
         );
     }
 
+    /**
+     * Obté la paraula completa que formen les peces col·locades a les posicions indicades,
+     * en la direcció donada.
+     *
+     * @param positions Posicions de les peces col·locades
+     * @param pieces Peces col·locades
+     * @param direction Direcció de la paraula
+     * @return La paraula formada, o null si només és una sola lletra (sense paraula)
+     */
     private String getWord(Vector2[] positions, Piece[] pieces, Direction direction) {
         Piece[] wordPieces = wordGetter.run(pieces, positions, direction);
         if (wordPieces.length <= 1)
@@ -101,6 +151,14 @@ public class PresentPiecesWordCompleter {
         return result.toString();
     }
 
+    /**
+     * Determina la direcció de la paraula a partir de les posicions de les peces.
+     * Si només hi ha una peça, retorna null.
+     * Si la coordenada x coincideix, la direcció és vertical, sinó horitzontal.
+     *
+     * @param positions Posicions de les peces col·locades
+     * @return Direcció de la paraula (Horizontal, Vertical o null)
+     */
     private Direction getWordDirection(Vector2[] positions) {
         if (positions.length == 1)
             return null;

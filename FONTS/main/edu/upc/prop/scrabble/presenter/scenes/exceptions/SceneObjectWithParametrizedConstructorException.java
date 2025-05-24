@@ -3,16 +3,21 @@ package edu.upc.prop.scrabble.presenter.scenes.exceptions;
 import edu.upc.prop.scrabble.presenter.scenes.SceneObject;
 
 /**
- * Exception thrown to indicate that a SceneObject can't have a constructor with parameters.
+ * Excepció llançada quan un {@link SceneObject} no pot tenir un constructor amb paràmetres.
  * <p>
- * This exception is typically used when attempting to create a SceneObject instance with a constructor
- * that takes parameters, which is not supported by the design or framework.
+ * Aquesta excepció s'utilitza quan es tracta de crear una instància de {@code SceneObject}
+ * amb un constructor que accepta paràmetres, fet que no està permès pel disseny o pel framework.
  * </p>
  *
  * @author Gerard Gascón
  * @see SceneObject
  */
 public class SceneObjectWithParametrizedConstructorException extends RuntimeException {
+    /**
+     * Constructor de l'excepció amb un missatge personalitzat.
+     *
+     * @param message Missatge explicant la causa de l'excepció.
+     */
     public SceneObjectWithParametrizedConstructorException(String message) {
         super(message);
     }
