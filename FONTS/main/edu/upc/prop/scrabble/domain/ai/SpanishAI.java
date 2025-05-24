@@ -13,11 +13,34 @@ import edu.upc.prop.scrabble.utils.Vector2;
 
 import java.util.Map;
 
+/**
+ * Intel·ligència artificial que computa el moviment a realitzar
+ * pel jugador controlat per la màquina i partides on la llengua seleccionada
+ * és el castellà.
+ * @see Player
+ * @see Board
+ * @see Anchors
+ * @see CrossChecks
+ * @see edu.upc.prop.scrabble.data.Movement
+ * @see PointCalculator
+ * @see PiecesConverter
+ * @see DAWG
+ * @author Albert Usero
+ * @author Felipe Martínez
+ */
 public class SpanishAI extends AI {
     public SpanishAI(PiecesConverter piecesConverter, PointCalculator pointCalculator, DAWG dawg, Board board, Player bot, Anchors anchors, CrossChecks crossChecks) {
         super(piecesConverter, pointCalculator, dawg, board, bot, anchors, crossChecks);
     }
 
+    /**
+     * Tracta casos especials cap a l'esquerra (RR, LL, CH)
+     * @param partialWord Tros de la paraula actual
+     * @param limit Com de lluny podem anar
+     * @param entry Caràcter/node següent que estem comprovant
+     * @see DAWG
+     * @see Node
+     */
     @Override
     protected void processLeftPartSpecialPieces(String partialWord, int limit, Map.Entry<Character, Node> entry) {
         char c = entry.getKey();
@@ -53,6 +76,15 @@ public class SpanishAI extends AI {
         }
     }
 
+    /**
+     * Comprova que no hi ha cap combinació il·legal (RR, LL, CH)
+     * @param partialWord Tros de la paraula actual
+     * @param limit Com de lluny podem anar
+     * @param entry Caràcter/node següent que estem comprovant
+     * @param usedPiece Peça utilitzada a la iteració actual
+     * @see DAWG
+     * @see Node
+     */
     @Override
     protected void processNextLeftPiece(String partialWord, int limit, Map.Entry<Character, Node> entry, Piece usedPiece) {
         char lastLetter = ' ';
@@ -65,6 +97,13 @@ public class SpanishAI extends AI {
         }
     }
 
+    /**
+     * Estén cap a la dreta fent servir una peça de la mà i comprova casos especials (RR, LL, CH)
+     * @param partialWord Tros de paraula actual
+     * @param cell Casella sobre la qual estem estenent
+     * @param entry Caràcter/Node següent que estem comprovant
+     * @param usedPiece Peça utilitzada
+     */
     @Override
     protected void extendToNextNewPieceRight(String partialWord, Vector2 cell, Map.Entry<Character, Node> entry, Piece usedPiece) {
         char lastLetter = ' ';
@@ -77,6 +116,13 @@ public class SpanishAI extends AI {
         }
     }
 
+    /**
+     * Estén cap a la dreta amb una peça ja col·locada al tauler i comprova casos especials (RR, LL, CH)
+     * @param partialWord Tros de paraula actual
+     * @param node Node que referencia a la peça ja col·locada
+     * @param cell Casella sobre la qual estem estenent
+     * @param placedPiece Peça ja al tauler
+     */
     @Override
     protected void extendToNextExistingPieceRight(String partialWord, Node node, Vector2 cell, Piece placedPiece) {
         char lastLetter = ' ';
@@ -99,6 +145,14 @@ public class SpanishAI extends AI {
         }
     }
 
+    /**
+     * Tracta casos especials cap a la dreta (RR, LL, CH)
+     * @param partialWord Tros de la paraula actual
+     * @param cell Posició a la qual ens trobem en expansió
+     * @param entry Caràcter/node següent que estem comprovant
+     * @see DAWG
+     * @see Node
+     */
     @Override
     protected void processRightPartSpecialPieces(String partialWord, Vector2 cell, Map.Entry<Character, Node> entry) {
         char c = entry.getKey();
@@ -151,6 +205,14 @@ public class SpanishAI extends AI {
         }
     }
 
+    /**
+     * Validem si quan estenem la paraula actual no fem invàlides
+     * les paraules presents al board
+     * @param cell Casella on comença la paraula
+     * @param board Tauler actual
+     * @param c Caràcter a afegir
+     * @return Cert si la paraula és vàlida
+     */
     @Override
     protected boolean validExistingWord(Vector2 cell, Board board, char c) {
         if(c == 'R' || c == 'C' || c == 'H' || c == 'L') return false;
