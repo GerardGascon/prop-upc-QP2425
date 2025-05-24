@@ -23,16 +23,32 @@ public class EnglishCrossChecks extends CrossChecks {
         super(boardSize);
     }
 
+    /**
+     * Obté el conjunt de peces vàlides per l'anglès.
+     * @return Array de Strings amb totes les peces de l'anglès
+     */
     @Override
     public String[] getLetters() {
         return letters;
     }
 
+    /**
+     * Obté el nombre total de peces diferents de l'anglès
+     * @return Nombre total de peces de l'anglès
+     */
     @Override
     public int getNumberOfLetters() {
         return 26;
     }
 
+    /**
+     * Determina si es pot col·locar una peça específica en una posició del tauler
+     * per peces en anglès.
+     * @param x Coordenada x de la posició a comprovar
+     * @param y Coordenada y de la posició a comprovar
+     * @param letter Peça a verificar
+     * @return True si es pot col·locar la peça, False altrament
+     */
     @Override
     public Boolean ableToPlace(int x, int y, String letter) {
         return !getCrossCheck(x, y).get(getNumLetter(letter));
@@ -48,6 +64,10 @@ public class EnglishCrossChecks extends CrossChecks {
         return letter.charAt(0) - 'A';
     }
 
+    /**
+     * Crea una còpia dels Englishcrosschecks actuals.
+     * @return Nova instància de Englishcrosschecks amb la mateixa configuració que l'actual.
+     */
     @Override
     protected CrossChecks copy() {
         return new EnglishCrossChecks(boardSize);
