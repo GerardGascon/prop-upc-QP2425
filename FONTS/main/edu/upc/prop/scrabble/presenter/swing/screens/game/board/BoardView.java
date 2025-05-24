@@ -13,13 +13,42 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Vista del tauler de Scrabble.
+ * <p>
+ * Gestiona la graella de fitxes, les peces temporals, i les fitxes premi.
+ * </p>
+ *
+ * @author Gerard Gascón
+ */
 public class BoardView extends JPanel implements IBoard {
+    /**
+     * Mida (nombre de caselles per fila i columna).
+     */
     private final int size;
+
+    /**
+     * Vista de la mà per gestionar la selecció de peces.
+     */
     private final IHandView handView;
+
+    /**
+     * Selector per fitxes en blanc.
+     */
     private final IBlankPieceSelector blankPieceSelector;
 
-    private final List<BoardTemporalPieceTile> temporalPieces = new ArrayList<BoardTemporalPieceTile>();
+    /**
+     * Llista de peces temporals col·locades al tauler però no confirmades.
+     */
+    private final List<BoardTemporalPieceTile> temporalPieces = new ArrayList<>();
 
+    /**
+     * Constructor del tauler.
+     *
+     * @param size mida del tauler
+     * @param handView vista de la mà
+     * @param blankPieceSelector selector per fitxes en blanc
+     */
     public BoardView(int size, IHandView handView, IBlankPieceSelector blankPieceSelector) {
         super();
         setOpaque(false);
@@ -33,6 +62,13 @@ public class BoardView extends JPanel implements IBoard {
         generateEmptyTiles(size, handView);
     }
 
+    /**
+     * Genera les caselles buides i les caselles de coordenades del tauler.
+     * Les caselles de coordenades són la fila i columna amb lletres o números.
+     *
+     * @param size mida del tauler
+     * @param handView vista de la mà
+     */
     private void generateEmptyTiles(int size, IHandView handView) {
         for (int i = 0, j = 0; i < (size + 2) * (size + 2); i++) {
             int borderRow = i / (size + 2);
@@ -58,6 +94,11 @@ public class BoardView extends JPanel implements IBoard {
         }
     }
 
+    /**
+     * Personalitza el pintat del tauler.
+     *
+     * @param g context gràfic
+     */
     @Override
     protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g.create();
@@ -70,27 +111,62 @@ public class BoardView extends JPanel implements IBoard {
         g2.dispose();
     }
 
+    /**
+     * Retorna la cadena que representa la fila per la coordenada.
+     *
+     * @param row número de fila
+     * @return cadena de la fila (o buit si és bord)
+     */
     private String getBorderRow(int row) {
         if (row == 0 || row == size + 1)
             return "";
         return Integer.toString(row);
     }
 
+    /**
+     * Retorna la cadena que representa la columna per la coordenada.
+     *
+     * @param col número de columna
+     * @return cadena amb lletra (o buit si és bord)
+     */
     private String getBorderCol(int col) {
         if (col == 0 || col == size + 1)
             return "";
         return String.valueOf((char)('A' + col - 1));
     }
 
+    /**
+     * Canvia la fitxa en la posició (x,y) pel nou BoardTile proporcionat.
+     *
+     * @param tile nova fitxa
+     * @param x coordenada x
+     * @param y coordenada y
+     */
     public void changeTile(BoardTile tile, int x, int y) {
         BoardCell cell = getCell(x, y);
         cell.setTile(tile);
     }
 
+    /**
+     * Retorna la cel·la corresponent a la posició (x,y).
+     *
+     * @param x coordenada x
+     * @param y coordenada y
+     * @return BoardCell a la posició indicada
+     */
     public BoardCell getCell(int x, int y) {
         return getComponentOfType(BoardCell.class, y * size + x);
     }
 
+    /**
+     * Retorna el component de tipus clazz en la posició index,
+     * filtrant només components de tipus clazz.
+     *
+     * @param <TComponent> tipus del component
+     * @param clazz classe del component
+     * @param index índex dins dels components d'aquest tipus
+     * @return component sol·licitat
+     */
     public <TComponent extends Component> TComponent getComponentOfType(Class<TComponent> clazz, int index) {
         int count = 0;
         for (Component comp : getComponents()) {
@@ -103,6 +179,15 @@ public class BoardView extends JPanel implements IBoard {
         throw new RuntimeException("No component found for " + clazz.getName());
     }
 
+    /**
+     * Col·loca una peça temporal al tauler a la posició (x,y),
+     * si la cel·la està disponible i la posició és vàlida segons les regles.
+     *
+     * @param piece lletra de la peça
+     * @param points punts de la peça
+     * @param x coordenada x
+     * @param y coordenada y
+     */
     public void placeTemporalPiece(String piece, int points, int x, int y) {
         BoardCell cell = getCell(x, y);
         if (isCellAvailable(cell) && isPositionValid(x, y)) {
@@ -112,6 +197,15 @@ public class BoardView extends JPanel implements IBoard {
         }
     }
 
+    /**
+     * Comprova si la posició és vàlida segons la lògica del joc:
+     * si no hi ha peces temporals, qualsevol posició és vàlida;
+     * sinó, ha de ser adjacent i en línia.
+     *
+     * @param x coordenada x
+     * @param y coordenada y
+     * @return true si la posició és vàlida
+     */
     private boolean isPositionValid(int x, int y) {
         if (temporalPieces.isEmpty())
             return true;
@@ -122,6 +216,13 @@ public class BoardView extends JPanel implements IBoard {
         return false;
     }
 
+    /**
+     * Comprova si la posició està alineada (horitzontal o vertical) amb les peces temporals col·locades.
+     *
+     * @param x coordenada x
+     * @param y coordenada y
+     * @return true si està en línia
+     */
     private boolean isInLineWithOthers(int x, int y) {
         if (temporalPieces.size() < 2)
             return true;
@@ -134,6 +235,13 @@ public class BoardView extends JPanel implements IBoard {
         return temporalPieces.getFirst().getPosition().x == x;
     }
 
+    /**
+     * Comprova si la posició (x,y) és adjacent a qualsevol peça temporal ja col·locada.
+     *
+     * @param x coordenada x
+     * @param y coordenada y
+     * @return true si és adjacent
+     */
     private boolean isAdjacentToOther(int x, int y) {
         for (BoardTemporalPieceTile boardTile : temporalPieces) {
             Vector2 pos = boardTile.getPosition();
@@ -145,20 +253,45 @@ public class BoardView extends JPanel implements IBoard {
         return false;
     }
 
+    /**
+     * Comprova si una cel·la està disponible per col·locar-hi una peça (no ocupada per peces ja col·locades).
+     *
+     * @param cell cel·la a comprovar
+     * @return true si està disponible
+     */
     private static boolean isCellAvailable(BoardCell cell) {
         return cell.getTile().getClass() != BoardPieceTile.class && cell.getTile().getClass() != BoardTemporalPieceTile.class;
     }
 
+    /**
+     * Actualitza el tauler (mètode pendent d'implementar).
+     */
     @Override
     public void updateBoard() {
 
     }
 
+    /**
+     * Actualitza la cel·la (x,y) amb una peça definitiva.
+     *
+     * @param piece lletra de la peça
+     * @param points punts de la peça
+     * @param x coordenada x
+     * @param y coordenada y
+     */
     @Override
     public void updateCell(String piece, int points, int x, int y) {
         changeTile(new BoardPieceTile(piece, points, x, y, handView, this, blankPieceSelector), x, y);
     }
 
+    /**
+     * Assigna una fitxa prèmium a la posició (x,y).
+     * La fitxa central té un tractament especial.
+     *
+     * @param type tipus de fitxa prèmium
+     * @param x coordenada x
+     * @param y coordenada y
+     */
     @Override
     public void setPremiumTile(PremiumTileType type, int x, int y) {
         if (x == y && x == size / 2){
