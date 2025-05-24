@@ -12,7 +12,8 @@ import edu.upc.prop.scrabble.utils.Direction;
 
 /**
  * Classe per actualitzar els CrossChecks
- * @author Albert Usero && Felipe Martínez
+ * @author Albert Usero
+ * @author Felipe Martínez
  * @see CrossChecks
  */
 public class CrossCheckUpdater {
@@ -46,7 +47,7 @@ public class CrossCheckUpdater {
      * Crea un nou actualitzador de CrossChecks
      * @param pc Convertidor de peces
      * @param crossChecks Crosschecks a actualitzar
-     * @param board Board sobre el qual s'han creat els crosschecks
+     * @param board Tauler sobre el qual s'han creat els crosschecks
      * @param dawg DAWG necessari per crear el word validator
      * @see Board
      * @see DAWG
@@ -79,6 +80,7 @@ public class CrossCheckUpdater {
      * d'un moviment en horitzontal.
      * @param move Moviment realitzat amb direcció horitzontal
      * @see Movement
+     * @see CrossChecks
      */
     private void calculateHorizontalCrossChecks(Movement move) {
         int beginningOfAddedWord = move.x();
