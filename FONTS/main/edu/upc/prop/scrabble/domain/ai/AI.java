@@ -25,6 +25,7 @@ import java.util.*;
  * @see Movement
  * @see PointCalculator
  * @see PiecesConverter
+ * @see DAWG
  * @author Albert Usero
  * @author Felipe Martínez
  */
@@ -109,7 +110,6 @@ public abstract class AI {
 
     /**
      * Computa i retorna el millor possible moviment que resulti en la quantitat més gran de punts.
-     *
      * @return El moviment que efectua la quantitat més gran de punts. Null si no hi ha cap possible.
      */
     public Movement run() {
@@ -245,7 +245,7 @@ public abstract class AI {
     protected abstract void processLeftPartSpecialPieces(String partialWord, int limit, Map.Entry<Character, Node> entry);
 
     /**
-     * Comprovem que no hi ha cap combinació ilegal (potser no fa res si no existeixen al llenguatge)*
+     * Comprova que no hi ha cap combinació il·legal (potser no fa res si no existeixen al llenguatge)
      * @param partialWord Tros de la paraula actual
      * @param limit Com de lluny podem anar
      * @param entry Caràcter/node següent que estem comprovant
@@ -257,7 +257,6 @@ public abstract class AI {
 
     /**
      * Gestor de backtracking
-     *
      * @param partialWord Tros de la paraula actual
      * @param limit Com de lluny podem anar
      * @param usedPiece Peça utilitzada a la iteració actual
@@ -320,7 +319,7 @@ public abstract class AI {
     protected abstract void processRightPartSpecialPieces(String partialWord, Vector2 cell, Map.Entry<Character, Node> entry);
 
     /**
-     * Estén cap a la dreta fent servir una peça de la mà
+     * Estén cap a la dreta fent servir una peça de la mà i comprova casos especials
      * @param partialWord Tros de paraula actual
      * @param cell Casella sobre la qual estem estenent
      * @param entry Caràcter/Node següent que estem comprovant
@@ -329,7 +328,7 @@ public abstract class AI {
     protected abstract void extendToNextNewPieceRight(String partialWord, Vector2 cell, Map.Entry<Character, Node> entry, Piece usedPiece);
 
     /**
-     * Estén cap a la dreta amb una peça ja col·locada al tauler
+     * Estén cap a la dreta amb una peça ja col·locada al tauler i comprova casos especials
      * @param partialWord Tros de paraula actual
      * @param node Node que referencia a la peça ja col·locada
      * @param cell Casella sobre la qual estem estenent
@@ -339,7 +338,6 @@ public abstract class AI {
 
     /**
      * Gestor de backtracking
-     *
      * @param partialWord Tros de paraula actual
      * @param nextNode Caràcter/node següent que estem comprovant
      * @param cell Casella de la següent iteració
@@ -375,7 +373,7 @@ public abstract class AI {
      * @param cell Casella on comença la paraula
      * @param board Tauler actual
      * @param c Caràcter a afegir
-     * @return
+     * @return Cert si la paraula és vàlida
      */
     protected abstract boolean validExistingWord(Vector2 cell, Board board, char c);
 
