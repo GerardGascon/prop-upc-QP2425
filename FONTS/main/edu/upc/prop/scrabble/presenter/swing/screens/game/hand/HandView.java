@@ -25,9 +25,7 @@ public class HandView extends JPanel implements IHandView {
         if (selectedPieceButton == null)
             return null;
 
-        ArrayList<String> letters = new ArrayList<>();
-        letters.add(selectedPieceButton.getLetter());
-        return letters.toArray(new String[0]);
+        return new String[] { selectedPieceButton.getLetter() };
     }
 
     @Override
