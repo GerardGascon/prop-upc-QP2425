@@ -46,6 +46,7 @@ public class MenuMock extends JPanel {
         g2.drawString(text, textX, textY);
     }
 
+    //TODO: Hardodejat WATCH OUT!
     @Override
     public void doLayout() {
         super.doLayout();
@@ -59,21 +60,18 @@ public class MenuMock extends JPanel {
         buttonPanel.setOpaque(false);
 
         JugarButton jugarButton = new JugarButton(buttonPanel);
-        buttonPanel.add(jugarButton);
         ContinueButton continueButton = new ContinueButton(buttonPanel);
+
+        jugarButton.setOtherButton(continueButton);
+        continueButton.setOtherButton(jugarButton);
+
+        buttonPanel.add(jugarButton);
         buttonPanel.add(continueButton);
         buttonPanel.add(new RanquingButton(buttonPanel));
+
         MenuButton quitButton = new MenuButton("Sortir");
         quitButton.addActionListener(_ -> System.exit(0));
         buttonPanel.add(quitButton);
-
-        jugarButton.addActionListener(_ -> {
-            jugarButton.toggleSettingsPanel();
-        });
-
-        continueButton.addActionListener(_ -> {
-            continueButton.toggleSettingsPanel();
-        });
 
         add(buttonPanel);
         return buttonPanel;

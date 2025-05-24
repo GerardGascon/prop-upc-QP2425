@@ -3,14 +3,37 @@ package edu.upc.prop.scrabble.presenter.swing.screens.menu;
 import javax.swing.*;
 import java.awt.*;
 
+
+/**
+ * Botó encarregat de gestionar el menú de continue i les seves funcionalitats associades,
+ * com carregar una partida o sortir del menú.
+ * @author Biel Perez Silvestre
+ */
 public class ContinueButton extends MenuButton {
-
-    private JPanel parentPanel;
+    /**
+     * Panell principal sobre el qual es mostren els menús desplegables del botó.
+     */
+    private final JPanel parentPanel;
+    /**
+     * Indica si el menú desplegable del botó "Continuar" està actualment actiu o no.
+     */
     private boolean menuActive = false;
+    /**
+     *Panell de configuració de la partida amb fons degradat,
+     * títol, etiquetes i separadors visuals,
+     * on es col·loquen els botons que s'utlitzaràn.
+     */
     private JPanel settingsPanel;
-
+    /**
+     * Boto amb el que s'intercanvia els panels.
+     * Si es prem otherbutton mentre s'estan mostrant panels de continueButton, aleshores
+     * es tanca els panels de continueButton
+     */
     private JugarButton otherButton;
-
+    /**
+     * Creador del botó "Continuar", que desplega el menú per carregar una partida guardada.
+     * @param parent El panell principal sobre el qual es mostrarà el menú.
+     */
     public ContinueButton(JPanel parent) {
         super("Continuar");
         this.parentPanel = parent;
@@ -22,11 +45,18 @@ public class ContinueButton extends MenuButton {
             toggleSettingsPanel();
         });
     }
-
+    /**
+     * Assigna el botó complementari amb el qual es coordina l'intercanvi de panells.
+     * Normalment utilitzat per assegurar que només un menú està actiu alhora.
+     * @param otherButton El botó amb què es coordina.
+     */
     public void setOtherButton(JugarButton otherButton) {
         this.otherButton = otherButton;
     }
-
+    /**
+     * Tanca el panell desplegat pel botó "Continuar", si està actiu.
+     * Elimina el panell de configuració del contenidor i actualitza la interfície.
+     */
     public void Close() {
         if (!menuActive) return; // No fem res si ja està tancat
 
@@ -36,8 +66,12 @@ public class ContinueButton extends MenuButton {
         container.revalidate();
         container.repaint();
     }
-
-
+    /**
+     * Mostra o amaga el panell de configuració de la partida associat al botó "Continuar".
+     * Si el panell ja està actiu, s’elimina de la interfície i es refresca l’escena.
+     * Si no està actiu, es crea un nou panell amb disseny personalitzat (fons degradat, títol i seccions de configuració),
+     * es posiciona al costat dret i es fusiona amb el panell principal.
+     */
     public void toggleSettingsPanel() {
         // Retornar al mode original
         if (menuActive) {
@@ -116,7 +150,11 @@ public class ContinueButton extends MenuButton {
         menuMockPanel.revalidate();
         menuMockPanel.repaint();
     }
-
+    /**
+     * Afegeix els components al panell de configuració: un botó per carregar una partida i un altre per cancel·lar.
+     * @param width L’amplada del panell de configuració.
+     * @param height L’alçada del panell de configuració.
+     */
     private void addSettingsComponents(int width, int height) {
 
         int componentWidth = (int) (width * 0.15);
@@ -151,12 +189,12 @@ public class ContinueButton extends MenuButton {
 
         settingsPanel.add(cancelButton);
     }
-
+    /**
+     * Acció que s’executa quan l’usuari decideix carregar una partida.
+     * Actualment pendent d’implementació.
+     */
     private void loadGame() {
         //TODO: Afegir funcionalitat de carrega de joc
-
-
-
         toggleSettingsPanel();
     }
 }

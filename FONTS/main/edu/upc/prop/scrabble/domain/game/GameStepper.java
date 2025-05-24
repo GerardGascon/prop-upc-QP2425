@@ -10,15 +10,40 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 /**
- * Class that check each if the game has ended,case in which it updates the leaderboard
- * @author  Biel Pérez Silvestre
+ * Classe responsable d'actualitzar el leaderboard quan la partida finalitza.
+ * També gestiona l'execució dels torns i mostra la pantalla final.
+ *
+ * @author Biel Pérez Silvestre
  */
 public class GameStepper {
+    /**
+     * Objecte que gestiona el flux dels torns de la partida.
+     * @see Turn
+     */
     private final Turn turn;
+    /**
+     * Objecte que representa el leaderboard on s'actualitzen les puntuacions.
+     * @see Leaderboard
+     */
     private final Leaderboard leaderboard;
+    /**
+     * Array dels jugadors participants a la partida.
+     * @see Player
+     */
     private final Player[] players;
+    /**
+     * Objecte encarregat de mostrar la pantalla final de la partida.
+     * @see IEndScreen
+     */
     private final IEndScreen endScreen;
 
+    /**
+     * Constructor de GameStepper.
+     * @param turn Objecte que gestiona els torns.
+     * @param leaderboard Leaderboard on es registren les puntuacions.
+     * @param players Jugadors de la partida.
+     * @param endScreen Pantalla final a mostrar quan acaba la partida.
+     */
     public GameStepper(Turn turn, Leaderboard leaderboard,Player[] players,IEndScreen endScreen) {
         this.turn = turn;
         this.leaderboard = leaderboard;
@@ -26,6 +51,11 @@ public class GameStepper {
         this.endScreen = endScreen;
     }
 
+    /**
+     * Executa el torn actual, actualitza el leaderboard si la partida ha acabat,
+     * i mostra la pantalla final amb els jugadors ordenats per puntuació.
+     * @param result Resultat del torn actual.
+     */
     public void run(TurnResult result){
         Player[] sortedPlayers = Arrays.stream(players)
                 .sorted(Comparator.comparingInt(Player::getScore).reversed())

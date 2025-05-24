@@ -4,13 +4,37 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
+/**
+ * Botó encarregat de gestionar el menú de pausa i les seves funcionalitats associades,
+ * com continuar o sortir de la partida.
+ *
+ * @author Biel Perez Silvestre
+ */
 public class PauseButton extends MenuButton {
-
+    /**
+     * Panell principal sobre el qual es mostren els menús desplegables del botó de pausa.
+     */
     private final JPanel parentPanel;
+    /**
+     * Indica si el menú de pausa està actualment actiu o no.
+     */
     private boolean menuActive = false;
+    /**
+     * Primer panell que es mostra en prémer el botó de pausa.
+     */
     private JPanel pausePanel;
+    /**
+     * Panell de confirmació que apareix quan l'usuari decideix sortir de la partida.
+     * Ofereix l'opció de guardar abans de sortir.
+     */
     private JPanel confirmExitPanel;
 
+    /**
+     * Constructor del botó de pausa.
+     * Assigna funcionalitat per obrir o tancar el menú de pausa en fer clic o prement la tecla ESC.
+     *
+     * @param parent El panell principal sobre el qual es mostrarà el menú de pausa.
+     */
     public PauseButton(JPanel parent) {
         super("Pausa");
         this.parentPanel = parent;
@@ -27,7 +51,11 @@ public class PauseButton extends MenuButton {
             }
         });
     }
-
+    /**
+     * Alterna l’estat del menú de pausa.
+     * Si el menú és actiu, el tanca i elimina els panells.
+     * Si no és actiu, el crea i el mostra sobre el panell principal.
+     */
     private void togglePausePanel() {
         if (menuActive) {
             closePanels();
@@ -106,7 +134,13 @@ public class PauseButton extends MenuButton {
         container.revalidate();
         container.repaint();
     }
-
+    /**
+     * Crea el panell de confirmació de sortida que apareix quan l’usuari vol sortir de la partida.
+     * Aquest panell pregunta si es vol guardar la partida abans de tancar l’aplicació.
+     *
+     * @param container Contenidor principal on s’afegirà el panell de confirmació.
+     * @return El panell amb les opcions de confirmar o cancel·lar la sortida.
+     */
     private JPanel createConfirmExitPanel(Container container) {
         confirmExitPanel = new JPanel(null) {
             @Override
@@ -167,7 +201,10 @@ public class PauseButton extends MenuButton {
 
         return confirmExitPanel;
     }
-
+    /**
+     * Tanca i elimina tots els panells creats pel menú de pausa (tant el principal com el de confirmació).
+     * Reinicialitza l’estat intern del menú.
+     */
     private void closePanels() {
         Container container = parentPanel.getParent();
         if (pausePanel != null) container.remove(pausePanel);

@@ -1,47 +1,141 @@
 package edu.upc.prop.scrabble.presenter.swing.screens.menu;
 
-
 import javax.swing.*;
-
 import java.awt.*;
 
-public class JugarButton extends MenuButton {
 
-    private JPanel parentPanel;
+/**
+ * Botó encarregat de gestionar el menú de jugar i les seves funcionalitats associades,
+ * com carregar seleccionar quants jugadors hi hauran, de quin tipus, els seus noms, el llenguatge de la partida i la mida del tauler
+ * @author Biel Pérez Silvestre
+ */
+public class JugarButton extends MenuButton {
+    /**
+     * Panell principal sobre el qual es mostren els menús desplegables del botó.
+     */
+    private final JPanel parentPanel;
+    /**
+     * Indica si el menú desplegable del botó "Jugar" està actualment actiu o no.
+     */
     private boolean menuActive = false;
+    /**
+     *Panell de configuració de la partida amb fons degradat,
+     * títol, etiquetes i separadors visuals,
+     * on es col·loquen les opcions per a jugadors, llenguatge i mida del tauler.
+     */
     private JPanel settingsPanel;
 
+    /**
+     * Boto amb el que s'intercanvia els panels.
+     * Si es prem otherbutton mentre s'estan mostrant panels de JugarButton, aleshores
+     * es tanca els panels de continueButton
+     */
     private ContinueButton otherButton;
 
+    /**
+     * ComboBox que permet seleccionar la mida del tauler
+     */
     private JComboBox<String> tableSizeComboBox;
+
+    /**
+     * ComboBox que permet seleccionar el llenguatge de la partida
+     */
     private JComboBox<String> languageComboBox;
+    /**
+     * ComboBox que permet seleccionar el Tipus del jugador 1
+     */
     private JComboBox<String> player1Type;
+    /**
+     * ComboBox que permet seleccionar el Tipus del jugador 2
+     */
     private JComboBox<String> player2Type;
+    /**
+     * ComboBox que permet seleccionar el Tipus del jugador 3
+     */
     private JComboBox<String> player3Type;
+    /**
+     * ComboBox que permet seleccionar el Tipus del jugador 4
+     */
     private JComboBox<String> player4Type;
 
-    private String p1Type;
-    private String p2Type;
-    private String p3Type;
-    private String p4Type;
-
+    /**
+     * Textfield que permet inserir el nom del jugador 1
+     */
     private JTextField player1Name;
+    /**
+     * Textfield que permet inserir el nom del jugador 2
+     */
     private JTextField player2Name;
+    /**
+     * Textfield que permet inserir el nom del jugador 3
+     */
     private JTextField player3Name;
+    /**
+     * Textfield que permet inserir el nom del jugador 4
+     */
     private JTextField player4Name;
 
+    /**
+     * String per a guardar el tipus del player 1
+     */
+    private String p1Type;
+
+    /**
+     * String per a guardar el tipus del player 2
+     */
+    private String p2Type;
+
+    /**
+     * String per a guardar el tipus del player 3
+     */
+    private String p3Type;
+
+    /**
+     * String per a guardar el tipus del jugador 4
+     */
+    private String p4Type;
+
+    /**
+     * String per a guardar el nom del jugador 1
+     */
     private String p1Name;
+    /**
+     * String per a guardar el nom del jugador 2
+     */
     private String p2Name;
+    /**
+     * String per a guardar el nom del jugador 3
+     */
     private String p3Name;
+    /**
+     * String per a guardar el nom del jugador 4
+     */
     private String p4Name;
 
+
+    /**
+     * String per a guardar el llenguatge de la partida
+     */
     private String selectedLanguage = "English";
+    /**
+     * String per a guardar la mida del tauler
+     */
     private String selectedTableSize = "Medium";
 
-
+    /**
+     * String per a guardar el numero de jugadors que no son CPU
+     */
     private int selectedRealPlayers = 2;
+    /**
+     * String per a guardar el numero de jugadors que son CPU
+     */
     private int selectedCPUPlayers = 0;
 
+
+    /**
+     * Creador del botó "Jugar", que desplega el menú per configurar i carregar una partida
+     * @param parent El panell principal sobre el qual es mostrarà el menú.
+     */
     public JugarButton(JPanel parent) {
         super("Jugar");
         this.parentPanel = parent;
@@ -53,10 +147,19 @@ public class JugarButton extends MenuButton {
         });
     }
 
+    /**
+     * Assigna el botó complementari amb el qual es coordina l'intercanvi de panells.
+     * Normalment utilitzat per assegurar que només un menú està actiu alhora.
+     * @param otherButton El botó amb què es coordina.
+     */
     public void setOtherButton(ContinueButton otherButton) {
         this.otherButton = otherButton;
     }
 
+    /**
+     * Tanca el panell desplegat pel botó "Continuar", si està actiu.
+     * Elimina el panell de configuració del contenidor i actualitza la interfície.
+     */
     public void Close() {
         if (!menuActive) return;
 
@@ -66,6 +169,13 @@ public class JugarButton extends MenuButton {
         container.revalidate();
         container.repaint();
     }
+
+    /**
+     * Mostra o amaga el panell de configuració de la partida associat al botó "Jugqr".
+     * Si el panell ja està actiu, s’elimina de la interfície i es refresca l’escena.
+     * Si no està actiu, es crea un nou panell amb disseny personalitzat (fons degradat, títol i seccions de configuració),
+     * es posiciona al costat dret i es fusiona amb el panell principal.
+     */
     public void toggleSettingsPanel() {
 
 // Retornar al mode original
@@ -156,6 +266,11 @@ public class JugarButton extends MenuButton {
         menuMockPanel.repaint();
     }
 
+    /**
+     * Afegeix els components al panell de configuració: un botó per carregar una partida i un altre per cancel·lar.
+     * @param width L’amplada del panell de configuració.
+     * @param height L’alçada del panell de configuració.
+     */
     private void addSettingsComponents(int width, int height) {
 
 
@@ -317,6 +432,10 @@ public class JugarButton extends MenuButton {
         settingsPanel.add(cancelButton);
 
     }
+    /**
+     * Acció que s’executa quan l’usuari, un cop ha assignat la configuració de la partida, decideix començar una partida
+     * Actualment pendent d’implementació.
+     */
     private void startGame() {
 
         //GameProperties startGame = new GameProperties();
@@ -339,5 +458,4 @@ public class JugarButton extends MenuButton {
 // TODO: RECOLECTA DE DADES
 
     }
-
 }
