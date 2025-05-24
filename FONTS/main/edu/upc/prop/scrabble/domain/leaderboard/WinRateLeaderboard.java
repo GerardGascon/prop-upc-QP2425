@@ -6,11 +6,21 @@ import java.util.TreeMap;
 import java.util.Map;
 
 /**
- * Leaderboard controller to sort players based on % of wins
+ * Controlador de Leaderboard encarregat d'ordenar als jugadors segons el percentatge de victòries
  * @author Felipe Martínez Lassalle
+ * @see edu.upc.prop.scrabble.data.leaderboard.Leaderboard
  */
 public class WinRateLeaderboard   {
 
+    /**
+     * Funció encarregada de complir la tasca del controlador
+     * @param scores Array de tots els Score a ordenar
+     * @return Array de PlayerValuePair que guarda de forma ordenada el nom del jugador i el seu percentatge de partides guanyades
+     * @see edu.upc.prop.scrabble.data.leaderboard.Leaderboard
+     * @see Score
+     * @see PlayerValuePair
+     * @see GamesWinsPair
+     */
     public PlayerValuePair[] run(Score[] scores) {
         // Group by player name and a pair of won and played games
         Map<String, GamesWinsPair> pairMap = new TreeMap<>();
