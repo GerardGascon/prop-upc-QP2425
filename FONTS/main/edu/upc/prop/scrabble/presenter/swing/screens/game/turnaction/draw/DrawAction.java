@@ -5,6 +5,10 @@ import edu.upc.prop.scrabble.presenter.terminal.actionmaker.HandView;
 
 import javax.swing.*;
 
+/**
+ * Classe per gestionar la lògica del botó de Draw (Robar) en una partida.
+ * @author Gina Escofet González
+ */
 public class DrawAction extends JPanel {
     private final JPanel parent;
     private JButton drawBtn;
@@ -26,11 +30,6 @@ public class DrawAction extends JPanel {
         add(drawBtn);
     }
 
-    /***
-     * Crea i configura el botó "Draw" (Robar).
-     * Quan es prem, elimina el botó "Draw", afegeix un botó "Confirm" (Confirmar)
-     * i gestiona la lògica per treure peces de la bossa.
-     */
     private void createDrawButton() {
         drawBtn = new JButton("Draw");
         drawBtn.setBounds(1400, 575, 75, 50); //hardcoded

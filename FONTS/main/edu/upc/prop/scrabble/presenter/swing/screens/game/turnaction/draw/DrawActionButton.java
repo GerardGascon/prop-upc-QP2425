@@ -2,7 +2,10 @@ package edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction.draw;
 
 import javax.swing.*;
 import java.awt.*;
-
+/**
+ * Classe per gestionar el botó de Draw (Robar) en una partida.
+ * @author Gina Escofet González
+ */
 public class DrawActionButton extends JButton {
     /***
      * Construeix un botó personalitzat per l'acció de "Draw" (Robar).
@@ -20,10 +23,6 @@ public class DrawActionButton extends JButton {
         disableKeyboardInput();
     }
 
-    /***
-     * Deshabilita l'entrada de teclat per a les tecles d'espai i enter,
-     * evitant que activin el botó.
-     */
     private void disableKeyboardInput() {
         InputMap inputMap = getInputMap(JComponent.WHEN_FOCUSED);
         inputMap.put(KeyStroke.getKeyStroke("SPACE"), "none");
