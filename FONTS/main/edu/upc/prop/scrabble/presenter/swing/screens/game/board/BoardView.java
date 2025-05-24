@@ -194,6 +194,7 @@ public class BoardView extends JPanel implements IBoard {
             BoardTemporalPieceTile boardTile = new BoardTemporalPieceTile(piece, points, x, y, handView, this, blankPieceSelector);
             temporalPieces.add(boardTile);
             cell.setTile(boardTile);
+            handView.piecePlaced();
         }
     }
 

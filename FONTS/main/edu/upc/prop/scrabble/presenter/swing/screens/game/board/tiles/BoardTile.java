@@ -196,7 +196,6 @@ public abstract class BoardTile extends JButton {
      */
     private void placePiece(String piece, int points) {
         board.placeTemporalPiece(piece, points, position.x, position.y);
-        handView.piecePlaced();
 
         if (tooltip != null)
             tooltip.setVisible(false);
