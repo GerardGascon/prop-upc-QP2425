@@ -39,6 +39,7 @@ import edu.upc.prop.scrabble.presenter.swing.screens.game.board.sidepanel.SidePa
 import edu.upc.prop.scrabble.presenter.swing.screens.game.hand.HandView;
 import edu.upc.prop.scrabble.domain.actionmaker.IHandView;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.pieceselector.BlankPieceSelector;
+import edu.upc.prop.scrabble.presenter.swing.screens.menu.PauseButton;
 import edu.upc.prop.scrabble.utils.Rand;
 
 import javax.swing.*;

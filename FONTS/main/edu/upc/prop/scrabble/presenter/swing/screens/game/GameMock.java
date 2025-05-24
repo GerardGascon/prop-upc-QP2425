@@ -47,10 +47,6 @@ public class GameMock extends JPanel {
             createTurnActionButton("SKIP", xcoord, (int)(height*0.4), compWidth, compHeight);
 
         });
-
-        // Create Pause button
-        PauseButton pauseButton = new PauseButton(this);
-        add(pauseButton);
     }
 
     @Override

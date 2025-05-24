@@ -4,6 +4,7 @@ import edu.upc.prop.scrabble.presenter.swing.screens.game.board.BoardView;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.sidepanel.SidePanel;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.hand.HandView;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.pieceselector.BlankPieceSelector;
+import edu.upc.prop.scrabble.presenter.swing.screens.menu.PauseButton;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,6 +22,9 @@ public class GameScreen extends JPanel {
     public GameScreen() {
         setLayout(new BorderLayout());
         setBackground(new Color(0x50, 0x84, 0x6e));
+
+        PauseButton pauseButton = new PauseButton(this);
+        add(pauseButton);
     }
 
     public void addBoard(BoardView boardView) {
