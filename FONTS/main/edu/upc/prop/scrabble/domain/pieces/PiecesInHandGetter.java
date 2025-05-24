@@ -9,7 +9,7 @@ import edu.upc.prop.scrabble.utils.IRand;
 import java.util.*;
 
 /***
- * Manages the retrieval and verification of pieces from a player's hand.
+ * Gestiona la recuperació i verificació de peces de la mà d'un jugador.
  * @author Gina Escofet González
  */
 public class PiecesInHandGetter {
@@ -18,9 +18,10 @@ public class PiecesInHandGetter {
     private final IRand rand;
 
     /***
-     * Constructs a new PiecesInHandGetter with the specified bag, player and piecePrinter.
-     * @param bag The game piece bag.
-     * @param player The target player.
+     * Construeix un nou PiecesInHandGetter amb la bossa, el jugador i el "piecePrinter" especificats.
+     * @param bag La bossa de peces del joc.
+     * @param player El jugador objectiu.
+     * @param rand La interfície per a la generació de nombres aleatoris.
      */
     public PiecesInHandGetter(Bag bag, Player player, IRand rand) {
         this.player = player;
@@ -29,10 +30,10 @@ public class PiecesInHandGetter {
     }
 
     /***
-     * Verifies and exchanges pieces from the player's hand.
-     * @param pieces Pieces needed for the current play.
-     * @return The new pieces drawn from the bag.
-     * @throws IllegalStateException if process fails.
+     * Verifica i intercanvia peces de la mà del jugador.
+     * @param pieces Peces necessàries per a la jugada actual.
+     * @return Les noves peces extretes de la bossa.
+     * @throws IllegalStateException si el procés falla.
      */
     public Piece[] run(Piece[] pieces) {
         List<Piece> piecesList = new Vector<>();
