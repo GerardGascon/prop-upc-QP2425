@@ -1,25 +1,45 @@
 package edu.upc.prop.scrabble.domain.leaderboard;
 
 /**
- * Aux class to store playerName and value used at the controller
+ * Estructura de dades auxiliar utilitzada pels controladors de Leaderboard
  * @author Felipe Martínez Lassalle
  */
 public class PlayerValuePair {
+    /**
+     * Emmagatzema el nom del jugador
+     */
     private final String playerName;
+    /**
+     * Emmagatzema el valor pertinent
+     */
     private final double value;
 
+    /**
+     * Creadora
+     * @param name Nom del jugador
+     * @param value Valor utilitzat pel controlador
+     */
     public PlayerValuePair(String name, double value) {
         this.playerName = name;
         this.value = value;
     }
 
+    /**
+     * Consultora
+     * @return Nom del jugador
+     */
     public String getPlayerName() { return playerName; }
+
+    /**
+     * Consultora
+     * @return Valor emmagatzemat
+     */
     public double getValue() { return value; }
 
     /**
-     * Static function that reverses the order of the array
-     * @param arr Array to reverse
-     * @return Reversed array
+     * Funció estàtica que inverteix l'orde de l'Array donada
+     * @param arr Array a invertir
+     * @return Array amb l'ordre invers
      */
     public static PlayerValuePair[] reverse(PlayerValuePair[] arr) {
         PlayerValuePair[] reversed = new PlayerValuePair[arr.length];

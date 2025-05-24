@@ -6,11 +6,20 @@ import java.util.TreeMap;
 import java.util.Map;
 
 /**
- * Leaderboard controller to sort players based on the total score achieved
+ * Controlador de Leaderboard encarregat d'ordenar als jugadors segons la puntuació total obtinguda
  * @author Felipe Martínez Lassalle
+ * @see edu.upc.prop.scrabble.data.leaderboard.Leaderboard
  */
 public class TotalScoreLeaderboard {
 
+    /**
+     * Funció encarregada de complir la tasca del controlador
+     * @param scores Array de tots els Score a ordenar
+     * @return Array de PlayerValuePair que guarda de forma ordenada el nom del jugador i la seva puntuació total
+     * @see edu.upc.prop.scrabble.data.leaderboard.Leaderboard
+     * @see Score
+     * @see PlayerValuePair
+     */
     public PlayerValuePair[] run(Score[] scores) {
         // Group by player name and total score
         Map<String, Integer> scoreMap = new TreeMap<>();
