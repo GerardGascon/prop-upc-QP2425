@@ -6,31 +6,33 @@ import edu.upc.prop.scrabble.persistence.runtime.data.PersistentObject;
 import edu.upc.prop.scrabble.persistence.runtime.interfaces.IPersistableObject;
 
 /**
- * Represents the game board for a Scrabble game.
- * Maintains the placed letter tiles and premium scoring tile information.
- * This class provides basic functionality such as placing tiles, checking cell status,
- * and rotating the board.
+ * Representa el tauler del joc de Scrabble.
+ * Manté les fitxes col·locades i la informació de les caselles amb bonificació de puntuació.
+ * Aquesta classe proporciona funcionalitats bàsiques com col·locar fitxes, comprovar l'estat de les caselles
+ * i rotar el tauler.
  *
  * @author Gerard Gascón
  */
 public abstract class Board implements IPersistableObject {
     /**
-     * Grid of letter tiles placed on the board. Empty cells contain null.
+     * Matriu de fitxes col·locades al tauler. Les caselles buides contenen null.
      */
     protected Piece[][] placedTiles;
+
     /**
-     * Grid representing premium scoring tiles such as double/triple word or letter.
+     * Matriu que representa les caselles de bonificació (doble/triple paraula o lletra).
      */
     private final PremiumTileType[][] premiumTiles;
+
     /**
-     * Indicates whether the board has any tiles placed.
+     * Indica si el tauler està buit (sense cap fitxa col·locada).
      */
     private boolean empty = true;
 
     /**
-     * Constructs a board with the given size.
+     * Crea un tauler amb la mida donada.
      *
-     * @param size the size (width and height) of the square board
+     * @param size la mida (amplada i alçada) del tauler quadrat
      */
     protected Board(int size) {
         placedTiles = new Piece[size][size];
@@ -38,21 +40,21 @@ public abstract class Board implements IPersistableObject {
     }
 
     /**
-     * Returns the size of the board.
+     * Retorna la mida del tauler.
      *
-     * @return the size of the board
+     * @return la mida del tauler
      */
     public int getSize() {
         return placedTiles.length;
     }
 
     /**
-     * Places a letter tile on the board at the specified coordinates.
-     * Does nothing if the target cell is already occupied.
+     * Col·loca una fitxa a les coordenades indicades del tauler.
+     * No fa res si la casella ja està ocupada.
      *
-     * @param piece the letter tile to place
-     * @param x     the column index (0-based)
-     * @param y     the row index (0-based)
+     * @param piece la fitxa a col·locar
+     * @param x     índex de columna (comença a 0)
+     * @param y     índex de fila (comença a 0)
      * @see Piece
      */
     public void placePiece(Piece piece, int x, int y) {
@@ -63,23 +65,23 @@ public abstract class Board implements IPersistableObject {
     }
 
     /**
-     * Checks if the given coordinates represent the center tile,
-     * which typically must be covered by the first word played.
+     * Comprova si les coordenades donades corresponen al centre del tauler.
+     * Normalment, la primera paraula s'ha de col·locar passant pel centre.
      *
-     * @param x the column index
-     * @param y the row index
-     * @return true if the cell is the center of the board
+     * @param x índex de columna
+     * @param y índex de fila
+     * @return true si la casella és el centre del tauler
      */
     public boolean isCenter(int x, int y) {
         return x == y && x == getSize() / 2;
     }
 
     /**
-     * Checks whether a cell at the specified coordinates is empty.
+     * Comprova si una casella està buida i dins dels límits del tauler.
      *
-     * @param x the x-coordinate
-     * @param y the y-coordinate
-     * @return true if the cell is empty and valid, false otherwise
+     * @param x coordenada x
+     * @param y coordenada y
+     * @return true si la casella és vàlida i buida
      */
     public boolean isCellEmpty(int x, int y) {
         if (!isCellValid(x, y))
@@ -88,33 +90,33 @@ public abstract class Board implements IPersistableObject {
     }
 
     /**
-     * Returns the piece at the specified cell.
+     * Retorna la fitxa a la casella especificada.
      *
-     * @param x the x-coordinate
-     * @param y the y-coordinate
-     * @return the piece at the given cell, or null if none
+     * @param x coordenada x
+     * @param y coordenada y
+     * @return la fitxa en la casella, o null si està buida
      */
     public Piece getCellPiece(int x, int y) {
         return placedTiles[y][x];
     }
 
     /**
-     * Checks if a given cell is a premium tile.
+     * Comprova si una casella és una casella de bonificació.
      *
-     * @param x the x-coordinate
-     * @param y the y-coordinate
-     * @return true if the tile is a premium tile, false otherwise
+     * @param x coordenada x
+     * @param y coordenada y
+     * @return true si és una casella de bonificació
      */
     public boolean isPremiumTile(int x, int y) {
         return premiumTiles[y][x] != null;
     }
 
     /**
-     * Returns the type of premium tile at the specified location.
+     * Retorna el tipus de bonificació d'una casella concreta.
      *
-     * @param x the x-coordinate
-     * @param y the y-coordinate
-     * @return the premium tile type at the given cell, or null if not premium
+     * @param x coordenada x
+     * @param y coordenada y
+     * @return el tipus de casella de bonificació, o null si no n'és
      * @see PremiumTileType
      */
     public PremiumTileType getPremiumTileType(int x, int y) {
@@ -122,41 +124,40 @@ public abstract class Board implements IPersistableObject {
     }
 
     /**
-     * Sets a premium tile type at the specified location.
+     * Assigna un tipus de casella de bonificació a una ubicació específica.
      *
-     * @param x    the x-coordinate
-     * @param y    the y-coordinate
-     * @param type the premium tile type to set
-     * @see PremiumTileType
+     * @param x    coordenada x
+     * @param y    coordenada y
+     * @param type el tipus de bonificació a assignar
      */
     protected void setPremiumTile(int x, int y, PremiumTileType type) {
         premiumTiles[y][x] = type;
     }
 
     /**
-     * Checks whether the specified cell coordinates are within board bounds.
+     * Comprova si les coordenades donades estan dins dels límits del tauler.
      *
-     * @param x the x-coordinate
-     * @param y the y-coordinate
-     * @return true if the cell is valid, false otherwise
+     * @param x coordenada x
+     * @param y coordenada y
+     * @return true si les coordenades són vàlides
      */
     public boolean isCellValid(int x, int y) {
         return x >= 0 && x < getSize() && y >= 0 && y < getSize();
     }
 
     /**
-     * Returns whether the board is empty.
+     * Retorna si el tauler està buit (sense cap fitxa col·locada).
      *
-     * @return true if no pieces have been placed, false otherwise
+     * @return true si no hi ha cap fitxa, false altrament
      */
     public boolean isEmpty() {
         return empty;
     }
 
     /**
-     * Returns a rotated copy of the board (90 degrees counterclockwise).
+     * Retorna una còpia del tauler rotat 90 graus en sentit antihorari.
      *
-     * @return a rotated copy of the board
+     * @return una còpia rotada del tauler
      */
     public Board rotate() {
         Board copy = copy();
@@ -165,9 +166,9 @@ public abstract class Board implements IPersistableObject {
     }
 
     /**
-     * Returns a rotated version of the placed pieces (90 degrees counterclockwise).
+     * Retorna una matriu de fitxes rotada 90 graus en sentit antihorari.
      *
-     * @return the rotated pieces grid
+     * @return la matriu de fitxes rotada
      */
     private Piece[][] getRotatedPieces() {
         Piece[][] rotatedPieces = new Piece[getSize()][getSize()];
@@ -180,13 +181,18 @@ public abstract class Board implements IPersistableObject {
     }
 
     /**
-     * Creates and returns a deep copy of this board's tiles.<br>
-     * <b>Important</b>: It doesn't include the placed pieces.
+     * Crea i retorna una còpia del tauler.<br>
+     * <b>Important</b>: No inclou les fitxes col·locades.
      *
-     * @return a copy of the board
+     * @return una còpia del tauler
      */
     protected abstract Board copy();
 
+    /**
+     * Codifica l'estat del tauler en un diccionari per persistència.
+     *
+     * @return el diccionari amb les dades del tauler
+     */
     @Override
     public PersistentDictionary encode() {
         PersistentDictionary data = new PersistentDictionary();
@@ -196,6 +202,11 @@ public abstract class Board implements IPersistableObject {
         return data;
     }
 
+    /**
+     * Decodifica les dades persistents per reconstruir l'estat del tauler.
+     *
+     * @param data diccionari amb les dades emmagatzemades
+     */
     @Override
     public void decode(PersistentDictionary data) {
         PersistentObject placedTiles = data.get("placedTiles");
@@ -203,6 +214,9 @@ public abstract class Board implements IPersistableObject {
         updateEmptyState();
     }
 
+    /**
+     * Actualitza l'estat de "buit" del tauler en funció de si hi ha fitxes col·locades.
+     */
     private void updateEmptyState() {
         for (int row = 0; row < getSize(); row++) {
             for (int col = 0; col < getSize(); col++) {
