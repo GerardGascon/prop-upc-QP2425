@@ -3,16 +3,17 @@ package edu.upc.prop.scrabble.domain.exceptions;
 import edu.upc.prop.scrabble.data.exceptions.ScrabbleException;
 
 /**
- * Exception thrown when there are not enough pieces remaining in the bag to complete a move.
- * This ensures that players cannot make a move that requires more pieces than are available.
+ * Excepció que es llença quan no hi ha prou fitxes restants a la bossa per completar un moviment.
+ * Aquesta excepció assegura que els jugadors no puguin fer un moviment que requereixi més fitxes
+ * de les que hi ha disponibles.
  *
  * @author Gerard Gascón
  */
 public class NotEnoughPiecesInBagException extends ScrabbleException {
     /**
-     * Constructs a NotEnoughPiecesInBagException with the specified detail message.
+     * Crea una nova excepció amb un missatge que explica la causa.
      *
-     * @param message The detail message explaining the cause of the exception.
+     * @param message Missatge detallat que descriu el motiu de l'excepció.
      */
     public NotEnoughPiecesInBagException(String message) {
         super(message);

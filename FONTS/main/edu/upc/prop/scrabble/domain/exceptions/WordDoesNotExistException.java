@@ -3,19 +3,20 @@ package edu.upc.prop.scrabble.domain.exceptions;
 import edu.upc.prop.scrabble.data.exceptions.ScrabbleException;
 
 /**
- * Exception thrown to indicate that a word does not exist in the dictionary during a move.
+ * Excepció que es llença quan una paraula no existeix al diccionari durant un moviment.
  * <p>
- * This exception is thrown when a player tries to place a word on the board that is not valid
- * according to the dictionary of accepted words. It ensures that only valid words are used in the game.
+ * Aquesta excepció es llença quan un jugador intenta col·locar una paraula al tauler que no és
+ * vàlida segons el diccionari de paraules acceptades. Assegura que només es facin servir paraules
+ * vàlides en el joc.
  * </p>
  *
  * @author Gerard Gascón
  */
 public class WordDoesNotExistException extends ScrabbleException {
     /**
-     * Constructs a WordDoesNotExistException with the specified detail message.
+     * Crea una instància de WordDoesNotExistException amb un missatge detallat.
      *
-     * @param message The detail message explaining the cause of the exception.
+     * @param message El missatge que explica la causa de l'excepció.
      */
     public WordDoesNotExistException(String message) {
         super(message);
