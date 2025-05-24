@@ -10,9 +10,9 @@ import edu.upc.prop.scrabble.domain.pieces.PiecesConverter;
 import edu.upc.prop.scrabble.domain.turns.TurnResult;
 import edu.upc.prop.scrabble.utils.IRand;
 
-/***
- * Class that exchanges pieces between the game bag and a player's hand. Pieces to swap are returned to the bag, and
- * new drawn pieces are assigned to the player's hand.
+/**
+ * Classe que gestiona l'intercanvi de fitxes entre la bossa del joc i la mà d'un jugador.
+ * Les fitxes a canviar es retornen a la bossa i es reparteixen noves fitxes a la mà del jugador.
  * @author Gina Escofet González
  */
 public class DrawActionMaker {
@@ -22,12 +22,13 @@ public class DrawActionMaker {
     private final IHandView handView;
     private final GameStepper stepper;
     private final PiecesConverter piecesConverter;
-    /***
-     * Default constructor of a DrawActionMaker with specific bag, player, rand and handDisplay.
-     * @param bag The current piece bag of the game.
-     * @param player The player who wants to draw pieces.
-     * @param rand The random number generator instance
-     * @param handView Interface that represents the current hand of the player.
+
+    /**
+     * Constructor per defecte d'un DrawActionMaker amb bag, player, rand i handView.
+     * @param bag La bossa de fitxes actual del joc.
+     * @param player El jugador que vol canviar fitxes.
+     * @param rand Instància del generador de nombres aleatoris.
+     * @param handView Interfície que representa la mà actual del jugador.
      */
     public DrawActionMaker(Bag bag, Player player, IRand rand, IHandView handView, GameStepper stepper, PiecesConverter piecesConverter) {
         this.player = player;
@@ -38,11 +39,11 @@ public class DrawActionMaker {
         this.stepper = stepper;
     }
 
-    /***
-     * Procedure that manages the exchange of pieces between the player's hand and the piece bag.
-     * @param word Word to be exchanged with new drawn pieces from the bag.
-     * @throws IllegalArgumentException if PiecesToSwap is null.
-     * @throws NotEnoughPiecesInBagException if there are not enough pieces in the bag for completing the exchange.
+    /**
+     * Procediment que gestiona l'intercanvi de fitxes entre la mà del jugador i la bossa de fitxes.
+     * @param word Paraula que es canvia per noves fitxes extretes de la bossa.
+     * @throws IllegalArgumentException si PiecesToSwap és nul.
+     * @throws NotEnoughPiecesInBagException si no hi ha prou fitxes a la bossa per completar l'intercanvi.
      */
     public void run(String[] word) {
         Piece[] PiecesToSwap = new Piece[word.length];
