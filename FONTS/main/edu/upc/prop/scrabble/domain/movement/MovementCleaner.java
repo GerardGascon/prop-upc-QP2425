@@ -11,8 +11,8 @@ import edu.upc.prop.scrabble.utils.Vector2;
 import java.util.ArrayList;
 
 /***
- * Filters pieces from a new word placement that overlap with existing board pieces.
- * It handles both vertical and horizontal word orientations.
+ * Filtra les peces d'una nova col·locació de paraula que se superposen amb les peces existents al tauler.
+ * Gestiona tant l'orientació vertical com l'horitzontal de la paraula.
  * @author Gina Escofet GonzÃ¡lez
  */
 public class MovementCleaner {
@@ -20,10 +20,10 @@ public class MovementCleaner {
     private final PiecesConverter piecesConverter;
 
     /***
-     * Constructs a MovementCleaner with the game board and pieces converter.
-     * @param board The current board state.
-     * @param piecesConverter Converts between string representations and Piece arrays.
-     * @throws IllegalArgumentException if either parameter is null.
+     * Construeix un MovementCleaner amb el board i el piecesConverter.
+     * @param board L'estat actual del tauler.
+     * @param piecesConverter Converteix entre String a Piece[].
+     * @throws IllegalArgumentException si algun dels paràmetres és nul.
      */
     public MovementCleaner(Board board, PiecesConverter piecesConverter) {
         if (board == null) {
@@ -37,11 +37,11 @@ public class MovementCleaner {
     }
 
     /***
-     * Filters and returns only the new pieces needed for a word placement.
-     * @param movement The proposed word placement containing: the word to place, the starting coordinates (x,y), and
-     * the placement direction (horizontal/vertical).
-     * @return Array of pieces needed to complete the word placement.
-     * @throws IllegalArgumentException if movement is null
+     * Filtra i retorna només les noves peces necessàries per a la col·locació d'una paraula.
+     * @param movement El moviment de paraula proposat que conté: la paraula a col·locar, les coordenades d'inici (x,y), i
+     * la direcció de col·locació (horitzontal/vertical).
+     * @return Matriu de peces necessàries per completar la col·locació de la paraula.
+     * @throws IllegalArgumentException si el moviment és nul.
      */
     public Pair<Piece, Vector2>[] run(Movement movement) {
         if (movement == null) {
