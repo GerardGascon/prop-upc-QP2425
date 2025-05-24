@@ -7,24 +7,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Base class for representing an in-game scene.
+ * Classe base per representar una escena dins del joc.
  * <p>
- * This class provides the ability to manage and interact with objects within a scene, including processing
- * updates, instantiating objects, and handling the destruction of objects.
+ * Aquesta classe proporciona la funcionalitat per gestionar i interactuar amb els objectes dins d'una escena,
+ * incloent-hi el processament d'actualitzacions, la creació d'objectes i la gestió de la destrucció d'objectes.
  * </p>
  *
  * @author Gerard Gascón
  */
 public abstract class Scene {
+    /**
+     * Llista d'objectes que pertanyen a aquesta escena.
+     */
     private final List<SceneObject> objects = new ArrayList<>();
 
     /**
-     * Continuously updates the objects present in the scene.
+     * Actualitza contínuament els objectes presents a l'escena.
      * <p>
-     * This method is called repeatedly to process any updates for the scene objects.
+     * Aquest mètode s'anomena repetidament per processar les actualitzacions dels objectes.
      * </p>
      *
-     * @param delta Time difference from the last update (delta time)
+     * @param delta Temps transcorregut des de l'última actualització (delta time)
      * @see SceneObject
      */
     void onProcess(float delta) {
@@ -35,9 +38,9 @@ public abstract class Scene {
     }
 
     /**
-     * Detaches all scene objects present in the current scene.
+     * Desenganxa (desconnecta) tots els objectes de l'escena actual.
      * <p>
-     * This method disables and detaches all objects, effectively removing them from the scene.
+     * Aquest mètode desactiva i desenganxa tots els objectes, eliminant-los efectivament de l'escena.
      * </p>
      *
      * @see SceneObject
@@ -51,16 +54,16 @@ public abstract class Scene {
     }
 
     /**
-     * Instantiates a new object in the scene.
+     * Instancia un nou objecte dins de l'escena.
      * <p>
-     * This method tries to create a new instance of the given class and add it to the scene. If the class
-     * has a constructor with parameters, it will throw an exception, as such constructors are not supported.
+     * Aquest mètode intenta crear una nova instància de la classe especificada i afegir-la a l'escena.
+     * Si la classe té un constructor amb paràmetres, llença una excepció, ja que no es donen suport constructors parametritzats.
      * </p>
      *
-     * @param o The class of the object to instantiate
-     * @return The newly instantiated object
-     * @throws SceneObjectWithParametrizedConstructorException If the object to be instantiated has a constructor with parameters
-     * @throws RuntimeException If an error occurs during the object creation
+     * @param o La classe de l'objecte a instanciar
+     * @return L'objecte instanciat
+     * @throws SceneObjectWithParametrizedConstructorException Si l'objecte té un constructor amb paràmetres
+     * @throws RuntimeException Si hi ha algun error durant la creació de l'objecte
      * @see SceneObject
      */
     public <T extends SceneObject> T instantiate(Class<T> o) {
@@ -84,13 +87,13 @@ public abstract class Scene {
     }
 
     /**
-     * Destroys an object from the scene.
+     * Destrueix un objecte de l'escena.
      * <p>
-     * This method removes the specified object from the scene, disables it, and detaches it.
+     * Aquest mètode elimina l'objecte especificat de l'escena, el desactiva i el desenganxa.
      * </p>
      *
-     * @param o Instance of the object to destroy
-     * @throws NullPointerException If the object to destroy is null
+     * @param o Instància de l'objecte a destruir
+     * @throws NullPointerException Si l'objecte a destruir és null
      * @see SceneObject
      */
     public void destroy(SceneObject o) {
