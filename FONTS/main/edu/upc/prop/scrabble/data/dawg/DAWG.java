@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Classe que representa un DAWG (Directed Acyclic Word Graph)
+ * Classe per representar un DAWG (Directed Acyclic Word Graph)
  * @author Albert Usero
  */
 public class DAWG {
@@ -15,7 +15,7 @@ public class DAWG {
     private final Node root;
 
     /**
-     * Mapa que relaciona números de hash amb nodes per emmagatzemar nodes únics.
+     * Mapa que relaciona números de hash amb nodes per emmagatzemar nodes únics
      */
     private final Map<Integer, Node> uniqueNodes;
 
