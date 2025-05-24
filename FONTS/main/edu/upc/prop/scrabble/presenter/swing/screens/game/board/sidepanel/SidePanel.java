@@ -39,12 +39,12 @@ public class SidePanel extends JPanel {
      * Cada element conté les dades d'un jugador (nom, puntuació, etc.).
      * </p>
      */
-    private final ArrayList<Player> players;
+    private final Player[] players;
     /**
      * Constructor que inicialitza el panell amb la llista de jugadors.
      * @param players Llista de jugadors que participen en la partida.
      */
-    public SidePanel(ArrayList<Player> players) {
+    public SidePanel(Player[] players) {
         setOpaque(false);
         this.players = players;
     }
@@ -82,7 +82,7 @@ public class SidePanel extends JPanel {
         g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         g2.setColor(new Color(0x2e, 0x3a, 0x3c));
         g2.fillRect(0, 0, getWidth(), getHeight());
-        playerHighlight.drawPlayerHighlight(g2, getHeight(), getWidth(), currentPlayer, players.size());
+        playerHighlight.drawPlayerHighlight(g2, getHeight(), getWidth(), currentPlayer, players.length);
         playerInfo.drawPlayerInfo(g2, getHeight(), getWidth(), players);
         g2.dispose();
     }

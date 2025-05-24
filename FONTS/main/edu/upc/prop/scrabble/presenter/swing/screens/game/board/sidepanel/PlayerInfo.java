@@ -30,11 +30,11 @@ public class PlayerInfo extends JPanel {
      * @param rectangleWidth Amplada disponible per a les targetes
      * @param players Llista de jugadors amb la seva informació
      */
-    public void drawPlayerInfo(Graphics g, int panelHeight, int rectangleWidth, ArrayList<Player> players) {
+    public void drawPlayerInfo(Graphics g, int panelHeight, int rectangleWidth, Player[] players) {
         // Marges adaptatius basats en la mida de la pantalla
         int USER_MARGIN = (int) (10 * (getWidth() / 1920.0));
         panelHeight -= USER_MARGIN * 2;
-        int NUM_USER_SECTIONS = players.size();
+        int NUM_USER_SECTIONS = players.length;
         float USER_SECTION_WIDTH_PERCENTAGE = 0.8f;
 
         for (int i = 0; i < NUM_USER_SECTIONS; i++) {
@@ -60,14 +60,14 @@ public class PlayerInfo extends JPanel {
             FontMetrics metrics = g.getFontMetrics(font);
 
             // Renderització del nom del jugador
-            String name = players.get(i).getName();
+            String name = players[i].getName();
             int nameWidth = metrics.stringWidth(name);
             int nameX = sectionX + ((userSectionWidth) - nameWidth) / 2;
             int nameY = sectionY + ((colorRectHeight * 725)/1000) + (metrics.getAscent() / 2);
             g.drawString(name, nameX, nameY);
 
             // Renderització de la puntuació
-            String score = String.valueOf(players.get(i).getScore());
+            String score = String.valueOf(players[i].getScore());
             int scoreWidth = metrics.stringWidth(score);
             int scoreX = sectionX + (userSectionWidth - scoreWidth) / 2;
             int scoreY = sectionY + (userSectionHeight * 190)/300 + colorRectHeight / 2;

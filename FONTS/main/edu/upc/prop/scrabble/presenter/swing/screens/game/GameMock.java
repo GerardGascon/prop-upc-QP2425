@@ -77,7 +77,7 @@ public class GameMock extends JPanel implements IBlankPieceSelector {
 
         playersList.add(h);
         // Create and add the side panel as a proper component
-        sidePanel = new SidePanel(playersList);
+        sidePanel = new SidePanel(playersList.toArray(Player[]::new));
         add(sidePanel);
 
         // En aquest moment exacte no tenim acces a getWidth i Heigth.
