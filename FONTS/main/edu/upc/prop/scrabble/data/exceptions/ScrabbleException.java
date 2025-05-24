@@ -1,20 +1,20 @@
 package edu.upc.prop.scrabble.data.exceptions;
 
 /**
- * Abstract base class for all exceptions specific to the Scrabble game.
+ * Classe base abstracta per a totes les excepcions específiques del joc de Scrabble.
  * <p>
- * This class is the parent for all exceptions that are thrown in the context of a Scrabble game.
- * It extends {@link RuntimeException}, allowing for unchecked exceptions that can be thrown during the game
- * whenever there are rule violations or invalid game actions.
+ * Aquesta classe és la mare de totes les excepcions que es llancen en el context d’una partida de Scrabble.
+ * Estén {@link RuntimeException}, cosa que permet utilitzar excepcions no comprovades que poden ser llançades
+ * durant el joc quan hi ha infraccions de les regles o accions de joc no vàlides.
  * </p>
  *
  * @author Gerard Gascón
  */
 public abstract class ScrabbleException extends RuntimeException {
     /**
-     * Constructs a ScrabbleException with the specified detail message.
+     * Construeix una excepció de tipus Scrabble amb el missatge de detall especificat.
      *
-     * @param message The detail message explaining the cause of the exception.
+     * @param message El missatge explicatiu de la causa de l’excepció.
      */
     public ScrabbleException(String message) {
         super(message);
