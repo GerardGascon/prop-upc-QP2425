@@ -1,1 +1,0 @@
-Classes que s'ocupen del parsing d'accions relacionades amb la feta de moviments i agafar fiches.

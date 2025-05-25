@@ -8,6 +8,8 @@ import java.util.Random;
  *
  * @see IRand
  * @see Random
+ *
+ * @author Gerard Gascón
  */
 public class Rand implements IRand {
     private final Random random = new Random();
