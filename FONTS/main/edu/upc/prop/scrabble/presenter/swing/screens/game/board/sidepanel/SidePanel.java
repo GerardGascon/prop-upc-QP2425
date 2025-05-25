@@ -14,7 +14,7 @@ import java.util.ArrayList;
  *   <li>El jugador actual (resaltat)</li>
  *   <li>Les puntuacions i noms dels jugadors</li>
  * </ul>
- * Utilitza {@link PlayerHighlight} i {@link PlayerInfo} per renderitzar els elements.
+ * Utilitza PlayerHighlight i PlayerInfo per renderitzar els elements.
  * </p>
  *
  * @author Albert Usero
