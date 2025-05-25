@@ -275,4 +275,68 @@ public class TestBoardView extends SwingTest {
 
         finish();
     }
+
+    @Test
+    public void getTemporalPiecesWordWithPieceInBetweenVertical() {
+        HandViewStub handViewStub = new HandViewStub("A", 1);
+        view = new TestWindow<>(500, 500, new BoardView(21, handViewStub, null));
+        Board board = new SuperBoard();
+        Player player = new Player("test", false);
+        PointCalculator pointCalculator = new PointCalculator(board);
+        WordPlacer placer = new WordPlacer(player, board, view.getPanel(), pointCalculator);
+
+        placer.run(new Piece[]{new Piece("A", 3)}, 10, 10, Direction.Horizontal);
+
+        view.getPanel().placeTemporalPiece("P", 2, 9, 10);
+        view.getPanel().placeTemporalPiece("T", 3, 11, 10);
+
+        String temporalWord = view.getPanel().getTemporalWord();
+
+        assertEquals("PAT", temporalWord);
+
+        finish();
+    }
+
+    @Test
+    public void getTemporalPiecesWordWithPieceInBetweenHorizontal() {
+        HandViewStub handViewStub = new HandViewStub("A", 1);
+        view = new TestWindow<>(500, 500, new BoardView(21, handViewStub, null));
+        Board board = new SuperBoard();
+        Player player = new Player("test", false);
+        PointCalculator pointCalculator = new PointCalculator(board);
+        WordPlacer placer = new WordPlacer(player, board, view.getPanel(), pointCalculator);
+
+        placer.run(new Piece[]{new Piece("A", 3)}, 10, 10, Direction.Horizontal);
+
+        view.getPanel().placeTemporalPiece("P", 2, 10, 9);
+        view.getPanel().placeTemporalPiece("T", 3, 10, 11);
+
+        String temporalWord = view.getPanel().getTemporalWord();
+
+        assertEquals("PAT", temporalWord);
+
+        finish();
+    }
+
+    @Test
+    public void getTemporalPiecesTakesSpacesIntoAccount() {
+        HandViewStub handViewStub = new HandViewStub("A", 1);
+        view = new TestWindow<>(500, 500, new BoardView(21, handViewStub, null));
+        Board board = new SuperBoard();
+        Player player = new Player("test", false);
+        PointCalculator pointCalculator = new PointCalculator(board);
+        WordPlacer placer = new WordPlacer(player, board, view.getPanel(), pointCalculator);
+
+        placer.run(new Piece[]{new Piece("A", 3)}, 10, 10, Direction.Horizontal);
+        placer.run(new Piece[]{new Piece("A", 3)}, 10, 7, Direction.Horizontal);
+
+        view.getPanel().placeTemporalPiece("P", 2, 10, 9);
+        view.getPanel().placeTemporalPiece("T", 3, 10, 11);
+
+        String temporalWord = view.getPanel().getTemporalWord();
+
+        assertEquals("PAT", temporalWord);
+
+        finish();
+    }
 }

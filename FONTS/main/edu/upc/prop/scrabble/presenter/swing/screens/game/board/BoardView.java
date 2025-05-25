@@ -6,11 +6,11 @@ import edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles.*;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles.premium.*;
 import edu.upc.prop.scrabble.domain.actionmaker.IHandView;
 import edu.upc.prop.scrabble.utils.Direction;
-import edu.upc.prop.scrabble.utils.Vector2;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
@@ -218,27 +218,88 @@ public class BoardView extends JPanel implements IBoard {
 
     private String getHorizontalTemporalWord() {
         StringBuilder word = new StringBuilder();
-        List<BoardTemporalPieceTile> sortedTiles = getSortedTiles(true);
-        for (BoardTemporalPieceTile boardTile : sortedTiles)
-            word.append(boardTile.getLetter());
+        List<BoardTile> sortedTiles = getSortedTiles(true);
+        for (BoardTile boardTile : sortedTiles){
+            if (boardTile instanceof BoardTemporalPieceTile temporalWord) {
+                word.append(temporalWord.getLetter());
+            } else if (boardTile instanceof BoardPieceTile pieceWord) {
+                word.append(pieceWord.getLetter());
+            }
+        }
         return word.toString();
     }
 
     private String getVerticalTemporalWord() {
         StringBuilder word = new StringBuilder();
-        List<BoardTemporalPieceTile> sortedTiles = getSortedTiles(false);
-        for (BoardTemporalPieceTile boardTile : sortedTiles)
-            word.append(boardTile.getLetter());
+        List<BoardTile> sortedTiles = getSortedTiles(false);
+        for (BoardTile boardTile : sortedTiles){
+            if (boardTile instanceof BoardTemporalPieceTile temporalWord) {
+                word.append(temporalWord.getLetter());
+            } else if (boardTile instanceof BoardPieceTile pieceWord) {
+                word.append(pieceWord.getLetter());
+            }
+        }
         return word.toString();
     }
 
-    private List<BoardTemporalPieceTile> getSortedTiles(boolean horizontal) {
-        if (horizontal)
-            return temporalPieces.stream()
-                        .sorted(Comparator.comparingInt(obj -> obj.getPosition().x)).toList();
+    private BoardTile[] getHorizontalTiles() {
+        List<BoardTile> tiles = new ArrayList<>();
 
-        return temporalPieces.stream()
-                        .sorted(Comparator.comparingInt(obj -> obj.getPosition().y)).toList();
+        BoardTile temporalPiece = temporalPieces.getFirst();
+        for (int i = temporalPiece.getPosition().x; i < size; i++) {
+            BoardTile tile = board[i][temporalPiece.getPosition().y].getTile();
+            if (tile instanceof BoardTemporalPieceTile || tile instanceof BoardPieceTile) {
+                tiles.add(tile);
+                continue;
+            }
+
+            break;
+        }
+        for (int i = temporalPiece.getPosition().x - 1; i >= 0; i--) {
+            BoardTile tile = board[i][temporalPiece.getPosition().y].getTile();
+            if (tile instanceof BoardTemporalPieceTile || tile instanceof BoardPieceTile) {
+                tiles.add(tile);
+                continue;
+            }
+
+            break;
+        }
+
+        return tiles.toArray(BoardTile[]::new);
+    }
+
+    private BoardTile[] getVerticalTiles() {
+        List<BoardTile> tiles = new ArrayList<>();
+
+        BoardTile temporalPiece = temporalPieces.getFirst();
+        for (int i = temporalPiece.getPosition().y; i < size; i++) {
+            BoardTile tile = board[temporalPiece.getPosition().x][i].getTile();
+            if (tile instanceof BoardTemporalPieceTile || tile instanceof BoardPieceTile) {
+                tiles.add(tile);
+                continue;
+            }
+
+            break;
+        }
+        for (int i = temporalPiece.getPosition().y - 1; i >= 0; i--) {
+            BoardTile tile = board[temporalPiece.getPosition().x][i].getTile();
+            if (tile instanceof BoardTemporalPieceTile || tile instanceof BoardPieceTile) {
+                tiles.add(tile);
+                continue;
+            }
+
+            break;
+        }
+
+        return tiles.toArray(BoardTile[]::new);
+    }
+
+    private List<BoardTile> getSortedTiles(boolean horizontal) {
+        if (horizontal)
+            return Arrays.stream(getHorizontalTiles())
+                    .sorted(Comparator.comparingInt(obj -> obj.getPosition().x)).toList();
+        return Arrays.stream(getVerticalTiles())
+                .sorted(Comparator.comparingInt(obj -> obj.getPosition().y)).toList();
     }
 
     /**
