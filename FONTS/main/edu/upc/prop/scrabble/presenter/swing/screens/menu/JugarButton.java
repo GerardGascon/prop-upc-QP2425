@@ -454,7 +454,7 @@ public class JugarButton extends MenuButton {
         System.out.println("Table Size: " + selectedTableSize);
 
 // Close settings panel
-
+        
         toggleSettingsPanel();
 
 

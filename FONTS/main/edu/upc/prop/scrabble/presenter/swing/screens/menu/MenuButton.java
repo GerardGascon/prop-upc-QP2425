@@ -76,4 +76,6 @@ public class MenuButton extends JButton {
     private int getCornerRadius() {
         return getHeight() * 20 / 100 * 2;
     }
+
+
 }
