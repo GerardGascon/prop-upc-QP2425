@@ -29,18 +29,21 @@ public class ContinueButton extends MenuButton {
      * Si es prem otherbutton mentre s'estan mostrant panels de continueButton, aleshores
      * es tanca els panels de continueButton
      */
-    private JugarButton otherButton;
+    private MenuButton[] otherButtons;
     /**
      * Creador del botó "Continuar", que desplega el menú per carregar una partida guardada.
      * @param parent El panell principal sobre el qual es mostrarà el menú.
      */
+    //TODO: TREURE COMENTARIS
     public ContinueButton(JPanel parent) {
         super("Continuar");
         this.parentPanel = parent;
 
         addActionListener(_ -> {
-            if (otherButton != null) {
-                otherButton.Close();
+            if (otherButtons != null) {
+                for (MenuButton b : otherButtons) {
+                //    if (b != null) b.Close();
+                }
             }
             toggleSettingsPanel();
         });
@@ -48,15 +51,16 @@ public class ContinueButton extends MenuButton {
     /**
      * Assigna el botó complementari amb el qual es coordina l'intercanvi de panells.
      * Normalment utilitzat per assegurar que només un menú està actiu alhora.
-     * @param otherButton El botó amb què es coordina.
+     * @param otherButtons El botó amb què es coordina.
      */
-    public void setOtherButton(JugarButton otherButton) {
-        this.otherButton = otherButton;
-    }
+    //public void setOtherButtons(MenuButton[] otherButtons) {
+    //    this.otherButtons = otherButtons;
+    //}
     /**
      * Tanca el panell desplegat pel botó "Continuar", si està actiu.
      * Elimina el panell de configuració del contenidor i actualitza la interfície.
      */
+    //@Override
     public void Close() {
         if (!menuActive) return; // No fem res si ja està tancat
 
