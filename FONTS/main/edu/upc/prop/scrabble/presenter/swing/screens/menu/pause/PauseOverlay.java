@@ -7,9 +7,23 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
 
+/**
+ * Panell superposat (overlay) que enfosqueix la pantalla i mostra el menú de pausa.
+ * Gestiona la tecla ESC per tancar-lo.
+ * @author Biel Pérez Silvestre
+ */
 public class PauseOverlay extends JPanel {
+    /**
+     * Panell sobre el ho apliquem tot
+     */
     private final PauseMenu parent;
 
+    /**
+     * Creadora del panell de pausa (overlay), que es mostra a sobre de la pantalla actual.
+     * @param parent panell sobre el qual es mostra l'overlay
+     * @param gameSaver objecte responsable de gestionar el guardat de la partida
+     * @see GameSaver
+     */
     public PauseOverlay(PauseMenu parent, GameSaver gameSaver) {
         super(null);
         this.parent = parent;
@@ -36,6 +50,9 @@ public class PauseOverlay extends JPanel {
         layoutComponents(gameSaver);
     }
 
+    /**
+     * Tanca l'overlay eliminant-lo del panell pare i actualitza la vista.
+     */
     public void closePanel() {
         parent.remove(this);
         parent.revalidate();
@@ -43,6 +60,12 @@ public class PauseOverlay extends JPanel {
         parent.closePauseMenu();
     }
 
+    /**
+     * Inicialitza i afegeix el panell de pausa a l'overlay.
+     * @param gameSaver objecte utilitzat per gestionar el guardat de partida
+     * @see GameSaver
+     * @see PausePanel
+     */
     private void layoutComponents(GameSaver gameSaver) {
         JPanel popup = new PausePanel(this, gameSaver);
         add(popup);
@@ -54,7 +77,6 @@ public class PauseOverlay extends JPanel {
     /**
      * Pinta el fons translúcid per donar un efecte de popup sobre el contingut
      * principal.
-     *
      * @param g Context gràfic per pintar
      */
     @Override
@@ -70,7 +92,6 @@ public class PauseOverlay extends JPanel {
 
     /**
      * Indica que el panell no és completament opac.
-     *
      * @return false sempre, ja que es vol un fons translúcid
      */
     @Override
