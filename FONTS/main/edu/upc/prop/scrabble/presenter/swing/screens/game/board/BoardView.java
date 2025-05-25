@@ -11,6 +11,7 @@ import edu.upc.prop.scrabble.utils.Vector2;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -37,6 +38,8 @@ public class BoardView extends JPanel implements IBoard {
      */
     private final IBlankPieceSelector blankPieceSelector;
 
+    private final BoardCell[][] board;
+
     /**
      * Llista de peces temporals col·locades al tauler però no confirmades.
      */
@@ -58,6 +61,8 @@ public class BoardView extends JPanel implements IBoard {
         this.size = size;
         this.handView = handView;
         this.blankPieceSelector = blankPieceSelector;
+
+        board = new BoardCell[size][size];
 
         generateEmptyTiles(size, handView);
     }
@@ -84,13 +89,14 @@ public class BoardView extends JPanel implements IBoard {
                 continue;
             }
 
-            int row = j / size;
-            int col = j % size;
+            int y = j / size;
+            int x = j % size;
             j++;
 
             BoardCell cell = new BoardCell();
-            cell.setTile(new BoardEmptyTile(col, row, handView, this, blankPieceSelector));
+            cell.setTile(new BoardEmptyTile(x, y, handView, this, blankPieceSelector));
             add(cell);
+            board[x][y] = cell;
         }
     }
 
@@ -198,6 +204,43 @@ public class BoardView extends JPanel implements IBoard {
         }
     }
 
+    public String getTemporalWord() {
+        if (temporalPieces.size() > 1) {
+            if (temporalPieces.get(0).getPosition().x == temporalPieces.get(1).getPosition().x) {
+                return getVerticalTemporalWord();
+            }
+            return getHorizontalTemporalWord();
+        }
+
+        // TODO: Test this case
+        throw new RuntimeException("Still not supported");
+    }
+
+    private String getHorizontalTemporalWord() {
+        StringBuilder word = new StringBuilder();
+        List<BoardTemporalPieceTile> sortedTiles = getSortedTiles(true);
+        for (BoardTemporalPieceTile boardTile : sortedTiles)
+            word.append(boardTile.getLetter());
+        return word.toString();
+    }
+
+    private String getVerticalTemporalWord() {
+        StringBuilder word = new StringBuilder();
+        List<BoardTemporalPieceTile> sortedTiles = getSortedTiles(false);
+        for (BoardTemporalPieceTile boardTile : sortedTiles)
+            word.append(boardTile.getLetter());
+        return word.toString();
+    }
+
+    private List<BoardTemporalPieceTile> getSortedTiles(boolean horizontal) {
+        if (horizontal)
+            return temporalPieces.stream()
+                        .sorted(Comparator.comparingInt(obj -> obj.getPosition().x)).toList();
+
+        return temporalPieces.stream()
+                        .sorted(Comparator.comparingInt(obj -> obj.getPosition().y)).toList();
+    }
+
     /**
      * Comprova si la posició és vàlida segons la lògica del joc:
      * si no hi ha peces temporals, qualsevol posició és vàlida;
@@ -211,47 +254,68 @@ public class BoardView extends JPanel implements IBoard {
         if (temporalPieces.isEmpty())
             return true;
 
-        if (isAdjacentToOther(x, y) && isInLineWithOthers(x, y))
+        if (isAdjacentToOtherPlacedWords(x, y) && isInLineWithAlreadyPlacedWords(x, y))
             return true;
 
         return false;
     }
 
-    /**
-     * Comprova si la posició està alineada (horitzontal o vertical) amb les peces temporals col·locades.
-     *
-     * @param x coordenada x
-     * @param y coordenada y
-     * @return true si està en línia
-     */
-    private boolean isInLineWithOthers(int x, int y) {
-        if (temporalPieces.size() < 2)
+    private boolean isAdjacentToOtherPlacedWords(int x, int y) {
+        Direction dir;
+        if (temporalPieces.size() == 1)
+            dir = temporalPieces.get(0).getPosition().x == x ? Direction.Vertical : Direction.Horizontal;
+        else
+            dir = temporalPieces.get(0).getPosition().x == temporalPieces.get(1).getPosition().x ? Direction.Vertical : Direction.Horizontal;
+
+        if (dir == Direction.Vertical){
+            int startY = Math.min(y, getSortedTiles(false).getFirst().getPosition().y);
+            int endY = Math.max(y, getSortedTiles(false).getFirst().getPosition().y);
+
+            boolean passedBlank = false;
+            for (int i = startY; i <= endY; i++) {
+                BoardTile tile = board[x][i].getTile();
+                if (tile instanceof BoardTemporalPieceTile || tile instanceof BoardPieceTile) {
+                    continue;
+                }
+
+                if (passedBlank)
+                    return false;
+
+                passedBlank = true;
+            }
+
             return true;
+        }
 
-        Direction dir = temporalPieces.get(0).getPosition().x == temporalPieces.get(1).getPosition().x ? Direction.Vertical : Direction.Horizontal;
+        int startX = Math.min(x, getSortedTiles(false).getFirst().getPosition().x);
+        int endX = Math.max(x, getSortedTiles(false).getFirst().getPosition().x);
 
-        System.out.println(x + " " + y + " " + dir);
+        boolean passedBlank = false;
+        for (int i = startX; i <= endX; i++) {
+            BoardTile tile = board[i][y].getTile();
+            if (tile instanceof BoardTemporalPieceTile || tile instanceof BoardPieceTile) {
+                continue;
+            }
+
+            if (passedBlank)
+                return false;
+
+            passedBlank = true;
+        }
+
+        return true;
+    }
+
+    private boolean isInLineWithAlreadyPlacedWords(int x, int y) {
+        Direction dir;
+        if (temporalPieces.size() == 1)
+            dir = temporalPieces.get(0).getPosition().x == x ? Direction.Vertical : Direction.Horizontal;
+        else
+            dir = temporalPieces.get(0).getPosition().x == temporalPieces.get(1).getPosition().x ? Direction.Vertical : Direction.Horizontal;
+
         if (dir == Direction.Horizontal)
             return temporalPieces.getFirst().getPosition().y == y;
         return temporalPieces.getFirst().getPosition().x == x;
-    }
-
-    /**
-     * Comprova si la posició (x,y) és adjacent a qualsevol peça temporal ja col·locada.
-     *
-     * @param x coordenada x
-     * @param y coordenada y
-     * @return true si és adjacent
-     */
-    private boolean isAdjacentToOther(int x, int y) {
-        for (BoardTemporalPieceTile boardTile : temporalPieces) {
-            Vector2 pos = boardTile.getPosition();
-            if (pos.y == y && (pos.x - x == -1 || pos.x - x == 1))
-                return true;
-            if (pos.x == x && (pos.y - y == -1 || pos.y - y == 1))
-                return true;
-        }
-        return false;
     }
 
     /**
