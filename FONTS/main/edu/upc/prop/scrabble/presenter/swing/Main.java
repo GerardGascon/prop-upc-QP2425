@@ -34,7 +34,7 @@ public class Main {
 
             GameProperties gameProperties = new GameProperties(Language.Catalan, BoardType.Standard,
                     Arrays.asList("Geri", "Adri"),
-                    List.of("CPU 1"));
+                    List.of("CPU 1"), true);
             GameLoop gameLoop = new GameLoop(GameScene.class, gameProperties, window);
 //            window.add(new GameMock());
             new Thread(gameLoop::run).start();
