@@ -118,6 +118,8 @@ public class GameScene extends Scene {
         PauseMenu pauseMenu = new PauseMenu(saver);
         generateWindow(window, boardView, sidePanel, handView, blankPieceSelector, pauseMenu);
 
+        dataCollector.addPersistableObjects(board);
+
         players[0].startTurn();
     }
 

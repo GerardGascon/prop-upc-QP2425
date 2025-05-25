@@ -4,6 +4,7 @@ import com.google.gson.*;
 import edu.upc.prop.scrabble.persistence.runtime.data.PersistentDictionary;
 
 import java.lang.reflect.Type;
+import java.util.Objects;
 
 /**
  * Serialitzador per a PersistentDictionary que utilitza Gson.
@@ -30,7 +31,7 @@ class PersistentDictionarySerializer implements JsonSerializer<PersistentDiction
         JsonObject dictJson = new JsonObject();
         src.getDictionary().forEach((key, value) -> dictJson.add(key, context.serialize(value)));
 
-        json.add(src.getName(), dictJson);
+        json.add(Objects.requireNonNullElse(src.getName(), ""), dictJson);
         return json;
     }
 }
