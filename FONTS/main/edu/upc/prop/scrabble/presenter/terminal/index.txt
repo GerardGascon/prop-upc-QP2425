@@ -1,2 +1,0 @@
-Aquestes classes s'ocupen d'inicialitzar els parametres d'una partida
-i de visualitzar las seleccio.
