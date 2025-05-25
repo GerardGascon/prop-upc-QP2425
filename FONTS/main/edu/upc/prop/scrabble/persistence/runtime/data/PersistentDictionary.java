@@ -84,6 +84,11 @@ public class PersistentDictionary extends PersistentObject {
         return dictionary.get(key);
     }
 
+    /**
+     * Converteix l'objecte en un diccionari.
+     *
+     * @return El mateix objecte, ja que aquest ja és un diccionari.
+     */
     @Override
     public PersistentDictionary toDictionary() {
         return this;

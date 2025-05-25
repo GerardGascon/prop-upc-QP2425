@@ -11,15 +11,60 @@ import edu.upc.prop.scrabble.domain.turns.IGamePlayer;
 import edu.upc.prop.scrabble.presenter.scenes.SceneObject;
 import edu.upc.prop.scrabble.domain.actionmaker.IHandView;
 
+/**
+ * Classe abstracta que representa un objecte jugador dins de l'escena,
+ * integrant les accions de joc i la interfície amb la vista de la mà.
+ * Implementa la interfície IGamePlayer per a la gestió de torns.
+ *
+ * @author Gerard Gascón
+ */
 public abstract class PlayerObject extends SceneObject implements IGamePlayer {
+
+    /**
+     * Índex que identifica el jugador dins de la partida.
+     */
     private int playerIndex;
+
+    /**
+     * Indica si el jugador té el torn actiu.
+     */
     private boolean onTurn = false;
+
+    /**
+     * Dades del jugador (nom, mà, etc.).
+     */
     protected Player player;
+
+    /**
+     * Acció encarregada de col·locar fitxes al tauler.
+     */
     private PlaceActionMaker placeActionMaker;
+
+    /**
+     * Acció encarregada de robar fitxes de la bossa.
+     */
     private DrawActionMaker drawActionMaker;
+
+    /**
+     * Acció encarregada de saltar el torn.
+     */
     private SkipActionMaker skipActionMaker;
+
+    /**
+     * Vista que mostra les fitxes a la mà del jugador.
+     */
     private IHandView handView;
 
+    /**
+     * Configura el jugador amb les accions i dades necessàries.
+     *
+     * @param playerIndex Índex del jugador.
+     * @param placeActionMaker Acció per col·locar fitxes.
+     * @param player Dades del jugador.
+     * @param drawActionMaker Acció per robar fitxes.
+     * @param skipActionMaker Acció per saltar torn.
+     * @param handView Vista de la mà del jugador.
+     */
     public final void configure(int playerIndex, PlaceActionMaker placeActionMaker, Player player, DrawActionMaker drawActionMaker, SkipActionMaker skipActionMaker, IHandView handView) {
         this.playerIndex = playerIndex;
         this.placeActionMaker = placeActionMaker;
@@ -29,12 +74,21 @@ public abstract class PlayerObject extends SceneObject implements IGamePlayer {
         this.handView = handView;
     }
 
+    /**
+     * Inicia el torn del jugador mostrant les fitxes a la vista.
+     */
     @Override
     public void startTurn() {
         onTurn = true;
         handView.showPieces(player.getHand());
     }
 
+    /**
+     * Intenta col·locar una fitxa al tauler segons el moviment indicat.
+     * En cas d'error, salta automàticament el torn.
+     *
+     * @param movement Moviment que indica on col·locar la fitxa.
+     */
     protected final void placePiece(Movement movement) {
         try {
             placeActionMaker.run(movement);
@@ -43,6 +97,12 @@ public abstract class PlayerObject extends SceneObject implements IGamePlayer {
         }
     }
 
+    /**
+     * Intenta robar les fitxes indicades.
+     * En cas d'error, salta automàticament el torn.
+     *
+     * @param piece Array de fitxes que es volen robar.
+     */
     protected final void drawPieces(Piece[] piece) {
         try {
             String[] word = new String[piece.length];
@@ -55,15 +115,26 @@ public abstract class PlayerObject extends SceneObject implements IGamePlayer {
         }
     }
 
+    /**
+     * Salta el torn actual.
+     */
     protected final void skipTurn() {
         skipActionMaker.run();
     }
 
+    /**
+     * Finalitza el torn del jugador.
+     */
     @Override
     public final void endTurn() {
         onTurn = false;
     }
 
+    /**
+     * Indica si el jugador està actiu en el torn actual.
+     *
+     * @return true si el jugador té el torn, false en cas contrari.
+     */
     @Override
     public final boolean isActive() {
         return onTurn;

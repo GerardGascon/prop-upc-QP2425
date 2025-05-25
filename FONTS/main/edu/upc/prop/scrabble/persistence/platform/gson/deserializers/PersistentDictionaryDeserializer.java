@@ -26,6 +26,7 @@ class PersistentDictionaryDeserializer extends Deserializer implements JsonDeser
      * @param typeOfT   El tipus de l'objecte a deserialitzar.
      * @param context   El context de deserialització de Gson.
      * @return Un PersistentDictionary amb el nom i els elements deserialitzats.
+     * @throws JsonParseException Si el JSON no conté exactament una entrada o si hi ha errors en la deserialització.
      */
     @Override
     public PersistentDictionary deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)

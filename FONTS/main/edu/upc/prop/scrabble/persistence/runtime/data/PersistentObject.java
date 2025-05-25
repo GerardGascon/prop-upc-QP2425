@@ -74,6 +74,11 @@ public class PersistentObject {
         }
     }
 
+    /**
+     * Converteix l'objecte en un diccionari.
+     *
+     * @return Una versió del mateix objecte convertit en un diccionari.
+     */
     public PersistentDictionary toDictionary() {
         if (value instanceof PersistentDictionary) {
             return (PersistentDictionary) value;

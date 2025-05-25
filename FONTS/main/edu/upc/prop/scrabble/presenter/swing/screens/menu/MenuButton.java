@@ -4,9 +4,24 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 
+/**
+ * Classe personalitzada de botó Swing que representa un botó de menú estilitzat.
+ * Dibuixa el botó amb cantonades arrodonides i una lletra gran en estil Scrabble.
+ * També desactiva la interacció amb el teclat per evitar activacions accidentals amb ESPAI o ENTER.
+ *
+ * @author Gerard Gascón
+ */
 public class MenuButton extends JButton {
+    /**
+     * Text que es mostra damunt del botó.
+     */
     private final String text;
 
+    /**
+     * Crea un nou botó de menú amb el text especificat.
+     *
+     * @param text el text que es mostrarà al botó.
+     */
     public MenuButton(String text) {
         super();
         setOpaque(false);
@@ -19,6 +34,9 @@ public class MenuButton extends JButton {
         disableKeyboardInput();
     }
 
+    /**
+     * Desactiva la interacció per teclat (ESPAI i ENTER) per evitar activacions no desitjades.
+     */
     private void disableKeyboardInput() {
         InputMap inputMap = getInputMap(JComponent.WHEN_FOCUSED);
         inputMap.put(KeyStroke.getKeyStroke("SPACE"), "none");
@@ -28,6 +46,12 @@ public class MenuButton extends JButton {
         inputMap.put(KeyStroke.getKeyStroke("released ENTER"), "none");
     }
 
+    /**
+     * Pinta el component del botó amb efectes d'estil personalitzat, com ara colors segons l'estat
+     * (normal, sobresortit, premut) i forma arrodonida.
+     *
+     * @param g l'objecte Graphics que s'utilitza per dibuixar el botó.
+     */
     @Override
     protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g.create();
@@ -47,12 +71,24 @@ public class MenuButton extends JButton {
         g2.dispose();
     }
 
+    /**
+     * Dibuixa la forma del botó com una fitxa amb cantonades arrodonides i el text centrat verticalment.
+     *
+     * @param g      l'objecte Graphics2D utilitzat per al dibuix.
+     * @param bg     el color de fons del botó.
+     * @param radius el radi de les cantonades arrodonides.
+     */
     protected void drawTile(Graphics2D g, Color bg, int radius) {
         g.setColor(bg);
         g.fillRoundRect(0, 0, getWidth(), getHeight(), radius, radius);
         drawLetter(g);
     }
 
+    /**
+     * Dibuixa el text del botó amb una font gran i negra, alineada verticalment al centre.
+     *
+     * @param g l'objecte Graphics2D utilitzat per al dibuix del text.
+     */
     private void drawLetter(Graphics2D g) {
         g.setColor(Color.BLACK);
 
@@ -67,12 +103,24 @@ public class MenuButton extends JButton {
         g.drawString(text, x, y);
     }
 
+    /**
+     * Comprova si el punt especificat es troba dins de la forma arrodonida del botó.
+     *
+     * @param x la coordenada x del punt.
+     * @param y la coordenada y del punt.
+     * @return true si el punt està dins del botó, false altrament.
+     */
     @Override
     public boolean contains(int x, int y) {
         Shape shape = new RoundRectangle2D.Float(0, 0, getWidth(), getHeight(), getCornerRadius(), getCornerRadius());
         return shape.contains(x, y);
     }
 
+    /**
+     * Calcula el radi de les cantonades arrodonides basant-se en l'altura del botó.
+     *
+     * @return el radi de les cantonades.
+     */
     private int getCornerRadius() {
         return getHeight() * 20 / 100 * 2;
     }

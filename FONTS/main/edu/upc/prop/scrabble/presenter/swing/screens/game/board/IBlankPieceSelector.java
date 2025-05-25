@@ -5,6 +5,8 @@ import java.util.function.Consumer;
 /**
  * Interfície per gestionar la selecció d'una fitxa en blanc.
  * Quan s'obre el selector, es passa un callback que rebrà la fitxa seleccionada.
+ *
+ * @author Gerard Gascón
  */
 public interface IBlankPieceSelector {
     /**

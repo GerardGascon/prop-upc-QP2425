@@ -1,28 +1,28 @@
 package edu.upc.prop.scrabble.utils;
 
 /**
- * A simple generic pair class to hold two values of potentially different types.
+ * Una classe genèrica simple per emmagatzemar un parell de valors de tipus potencialment diferents.
  *
- * @param <X> The type of the first element in the pair.
- * @param <Y> The type of the second element in the pair.
+ * @param <X> El tipus del primer element del parell.
+ * @param <Y> El tipus del segon element del parell.
  *
  * @author Gerard Gascón
  */
 public record Pair<X, Y>(X first, Y second) {
 
     /**
-     * Gets the first element of the pair.
+     * Obté el primer element del parell.
      *
-     * @return The first element of type X.
+     * @return El primer element de tipus X.
      */
     public X first() {
         return first;
     }
 
     /**
-     * Gets the second element of the pair.
+     * Obté el segon element del parell.
      *
-     * @return The second element of type Y.
+     * @return El segon element de tipus Y.
      */
     public Y second() {
         return second;

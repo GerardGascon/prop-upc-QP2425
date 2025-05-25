@@ -3,8 +3,8 @@ package edu.upc.prop.scrabble.utils;
 import java.util.Random;
 
 /**
- * Rand is a concrete implementation of the IRand interface.
- * It provides methods to generate random numbers using the java.util.Random class.
+ * Rand és una implementació concreta de la interfície IRand.
+ * Proporciona mètodes per generar nombres aleatoris utilitzant la classe java.util.Random.
  *
  * @see IRand
  * @see Random
@@ -13,9 +13,9 @@ public class Rand implements IRand {
     private final Random random = new Random();
 
     /**
-     * Returns a random integer. This method generates random integers across the entire range of integer values.
+     * Retorna un enter aleatori. Aquest mètode genera enters aleatoris dins de tot el rang possible d'enters.
      *
-     * @return a random integer.
+     * @return un enter aleatori.
      */
     @Override
     public int nextInt() {
@@ -23,10 +23,10 @@ public class Rand implements IRand {
     }
 
     /**
-     * Returns a random integer from 0 (inclusive) to the specified bound (exclusive).
+     * Retorna un enter aleatori des de 0 (inclusiu) fins al límit especificat (exclusiu).
      *
-     * @param bound the upper bound (exclusive) for the random number.
-     * @return a random integer in the range [0, bound).
+     * @param bound el límit superior (exclusiu) per al nombre aleatori.
+     * @return un enter aleatori dins del rang [0, bound).
      */
     @Override
     public int nextInt(int bound) {
@@ -34,11 +34,11 @@ public class Rand implements IRand {
     }
 
     /**
-     * Returns a random integer between the specified origin (inclusive) and bound (exclusive).
+     * Retorna un enter aleatori entre l'origen especificat (inclusiu) i el límit (exclusiu).
      *
-     * @param origin the lower bound (inclusive) for the random number.
-     * @param bound  the upper bound (exclusive) for the random number.
-     * @return a random integer in the range [origin, bound).
+     * @param origin el límit inferior (inclusiu) per al nombre aleatori.
+     * @param bound  el límit superior (exclusiu) per al nombre aleatori.
+     * @return un enter aleatori dins del rang [origin, bound).
      */
     @Override
     public int nextInt(int origin, int bound) {
