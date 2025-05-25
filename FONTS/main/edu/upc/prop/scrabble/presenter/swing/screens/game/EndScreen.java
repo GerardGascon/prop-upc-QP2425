@@ -9,18 +9,48 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
 
+/**
+ * EndScreen és un JPanel que mostra els resultats finals d'una partida de Scrabble.
+ * Mostra un podi amb els 3 primers jugadors, una llista completa de classificació, i proporciona
+ * botons per iniciar una nova partida, tornar al menú, o sortir de l'aplicació.
+ *
+ * La pantalla presenta un fons amb degradat amb una visualització de podi i
+ * targetes de jugadors codificades per colors que mostren puntuacions i posicions.
+ *
+ * @author Albert Usero
+ */
 public class EndScreen extends JPanel implements IEndScreen {
+    /** Percentatge d'amplada de pantalla ocupat pel panell lateral */
     private final float SIDE_PANEL_WIDTH_PERCENT = 0.35f;
+
+    /** Percentatge d'alçada de pantalla ocupat per l'àrea del podi */
     private final float PODIUM_HEIGHT_PERCENT = 0.6f;
+
+    /** Alçada en píxels de cada targeta de jugador a la llista de classificació */
     private final int PLAYER_CARD_HEIGHT = 80;
+
+    /** Marge en píxels entre targetes de jugadors */
     private final int PLAYER_CARD_MARGIN = 10;
 
+    /** Array de jugadors de la partida */
     private Player[] players;
+
+    /** Array de jugadors ordenats per puntuació (ordre descendent) */
     private Player[] sortedPlayers;
+
+    /** Panell que conté els botons d'acció */
     private JPanel buttonPanel;
+
+    /** Callback per tornar al menú principal */
     private ActionListener onMenuCallback;
+
+    /** Callback per iniciar una nova partida */
     private ActionListener onNewGameCallback;
 
+    /**
+     * Constructor per defecte que crea un EndScreen sense jugadors.
+     * Inicialitza el component amb l'estil per defecte i arrays de jugadors buits.
+     */
     public EndScreen() {
         setLayout(null);
         setBackground(new Color(0x2d, 0x2d, 0x2d));
@@ -29,6 +59,11 @@ public class EndScreen extends JPanel implements IEndScreen {
         initializeButtons();
     }
 
+    /**
+     * Constructor que crea un EndScreen amb els jugadors especificats.
+     *
+     * @param players Array de jugadors per mostrar a la pantalla final
+     */
     public EndScreen(Player[] players) {
         setLayout(null);
         setBackground(new Color(0x2d, 0x2d, 0x2d));
@@ -36,6 +71,12 @@ public class EndScreen extends JPanel implements IEndScreen {
         initializeButtons();
     }
 
+    /**
+     * Mostra la pantalla final amb l'array de jugadors ordenats proporcionat.
+     * Fa visible la finestra, la porta al davant i demana el focus.
+     *
+     * @param sortedPlayers Array de jugadors ordenats per puntuació final
+     */
     @Override
     public void show(Player[] sortedPlayers) {
         setPlayers(sortedPlayers);
@@ -51,21 +92,41 @@ public class EndScreen extends JPanel implements IEndScreen {
         revalidate();
     }
 
+    /**
+     * Estableix l'array de jugadors per a la pantalla final.
+     * Els jugadors ja haurien d'estar ordenats per puntuació en ordre descendent.
+     *
+     * @param players Array de jugadors ordenats per puntuació, o null per array buit
+     */
     public void setPlayers(Player[] players) {
         this.players = players != null ? players : new Player[0];
-        // Los jugadores ya vienen ordenados según la interfaz
+        // Els jugadors ja venen ordenats segons la interfície
         this.sortedPlayers = Arrays.copyOf(this.players, this.players.length);
         repaint();
     }
 
+    /**
+     * Estableix la funció callback que s'executarà quan es cliqui el botó "Menú Principal".
+     *
+     * @param callback ActionListener per gestionar els clics del botó menú
+     */
     public void setOnMenuCallback(ActionListener callback) {
         this.onMenuCallback = callback;
     }
 
+    /**
+     * Estableix la funció callback que s'executarà quan es cliqui el botó "Nova Partida".
+     *
+     * @param callback ActionListener per gestionar els clics del botó nova partida
+     */
     public void setOnNewGameCallback(ActionListener callback) {
         this.onNewGameCallback = callback;
     }
 
+    /**
+     * Inicialitza i configura el panell de botons amb els botons d'acció.
+     * Crea botons per "Nova Partida", "Menú Principal" i "Sortir" amb els seus respectius gestors.
+     */
     private void initializeButtons() {
         buttonPanel = new JPanel();
         buttonPanel.setOpaque(false);
@@ -95,6 +156,12 @@ public class EndScreen extends JPanel implements IEndScreen {
         add(buttonPanel);
     }
 
+    /**
+     * Mètode de pintat personalitzat que renderitza la interfície completa de la pantalla final.
+     * Dibuixa el fons, títol i resultats amb antialiasing activat.
+     *
+     * @param g Context gràfic per dibuixar
+     */
     @Override
     protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g.create();
@@ -118,6 +185,13 @@ public class EndScreen extends JPanel implements IEndScreen {
         g2.dispose();
     }
 
+    /**
+     * Dibuixa el fons dividit amb un panell lateral fosc i àrea principal amb degradat.
+     *
+     * @param g2 Context Graphics2D per dibuixar
+     * @param width Amplada del component
+     * @param height Alçada del component
+     */
     private void drawBackground(Graphics2D g2, int width, int height) {
         // Panel lateral izquierdo (más oscuro)
         g2.setColor(new Color(0x2d, 0x2d, 0x2d));
@@ -133,6 +207,13 @@ public class EndScreen extends JPanel implements IEndScreen {
                 (int) (width - width * SIDE_PANEL_WIDTH_PERCENT), height);
     }
 
+    /**
+     * Dibuixa el títol i l'anunci del guanyador a la part superior de la pantalla.
+     *
+     * @param g2 Context Graphics2D per dibuixar
+     * @param width Amplada del component
+     * @param height Alçada del component
+     */
     private void drawTitle(Graphics2D g2, int width, int height) {
         g2.setColor(Color.WHITE);
         g2.setFont(new Font("SansSerif", Font.BOLD, height / 12));
@@ -153,6 +234,13 @@ public class EndScreen extends JPanel implements IEndScreen {
         }
     }
 
+    /**
+     * Dibuixa la secció de resultats incloent tant el podi com la llista completa de jugadors.
+     *
+     * @param g2 Context Graphics2D per dibuixar
+     * @param width Amplada del component
+     * @param height Alçada del component
+     */
     private void drawResults(Graphics2D g2, int width, int height) {
         if (sortedPlayers.length == 0) return;
 
@@ -168,6 +256,17 @@ public class EndScreen extends JPanel implements IEndScreen {
         drawPlayerList(g2, resultsX, resultsY + resultsHeight + 20, resultsWidth);
     }
 
+    /**
+     * Dibuixa la visualització del podi per als 3 primers jugadors.
+     * El podi mostra les posicions 1a, 2a i 3a amb diferents alçades
+     * i mostra noms de jugadors i puntuacions.
+     *
+     * @param g2 Context Graphics2D per dibuixar
+     * @param x Coordenada X de l'àrea del podi
+     * @param y Coordenada Y de l'àrea del podi
+     * @param width Amplada de l'àrea del podi
+     * @param height Alçada de l'àrea del podi
+     */
     private void drawPodium(Graphics2D g2, int x, int y, int width, int height) {
         if (sortedPlayers.length == 0) return;
 
@@ -227,6 +326,15 @@ public class EndScreen extends JPanel implements IEndScreen {
         }
     }
 
+    /**
+     * Dibuixa la llista completa de classificació de tots els jugadors en format desplaçable.
+     * Cada jugador es mostra en format targeta amb posició, nom i puntuació.
+     *
+     * @param g2 Context Graphics2D per dibuixar
+     * @param x Coordenada X de l'àrea de la llista de jugadors
+     * @param y Coordenada Y de l'àrea de la llista de jugadors
+     * @param width Amplada de l'àrea de la llista de jugadors
+     */
     private void drawPlayerList(Graphics2D g2, int x, int y, int width) {
         g2.setColor(new Color(255, 255, 255, 200));
         g2.fillRoundRect(x, y, width,
@@ -243,6 +351,18 @@ public class EndScreen extends JPanel implements IEndScreen {
         }
     }
 
+    /**
+     * Dibuixa una targeta individual de jugador mostrant el seu rang, nom, puntuació i indicador de CPU.
+     * Cada targeta està codificada per colors basant-se en la posició del jugador.
+     *
+     * @param g2 Context Graphics2D per dibuixar
+     * @param player Objecte Player que conté la informació del jugador
+     * @param x Coordenada X de la targeta
+     * @param y Coordenada Y de la targeta
+     * @param width Amplada de la targeta
+     * @param height Alçada de la targeta
+     * @param position Posició de classificació del jugador (1r, 2n, etc.)
+     */
     private void drawPlayerCard(Graphics2D g2, Player player, int x, int y, int width, int height, int position) {
         // Fondo de la carta
         g2.setColor(Color.WHITE);
@@ -280,6 +400,13 @@ public class EndScreen extends JPanel implements IEndScreen {
         }
     }
 
+    /**
+     * Estableix el color gràfic basat en l'índex del jugador utilitzant un esquema de colors predefinit.
+     * Els colors van rotant entre vermell, blau, groc i verd per fins a 4 jugadors.
+     *
+     * @param g Context gràfic on establir el color
+     * @param playerIndex Índex del jugador (basat en 0)
+     */
     private void setPlayerColor(Graphics g, int playerIndex) {
         switch (playerIndex % 4) {
             case 0 -> g.setColor(new Color(0xf5, 0x2e, 0x2e));
@@ -289,6 +416,10 @@ public class EndScreen extends JPanel implements IEndScreen {
         }
     }
 
+    /**
+     * Posiciona el panell de botons a la cantonada inferior esquerra de la pantalla.
+     * Es crida automàticament durant les actualitzacions del layout.
+     */
     @Override
     public void doLayout() {
         super.doLayout();
