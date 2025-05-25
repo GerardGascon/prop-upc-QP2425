@@ -1,23 +1,8 @@
 package edu.upc.prop.scrabble.presenter.swing.screens.game;
 
-import edu.upc.prop.scrabble.data.Player;
-import edu.upc.prop.scrabble.data.board.Board;
-import edu.upc.prop.scrabble.data.board.SuperBoard;
-import edu.upc.prop.scrabble.data.pieces.Piece;
-import edu.upc.prop.scrabble.domain.board.PremiumTileTypeFiller;
-import edu.upc.prop.scrabble.presenter.swing.screens.game.board.BoardView;
-import edu.upc.prop.scrabble.presenter.swing.screens.game.board.IBlankPieceSelector;
-import edu.upc.prop.scrabble.presenter.swing.screens.game.board.sidepanel.SidePanel;
-import edu.upc.prop.scrabble.presenter.swing.screens.game.hand.HandView;
-import edu.upc.prop.scrabble.presenter.swing.screens.game.pieceselector.PieceSelector;
-import edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction.draw.DrawAction;
-import edu.upc.prop.scrabble.presenter.swing.screens.menu.PauseButton;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
-import java.util.function.Consumer;
 
 public class GameMock extends JPanel {
     // Coses per a Pause Button
