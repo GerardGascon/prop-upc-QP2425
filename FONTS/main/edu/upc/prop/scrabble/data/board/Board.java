@@ -1,5 +1,8 @@
 package edu.upc.prop.scrabble.data.board;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
 import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.persistence.runtime.data.PersistentDictionary;
 import edu.upc.prop.scrabble.persistence.runtime.data.PersistentObject;
@@ -210,7 +213,7 @@ public abstract class Board implements IPersistableObject {
     @Override
     public void decode(PersistentDictionary data) {
         PersistentObject placedTiles = data.get("placedTiles");
-        this.placedTiles = placedTiles.parse(Piece[][].class);
+        this.placedTiles = new Gson().fromJson(((JsonArray)placedTiles.getValue()), Piece[][].class);
         updateEmptyState();
     }
 
