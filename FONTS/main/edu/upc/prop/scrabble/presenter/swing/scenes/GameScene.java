@@ -25,6 +25,18 @@ import edu.upc.prop.scrabble.domain.game.IEndScreen;
 import edu.upc.prop.scrabble.domain.pieces.*;
 import edu.upc.prop.scrabble.domain.turns.Endgame;
 import edu.upc.prop.scrabble.domain.turns.Turn;
+import edu.upc.prop.scrabble.persistence.platform.gson.deserializers.GsonDeserializer;
+import edu.upc.prop.scrabble.persistence.platform.gson.serializers.GsonSerializer;
+import edu.upc.prop.scrabble.persistence.platform.gson.streamers.SaveReader;
+import edu.upc.prop.scrabble.persistence.platform.gson.streamers.SaveWriter;
+import edu.upc.prop.scrabble.persistence.runtime.controllers.DataCollector;
+import edu.upc.prop.scrabble.persistence.runtime.controllers.DataRestorer;
+import edu.upc.prop.scrabble.persistence.runtime.controllers.GameLoader;
+import edu.upc.prop.scrabble.persistence.runtime.controllers.GameSaver;
+import edu.upc.prop.scrabble.persistence.runtime.interfaces.IDeserializer;
+import edu.upc.prop.scrabble.persistence.runtime.interfaces.ISaveReader;
+import edu.upc.prop.scrabble.persistence.runtime.interfaces.ISaveWriter;
+import edu.upc.prop.scrabble.persistence.runtime.interfaces.ISerializer;
 import edu.upc.prop.scrabble.presenter.localization.DictionaryReader;
 import edu.upc.prop.scrabble.presenter.localization.PiecesReader;
 import edu.upc.prop.scrabble.presenter.scenes.Scene;
@@ -46,6 +58,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameScene extends Scene {
+    private final String SAVE_FILE_NAME = "save.data";
+
     public GameScene(GameProperties properties, JFrame window) {
         Board board = getBoard(properties);
         DAWG dawg = new DAWG();
@@ -55,6 +69,16 @@ public class GameScene extends Scene {
             case Language.English -> new EnglishCrossChecks(board.getSize());
         };
         Leaderboard leaderboard = new Leaderboard();
+
+        DataCollector dataCollector = new DataCollector();
+        ISerializer serializer = new GsonSerializer();
+        ISaveWriter saveWriter = new SaveWriter();
+        GameSaver saver = new GameSaver(dataCollector, serializer, saveWriter, SAVE_FILE_NAME);
+
+        DataRestorer dataRestorer = new DataRestorer();
+        IDeserializer deserializer = new GsonDeserializer();
+        ISaveReader saveReader = new SaveReader();
+        GameLoader loader = new GameLoader(dataRestorer, deserializer, saveReader, SAVE_FILE_NAME);
 
         HandView handView = new HandView();
         BlankPieceSelector blankPieceSelector = new BlankPieceSelector();
@@ -91,20 +115,20 @@ public class GameScene extends Scene {
         boardView.updateBoard();
 
         SidePanel sidePanel = new SidePanel(playersData);
-        generateWindow(window, boardView, sidePanel, handView, blankPieceSelector);
+        PauseMenu pauseMenu = new PauseMenu();
+        generateWindow(window, boardView, sidePanel, handView, blankPieceSelector, pauseMenu);
 
         players[0].startTurn();
     }
 
-    private static void generateWindow(JFrame window, BoardView boardView, SidePanel sidePanel, HandView handView, BlankPieceSelector blankPieceSelector) {
+    private static void generateWindow(JFrame window, BoardView boardView, SidePanel sidePanel, HandView handView, BlankPieceSelector blankPieceSelector, PauseMenu pauseMenu) {
         GameScreen screen = new GameScreen();
 
         screen.addBoard(boardView);
         screen.addSidePanel(sidePanel);
         screen.addHandView(handView);
         screen.addBlankPieceSelector(blankPieceSelector);
-        screen.addPauseButton(new PauseMenu()
-        );
+        screen.addPauseButton(pauseMenu);
 
         window.add(screen);
     }

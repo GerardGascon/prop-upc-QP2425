@@ -41,4 +41,16 @@ public class SaveReader extends SaveDataStreamer implements ISaveReader {
             return null;
         }
     }
+
+    /**
+     * Comprova que el fitxer de guardat existeixi.
+
+     * @param fileName Nom del fitxer de guardat.
+     * @return true si el fitxer existeix.
+     */
+    @Override
+    public boolean exists(String fileName) {
+        File path = getAbsolutePath(fileName);
+        return path.exists();
+    }
 }

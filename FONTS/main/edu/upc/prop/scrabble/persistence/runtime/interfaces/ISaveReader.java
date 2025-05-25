@@ -13,4 +13,12 @@ public interface ISaveReader {
      * @return null si el fitxer no existeix, String en cas contrari.
      */
     String read(String fileName);
+
+    /**
+     * Comprova que el fitxer de guardat existeixi.
+
+     * @param fileName Nom del fitxer de guardat.
+     * @return true si el fitxer existeix.
+     */
+    boolean exists(String fileName);
 }
