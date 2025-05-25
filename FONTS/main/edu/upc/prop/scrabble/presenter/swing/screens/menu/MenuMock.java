@@ -62,8 +62,6 @@ public class MenuMock extends JPanel {
         JugarButton jugarButton = new JugarButton(buttonPanel);
         ContinueButton continueButton = new ContinueButton(buttonPanel);
 
-        jugarButton.setOtherButton(continueButton);
-        continueButton.setOtherButton(jugarButton);
 
         buttonPanel.add(jugarButton);
         buttonPanel.add(continueButton);

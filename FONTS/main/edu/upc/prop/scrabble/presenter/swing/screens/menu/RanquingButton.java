@@ -1,5 +1,7 @@
 package edu.upc.prop.scrabble.presenter.swing.screens.menu;
 
+import edu.upc.prop.scrabble.data.GameData;
+import edu.upc.prop.scrabble.persistence.runtime.controllers.DataRestorer;
 import edu.upc.prop.scrabble.presenter.swing.screens.menu.MenuButton;
 import edu.upc.prop.scrabble.data.leaderboard.Leaderboard;
 import edu.upc.prop.scrabble.data.leaderboard.Score;
@@ -17,19 +19,82 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 
 public class RanquingButton extends MenuButton {
+    /**
+     * Panell principal sobre el qual es mostren els menús desplegables del botó.
+     */
     private JPanel parentPanel;
+    /**
+     * Indica si el menú desplegable del botó està actualment actiu o no.
+     */
     private boolean ranquingActive = false;
+    /**
+     *Panell visualització dels rànquings
+     */
     private JPanel ranquingPanel;
+    /**
+     * Selector dels diferents mètodes de rànquing
+     */
     private JComboBox<String> modeSelector;
+    /**
+     * Text del botó
+     */
     private JTextArea ranquingText;
+    /**
+     * Array dels botons que facilita la gestió dels panells del menú
+     */
+    private MenuButton[] otherButtons;
+    /**
+     * Contenidor de les dades a mostrar
+     */
+    private Leaderboard leaderboard;
 
+    /**
+     * Creador del botó "Rànquing"
+     * @param parent El panell principal sobre el qual es mostrarà el menú.
+     */
     public RanquingButton(JPanel parent) {
         super("Rànquing");
         this.parentPanel = parent;
-        addActionListener(e -> toggleRanquingPanel());
+        addActionListener(_ -> {
+            if (otherButtons != null) {
+                for (MenuButton b : otherButtons) {
+                //    if (b != null) b.Close();
+                }
+            }
+            toggleRanquingPanel();
+        });
+    }
+    /**
+     * Assigna els botons complementaris amb el qual es coordina l'intercanvi de panells.
+     * Normalment utilitzat per assegurar que només un menú està actiu alhora.
+     * @param otherButtons Els botons amb què es coordina.
+     */
+    public void setOtherButtons(MenuButton[] otherButtons) {
+        this.otherButtons = otherButtons;
     }
 
-    private void toggleRanquingPanel() {
+    /**
+     * Tanca el panell desplegat si està actiu.
+     */
+    //@Override
+    public void Close() {
+        if(!ranquingActive) return;
+
+        Container container = parentPanel.getParent();
+        container.remove(ranquingPanel);
+        ranquingActive = false;
+        container.revalidate();
+        container.repaint();
+
+    }
+
+    /**
+     * Mostra o amaga el panell associat al botó "Rànquing".
+     * Si el panell ja està actiu, s’elimina de la interfície i es refresca l’escena.
+     * Si no està actiu, es crea un nou panell amb disseny personalitzat (fons degradat, títol i seccions),
+     * es posiciona al costat dret i es fusiona amb el panell principal.
+     */
+    public void toggleRanquingPanel() {
         // Amaga panel
         if (ranquingActive) {
             Container container = parentPanel.getParent();
@@ -90,6 +155,11 @@ public class RanquingButton extends MenuButton {
         mainPanel.repaint();
     }
 
+    /**
+     * Afegeix els components presents al panell
+     * @param width Amplada del panell
+     * @param height Altura del panell
+     */
     private void addRankingComponents(int width, int height) {
         int componentHeight = (int)(height * 0.05);
 
@@ -121,10 +191,14 @@ public class RanquingButton extends MenuButton {
         updateRanquing(null); // Initial population
     }
 
+    /**
+     * Actualitza el mètode d'ordenació del ranking
+     * @param e Esdeveniment que causa l'actualització
+     */
     private void updateRanquing(ActionEvent e) {
         String mode = (String) modeSelector.getSelectedItem();
         PlayerValuePair[] ranquingData = new PlayerValuePair[0];
-        Leaderboard leaderboard = new Leaderboard();
+        Leaderboard leaderboard = new Leaderboard(); // A QUITAR!
         switch (mode) {
             case "Partides Jugades":
                 GamesPlayedLeaderboard gamesPlayedLeaderboard = new GamesPlayedLeaderboard();
