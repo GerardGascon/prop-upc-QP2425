@@ -1,7 +1,10 @@
 package edu.upc.prop.scrabble.data;
 
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import edu.upc.prop.scrabble.data.board.BoardType;
+import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.data.properties.Language;
 import edu.upc.prop.scrabble.persistence.runtime.data.PersistentDictionary;
 import edu.upc.prop.scrabble.persistence.runtime.data.PersistentObject;
@@ -125,13 +128,14 @@ public class GameData implements IPersistableObject {
         this.turnNumber = turnNumber.parse(Integer.class);
 
         PersistentObject boardType = data.get("boardType");
-        this.boardType = boardType.parse(BoardType.class);
+        this.boardType = BoardType.valueOf(boardType.parse(String.class));
 
         PersistentObject language = data.get("language");
-        this.language = language.parse(Language.class);
+        this.language = Language.valueOf(language.parse(String.class));
 
         PersistentObject players = data.get("players");
-        this.players = players.parse(Player[].class);
+        this.players = new Gson().fromJson(((JsonArray)players.getValue()), Player[].class);
+//        this.players = players.parse(Player[].class);
     }
 }
 

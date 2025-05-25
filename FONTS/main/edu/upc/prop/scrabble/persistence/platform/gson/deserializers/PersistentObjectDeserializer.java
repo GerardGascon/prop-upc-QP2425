@@ -1,9 +1,12 @@
 package edu.upc.prop.scrabble.persistence.platform.gson.deserializers;
 
 import com.google.gson.*;
+import edu.upc.prop.scrabble.persistence.runtime.data.PersistentDictionary;
 import edu.upc.prop.scrabble.persistence.runtime.data.PersistentObject;
 
 import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Map.Entry;
 
 /**
@@ -33,7 +36,15 @@ class PersistentObjectDeserializer extends Deserializer implements JsonDeseriali
         JsonObject jsonObject = json.getAsJsonObject();
 
         if (jsonObject.entrySet().size() != 1) {
-            throw new JsonParseException("S'esperava exactament una propietat per a PersistentObject");
+            Map<String, PersistentObject> dictionary = new HashMap<>();
+            for (Map.Entry<String, JsonElement> item : jsonObject.entrySet()) {
+                String key = item.getKey();
+                JsonElement valueElement = item.getValue();
+                PersistentObject value = (PersistentObject)parseJsonElement(valueElement, context);
+                dictionary.put(key, value);
+            }
+            return new PersistentDictionary("", dictionary);
+            //            throw new JsonParseException("S'esperava exactament una propietat per a PersistentObject");
         }
 
         Entry<String, JsonElement> entry = jsonObject.entrySet().iterator().next();
