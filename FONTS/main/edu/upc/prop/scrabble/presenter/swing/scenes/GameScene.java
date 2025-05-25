@@ -34,12 +34,11 @@ import edu.upc.prop.scrabble.presenter.swing.objects.PlayerObject;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.EndScreen;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.GameScreen;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.BoardView;
-import edu.upc.prop.scrabble.presenter.swing.screens.game.board.IBlankPieceSelector;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.sidepanel.SidePanel;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.hand.HandView;
 import edu.upc.prop.scrabble.domain.actionmaker.IHandView;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.pieceselector.BlankPieceSelector;
-import edu.upc.prop.scrabble.presenter.swing.screens.menu.PauseButton;
+import edu.upc.prop.scrabble.presenter.swing.screens.menu.pause.PauseMenu;
 import edu.upc.prop.scrabble.utils.Rand;
 
 import javax.swing.*;
@@ -104,6 +103,8 @@ public class GameScene extends Scene {
         screen.addSidePanel(sidePanel);
         screen.addHandView(handView);
         screen.addBlankPieceSelector(blankPieceSelector);
+        screen.addPauseButton(new PauseMenu()
+        );
 
         window.add(screen);
     }

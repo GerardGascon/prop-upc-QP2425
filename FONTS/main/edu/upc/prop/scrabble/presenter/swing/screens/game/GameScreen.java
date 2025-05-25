@@ -4,7 +4,7 @@ import edu.upc.prop.scrabble.presenter.swing.screens.game.board.BoardView;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.sidepanel.SidePanel;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.hand.HandView;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.pieceselector.BlankPieceSelector;
-import edu.upc.prop.scrabble.presenter.swing.screens.menu.PauseButton;
+import edu.upc.prop.scrabble.presenter.swing.screens.menu.pause.PauseMenu;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,13 +18,11 @@ public class GameScreen extends JPanel {
     private SidePanel sidePanel;
     private HandView handView;
     private BlankPieceSelector blankPieceSelector;
+    private PauseMenu pauseMenu;
 
     public GameScreen() {
         setLayout(new BorderLayout());
         setBackground(new Color(0x50, 0x84, 0x6e));
-
-        PauseButton pauseButton = new PauseButton(this);
-        add(pauseButton);
     }
 
     public void addBoard(BoardView boardView) {
@@ -48,6 +46,12 @@ public class GameScreen extends JPanel {
         this.blankPieceSelector = blankPieceSelector;
     }
 
+    public void addPauseButton(PauseMenu pauseMenu) {
+        add(pauseMenu);
+        setComponentZOrder(pauseMenu, 0);
+        this.pauseMenu = pauseMenu;
+    }
+
     @Override
     public void doLayout() {
         super.doLayout();
@@ -56,6 +60,7 @@ public class GameScreen extends JPanel {
         putSidePanel();
         putHandView();
         putBlankPieceSelector();
+        putPauseButton();
     }
 
     private void putBoard() {
@@ -91,5 +96,9 @@ public class GameScreen extends JPanel {
 
     private void putBlankPieceSelector() {
         blankPieceSelector.setBounds(0, 0, getWidth(), getHeight());
+    }
+
+    private void putPauseButton() {
+        pauseMenu.setBounds(0, 0, getWidth(), getHeight());
     }
 }
