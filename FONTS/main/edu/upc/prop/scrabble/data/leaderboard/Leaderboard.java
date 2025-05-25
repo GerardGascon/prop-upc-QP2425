@@ -9,35 +9,37 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * Classe utilitzada per emmagatzemar els Score
- * de les diferents partides jugades
+ * Classe encarregada d’emmagatzemar els registres {@link Score}
+ * associats a les diferents partides jugades.
+ * Aquesta classe permet afegir, obtenir i serialitzar la informació
+ * dels resultats per a la seva persistència.
  * @author Felipe Martínez Lassalle
  * @see Score
  */
+
 public class Leaderboard implements IPersistableObject {
     /**
-     * Estructura utilitzada per l'emmagatzematge
+     * Llista que conté tots els resultats {@link Score} registrats.
      */
     private ArrayList<Score> leaderBoard = new ArrayList<>();
 
     /**
-     * Transforma l'ArrayList leaderBoard en una array regular
-     * amb l'objectiu de facilitar la gestió als controladors
-     * @return array que conté tots els Score emmagatzemats
-     * @see Score
+     * Retorna els resultats en forma d'array per facilitar-ne la gestió
+     * i el seu ús des de capes superiors, com ara els controladors.
+     * @return Un array de {@link Score} amb tots els resultats emmagatzemats.
      */
     public Score[] getScoreArray() { return leaderBoard.toArray(new Score[0]); }
 
     /**
-     * Afegeix un Score a l'ArrayList leaderBoard
-     * @param score Score a afegir
-     * @see Score
+     * Afegeix un nou resultat a la classificació.
+     * @param score El nou {@link Score} a afegir.
      */
     public void addScore(Score score) { leaderBoard.add(score); }
 
     /**
-     * Transforma les dades que emmagatzema la leaderBoard per ser guardades
-     * @return Dades que poden ser afegides al diccionari persistent
+     * Codifica els resultats emmagatzemats per tal de permetre la seva persistència.
+     * Construeix un diccionari persistent amb la informació actual de la classificació.
+     * @return Un {@link PersistentDictionary} amb les dades codificades de la classificació.
      * @see PersistentDictionary
      */
     @Override
@@ -48,7 +50,9 @@ public class Leaderboard implements IPersistableObject {
     }
 
     /**
-     * Emmagatzema les dades relacionades guardades al diccionari persistent a la leaderBoard
+     * Reconstrueix la classificació a partir de les dades desades en un diccionari persistent.
+     * Els resultats recuperats s’afegeixen a la llista interna {@code leaderBoard}.
+     * @param data El {@link PersistentDictionary} que conté les dades a deserialitzar.
      * @see PersistentDictionary
      */
     @Override

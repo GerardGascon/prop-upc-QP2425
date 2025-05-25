@@ -1,8 +1,15 @@
 package edu.upc.prop.scrabble.presenter.swing.screens.menu;
 
+import edu.upc.prop.scrabble.presenter.scenes.Scene;
+
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Panel amb els elements a mostrar al menú principal
+ * @author Felipe Martínez Lassalle
+ * @see JPanel
+ */
 public class MenuScreen extends JPanel {
     private final float SIDE_PANEL_WIDTH_PERCENT = 0.4f;
     private JugarButton playButton;
@@ -10,13 +17,13 @@ public class MenuScreen extends JPanel {
     private RanquingButton rankingButton;
     private MenuButton quitButton;
 
+    /**
+     * Creadora i inicialitzadora
+     */
     public MenuScreen() {
         setLayout(null);
         setBackground(new Color(0x54, 0x63, 0xff));
-        createButtons();
-    }
 
-    private void createButtons() {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setOpaque(false);
 
@@ -40,14 +47,36 @@ public class MenuScreen extends JPanel {
         add(buttonPanel);
     }
 
+    /**
+     * Consultora
+     * @return Botó Jugar
+     */
     public JugarButton getPlayButton() { return playButton; }
 
+    /**
+     * Consultora
+     * @return Botó Continuar
+     */
     public ContinueButton getContinueButton() { return continueButton; }
 
+    /**
+     * Consultora
+     * @return Botó Ranquing
+     */
     public RanquingButton getRankingButton() { return rankingButton; }
 
+    /**
+     * Consultora
+     * @return Botó Sortir
+     */
     public MenuButton getQuitButton() { return quitButton; }
 
+    /**
+     * Dibuixa el component personalitzat, incloent el panell lateral fosc i el títol "Scrabble".
+     * Aquesta funció s'encarrega de la renderització gràfica del component, utilitzant
+     * antialiasing per millorar la qualitat visual del text i les formes.
+     * @param g L'objecte Graphics proporcionat pel sistema per dibuixar.
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -71,6 +100,11 @@ public class MenuScreen extends JPanel {
         g2.drawString(text, textX, textY);
     }
 
+    /**
+     * Reorganitza la disposició del panell de botons dins del component.
+     * Calcula i assigna les dimensions i posició del primer component fill (suposadament
+     * un JPanel amb botons), col·locant-lo a la part inferior del panell lateral.
+     */
     @Override
     public void doLayout() {
         super.doLayout();

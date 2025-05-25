@@ -18,6 +18,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
+/**
+ * Botó encarregat de gestionar la visualització dels rànquings
+ * @author Felipe Martínez LassalleB
+ */
 public class RanquingButton extends MenuButton {
     /**
      * Panell principal sobre el qual es mostren els menús desplegables del botó.
