@@ -1,33 +1,33 @@
 package edu.upc.prop.scrabble.utils;
 
 /**
- * Interface defining methods for generating random integers.
- * This is useful for randomizing elements in the game, such as tile selection or placement.
+ * Interfície que defineix mètodes per generar enters aleatoris.
+ * És útil per aleatoritzar elements del joc, com ara la selecció o col·locació de fitxes.
  *
  * @author Gerard Gascón
  */
 public interface IRand {
     /**
-     * Generates a random integer.
+     * Genera un enter aleatori.
      *
-     * @return A random integer.
+     * @return Un enter aleatori.
      */
     int nextInt();
 
     /**
-     * Generates a random integer within the specified range.
+     * Genera un enter aleatori dins del rang especificat.
      *
-     * @param bound The upper bound (exclusive) for the random number.
-     * @return A random integer between 0 (inclusive) and the given bound (exclusive).
+     * @param bound El límit superior (exclusiu) per al nombre aleatori.
+     * @return Un enter aleatori entre 0 (inclusiu) i el límit donat (exclusiu).
      */
     int nextInt(int bound);
 
     /**
-     * Generates a random integer within the specified range (inclusive of origin, exclusive of bound).
+     * Genera un enter aleatori dins del rang especificat (inclusiu per l'origen, exclusiu pel límit).
      *
-     * @param origin The lower bound (inclusive) for the random number.
-     * @param bound  The upper bound (exclusive) for the random number.
-     * @return A random integer between origin (inclusive) and bound (exclusive).
+     * @param origin El límit inferior (inclusiu) per al nombre aleatori.
+     * @param bound  El límit superior (exclusiu) per al nombre aleatori.
+     * @return Un enter aleatori entre l'origen (inclusiu) i el límit (exclusiu).
      */
     int nextInt(int origin, int bound);
 }

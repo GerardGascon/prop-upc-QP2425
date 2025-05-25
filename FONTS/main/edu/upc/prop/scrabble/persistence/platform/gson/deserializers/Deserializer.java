@@ -56,6 +56,7 @@ abstract class Deserializer {
                 }
             }
         } else if (element.isJsonArray()) {
+            //TODO: Parse into a JsonArray or something
 //            List<PersistentObject> elements = new ArrayList<>();
 //            for (JsonElement arrayElement : element.getAsJsonArray()) {
 //                elements.add((PersistentObject) parseJsonElement(arrayElement, context));

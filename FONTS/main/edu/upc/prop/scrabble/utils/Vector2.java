@@ -3,34 +3,34 @@ package edu.upc.prop.scrabble.utils;
 import java.util.Objects;
 
 /**
- * A class that represents a 2D vector or point with integer coordinates.
- * This class provides methods for basic vector operations, such as addition,
- * as well as overriding methods for equality and string representation.
+ * Classe que representa un vector o punt 2D amb coordenades enteres.
+ * Aquesta classe proporciona mètodes per a operacions vectorials bàsiques, com la suma,
+ * així com la redefinició de mètodes per a la igualtat i la representació en forma de cadena.
  *
  * @author Gerard Gascón
  */
 public final class Vector2 {
     /**
-     * The x-coordinate of the vector.
+     * La coordenada x del vector.
      */
     public int x;
     /**
-     * The y-coordinate of the vector.
+     * La coordenada y del vector.
      */
     public int y;
 
     /**
-     * Constructs a Vector2 with both x and y set to 0.
+     * Construeix un Vector2 amb x i y inicialitzats a 0.
      */
-    public Vector2(){
-        this(0,0);
+    public Vector2() {
+        this(0, 0);
     }
 
     /**
-     * Constructs a Vector2 with the specified x and y coordinates.
+     * Construeix un Vector2 amb les coordenades x i y especificades.
      *
-     * @param x the x-coordinate of the vector.
-     * @param y the y-coordinate of the vector.
+     * @param x la coordenada x del vector.
+     * @param y la coordenada y del vector.
      */
     public Vector2(int x, int y) {
         this.x = x;
@@ -38,21 +38,21 @@ public final class Vector2 {
     }
 
     /**
-     * Adds the given vector to this vector and returns a new Vector2 that is the result.
+     * Suma el vector donat a aquest vector i retorna un nou Vector2 com a resultat.
      *
-     * @param other the vector to add to this vector.
-     * @return a new Vector2 representing the sum of this vector and the given vector.
+     * @param other el vector a sumar a aquest vector.
+     * @return un nou Vector2 que representa la suma d'aquest vector amb el vector donat.
      */
-    public Vector2 add(Vector2 other){
+    public Vector2 add(Vector2 other) {
         return new Vector2(this.x + other.x, this.y + other.y);
     }
 
     /**
-     * Compares this vector with another object for equality.
-     * The vectors are considered equal if both their x and y coordinates are the same.
+     * Compara aquest vector amb un altre objecte per veure si són iguals.
+     * Els vectors es consideren iguals si tenen les mateixes coordenades x i y.
      *
-     * @param obj the object to compare this vector with.
-     * @return true if the given object is equal to this vector, false otherwise.
+     * @param obj l'objecte amb el qual comparar aquest vector.
+     * @return true si l'objecte donat és igual a aquest vector, false altrament.
      */
     @Override
     public boolean equals(Object obj) {
@@ -64,9 +64,9 @@ public final class Vector2 {
     }
 
     /**
-     * Returns a hash code for this vector based on its x and y coordinates.
+     * Retorna el codi hash d'aquest vector basat en les seves coordenades x i y.
      *
-     * @return the hash code for this vector.
+     * @return el codi hash d'aquest vector.
      */
     @Override
     public int hashCode() {
@@ -74,10 +74,10 @@ public final class Vector2 {
     }
 
     /**
-     * Returns a string representation of the vector in the format:
+     * Retorna una representació en forma de cadena del vector en el format:
      * Vector2[x=<x>, y=<y>].
      *
-     * @return a string representation of this vector.
+     * @return una representació en forma de cadena d'aquest vector.
      */
     @Override
     public String toString() {

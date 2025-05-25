@@ -1,10 +1,10 @@
 package edu.upc.prop.scrabble.presenter.swing.screens.game.board;
 
 import edu.upc.prop.scrabble.data.board.PremiumTileType;
+import edu.upc.prop.scrabble.domain.actionmaker.IHandView;
 import edu.upc.prop.scrabble.domain.board.IBoard;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles.*;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles.premium.*;
-import edu.upc.prop.scrabble.domain.actionmaker.IHandView;
 import edu.upc.prop.scrabble.utils.Direction;
 
 import javax.swing.*;
@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * Vista del tauler de Scrabble.
  * <p>
- * Gestiona la graella de fitxes, les peces temporals, i les fitxes premi.
+ * Gestiona la graella de fitxes, les peces temporals i les fitxes prèmium.
  * </p>
  *
  * @author Gerard Gascón
@@ -69,7 +69,7 @@ public class BoardView extends JPanel implements IBoard {
 
     /**
      * Genera les caselles buides i les caselles de coordenades del tauler.
-     * Les caselles de coordenades són la fila i columna amb lletres o números.
+     * Les caselles de coordenades mostren la fila i columna amb lletres o números.
      *
      * @param size mida del tauler
      * @param handView vista de la mà
@@ -121,7 +121,7 @@ public class BoardView extends JPanel implements IBoard {
      * Retorna la cadena que representa la fila per la coordenada.
      *
      * @param row número de fila
-     * @return cadena de la fila (o buit si és bord)
+     * @return cadena que representa la fila (o buit si és bord)
      */
     private String getBorderRow(int row) {
         if (row == 0 || row == size + 1)
@@ -142,7 +142,7 @@ public class BoardView extends JPanel implements IBoard {
     }
 
     /**
-     * Canvia la fitxa en la posició (x,y) pel nou BoardTile proporcionat.
+     * Canvia la fitxa en la posició (x,y) per la nova BoardTile proporcionada.
      *
      * @param tile nova fitxa
      * @param x coordenada x
@@ -172,6 +172,7 @@ public class BoardView extends JPanel implements IBoard {
      * @param clazz classe del component
      * @param index índex dins dels components d'aquest tipus
      * @return component sol·licitat
+     * @throws RuntimeException si no es troba cap component del tipus i índex indicats
      */
     public <TComponent extends Component> TComponent getComponentOfType(Class<TComponent> clazz, int index) {
         int count = 0;
@@ -204,6 +205,12 @@ public class BoardView extends JPanel implements IBoard {
         }
     }
 
+    /**
+     * Retorna la paraula temporal formada per les peces col·locades temporalment.
+     *
+     * @return paraula formada
+     * @throws RuntimeException si el cas no està suportat
+     */
     public String getTemporalWord() {
         if (temporalPieces.size() > 1) {
             if (temporalPieces.get(0).getPosition().x == temporalPieces.get(1).getPosition().x) {
@@ -216,6 +223,11 @@ public class BoardView extends JPanel implements IBoard {
         throw new RuntimeException("Still not supported");
     }
 
+    /**
+     * Retorna la paraula formada horitzontalment per les peces temporals i fixes.
+     *
+     * @return paraula horitzontal
+     */
     private String getHorizontalTemporalWord() {
         StringBuilder word = new StringBuilder();
         List<BoardTile> sortedTiles = getSortedTiles(true);
@@ -229,6 +241,11 @@ public class BoardView extends JPanel implements IBoard {
         return word.toString();
     }
 
+    /**
+     * Retorna la paraula formada verticalment per les peces temporals i fixes.
+     *
+     * @return paraula vertical
+     */
     private String getVerticalTemporalWord() {
         StringBuilder word = new StringBuilder();
         List<BoardTile> sortedTiles = getSortedTiles(false);
@@ -242,10 +259,15 @@ public class BoardView extends JPanel implements IBoard {
         return word.toString();
     }
 
+    /**
+     * Retorna les fitxes horitzontals adjacents a la peça temporal.
+     *
+     * @return array de fitxes horitzontals
+     */
     private BoardTile[] getHorizontalTiles() {
         List<BoardTile> tiles = new ArrayList<>();
 
-        BoardTile temporalPiece = temporalPieces.getFirst();
+        BoardTile temporalPiece = temporalPieces.get(0);
         for (int i = temporalPiece.getPosition().x; i < size; i++) {
             BoardTile tile = board[i][temporalPiece.getPosition().y].getTile();
             if (tile instanceof BoardTemporalPieceTile || tile instanceof BoardPieceTile) {
@@ -268,10 +290,15 @@ public class BoardView extends JPanel implements IBoard {
         return tiles.toArray(BoardTile[]::new);
     }
 
+    /**
+     * Retorna les fitxes verticals adjacents a la peça temporal.
+     *
+     * @return array de fitxes verticals
+     */
     private BoardTile[] getVerticalTiles() {
         List<BoardTile> tiles = new ArrayList<>();
 
-        BoardTile temporalPiece = temporalPieces.getFirst();
+        BoardTile temporalPiece = temporalPieces.get(0);
         for (int i = temporalPiece.getPosition().y; i < size; i++) {
             BoardTile tile = board[temporalPiece.getPosition().x][i].getTile();
             if (tile instanceof BoardTemporalPieceTile || tile instanceof BoardPieceTile) {
@@ -294,6 +321,12 @@ public class BoardView extends JPanel implements IBoard {
         return tiles.toArray(BoardTile[]::new);
     }
 
+    /**
+     * Retorna la llista de fitxes ordenades horitzontalment o verticalment.
+     *
+     * @param horizontal true si és horitzontal, false si és vertical
+     * @return llista ordenada de fitxes
+     */
     private List<BoardTile> getSortedTiles(boolean horizontal) {
         if (horizontal)
             return Arrays.stream(getHorizontalTiles())
@@ -303,9 +336,9 @@ public class BoardView extends JPanel implements IBoard {
     }
 
     /**
-     * Comprova si la posició és vàlida segons la lògica del joc:
-     * si no hi ha peces temporals, qualsevol posició és vàlida;
-     * sinó, ha de ser adjacent i en línia.
+     * Comprova si la posició (x,y) és vàlida per col·locar-hi una peça temporal.
+     * Si no hi ha peces temporals, qualsevol posició és vàlida;
+     * en cas contrari, ha de ser adjacent i alineada amb les peces ja col·locades temporalment.
      *
      * @param x coordenada x
      * @param y coordenada y
@@ -321,6 +354,13 @@ public class BoardView extends JPanel implements IBoard {
         return false;
     }
 
+    /**
+     * Comprova si la posició (x,y) és adjacent a altres peces ja col·locades temporalment.
+     *
+     * @param x coordenada x
+     * @param y coordenada y
+     * @return true si és adjacent
+     */
     private boolean isAdjacentToOtherPlacedWords(int x, int y) {
         Direction dir;
         if (temporalPieces.size() == 1)
@@ -329,8 +369,8 @@ public class BoardView extends JPanel implements IBoard {
             dir = temporalPieces.get(0).getPosition().x == temporalPieces.get(1).getPosition().x ? Direction.Vertical : Direction.Horizontal;
 
         if (dir == Direction.Vertical){
-            int startY = Math.min(y, getSortedTiles(false).getFirst().getPosition().y);
-            int endY = Math.max(y, getSortedTiles(false).getFirst().getPosition().y);
+            int startY = Math.min(y, getSortedTiles(false).get(0).getPosition().y);
+            int endY = Math.max(y, getSortedTiles(false).get(0).getPosition().y);
 
             boolean passedBlank = false;
             for (int i = startY; i <= endY; i++) {
@@ -348,8 +388,8 @@ public class BoardView extends JPanel implements IBoard {
             return true;
         }
 
-        int startX = Math.min(x, getSortedTiles(false).getFirst().getPosition().x);
-        int endX = Math.max(x, getSortedTiles(false).getFirst().getPosition().x);
+        int startX = Math.min(x, getSortedTiles(true).get(0).getPosition().x);
+        int endX = Math.max(x, getSortedTiles(true).get(0).getPosition().x);
 
         boolean passedBlank = false;
         for (int i = startX; i <= endX; i++) {
@@ -367,6 +407,13 @@ public class BoardView extends JPanel implements IBoard {
         return true;
     }
 
+    /**
+     * Comprova si la posició (x,y) està alineada amb les peces ja col·locades temporalment.
+     *
+     * @param x coordenada x
+     * @param y coordenada y
+     * @return true si està alineada
+     */
     private boolean isInLineWithAlreadyPlacedWords(int x, int y) {
         Direction dir;
         if (temporalPieces.size() == 1)
@@ -375,8 +422,8 @@ public class BoardView extends JPanel implements IBoard {
             dir = temporalPieces.get(0).getPosition().x == temporalPieces.get(1).getPosition().x ? Direction.Vertical : Direction.Horizontal;
 
         if (dir == Direction.Horizontal)
-            return temporalPieces.getFirst().getPosition().y == y;
-        return temporalPieces.getFirst().getPosition().x == x;
+            return temporalPieces.get(0).getPosition().y == y;
+        return temporalPieces.get(0).getPosition().x == x;
     }
 
     /**
@@ -394,7 +441,7 @@ public class BoardView extends JPanel implements IBoard {
      */
     @Override
     public void updateBoard() {
-
+        // Implementació pendent
     }
 
     /**
@@ -426,12 +473,21 @@ public class BoardView extends JPanel implements IBoard {
         }
 
         switch (type) {
-            case QuadrupleWord -> changeTile(new BoardQuadrupleWordTile(x, y, handView, this, blankPieceSelector), x, y);
-            case TripleWord -> changeTile(new BoardTripleWordTile(x, y, handView, this, blankPieceSelector), x, y);
-            case DoubleWord -> changeTile(new BoardDoubleWordTile(x, y, handView, this, blankPieceSelector), x, y);
-            case QuadrupleLetter -> changeTile(new BoardQuadrupleLetterTile(x, y, handView, this, blankPieceSelector), x, y);
-            case TripleLetter -> changeTile(new BoardTripleLetterTile(x, y, handView, this, blankPieceSelector), x, y);
-            case DoubleLetter -> changeTile(new BoardDoubleLetterTile(x, y, handView, this, blankPieceSelector), x, y);
+            case QuadrupleWord:
+                changeTile(new BoardQuadrupleWordTile(x, y, handView, this, blankPieceSelector), x, y);
+                break;
+            case TripleWord:
+                changeTile(new BoardTripleWordTile(x, y, handView, this, blankPieceSelector), x, y);
+                break;
+            case DoubleWord:
+                changeTile(new BoardDoubleWordTile(x, y, handView, this, blankPieceSelector), x, y);
+                break;
+            case TripleLetter:
+                changeTile(new BoardTripleLetterTile(x, y, handView, this, blankPieceSelector), x, y);
+                break;
+            case DoubleLetter:
+                changeTile(new BoardDoubleLetterTile(x, y, handView, this, blankPieceSelector), x, y);
+                break;
         }
     }
 }

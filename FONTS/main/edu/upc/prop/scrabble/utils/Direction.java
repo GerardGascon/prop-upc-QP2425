@@ -1,18 +1,18 @@
 package edu.upc.prop.scrabble.utils;
 
 /**
- * Enum representing the two possible directions in which a word can be placed
- * on a Scrabble board.
+ * Enumeració que representa les dues direccions possibles en què es pot col·locar
+ * una paraula en un tauler de Scrabble.
  *
  * @author Gerard Gascón
  */
 public enum Direction {
     /**
-     * Word is placed vertically on the board.
+     * La paraula es col·loca verticalment al tauler.
      */
     Vertical,
     /**
-     * Word is placed horizontally on the board.
+     * La paraula es col·loca horitzontalment al tauler.
      */
     Horizontal,
 }

@@ -58,9 +58,23 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe que representa l'escena principal del joc de Scrabble.
+ *
+ * @author Gerard Gascón
+ */
 public class GameScene extends Scene {
+    /**
+     * Nom del fitxer on es desa i es carrega la partida guardada.
+     */
     private final String SAVE_FILE_NAME = "save.data";
 
+    /**
+     * Constructor que crea la escena del joc.
+     *
+     * @param properties Propietats que configuren el joc.
+     * @param window Finestra principal del joc.
+     */
     public GameScene(GameProperties properties, JFrame window) {
         DataCollector dataCollector = new DataCollector();
         ISerializer serializer = new GsonSerializer();
@@ -79,12 +93,29 @@ public class GameScene extends Scene {
         }
     }
 
+    /**
+     * Crea una nova partida amb les propietats indicades.
+     *
+     * @param properties Propietats del joc.
+     * @param window Finestra on es mostrarà la partida.
+     * @param saver Objecte encarregat de guardar la partida.
+     * @param dataCollector Objecte encarregat de recopilar dades persistents.
+     */
     private void createNewGame(GameProperties properties, JFrame window, GameSaver saver, DataCollector dataCollector) {
         Board board = getBoard(properties);
         Player[] playersData = createPlayersData(properties);
         resolveDependencies(window, saver, dataCollector, board, properties.language(), playersData, 0, 0);
     }
 
+    /**
+     * Carrega una partida desada prèviament.
+     *
+     * @param window Finestra on es mostrarà la partida.
+     * @param dataRestorer Objecte encarregat de restaurar les dades.
+     * @param loader Objecte encarregat de carregar la partida.
+     * @param saver Objecte encarregat de guardar la partida.
+     * @param dataCollector Objecte encarregat de recopilar dades persistents.
+     */
     private void loadGame(JFrame window, DataRestorer dataRestorer, GameLoader loader, GameSaver saver, DataCollector dataCollector) {
         Board board = new StandardBoard();
 
@@ -97,6 +128,18 @@ public class GameScene extends Scene {
         resolveDependencies(window, saver, dataCollector, board, gameData.getLanguage(), playersData, gameData.getTurnNumber(), gameData.getSkipCounter());
     }
 
+    /**
+     * Resol i configura totes les dependències necessàries per al funcionament del joc.
+     *
+     * @param window Finestra principal.
+     * @param saver Objecte encarregat de guardar la partida.
+     * @param dataCollector Objecte encarregat de recopilar dades persistents.
+     * @param board Tauler del joc.
+     * @param language Idioma del joc.
+     * @param playersData Dades dels jugadors.
+     * @param turnNumber Número del torn actual.
+     * @param skipCounter Comptador de salts de torn.
+     */
     private void resolveDependencies(JFrame window, GameSaver saver, DataCollector dataCollector, Board board, Language language, Player[] playersData, int turnNumber, int skipCounter) {
         DAWG dawg = new DAWG();
         CrossChecks crossChecks = switch (language) {
@@ -155,6 +198,16 @@ public class GameScene extends Scene {
         players[0].startTurn();
     }
 
+    /**
+     * Genera i afegeix les diferents vistes i panells a la finestra del joc.
+     *
+     * @param window Finestra principal.
+     * @param boardView Vista del tauler.
+     * @param sidePanel Panell lateral amb informació dels jugadors.
+     * @param handView Vista de la mà del jugador.
+     * @param blankPieceSelector Selector de fitxes en blanc.
+     * @param pauseMenu Menú de pausa.
+     */
     private static void generateWindow(JFrame window, BoardView boardView, SidePanel sidePanel, HandView handView, BlankPieceSelector blankPieceSelector, PauseMenu pauseMenu) {
         GameScreen screen = new GameScreen();
 
@@ -167,6 +220,12 @@ public class GameScene extends Scene {
         window.add(screen);
     }
 
+    /**
+     * Omple l'estructura DAWG amb paraules segons l'idioma del joc.
+     *
+     * @param dawg Estructura DAWG on es guarden les paraules.
+     * @param language Idioma del joc.
+     */
     private static void fillDAWG(DAWG dawg, Language language) {
         WordAdder wordAdder = new WordAdder(dawg);
         DictionaryReader reader = new DictionaryReader();
@@ -174,6 +233,12 @@ public class GameScene extends Scene {
         dictionary.lines().forEach(wordAdder::run);
     }
 
+    /**
+     * Genera una bossa de fitxes segons l'idioma del joc.
+     *
+     * @param language Idioma del joc.
+     * @return Bossa amb les fitxes configurades.
+     */
     private static Bag generateBag(Language language) {
         PiecesReader reader = new PiecesReader();
         String piecesFile = reader.run(language);
@@ -182,6 +247,12 @@ public class GameScene extends Scene {
         return bagFiller.run(piecesFile);
     }
 
+    /**
+     * Crea un array de jugadors (dades bàsiques) a partir de les propietats del joc.
+     *
+     * @param properties Propietats del joc.
+     * @return Array de jugadors.
+     */
     private Player[] createPlayersData(GameProperties properties) {
         List<Player> players = new ArrayList<>();
         for (String name : properties.players())
@@ -191,6 +262,19 @@ public class GameScene extends Scene {
         return players.toArray(Player[]::new);
     }
 
+    /**
+     * Instancia els objectes de jugadors, diferenciant entre jugadors humans i IA, segons l'idioma.
+     *
+     * @param players Array de jugadors amb dades bàsiques.
+     * @param language Idioma del joc.
+     * @param piecesConverter Convertidor de fitxes segons l'idioma.
+     * @param pointCalculator Calculadora de punts.
+     * @param dawg Estructura DAWG amb paraules.
+     * @param board Tauler del joc.
+     * @param anchors Ancoratges per a jugades.
+     * @param crossChecks Objecte de validació de paraules creuades.
+     * @return Array d'objectes PlayerObject instanciats.
+     */
     private PlayerObject[] instantiatePlayers(Player[] players, Language language, PiecesConverter piecesConverter, PointCalculator pointCalculator, DAWG dawg, Board board, Anchors anchors, CrossChecks crossChecks) {
         List<PlayerObject> playerObjects = new ArrayList<>();
         for (Player player : players) {
@@ -211,6 +295,22 @@ public class GameScene extends Scene {
         return playerObjects.toArray(PlayerObject[]::new);
     }
 
+    /**
+     * Configura les propietats i dependències de cada jugador per al desenvolupament correcte del joc.
+     *
+     * @param playerObjects Objectes PlayerObject.
+     * @param players Dades bàsiques dels jugadors.
+     * @param stepper Gestor de torns.
+     * @param board Tauler del joc.
+     * @param boardView Vista del tauler.
+     * @param pointCalculator Calculadora de punts.
+     * @param bag Bossa de fitxes.
+     * @param piecesConverter Convertidor de fitxes.
+     * @param anchorUpdater Actualitzador d'ancoratges.
+     * @param dawg Estructura DAWG.
+     * @param crossChecks Validació de paraules creuades.
+     * @param handView Vista de la mà del jugador.
+     */
     private void configurePlayers(PlayerObject[] playerObjects, Player[] players, GameStepper stepper, Board board,
                                   BoardView boardView, PointCalculator pointCalculator, Bag bag,
                                   PiecesConverter piecesConverter, AnchorUpdater anchorUpdater, DAWG dawg,
@@ -221,7 +321,24 @@ public class GameScene extends Scene {
         }
     }
 
-    public void configurePlayer(int index, PlayerObject playerObject, Player player, GameStepper stepper, Board board,
+    /**
+     * Configura un jugador amb totes les seves dependències i accions.
+     *
+     * @param index Índex del jugador a configurar.
+     * @param playerObject Objecte que representa el jugador (humà o IA).
+     * @param player Dades bàsiques del jugador.
+     * @param stepper Gestor del torn de joc.
+     * @param board Tauler del joc.
+     * @param boardView Vista del tauler.
+     * @param pointCalculator Calculadora de punts per a la partida.
+     * @param bag Bossa de fitxes disponible.
+     * @param piecesConverter Convertidor de fitxes segons idioma.
+     * @param anchorUpdater Actualitzador d'ancoratges per a jugades.
+     * @param dawg Estructura DAWG que conté el diccionari.
+     * @param crossChecks Objecte per a la validació de paraules creuades.
+     * @param handView Vista de la mà del jugador.
+     */
+    private void configurePlayer(int index, PlayerObject playerObject, Player player, GameStepper stepper, Board board,
                                 BoardView boardView, PointCalculator pointCalculator, Bag bag,
                                 PiecesConverter piecesConverter, AnchorUpdater anchorUpdater, DAWG dawg,
                                 CrossChecks crossChecks, IHandView handView) {
@@ -234,6 +351,12 @@ public class GameScene extends Scene {
         playerObject.configure(index, placeActionMaker, player, drawActionMaker, skipActionMaker, handView);
     }
 
+    /**
+     * Retorna el tauler segons la configuració especificada a les propietats.
+     *
+     * @param properties Propietats del joc que defineixen el tipus de tauler.
+     * @return Tauler configurat.
+     */
     private Board getBoard(GameProperties properties) {
         return switch (properties.boardType()) {
             case BoardType.Junior -> new JuniorBoard();
