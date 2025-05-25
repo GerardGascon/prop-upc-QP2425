@@ -1,12 +1,14 @@
 package edu.upc.prop.scrabble.presenter.swing.screens.menu.pause;
 
+import edu.upc.prop.scrabble.persistence.runtime.controllers.GameSaver;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class PausePanel extends JPanel {
     private boolean isQuitting = false;
 
-    public PausePanel(PauseOverlay pauseOverlay) {
+    public PausePanel(PauseOverlay pauseOverlay, GameSaver gameSaver) {
         setLayout(null);
 
         int w = pauseOverlay.getWidth();
@@ -41,8 +43,7 @@ public class PausePanel extends JPanel {
             add(noButton);
 
             yesButton.addActionListener(_ -> {
-                // TODO: Guardar partida aquí
-                System.out.println("Guardando...");
+                gameSaver.run();
                 System.exit(0);
             });
 

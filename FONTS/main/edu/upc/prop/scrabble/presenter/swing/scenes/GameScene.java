@@ -115,7 +115,7 @@ public class GameScene extends Scene {
         boardView.updateBoard();
 
         SidePanel sidePanel = new SidePanel(playersData);
-        PauseMenu pauseMenu = new PauseMenu();
+        PauseMenu pauseMenu = new PauseMenu(saver);
         generateWindow(window, boardView, sidePanel, handView, blankPieceSelector, pauseMenu);
 
         players[0].startTurn();

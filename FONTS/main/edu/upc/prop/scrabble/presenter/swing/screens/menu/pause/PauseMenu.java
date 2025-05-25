@@ -1,14 +1,20 @@
 package edu.upc.prop.scrabble.presenter.swing.screens.menu.pause;
 
+import edu.upc.prop.scrabble.persistence.runtime.controllers.GameSaver;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
 public class PauseMenu extends JPanel {
+    private final GameSaver gameSaver;
+
     private JPanel overlay;
 
-    public PauseMenu() {
+    public PauseMenu(GameSaver gameSaver) {
         setLayout(null);
         setOpaque(false);
+
+        this.gameSaver = gameSaver;
 
         InputMap inputMap = getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
         ActionMap actionMap = getActionMap();
@@ -27,7 +33,7 @@ public class PauseMenu extends JPanel {
         if (overlay != null)
             return;
 
-        overlay = new PauseOverlay(this);
+        overlay = new PauseOverlay(this, gameSaver);
         add(overlay);
         overlay.requestFocusInWindow();
         setComponentZOrder(overlay, 0);

@@ -1,5 +1,7 @@
 package edu.upc.prop.scrabble.presenter.swing.screens.menu.pause;
 
+import edu.upc.prop.scrabble.persistence.runtime.controllers.GameSaver;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -8,7 +10,7 @@ import java.awt.event.InputEvent;
 public class PauseOverlay extends JPanel {
     private final PauseMenu parent;
 
-    public PauseOverlay(PauseMenu parent) {
+    public PauseOverlay(PauseMenu parent, GameSaver gameSaver) {
         super(null);
         this.parent = parent;
 
@@ -31,7 +33,7 @@ public class PauseOverlay extends JPanel {
 
         addMouseWheelListener(InputEvent::consume);
 
-        layoutComponents();
+        layoutComponents(gameSaver);
     }
 
     public void closePanel() {
@@ -41,8 +43,8 @@ public class PauseOverlay extends JPanel {
         parent.closePauseMenu();
     }
 
-    private void layoutComponents() {
-        JPanel popup = new PausePanel(this);
+    private void layoutComponents(GameSaver gameSaver) {
+        JPanel popup = new PausePanel(this, gameSaver);
         add(popup);
 
         popup.setBounds(0, 0, getWidth(), getHeight());
