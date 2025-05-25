@@ -14,7 +14,10 @@ public class SkipActionPanel extends JPanel {
     public SkipActionPanel (LayoutManager layout) {
         super(layout);
     }
-
+    /**
+     * Pinta el component amb un fons negre i cantonades arrodonides per a un estil personalitzat.
+     * @param g L'objecte Graphics utilitzat per dibuixar el component.
+     */
     @Override
     protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g.create();
@@ -25,7 +28,10 @@ public class SkipActionPanel extends JPanel {
         g2.fillRoundRect(0, 0, getWidth(), getHeight(), 58, 58);
         g2.dispose();
     }
-
+    /**
+     * Indica que el panell no és opac per permetre transparències o dibuixos sota seu.
+     * @return fals sempre.
+     */
     @Override
     public boolean isOpaque() {
         return false;

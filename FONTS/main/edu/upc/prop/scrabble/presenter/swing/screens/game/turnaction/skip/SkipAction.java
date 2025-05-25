@@ -8,8 +8,17 @@ import javax.swing.*;
  * @author Gina Escofet González
  */
 public class SkipAction extends JPanel {
+    /**
+     * Panell pare on s'afegirà el botó Skip.
+     */
     private final JPanel parent;
+    /**
+     * Botó que representa l'acció de saltar el torn.
+     */
     private JButton skipBtn;
+    /**
+     * Objecte que gestiona la lògica associada a l'acció de Skip.
+     */
     private final SkipActionMaker skipActionMaker;
     /***
      * Construeix un objecte `SkipAction`.
@@ -24,7 +33,10 @@ public class SkipAction extends JPanel {
         createSkipButton();
         add(skipBtn);
     }
-
+    /**
+     * Crea el botó Skip, li assigna posició fixa i el listener per executar l'acció.
+     * El botó s'afegeix directament al panell pare.
+     */
     private void createSkipButton() {
         skipBtn = new JButton("Skip");
         skipBtn.setBounds(1400, 650, 75, 50); //hardcoded
@@ -35,7 +47,10 @@ public class SkipAction extends JPanel {
         });
         parent.add(skipBtn);
     }
-
+    /**
+     * Indica que el panell no és opac per permetre transparències o dibuixos sota seu.
+     * @return fals sempre.
+     */
     @Override
     public boolean isOpaque() {
         return false;

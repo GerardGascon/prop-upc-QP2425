@@ -14,7 +14,11 @@ public class PlaceActionPanel extends JPanel {
     public PlaceActionPanel(LayoutManager layout) {
         super(layout);
     }
-
+    /**
+     * Personalitza el dibuix del component pintant un rectangle rodó negre
+     * amb qualitat antialiasing per suavitzar les vores i el text.
+     * @param g El context gràfic on es fa el dibuix.
+     */
     @Override
     protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g.create();
@@ -25,7 +29,10 @@ public class PlaceActionPanel extends JPanel {
         g2.fillRoundRect(0, 0, getWidth(), getHeight(), 58, 58);
         g2.dispose();
     }
-
+    /**
+     * Indica que el panell no és opac per permetre transparències o dibuixos sota seu.
+     * @return fals sempre.
+     */
     @Override
     public boolean isOpaque() {
         return false;

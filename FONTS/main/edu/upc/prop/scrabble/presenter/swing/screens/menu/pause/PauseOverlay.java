@@ -94,6 +94,8 @@ public class PauseOverlay extends JPanel {
      * Indica que el panell no és completament opac.
      * @return fals sempre, ja que es vol un fons translúcid
      */
+
+
     @Override
     public boolean isOpaque() {
         return false;

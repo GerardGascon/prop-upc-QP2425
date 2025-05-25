@@ -22,7 +22,10 @@ public class DrawActionButton extends JButton {
 
         disableKeyboardInput();
     }
-
+    /**
+     * Deshabilita l'ús de les tecles Espai i Enter quan el botó està en focus,
+     * evitant així que es disparin accions no desitjades amb aquestes tecles.
+     */
     private void disableKeyboardInput() {
         InputMap inputMap = getInputMap(JComponent.WHEN_FOCUSED);
         inputMap.put(KeyStroke.getKeyStroke("SPACE"), "none");
@@ -31,7 +34,13 @@ public class DrawActionButton extends JButton {
         inputMap.put(KeyStroke.getKeyStroke("ENTER"), "none");
         inputMap.put(KeyStroke.getKeyStroke("released ENTER"), "none");
     }
-
+    /**
+     * Pinta el botó amb cantonades arrodonides.
+     * El color de fons varia segons l'estat:
+     * més fosc quan està premut i més clar quan el cursor està sobre el botó.
+     *
+     * @param g L'objecte gràfic usat per pintar el component.
+     */
     @Override
     protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g.create();
@@ -52,7 +61,11 @@ public class DrawActionButton extends JButton {
 
         g2.dispose();
     }
-
+    /**
+     * Indica que el botó no és opac per permetre efectes de transparència.
+     *
+     * @return fals per permetre transparència.
+     */
     @Override
     public boolean isOpaque() {
         return false;

@@ -22,7 +22,9 @@ public class SkipActionButton extends JButton {
 
         disableKeyboardInput();
     }
-
+    /**
+     * Desactiva les tecles espai i enter per evitar que activin el botó per teclat.
+     */
     private void disableKeyboardInput() {
         InputMap inputMap = getInputMap(JComponent.WHEN_FOCUSED);
         inputMap.put(KeyStroke.getKeyStroke("SPACE"), "none");
@@ -31,7 +33,10 @@ public class SkipActionButton extends JButton {
         inputMap.put(KeyStroke.getKeyStroke("ENTER"), "none");
         inputMap.put(KeyStroke.getKeyStroke("released ENTER"), "none");
     }
-
+    /**
+     * Pinta el botó amb esquemes de color i cantonades arrodonides personalitzades.
+     * Utilitza efectes de sombrejat segons l'estat del botó (clicat, sobrevolat, normal).
+     */
     @Override
     protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g.create();
@@ -52,7 +57,10 @@ public class SkipActionButton extends JButton {
 
         g2.dispose();
     }
-
+    /**
+     * Indica que el panell no és opac per permetre transparències o dibuixos sota seu.
+     * @return fals sempre.
+     */
     @Override
     public boolean isOpaque() {
         return false;

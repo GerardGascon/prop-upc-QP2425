@@ -12,12 +12,19 @@ import javax.swing.*;
  * @author Gina Escofet González
  */
 public class PlaceAction extends JPanel {
+    /** Panell pare on s'insereix aquest component i on es gestionen els botons. */
     private final JPanel parent;
+    /** Botó per iniciar l'acció de posar peces al tauler. */
     private JButton placeBtn;
+    /** Botó per confirmar la col·locació de peces al tauler. */
     private JButton confirmBtn;
+    /** Botó per cancel·lar la col·locació i retornar les peces a la mà. */
     private JButton cancelBtn;
+    /** Lògica que gestiona l'acció de posar peces al tauler. */
     private final PlaceActionMaker placeActionMaker;
+    /** Vista del tauler de joc, per accedir a la col·locació actual. */
     private final BoardView boardView;
+    /** Vista de la mà del jugador, per gestionar les peces seleccionades o retornades. */
     private final HandView handView;
 
     /***
@@ -37,6 +44,10 @@ public class PlaceAction extends JPanel {
         add(placeBtn);
     }
 
+    /**
+     * Crea el botó "Place" que inicia el procés de col·locació.
+     * Quan es prem, elimina aquest botó i mostra els botons "Confirm" i "Cancel".
+     */
     private void createPlaceButton() {
         placeBtn = new JButton("Place");
         placeBtn.setBounds(1400, 575, 75, 50); //hardcoded
@@ -66,7 +77,11 @@ public class PlaceAction extends JPanel {
         });
         parent.add(placeBtn);
     }
-
+    /**
+     * Indica que aquest panell no és opac per permetre efectes de transparència.
+     *
+     * @return fals per indicar que el component no és opac.
+     */
     @Override
     public boolean isOpaque() {
         return false;

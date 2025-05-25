@@ -22,7 +22,9 @@ public class PlaceActionButton extends JButton {
 
         disableKeyboardInput();
     }
-
+    /**
+     * Desactiva les tecles ESPAI i ENTER perquè no activin el botó.
+     */
     private void disableKeyboardInput() {
         InputMap inputMap = getInputMap(JComponent.WHEN_FOCUSED);
         inputMap.put(KeyStroke.getKeyStroke("SPACE"), "none");
@@ -31,7 +33,10 @@ public class PlaceActionButton extends JButton {
         inputMap.put(KeyStroke.getKeyStroke("ENTER"), "none");
         inputMap.put(KeyStroke.getKeyStroke("released ENTER"), "none");
     }
-
+    /**
+     * Dibuixa el botó amb un fons rodó que canvia de tonalitat segons l'estat.
+     * @param g Context gràfic per dibuixar el component.
+     */
     @Override
     protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g.create();
@@ -52,7 +57,10 @@ public class PlaceActionButton extends JButton {
 
         g2.dispose();
     }
-
+    /**
+     * Indica que el botó no és opac, permetent efectes de transparència.
+     * @return fals sempre.
+     */
     @Override
     public boolean isOpaque() {
         return false;
