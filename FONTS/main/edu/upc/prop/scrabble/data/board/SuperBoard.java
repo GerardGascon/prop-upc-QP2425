@@ -230,4 +230,14 @@ public class SuperBoard extends Board {
     protected Board copy() {
         return new SuperBoard();
     }
+
+    /**
+     * Retorna el tipus de tauler que és.
+     *
+     * @return BoardType.Super
+     */
+    @Override
+    public BoardType getType() {
+        return BoardType.Super;
+    }
 }

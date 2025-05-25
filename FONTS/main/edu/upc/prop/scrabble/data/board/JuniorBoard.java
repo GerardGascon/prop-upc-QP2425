@@ -111,4 +111,14 @@ public class JuniorBoard extends Board {
     protected Board copy() {
         return new JuniorBoard();
     }
+
+    /**
+     * Retorna el tipus de tauler que és.
+     *
+     * @return BoardType.Junior
+     */
+    @Override
+    public BoardType getType() {
+        return BoardType.Junior;
+    }
 }

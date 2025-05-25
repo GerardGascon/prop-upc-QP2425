@@ -129,4 +129,14 @@ public class StandardBoard extends Board {
     protected Board copy() {
         return new StandardBoard();
     }
+
+    /**
+     * Retorna el tipus de tauler que és.
+     *
+     * @return BoardType.Standard
+     */
+    @Override
+    public BoardType getType() {
+        return BoardType.Standard;
+    }
 }

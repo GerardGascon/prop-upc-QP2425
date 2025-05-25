@@ -227,4 +227,11 @@ public abstract class Board implements IPersistableObject {
             }
         }
     }
+
+    /**
+     * Retorna el tipus de tauler que és.
+     *
+     * @return BoardType indicant el tipus de tauler
+     */
+    public abstract BoardType getType();
 }

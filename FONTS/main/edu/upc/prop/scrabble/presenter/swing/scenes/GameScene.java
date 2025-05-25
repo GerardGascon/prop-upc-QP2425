@@ -1,6 +1,7 @@
 package edu.upc.prop.scrabble.presenter.swing.scenes;
 
 import edu.upc.prop.scrabble.data.Anchors;
+import edu.upc.prop.scrabble.data.GameData;
 import edu.upc.prop.scrabble.data.Player;
 import edu.upc.prop.scrabble.data.board.*;
 import edu.upc.prop.scrabble.data.crosschecks.CatalanCrossChecks;
@@ -61,15 +62,6 @@ public class GameScene extends Scene {
     private final String SAVE_FILE_NAME = "save.data";
 
     public GameScene(GameProperties properties, JFrame window) {
-        Board board = getBoard(properties);
-        DAWG dawg = new DAWG();
-        CrossChecks crossChecks = switch (properties.language()) {
-            case Language.Catalan -> new CatalanCrossChecks(board.getSize());
-            case Language.Spanish -> new SpanishCrossChecks(board.getSize());
-            case Language.English -> new EnglishCrossChecks(board.getSize());
-        };
-        Leaderboard leaderboard = new Leaderboard();
-
         DataCollector dataCollector = new DataCollector();
         ISerializer serializer = new GsonSerializer();
         ISaveWriter saveWriter = new SaveWriter();
@@ -80,27 +72,60 @@ public class GameScene extends Scene {
         ISaveReader saveReader = new SaveReader();
         GameLoader loader = new GameLoader(dataRestorer, deserializer, saveReader, SAVE_FILE_NAME);
 
+        if (properties.reload() && saveReader.exists(SAVE_FILE_NAME)) {
+            loadGame(window, dataRestorer, loader, saver, dataCollector);
+        } else {
+            createNewGame(properties, window, saver, dataCollector);
+        }
+    }
+
+    private void createNewGame(GameProperties properties, JFrame window, GameSaver saver, DataCollector dataCollector) {
+        Board board = getBoard(properties);
+        Player[] playersData = createPlayersData(properties);
+        resolveDependencies(window, saver, dataCollector, board, properties.language(), playersData, 0, 0);
+    }
+
+    private void loadGame(JFrame window, DataRestorer dataRestorer, GameLoader loader, GameSaver saver, DataCollector dataCollector) {
+        Board board = new StandardBoard();
+
+        GameData gameData = new GameData();
+        dataRestorer.addPersistableObjects(board, gameData);
+        loader.run();
+
+        Player[] playersData = gameData.getPlayers();
+
+        resolveDependencies(window, saver, dataCollector, board, gameData.getLanguage(), playersData, gameData.getTurnNumber(), gameData.getSkipCounter());
+    }
+
+    private void resolveDependencies(JFrame window, GameSaver saver, DataCollector dataCollector, Board board, Language language, Player[] playersData, int turnNumber, int skipCounter) {
+        DAWG dawg = new DAWG();
+        CrossChecks crossChecks = switch (language) {
+            case Language.Catalan -> new CatalanCrossChecks(board.getSize());
+            case Language.Spanish -> new SpanishCrossChecks(board.getSize());
+            case Language.English -> new EnglishCrossChecks(board.getSize());
+        };
+
+        Leaderboard leaderboard = new Leaderboard();
+
         HandView handView = new HandView();
         BlankPieceSelector blankPieceSelector = new BlankPieceSelector();
         BoardView boardView = new BoardView(board.getSize(), handView, blankPieceSelector);
         PremiumTileTypeFiller premiumTileTypeFiller = new PremiumTileTypeFiller(board, boardView);
         premiumTileTypeFiller.run();
 
-        Player[] playersData = createPlayersData(properties);
-
         PointCalculator pointCalculator = new PointCalculator(board);
 
         PiecesReader piecesReader = new PiecesReader();
         PiecesConverterFactory piecesConverterFactory = new PiecesConverterFactory(piecesReader);
-        PiecesConverter piecesConverter = piecesConverterFactory.run(properties.language());
+        PiecesConverter piecesConverter = piecesConverterFactory.run(language);
 
-        Bag bag = generateBag(properties.language());
-        fillDAWG(dawg, properties.language());
+        Bag bag = generateBag(language);
+        fillDAWG(dawg, language);
 
         Anchors anchors = new Anchors();
         AnchorUpdater anchorUpdater = new AnchorUpdater(anchors, board, piecesConverter);
 
-        PlayerObject[] players = instantiatePlayers(playersData, properties.language(), piecesConverter, pointCalculator, dawg, board, anchors, crossChecks);
+        PlayerObject[] players = instantiatePlayers(playersData, language, piecesConverter, pointCalculator, dawg, board, anchors, crossChecks);
         Endgame endgame = new Endgame(playersData);
         Turn turnManager = new Turn(endgame, players);
 
@@ -118,7 +143,14 @@ public class GameScene extends Scene {
         PauseMenu pauseMenu = new PauseMenu(saver);
         generateWindow(window, boardView, sidePanel, handView, blankPieceSelector, pauseMenu);
 
-        dataCollector.addPersistableObjects(board);
+        GameData gameData = new GameData();
+        gameData.setLanguage(language);
+        gameData.setPlayers(playersData);
+        gameData.setBoardType(board.getType());
+        gameData.setTurnNumber(turnNumber);
+        gameData.setSkipCounter(skipCounter);
+
+        dataCollector.addPersistableObjects(board, gameData);
 
         players[0].startTurn();
     }
