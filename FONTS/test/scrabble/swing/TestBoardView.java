@@ -10,10 +10,7 @@ import edu.upc.prop.scrabble.domain.board.PointCalculator;
 import edu.upc.prop.scrabble.domain.board.PremiumTileTypeFiller;
 import edu.upc.prop.scrabble.domain.board.WordPlacer;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.BoardView;
-import edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles.BoardCell;
-import edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles.BoardEmptyTile;
-import edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles.BoardPieceTile;
-import edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles.BoardTile;
+import edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles.*;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles.premium.*;
 import edu.upc.prop.scrabble.utils.Direction;
 import org.junit.After;
@@ -180,6 +177,102 @@ public class TestBoardView extends SwingTest {
         filler.run();
 
         assertTrue(getTile(view, 5, 5, 11) instanceof BoardCenterTile);
+        finish();
+    }
+
+    @Test
+    public void placeTemporalPieceGetsPlaced() {
+        HandViewStub handViewStub = new HandViewStub("A", 1);
+        view = new TestWindow<>(500, 500, new BoardView(21, handViewStub, null));
+
+        view.getPanel().placeTemporalPiece("A", 3, 10, 10);
+        view.getPanel().placeTemporalPiece("B", 2, 11, 10);
+
+        assertTrue(getTile(view, 10, 10, 21) instanceof BoardTemporalPieceTile);
+        assertEquals("A", ((BoardTemporalPieceTile) getTile(view, 10, 10, 21)).getLetter());
+        assertEquals(3, ((BoardTemporalPieceTile) getTile(view, 10, 10, 21)).getPoints());
+
+        assertTrue(getTile(view, 11, 10, 21) instanceof BoardTemporalPieceTile);
+        assertEquals("B", ((BoardTemporalPieceTile) getTile(view, 11, 10, 21)).getLetter());
+        assertEquals(2, ((BoardTemporalPieceTile) getTile(view, 11, 10, 21)).getPoints());
+        finish();
+    }
+
+    @Test
+    public void getTemporalPieceTilesHorizontal() {
+        HandViewStub handViewStub = new HandViewStub("A", 1);
+        view = new TestWindow<>(500, 500, new BoardView(21, handViewStub, null));
+
+        view.getPanel().placeTemporalPiece("B", 2, 11, 10);
+        view.getPanel().placeTemporalPiece("A", 3, 10, 10);
+
+        String temporalWord = view.getPanel().getTemporalWord();
+
+        assertEquals("AB", temporalWord);
+        finish();
+    }
+
+    @Test
+    public void getTemporalPieceTilesVertical() {
+        HandViewStub handViewStub = new HandViewStub("A", 1);
+        view = new TestWindow<>(500, 500, new BoardView(21, handViewStub, null));
+
+        view.getPanel().placeTemporalPiece("B", 2, 10, 11);
+        view.getPanel().placeTemporalPiece("A", 3, 10, 10);
+
+        String temporalWord = view.getPanel().getTemporalWord();
+
+        assertEquals("AB", temporalWord);
+        finish();
+    }
+
+    @Test
+    public void placeTemporalPiecesWithPieceInBetween() {
+        HandViewStub handViewStub = new HandViewStub("A", 1);
+        view = new TestWindow<>(500, 500, new BoardView(21, handViewStub, null));
+        Board board = new SuperBoard();
+        Player player = new Player("test", false);
+        PointCalculator pointCalculator = new PointCalculator(board);
+        WordPlacer placer = new WordPlacer(player, board, view.getPanel(), pointCalculator);
+
+        placer.run(new Piece[]{new Piece("A", 3)}, 10, 10, Direction.Horizontal);
+
+        view.getPanel().placeTemporalPiece("P", 2, 9, 10);
+        view.getPanel().placeTemporalPiece("T", 3, 11, 10);
+
+        assertTrue(getTile(view, 9, 10, 21) instanceof BoardTemporalPieceTile);
+        assertEquals("P", ((BoardTemporalPieceTile) getTile(view, 9, 10, 21)).getLetter());
+        assertEquals(2, ((BoardTemporalPieceTile) getTile(view, 9, 10, 21)).getPoints());
+
+        assertTrue(getTile(view, 11, 10, 21) instanceof BoardTemporalPieceTile);
+        assertEquals("T", ((BoardTemporalPieceTile) getTile(view, 11, 10, 21)).getLetter());
+        assertEquals(3, ((BoardTemporalPieceTile) getTile(view, 11, 10, 21)).getPoints());
+
+        finish();
+    }
+
+    @Test
+    public void placeTemporalPiecesWithPieceInBetweenVertical() {
+        HandViewStub handViewStub = new HandViewStub("A", 1);
+        view = new TestWindow<>(500, 500, new BoardView(21, handViewStub, null));
+        Board board = new SuperBoard();
+        Player player = new Player("test", false);
+        PointCalculator pointCalculator = new PointCalculator(board);
+        WordPlacer placer = new WordPlacer(player, board, view.getPanel(), pointCalculator);
+
+        placer.run(new Piece[]{new Piece("A", 3)}, 10, 10, Direction.Horizontal);
+
+        view.getPanel().placeTemporalPiece("P", 2, 10, 9);
+        view.getPanel().placeTemporalPiece("T", 3, 10, 11);
+
+        assertTrue(getTile(view, 10, 9, 21) instanceof BoardTemporalPieceTile);
+        assertEquals("P", ((BoardTemporalPieceTile) getTile(view, 10, 9, 21)).getLetter());
+        assertEquals(2, ((BoardTemporalPieceTile) getTile(view, 10, 9, 21)).getPoints());
+
+        assertTrue(getTile(view, 10, 11, 21) instanceof BoardTemporalPieceTile);
+        assertEquals("T", ((BoardTemporalPieceTile) getTile(view, 10, 11, 21)).getLetter());
+        assertEquals(3, ((BoardTemporalPieceTile) getTile(view, 10, 11, 21)).getPoints());
+
         finish();
     }
 }
