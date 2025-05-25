@@ -6,31 +6,38 @@ import java.util.TreeMap;
 import java.util.Map;
 
 /**
- * Controlador de Leaderboard encarregat d'ordenar als jugadors segons el percentatge de victòries
+ * Controlador de Leaderboard encarregat de generar una classificació
+ * dels jugadors segons el seu percentatge de victòries en les partides jugades.
+ * Calcula el ratio de partides guanyades respecte al total de partides jugades per cada jugador.
  * @author Felipe Martínez Lassalle
  * @see edu.upc.prop.scrabble.data.leaderboard.Leaderboard
+ * @see GamesWinsPair
  */
-public class WinRateLeaderboard   {
+public class WinRateLeaderboard {
 
     /**
-     * Funció encarregada de complir la tasca del controlador
-     * @param scores Array de tots els Score a ordenar
-     * @return Array de PlayerValuePair que guarda de forma ordenada el nom del jugador i el seu percentatge de partides guanyades
+     * Executa el controlador per calcular i ordenar el percentatge de victòries dels jugadors.
+     *
+     * @param scores Array amb tots els objectes {@code Score} que representen les partides jugades.
+     * @return Array de {@code PlayerValuePair} amb el nom del jugador i el seu percentatge de victòries,
+     *         ordenat de major a menor percentatge.
      * @see edu.upc.prop.scrabble.data.leaderboard.Leaderboard
      * @see Score
      * @see PlayerValuePair
      * @see GamesWinsPair
      */
     public PlayerValuePair[] run(Score[] scores) {
-        // Group by player name and a pair of won and played games
+        // Agrupa per nom de jugador i manté un registre de partides jugades i guanyades
         Map<String, GamesWinsPair> pairMap = new TreeMap<>();
-        for (Score score : scores) pairMap.compute(score.playerName(), (k, v) -> v == null  ? new GamesWinsPair(score.isWinner()) : v.addGame(score.isWinner()));
+        for (Score score : scores) {
+            pairMap.compute(score.playerName(),
+                    (k, v) -> v == null ? new GamesWinsPair(score.isWinner()) : v.addGame(score.isWinner()));
+        }
 
-        // Convert map into a sorted PlayerValuePair[]
+        // Converteix el map a un array ordenat de PlayerValuePair segons el percentatge de victòries
         return pairMap.entrySet().stream()
-                .sorted((entry1, entry2) -> Double.compare(entry2.getValue().getWinRate(), entry1.getValue().getWinRate())) // Sort directly using map values
-                .map(entry -> new PlayerValuePair(entry.getKey(), entry.getValue().getWinRate())) // Create PlayerValuePair objects after sorting
+                .sorted((entry1, entry2) -> Double.compare(entry2.getValue().getWinRate(), entry1.getValue().getWinRate()))
+                .map(entry -> new PlayerValuePair(entry.getKey(), entry.getValue().getWinRate()))
                 .toArray(PlayerValuePair[]::new);
-
     }
 }

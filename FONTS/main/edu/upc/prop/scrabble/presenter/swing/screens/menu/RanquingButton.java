@@ -1,16 +1,11 @@
 package edu.upc.prop.scrabble.presenter.swing.screens.menu;
 
-import edu.upc.prop.scrabble.data.GameData;
-import edu.upc.prop.scrabble.persistence.runtime.controllers.DataRestorer;
-import edu.upc.prop.scrabble.presenter.swing.screens.menu.MenuButton;
 import edu.upc.prop.scrabble.data.leaderboard.Leaderboard;
-import edu.upc.prop.scrabble.data.leaderboard.Score;
 import edu.upc.prop.scrabble.domain.leaderboard.GamesPlayedLeaderboard;
 import edu.upc.prop.scrabble.domain.leaderboard.GamesWonLeaderboard;
 import edu.upc.prop.scrabble.domain.leaderboard.WinRateLeaderboard;
 import edu.upc.prop.scrabble.domain.leaderboard.MaxScoreLeaderboard;
 import edu.upc.prop.scrabble.domain.leaderboard.TotalScoreLeaderboard;
-import edu.upc.prop.scrabble.domain.leaderboard.GamesWinsPair;
 import edu.upc.prop.scrabble.domain.leaderboard.PlayerValuePair;
 
 import javax.swing.*;
@@ -230,15 +225,15 @@ public class RanquingButton extends MenuButton {
         int pos = 1;
         for (int i = 0; i < ranquingData.length; i++) {
             // No ensenyar decimals si no cal
-            double value = ranquingData[i].getValue();
+            double value = ranquingData[i].value();
             String valueStr;
             if (mode.equals("Percentatge de Victòries")) {
                 valueStr = String.format("%.2f", value);
             } else {
                 valueStr = String.format("%.0f", value);
             }
-            if(i != 0 && value != ranquingData[i - 1].getValue()) ++pos; // Empat de posicions
-            builder.append(String.format("%d. %-10s - %s%n", pos, ranquingData[i].getPlayerName(), valueStr));
+            if(i != 0 && value != ranquingData[i - 1].value()) ++pos; // Empat de posicions
+            builder.append(String.format("%d. %-10s - %s%n", pos, ranquingData[i].playerName(), valueStr));
         }
         ranquingText.setText(builder.toString());
     }

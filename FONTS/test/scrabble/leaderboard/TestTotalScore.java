@@ -37,13 +37,13 @@ public class TestTotalScore {
         assertEquals(4, result.length);
 
         // Check correct sorting by games played: Biel (8500), Albert (5000), Gina (5000)
-        assertEquals("Biel", result[0].getPlayerName());
-        assertEquals("Albert", result[1].getPlayerName());
-        assertEquals("Gina", result[2].getPlayerName());
+        assertEquals("Biel", result[0].playerName());
+        assertEquals("Albert", result[1].playerName());
+        assertEquals("Gina", result[2].playerName());
 
-        assertEquals(8500.0, result[0].getValue(), 0.0);
-        assertEquals(5000.0, result[1].getValue(), 0.0);
-        assertEquals(5000.0, result[2].getValue(), 0.0);
+        assertEquals(8500.0, result[0].value(), 0.0);
+        assertEquals(5000.0, result[1].value(), 0.0);
+        assertEquals(5000.0, result[2].value(), 0.0);
 
         result = PlayerValuePair.reverse(result);
 
@@ -51,12 +51,12 @@ public class TestTotalScore {
         assertEquals(4, result.length);
 
         // Check correct sorting: Gerard (3000), Gina (5000), Albert (5000)
-        assertEquals("Gerard", result[0].getPlayerName());
-        assertEquals("Gina", result[1].getPlayerName());
-        assertEquals("Albert", result[2].getPlayerName());
+        assertEquals("Gerard", result[0].playerName());
+        assertEquals("Gina", result[1].playerName());
+        assertEquals("Albert", result[2].playerName());
 
-        assertEquals(3000.0, result[0].getValue(), 0.0);
-        assertEquals(5000.0, result[1].getValue(), 0.0);
-        assertEquals(5000.0, result[2].getValue(), 0.0);
+        assertEquals(3000.0, result[0].value(), 0.0);
+        assertEquals(5000.0, result[1].value(), 0.0);
+        assertEquals(5000.0, result[2].value(), 0.0);
     }
 }

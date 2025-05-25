@@ -6,29 +6,35 @@ import java.util.TreeMap;
 import java.util.Map;
 
 /**
- * Controlador de Leaderboard encarregat d'ordenar als jugadors segons la puntuació total obtinguda
+ * Controlador de Leaderboard encarregat de generar una classificació
+ * dels jugadors segons la puntuació total acumulada en totes les partides.
+ * Cada jugador és identificat pel seu nom, i la seva puntuació total
+ * es calcula sumant totes les puntuacions obtingudes a les diferents partides.
  * @author Felipe Martínez Lassalle
  * @see edu.upc.prop.scrabble.data.leaderboard.Leaderboard
  */
 public class TotalScoreLeaderboard {
 
     /**
-     * Funció encarregada de complir la tasca del controlador
-     * @param scores Array de tots els Score a ordenar
-     * @return Array de PlayerValuePair que guarda de forma ordenada el nom del jugador i la seva puntuació total
+     * Executa el controlador per generar la classificació de puntuació total.
+     *
+     * @param scores Array amb tots els objectes {@code Score} de les partides jugades.
+     * @return Un array de {@code PlayerValuePair} que conté el nom dels jugadors
+     *         i la seva puntuació total, ordenats de major a menor valor.
      * @see edu.upc.prop.scrabble.data.leaderboard.Leaderboard
      * @see Score
      * @see PlayerValuePair
      */
     public PlayerValuePair[] run(Score[] scores) {
-        // Group by player name and total score
+        // Agrupa per nom de jugador i suma la seva puntuació total
         Map<String, Integer> scoreMap = new TreeMap<>();
-        for(Score score : scores) scoreMap.put(score.playerName(), scoreMap.getOrDefault(score.playerName(), 0) + score.scoreValue());
+        for (Score score : scores)
+            scoreMap.put(score.playerName(), scoreMap.getOrDefault(score.playerName(), 0) + score.scoreValue());
 
-        // Convert map into a sorted PlayerValuePair[]
+        // Converteix el map a un array ordenat de PlayerValuePair
         return scoreMap.entrySet().stream()
-                .sorted((entry1, entry2) -> Integer.compare(entry2.getValue(), entry1.getValue())) // Sort directly using map values
-                .map(entry -> new PlayerValuePair(entry.getKey(), entry.getValue())) // Create PlayerValuePair objects after sorting
+                .sorted((entry1, entry2) -> Integer.compare(entry2.getValue(), entry1.getValue()))
+                .map(entry -> new PlayerValuePair(entry.getKey(), entry.getValue()))
                 .toArray(PlayerValuePair[]::new);
     }
 }

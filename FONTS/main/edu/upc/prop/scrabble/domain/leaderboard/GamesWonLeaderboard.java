@@ -6,30 +6,39 @@ import java.util.TreeMap;
 import java.util.Map;
 
 /**
- * Controlador de Leaderboard encarregat d'ordenar als jugadors segons el nombre de partides guanyades
+ * Controlador de Leaderboard encarregat de generar una classificació
+ * dels jugadors segons el nombre total de partides guanyades.
+ * Processa un conjunt de resultats {@link Score} i compta les victòries
+ * per jugador, retornant una classificació ordenada descendentment.
  * @author Felipe Martínez Lassalle
  * @see edu.upc.prop.scrabble.data.leaderboard.Leaderboard
+ * @see Score
  */
-public class GamesWonLeaderboard   {
+public class GamesWonLeaderboard {
 
     /**
-     * Funció encarregada de complir la tasca del controlador
-     * @param scores Array de tots els Score a ordenar
-     * @return Array de PlayerValuePair que guarda de forma ordenada el nom del jugador i el nombre de partides guanyades
-     * @see edu.upc.prop.scrabble.data.leaderboard.Leaderboard
+     * Executa el procés de classificació de jugadors segons el nombre de partides guanyades.
+     *
+     * @param scores Array de resultats {@link Score} corresponents a partides prèvies.
+     * @return Un array de {@link PlayerValuePair}, ordenat descendentment pel nombre de partides guanyades.
+     *         Cada element representa un jugador i la seva quantitat total de victòries.
      * @see Score
      * @see PlayerValuePair
      */
     public PlayerValuePair[] run(Score[] scores) {
-        // Group by player name and won games
+        // Agrupa els resultats pel nom del jugador i compta només les partides guanyades
         Map<String, Integer> winsMap = new TreeMap<>();
-        for (Score score : scores) winsMap.compute(score.playerName(), (k, v) -> v == null  ? (score.isWinner() ? 1 : 0) : (score.isWinner() ? v + 1 : v));
+        for (Score score : scores) {
+            winsMap.compute(score.playerName(), (k, v) ->
+                    v == null
+                            ? (score.isWinner() ? 1 : 0)
+                            : (score.isWinner() ? v + 1 : v));
+        }
 
-        // Convert map into a sorted PlayerValuePair[]
+        // Converteix el mapa a un array ordenat de PlayerValuePair (descendent per nombre de victòries)
         return winsMap.entrySet().stream()
-                .sorted((entry1, entry2) -> Integer.compare(entry2.getValue(), entry1.getValue())) // Sort directly using map values
-                .map(entry -> new PlayerValuePair(entry.getKey(), entry.getValue())) // Create PlayerValuePair objects after sorting
+                .sorted((entry1, entry2) -> Integer.compare(entry2.getValue(), entry1.getValue()))
+                .map(entry -> new PlayerValuePair(entry.getKey(), entry.getValue()))
                 .toArray(PlayerValuePair[]::new);
-
     }
 }

@@ -31,13 +31,13 @@ public class TestWinRate {
         assertEquals(4, result.length);
 
         // Check correct sorting by win rate: Gerard (1.0), Albert (0.66), Biel (0.5)
-        assertEquals("Gerard", result[0].getPlayerName());
-        assertEquals("Albert", result[1].getPlayerName());
-        assertEquals("Biel", result[2].getPlayerName());
+        assertEquals("Gerard", result[0].playerName());
+        assertEquals("Albert", result[1].playerName());
+        assertEquals("Biel", result[2].playerName());
 
-        assertEquals(1.0 * 100, result[0].getValue(), 0.01);
-        assertEquals((2.0 / 3)* 100, result[1].getValue(), 0.01);
-        assertEquals(0.5 * 100, result[2].getValue(), 0.01);
+        assertEquals(1.0 * 100, result[0].value(), 0.01);
+        assertEquals((2.0 / 3)* 100, result[1].value(), 0.01);
+        assertEquals(0.5 * 100, result[2].value(), 0.01);
 
         result = PlayerValuePair.reverse(result);
 
@@ -45,12 +45,12 @@ public class TestWinRate {
         assertEquals(4, result.length);
 
         // Check correct sorting: Gina (0.0), Biel (0.5), Albert (0.66)
-        assertEquals("Gina", result[0].getPlayerName());
-        assertEquals("Biel", result[1].getPlayerName());
-        assertEquals("Albert", result[2].getPlayerName());
+        assertEquals("Gina", result[0].playerName());
+        assertEquals("Biel", result[1].playerName());
+        assertEquals("Albert", result[2].playerName());
 
-        assertEquals(0.0 * 100, result[0].getValue(), 0.01);
-        assertEquals(0.5 * 100, result[1].getValue(), 0.01);
-        assertEquals((2.0 / 3) * 100, result[2].getValue(), 0.01);
+        assertEquals(0.0 * 100, result[0].value(), 0.01);
+        assertEquals(0.5 * 100, result[1].value(), 0.01);
+        assertEquals((2.0 / 3) * 100, result[2].value(), 0.01);
     }
 }

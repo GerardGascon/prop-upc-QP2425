@@ -6,30 +6,36 @@ import java.util.TreeMap;
 import java.util.Map;
 
 /**
- * Controlador de Leaderboard encarregat d'ordenar als jugadors segons la puntuació màxima obtinguda
+ * Controlador de Leaderboard encarregat de generar una classificació
+ * dels jugadors basada en la puntuació més alta assolida en una partida.
+ * A partir d’un conjunt de resultats {@link Score}, es calcula la màxima
+ * puntuació per jugador i es retorna una classificació ordenada descendentment.
  * @author Felipe Martínez Lassalle
  * @see edu.upc.prop.scrabble.data.leaderboard.Leaderboard
+ * @see Score
  */
-public class MaxScoreLeaderboard   {
+public class MaxScoreLeaderboard {
 
     /**
-     * Funció encarregada de complir la tasca del controlador
-     * @param scores Array de tots els Score a ordenar
-     * @return Array de PlayerValuePair que guarda de forma ordenada el nom del jugador i la puntuació màxima obtinguda
-     * @see edu.upc.prop.scrabble.data.leaderboard.Leaderboard
+     * Executa el procés de classificació de jugadors segons la seva puntuació més alta en una sola partida.
+     *
+     * @param scores Array de resultats {@link Score} corresponents a partides jugades.
+     * @return Un array de {@link PlayerValuePair}, ordenat descendentment segons la puntuació màxima obtinguda
+     *         per cada jugador.
      * @see Score
      * @see PlayerValuePair
      */
     public PlayerValuePair[] run(Score[] scores) {
-        // Group by player name and maxScore
+        // Agrupa pel nom del jugador i guarda només la puntuació màxima
         Map<String, Integer> scoreMap = new TreeMap<>();
-        for (Score score : scores) scoreMap.compute(score.playerName(), (k, v) -> v == null || score.scoreValue() > v ? score.scoreValue() : v);
+        for (Score score : scores)
+            scoreMap.compute(score.playerName(),
+                    (k, v) -> v == null || score.scoreValue() > v ? score.scoreValue() : v);
 
-        // Convert map into a sorted PlayerValuePair[]
+        // Converteix el mapa en un array ordenat de PlayerValuePair (descendent per puntuació màxima)
         return scoreMap.entrySet().stream()
-                .sorted((entry1, entry2) -> Integer.compare(entry2.getValue(), entry1.getValue())) // Sort directly using map values
-                .map(entry -> new PlayerValuePair(entry.getKey(), entry.getValue())) // Create PlayerValuePair objects after sorting
+                .sorted((entry1, entry2) -> Integer.compare(entry2.getValue(), entry1.getValue()))
+                .map(entry -> new PlayerValuePair(entry.getKey(), entry.getValue()))
                 .toArray(PlayerValuePair[]::new);
-
     }
 }

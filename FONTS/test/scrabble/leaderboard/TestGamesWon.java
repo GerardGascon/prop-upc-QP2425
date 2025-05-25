@@ -37,13 +37,13 @@ public class TestGamesWon {
         assertEquals(4, result.length);
 
         // Check correct sorting by games played: Gina (4), Albert (2), Gerard (1)
-        assertEquals("Gina", result[0].getPlayerName());
-        assertEquals("Albert", result[1].getPlayerName());
-        assertEquals("Gerard", result[2].getPlayerName());
+        assertEquals("Gina", result[0].playerName());
+        assertEquals("Albert", result[1].playerName());
+        assertEquals("Gerard", result[2].playerName());
 
-        assertEquals(4.0, result[0].getValue(), 0.0);
-        assertEquals(2.0, result[1].getValue(), 0.0);
-        assertEquals(1.0, result[2].getValue(), 0.0);
+        assertEquals(4.0, result[0].value(), 0.0);
+        assertEquals(2.0, result[1].value(), 0.0);
+        assertEquals(1.0, result[2].value(), 0.0);
 
         result = PlayerValuePair.reverse(result);
 
@@ -51,12 +51,12 @@ public class TestGamesWon {
         assertEquals(4, result.length);
 
         // Check correct sorting: Biel (0), Gerard (1), Albert (2)
-        assertEquals("Biel", result[0].getPlayerName());
-        assertEquals("Gerard", result[1].getPlayerName());
-        assertEquals("Albert", result[2].getPlayerName());
+        assertEquals("Biel", result[0].playerName());
+        assertEquals("Gerard", result[1].playerName());
+        assertEquals("Albert", result[2].playerName());
 
-        assertEquals(0.0, result[0].getValue(), 0.0);
-        assertEquals(1.0, result[1].getValue(), 0.0);
-        assertEquals(2.0, result[2].getValue(), 0.0);
+        assertEquals(0.0, result[0].value(), 0.0);
+        assertEquals(1.0, result[1].value(), 0.0);
+        assertEquals(2.0, result[2].value(), 0.0);
     }
 }
