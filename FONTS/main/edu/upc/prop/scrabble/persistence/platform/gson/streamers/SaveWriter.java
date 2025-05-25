@@ -5,6 +5,7 @@ import edu.upc.prop.scrabble.persistence.runtime.interfaces.ISaveWriter;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 
 /**
  * Classe encarregada d'escriure dades en fitxers de guardat de la partida.
@@ -27,10 +28,11 @@ public class SaveWriter extends SaveDataStreamer implements ISaveWriter {
      */
     @Override
     public void write(String data, String fileName) {
-        File path = getAbsolutePath(fileName);
+        Path path = getAbsolutePath(fileName).toPath();
 
         try {
-            Files.writeString(path.toPath(), data);
+            Files.createDirectories(path.getParent());
+            Files.writeString(path, data);
         } catch (IOException e) {
             System.err.println("Error writing file: " + path + " - " + e.getMessage());
         }
