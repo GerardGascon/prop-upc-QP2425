@@ -50,7 +50,9 @@ public class DataRestorer {
     public void run(PersistentDictionary dictionary) {
         for (IPersistableObject persistableObject : persistableObject) {
             PersistentObject object = dictionary.get(persistableObject.getClass().getSimpleName());
-            persistableObject.decode((PersistentDictionary) object);
+            if (object == null)
+                continue;
+            persistableObject.decode(object.toDictionary());
         }
     }
 }

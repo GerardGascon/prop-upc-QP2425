@@ -1,5 +1,8 @@
 package edu.upc.prop.scrabble.persistence.runtime.data;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Representa un objecte persistent genèric que conté un nom i un valor.
  * <p>
@@ -69,5 +72,15 @@ public class PersistentObject {
             throw new ClassCastException("Cannot cast object of type "
                     + value.getClass().getName() + " to " + type.getName());
         }
+    }
+
+    public PersistentDictionary toDictionary() {
+        if (value instanceof PersistentDictionary) {
+            return (PersistentDictionary) value;
+        }
+
+        Map<String, PersistentObject> map = new HashMap<>();
+        map.put(((PersistentObject) this.value).name, (PersistentObject) ((PersistentObject) this.value).value);
+        return new PersistentDictionary(name, map);
     }
 }

@@ -2,11 +2,13 @@ package edu.upc.prop.scrabble.persistence.platform.gson.deserializers;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import edu.upc.prop.scrabble.persistence.runtime.data.PersistentObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Classe abstracta que facilita la deserialització d'elements JSON en objectes de tipus PersistentObject.
@@ -54,11 +56,11 @@ abstract class Deserializer {
                 }
             }
         } else if (element.isJsonArray()) {
-            List<PersistentObject> elements = new ArrayList<>();
-            for (JsonElement arrayElement : element.getAsJsonArray()) {
-                elements.add((PersistentObject) parseJsonElement(arrayElement, context));
-            }
-            return elements;
+//            List<PersistentObject> elements = new ArrayList<>();
+//            for (JsonElement arrayElement : element.getAsJsonArray()) {
+//                elements.add((PersistentObject) parseJsonElement(arrayElement, context));
+//            }
+            return element.getAsJsonArray();
         } else if (element.isJsonObject()) {
             return context.deserialize(element, PersistentObject.class);
         }

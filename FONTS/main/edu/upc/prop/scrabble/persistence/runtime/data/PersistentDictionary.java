@@ -83,4 +83,9 @@ public class PersistentDictionary extends PersistentObject {
     public PersistentObject get(String key) {
         return dictionary.get(key);
     }
+
+    @Override
+    public PersistentDictionary toDictionary() {
+        return this;
+    }
 }

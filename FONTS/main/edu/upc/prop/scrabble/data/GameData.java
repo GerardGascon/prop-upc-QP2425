@@ -1,55 +1,107 @@
 package edu.upc.prop.scrabble.data;
 
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import edu.upc.prop.scrabble.data.board.BoardType;
+import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.data.properties.Language;
 import edu.upc.prop.scrabble.persistence.runtime.data.PersistentDictionary;
 import edu.upc.prop.scrabble.persistence.runtime.data.PersistentObject;
 import edu.upc.prop.scrabble.persistence.runtime.interfaces.IPersistableObject;
 
-// terminal... (OR MAYBE NOT!)
+/**
+ * Representa l'estat de la partida en curs, incloent informació sobre el tauler,
+ * el llenguatge, el torn actual, els jugadors i el nombre de torns saltats.
+ * Aquesta classe també permet la persistència d'aquestes dades mitjançant encode/decode.
+ * @author Biel
+ */
 public class GameData implements IPersistableObject {
+    /** Nombre de torns consecutius que s'han saltat. */
     private int skipCounter = 0;
+    /** Número del torn actual. */
     private int turnNumber = 0;
+    /** Tipus de tauler de joc. */
     private BoardType boardType;
+    /** Llengua utilitzada durant la partida. */
     private Language language;
+    /** Jugadors participants en la partida. */
     private Player[] players;
 
+    /**
+     * Estableix el comptador de salts de torn.
+     * @param skipCounter nombre de torns consecutius saltats
+     */
     public void setSkipCounter(int skipCounter) {
         this.skipCounter = skipCounter;
     }
+    /**
+     * Retorna el nombre de torns consecutius saltats.
+     * @return nombre de torns saltats
+     */
     public int getSkipCounter() {
         return this.skipCounter;
     }
-
+    /**
+     * Estableix el número de torn actual.
+     * @param turnNumber número del torn
+     */
     public void setTurnNumber(int turnNumber) {
         this.turnNumber = turnNumber;
     }
+    /**
+     * Retorna el número de torn actual.
+     * @return número del torn
+     */
     public int getTurnNumber() {
         return turnNumber;
     }
-
+    /**
+     * Estableix l'idioma de la partida.
+     * @param language idioma seleccionat
+     */
     public void setLanguage(Language language) {
         this.language = language;
     }
+    /**
+     * Retorna l'idioma actual de la partida.
+     * @return idioma seleccionat
+     */
     public Language getLanguage() {
         return language;
     }
-
+    /**
+     * Estableix els jugadors de la partida.
+     * @param players array de jugadors
+     */
     public void setPlayers(Player[] players) {
         this.players = players;
     }
+    /**
+     * Retorna l'array de jugadors participants.
+     * @return jugadors de la partida
+     */
     public Player[] getPlayers() {
         return players;
     }
-
+    /**
+     * Estableix el tipus de tauler emprat.
+     * @param boardType tipus de tauler
+     */
     public void setBoardType(BoardType boardType) {
         this.boardType = boardType;
     }
+    /**
+     * Retorna el tipus de tauler emprat.
+     * @return tipus de tauler
+     */
     public BoardType getBoardType() {
         return boardType;
     }
-
+    /**
+     * Serialitza totes les dades del joc en un {@link PersistentDictionary} per a poder-les guardar.
+     * @return diccionari amb les dades persistents de la partida
+     */
     @Override
     public PersistentDictionary encode() {
         PersistentDictionary data = new PersistentDictionary();
@@ -62,7 +114,11 @@ public class GameData implements IPersistableObject {
 
         return data;
     }
-
+    /**
+     * Reconstrueix l'estat intern a partir d'un {@link PersistentDictionary}.
+     * Aquesta funció es fa servir per carregar una partida desada.
+     * @param data diccionari amb les dades persistides
+     */
     @Override
     public void decode(PersistentDictionary data) {
         PersistentObject skipCounter = data.get("skipCounter");
@@ -72,13 +128,14 @@ public class GameData implements IPersistableObject {
         this.turnNumber = turnNumber.parse(Integer.class);
 
         PersistentObject boardType = data.get("boardType");
-        this.boardType = boardType.parse(BoardType.class);
+        this.boardType = BoardType.valueOf(boardType.parse(String.class));
 
         PersistentObject language = data.get("language");
-        this.language = language.parse(Language.class);
+        this.language = Language.valueOf(language.parse(String.class));
 
         PersistentObject players = data.get("players");
-        this.players = players.parse(Player[].class);
+        this.players = new Gson().fromJson(((JsonArray)players.getValue()), Player[].class);
+//        this.players = players.parse(Player[].class);
     }
 }
 
