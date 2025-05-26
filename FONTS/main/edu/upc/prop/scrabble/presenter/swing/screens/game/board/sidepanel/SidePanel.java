@@ -15,7 +15,6 @@ import java.util.ArrayList;
  *   <li>Les puntuacions i noms dels jugadors</li>
  * </ul>
  * Utilitza PlayerHighlight i PlayerInfo per renderitzar els elements.
- * </p>
  *
  * @author Albert Usero
  */
@@ -70,7 +69,6 @@ public class SidePanel extends JPanel {
      *   <li>Renderitzar el resaltat del jugador actual.</li>
      *   <li>Mostrar la informació dels jugadors.</li>
      * </ul>
-     * </p>
      *
      * @param g Context gràfic utilitzat per al pintat.
      */

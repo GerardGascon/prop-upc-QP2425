@@ -75,7 +75,7 @@ public final class Vector2 {
 
     /**
      * Retorna una representació en forma de cadena del vector en el format:
-     * Vector2[x=<x>, y=<y>].
+     * Vector2[x=&lt;x&gt;, y=&lt;y&gt;].
      *
      * @return una representació en forma de cadena d'aquest vector.
      */

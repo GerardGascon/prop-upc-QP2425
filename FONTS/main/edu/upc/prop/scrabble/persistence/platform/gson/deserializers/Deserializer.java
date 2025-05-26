@@ -31,7 +31,6 @@ abstract class Deserializer {
      *   <li>Si és un array JSON, crea una llista d'objectes PersistentObject a partir dels elements de l'array.</li>
      *   <li>Si és un objecte JSON, el deserialitza com un PersistentObject.</li>
      * </ul>
-     * </p>
      *
      * @param element L'element JSON a processar.
      * @param context El context de deserialització de Gson.

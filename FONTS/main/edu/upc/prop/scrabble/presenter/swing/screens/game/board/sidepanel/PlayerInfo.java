@@ -16,7 +16,6 @@ import java.util.ArrayList;
  *   <li>Un indicador de color que identifica a cada jugador</li>
  * </ul>
  * Els elements es mostren en targetes individuals amb disseny arrodonit.
- * </p>
  *
  * @author Albert Usero
  */
@@ -85,7 +84,6 @@ public class PlayerInfo extends JPanel {
      *   <li>Jugador 2: Groc (#ffc717)</li>
      *   <li>Jugador 3: Verd (#43e81f)</li>
      * </ul>
-     * </p>
      *
      * @param g Context gràfic on s'aplicarà el color
      * @param selectedPlayer Índex del jugador (0-3)

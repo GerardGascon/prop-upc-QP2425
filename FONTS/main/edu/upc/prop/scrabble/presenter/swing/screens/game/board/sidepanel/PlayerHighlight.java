@@ -57,7 +57,6 @@ public class PlayerHighlight extends JPanel {
      *   <li>Jugador 2: Groc (#ffc717)</li>
      *   <li>Jugador 3: Verd (#43e81f)</li>
      * </ul>
-     * </p>
      *
      * @param g Context gràfic on s'aplicarà el color
      * @param selectedPlayer Índex del jugador seleccionat (0-3)
