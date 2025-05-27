@@ -70,17 +70,15 @@ public class TestHandView extends SwingTest {
         queueClick(buttonB);
 
         doClick(buttonA);
-        String[] selectedA = view.getPanel().getSelectedPiece();
+        String selectedA = view.getPanel().getSelectedPiece();
         assertNotNull(selectedA);
-        assertEquals(1, selectedA.length);
-        assertEquals("A", selectedA[0]);
+        assertEquals("A", selectedA);
         assertEquals(1, view.getPanel().getSelectedPiecePoints());
 
         doClick(buttonB);
-        String[] selectedB = view.getPanel().getSelectedPiece();
+        String selectedB = view.getPanel().getSelectedPiece();
         assertNotNull(selectedB);
-        assertEquals(1, selectedB.length);
-        assertEquals("B", selectedB[0]);
+        assertEquals("B", selectedB);
         assertEquals(2, view.getPanel().getSelectedPiecePoints());
         finish();
     }
@@ -100,10 +98,9 @@ public class TestHandView extends SwingTest {
         queueClick(buttonF);
 
         doClick(buttonF);
-        String[] selectedF = view.getPanel().getSelectedPiece();
+        String selectedF = view.getPanel().getSelectedPiece();
         assertNotNull(selectedF);
-        assertEquals(1, selectedF.length);
-        assertEquals("F", selectedF[0]);
+        assertEquals("F", selectedF);
         assertEquals(5, view.getPanel().getSelectedPiecePoints());
 
         doClick(buttonF);

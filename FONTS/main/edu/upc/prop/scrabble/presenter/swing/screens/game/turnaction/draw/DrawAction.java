@@ -2,8 +2,11 @@ package edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction.draw;
 
 import edu.upc.prop.scrabble.domain.actionmaker.DrawActionMaker;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.hand.HandView;
+import edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction.ActionButtonPanel;
 
 import javax.swing.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Classe per gestionar la lògica del botó de Draw (Robar) en una partida.
@@ -11,31 +14,24 @@ import javax.swing.*;
  */
 public class DrawAction extends JPanel {
     /**
-     * Panell contenidor on s'afegeixen i treuen els botons (Draw / Confirm).
-     */
-    private final JPanel parent;
-    /**
      * Botó principal que permet iniciar l'acció de robar peces.
      */
     private JButton drawBtn;
-    /**
-     * Gestor de la lògica que executa l'acció de robar peces un cop confirmada.
-     */
-    private final DrawActionMaker drawActionMaker;
+    private JButton confirmBtn;
+    private JButton finishBtn;
     /**
      * Vista de la mà del jugador, des d'on es recuperen les peces seleccionades per intercanviar.
      */
     private final HandView handView;
+    private ActionButtonPanel actionButtonPanel;
+    private DrawActionMaker drawActionMaker;
+    private final List<String> pieces = new ArrayList<>();
 
     /**
      * Construeix un objecte `DrawAction`.
-     * @param parent El panell pare on s'afegirà aquest component.
-     * @param drawActionMaker L'objecte responsable de gestionar la lògica de robar peces.
      * @param handView La vista de la mà del jugador per interactuar amb les peces seleccionades.
      */
-    public DrawAction(JPanel parent, DrawActionMaker drawActionMaker, HandView handView) {
-        this.drawActionMaker = drawActionMaker;
-        this.parent = parent;
+    public DrawAction(HandView handView) {
         this.handView = handView;
         setOpaque(false);
         createDrawButton();
@@ -48,31 +44,32 @@ public class DrawAction extends JPanel {
     private void createDrawButton() {
         drawBtn = new JButton("Draw");
         drawBtn.setBounds(1400, 575, 75, 50); //hardcoded
-        drawBtn.addActionListener(e -> {
-            parent.remove(drawBtn);
-            parent.revalidate();
-            parent.repaint();
-
-            JButton confirmBtn = new JButton("Confirm");
-            confirmBtn.setBounds(1400, 575, 75, 50); //hardcoded
-            confirmBtn.addActionListener(confirmEvent -> {
-                String[] selectedPieces = handView.getSelectedPiece();
-                if (selectedPieces != null && selectedPieces.length > 0) {
-                    drawActionMaker.run(selectedPieces);
-                } else {
-                    System.out.println("No pieces to draw.");
-                }
-                parent.remove(confirmBtn);
-                parent.add(drawBtn);
-                parent.revalidate();
-                parent.repaint();
-            });
-            parent.add(confirmBtn);
-            parent.revalidate();
-            parent.repaint();
-        });
-        parent.add(drawBtn);
+        drawBtn.addActionListener(_ -> startDraw());
     }
+
+    private void startDraw() {
+        confirmBtn = new JButton("Confirm");
+        confirmBtn.setBounds(1400, 575, 75, 50); //hardcoded
+        confirmBtn.addActionListener(_ -> {
+            pieces.add(handView.getSelectedPiece());
+            handView.piecePlaced();
+        });
+        finishBtn = new JButton("Finish");
+        finishBtn.setBounds(1400, 575, 75, 50); //hardcoded
+        finishBtn.addActionListener(_ -> drawPieces());
+        remove(drawBtn);
+        add(confirmBtn);
+        add(finishBtn);
+        actionButtonPanel.startDraw();
+    }
+
+    private void drawPieces() {
+        drawActionMaker.run(pieces.toArray(String[]::new));
+        add(drawBtn);
+        remove(confirmBtn);
+        remove(finishBtn);
+    }
+
     /**
      * Indica si aquest panell és opac.
      * Retorna sempre fals per assegurar que el fons sigui transparent,
@@ -81,5 +78,13 @@ public class DrawAction extends JPanel {
     @Override
     public boolean isOpaque() {
         return false;
+    }
+
+    public void setParent(ActionButtonPanel actionButtonPanel) {
+        this.actionButtonPanel = actionButtonPanel;
+    }
+
+    public void setActionMaker(DrawActionMaker draw) {
+        drawActionMaker = draw;
     }
 }

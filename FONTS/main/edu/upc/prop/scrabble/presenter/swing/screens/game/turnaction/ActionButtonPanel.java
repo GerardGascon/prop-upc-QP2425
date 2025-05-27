@@ -1,5 +1,8 @@
 package edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction;
 
+import edu.upc.prop.scrabble.domain.actionmaker.DrawActionMaker;
+import edu.upc.prop.scrabble.domain.actionmaker.PlaceActionMaker;
+import edu.upc.prop.scrabble.domain.actionmaker.SkipActionMaker;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction.draw.DrawAction;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction.place.PlaceAction;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction.skip.SkipAction;
@@ -38,8 +41,46 @@ public class ActionButtonPanel extends JPanel {
         add(placeAction);
         add(skipAction);
 
+        drawAction.setParent(this);
+        placeAction.setParent(this);
+
         // setPreferredSize(new Dimension(WIDTH, HEIGHT));
         // setBounds(X, Y, WIDTH, HEIGHT);
+    }
+
+    public void showButtons() {
+        removeAll();
+        add(drawAction);
+        add(placeAction);
+        add(skipAction);
+        revalidate();
+        repaint();
+    }
+
+    public void hideButtons() {
+        removeAll();
+        revalidate();
+        repaint();
+    }
+
+    public void startDraw() {
+        remove(placeAction);
+        remove(skipAction);
+        revalidate();
+        repaint();
+    }
+
+    public void startPlace() {
+        remove(drawAction);
+        remove(skipAction);
+        revalidate();
+        repaint();
+    }
+
+    public void setActionMakers(PlaceActionMaker place, DrawActionMaker draw, SkipActionMaker skip) {
+        placeAction.setActionMaker(place);
+        drawAction.setActionMaker(draw);
+        skipAction.setSkip(skip);
     }
 
     /**

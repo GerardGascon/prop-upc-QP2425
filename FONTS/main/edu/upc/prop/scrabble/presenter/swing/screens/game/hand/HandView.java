@@ -41,11 +41,11 @@ public class HandView extends JPanel implements IHandView {
      * Retorna la lletra de la peça seleccionada actualment, si n'hi ha.
      */
     @Override
-    public String[] getSelectedPiece() {
+    public String getSelectedPiece() {
         if (selectedPieceButton == null)
             return null;
 
-        return new String[] { selectedPieceButton.getLetter() };
+        return selectedPieceButton.getLetter();
     }
     /**
      * Retorna els punts de la peça seleccionada actualment, o 0 si no n'hi ha.

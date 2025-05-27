@@ -10,9 +10,10 @@ import edu.upc.prop.scrabble.data.pieces.Piece;
 public interface IHandView {
     /**
      * Obté les fitxes actualment seleccionades per l'usuari.
+     *
      * @return Array de Strings amb la informació de la fitxa seleccionada.
      */
-    String[] getSelectedPiece();
+    String getSelectedPiece();
 
     /**
      * Obté els punts associats a les fitxes actualment seleccionades per l'usuari.
