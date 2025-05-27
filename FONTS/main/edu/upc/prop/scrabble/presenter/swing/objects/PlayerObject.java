@@ -10,6 +10,8 @@ import edu.upc.prop.scrabble.domain.actionmaker.SkipActionMaker;
 import edu.upc.prop.scrabble.domain.turns.IGamePlayer;
 import edu.upc.prop.scrabble.presenter.scenes.SceneObject;
 import edu.upc.prop.scrabble.domain.actionmaker.IHandView;
+import edu.upc.prop.scrabble.presenter.swing.screens.game.board.sidepanel.SidePanel;
+import edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction.ActionButtonPanel;
 
 /**
  * Classe abstracta que representa un objecte jugador dins de l'escena,
@@ -38,22 +40,25 @@ public abstract class PlayerObject extends SceneObject implements IGamePlayer {
     /**
      * Acció encarregada de col·locar fitxes al tauler.
      */
-    private PlaceActionMaker placeActionMaker;
+    protected PlaceActionMaker placeActionMaker;
 
     /**
      * Acció encarregada de robar fitxes de la bossa.
      */
-    private DrawActionMaker drawActionMaker;
+    protected DrawActionMaker drawActionMaker;
 
     /**
      * Acció encarregada de saltar el torn.
      */
-    private SkipActionMaker skipActionMaker;
+    protected SkipActionMaker skipActionMaker;
 
     /**
      * Vista que mostra les fitxes a la mà del jugador.
      */
     private IHandView handView;
+
+    protected ActionButtonPanel actionButtonPanel;
+    private SidePanel sidePanel;
 
     /**
      * Configura el jugador amb les accions i dades necessàries.
@@ -64,14 +69,18 @@ public abstract class PlayerObject extends SceneObject implements IGamePlayer {
      * @param drawActionMaker Acció per robar fitxes.
      * @param skipActionMaker Acció per saltar torn.
      * @param handView Vista de la mà del jugador.
+     * @param actionButtonPanel Panell dels botons d'acció
+     * @param sidePanel Panell lateral on es mostren les puntuacions dels jugadors
      */
-    public final void configure(int playerIndex, PlaceActionMaker placeActionMaker, Player player, DrawActionMaker drawActionMaker, SkipActionMaker skipActionMaker, IHandView handView) {
+    public final void configure(int playerIndex, PlaceActionMaker placeActionMaker, Player player, DrawActionMaker drawActionMaker, SkipActionMaker skipActionMaker, IHandView handView, ActionButtonPanel actionButtonPanel, SidePanel sidePanel) {
         this.playerIndex = playerIndex;
         this.placeActionMaker = placeActionMaker;
         this.player = player;
         this.drawActionMaker = drawActionMaker;
         this.skipActionMaker = skipActionMaker;
         this.handView = handView;
+        this.actionButtonPanel = actionButtonPanel;
+        this.sidePanel = sidePanel;
     }
 
     /**
@@ -81,6 +90,7 @@ public abstract class PlayerObject extends SceneObject implements IGamePlayer {
     public void startTurn() {
         onTurn = true;
         handView.showPieces(player.getHand());
+        sidePanel.setCurrentPlayer(playerIndex);
     }
 
     /**

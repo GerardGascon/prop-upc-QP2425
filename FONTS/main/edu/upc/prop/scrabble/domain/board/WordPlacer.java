@@ -56,8 +56,6 @@ public class WordPlacer {
 
         int points = pointCalculator.run(positions, pieces);
         player.addScore(points);
-
-        view.updateBoard();
     }
 
     /**

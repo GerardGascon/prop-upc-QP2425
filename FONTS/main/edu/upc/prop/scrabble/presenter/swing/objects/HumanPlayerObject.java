@@ -7,5 +7,11 @@ package edu.upc.prop.scrabble.presenter.swing.objects;
  * @author Gerard Gascón
  */
 public class HumanPlayerObject extends PlayerObject {
-    // Sense mètodes o atributs addicionals actualment
+    @Override
+    public void startTurn() {
+        super.startTurn();
+
+        actionButtonPanel.setActionMakers(placeActionMaker, drawActionMaker, skipActionMaker);
+        actionButtonPanel.showButtons();
+    }
 }

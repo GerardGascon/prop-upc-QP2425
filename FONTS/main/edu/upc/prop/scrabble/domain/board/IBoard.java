@@ -1,6 +1,5 @@
 package edu.upc.prop.scrabble.domain.board;
 
-import edu.upc.prop.scrabble.data.board.Board;
 import edu.upc.prop.scrabble.data.board.PremiumTileType;
 
 /**
@@ -11,20 +10,12 @@ import edu.upc.prop.scrabble.data.board.PremiumTileType;
  */
 public interface IBoard {
     /**
-     * Dispara una actualització del tauler a la capa de presentació per tal que es refresqui la vista del tauler.
-     * Aquest mètode s'invoca quan l'estat del joc o del tauler ha canviat i cal reflectir-ho en la UI.
-     *
-     * @see Board
-     */
-    void updateBoard();
-
-    /**
      * Actualitza una cel·la específica del tauler amb la peça i els punts corresponents.
      *
-     * @param piece La lletra o peça que s'ha col·locat.
+     * @param piece  La lletra o peça que s'ha col·locat.
      * @param points Els punts assignats a aquesta peça.
-     * @param x La coordenada horitzontal de la cel·la.
-     * @param y La coordenada vertical de la cel·la.
+     * @param x      La coordenada horitzontal de la cel·la.
+     * @param y      La coordenada vertical de la cel·la.
      */
     void updateCell(String piece, int points, int x, int y);
 
@@ -32,9 +23,8 @@ public interface IBoard {
      * Estableix el tipus de casella especial (premium) en una posició determinada del tauler.
      *
      * @param type El tipus de casella premium (doble lletra, triple paraula, etc.).
-     * @param x La coordenada horitzontal de la cel·la.
-     * @param y La coordenada vertical de la cel·la.
+     * @param x    La coordenada horitzontal de la cel·la.
+     * @param y    La coordenada vertical de la cel·la.
      */
     void setPremiumTile(PremiumTileType type, int x, int y);
 }
-

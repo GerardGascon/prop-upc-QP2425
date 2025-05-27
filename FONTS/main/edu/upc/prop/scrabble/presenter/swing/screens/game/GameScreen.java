@@ -4,6 +4,7 @@ import edu.upc.prop.scrabble.presenter.swing.screens.game.board.BoardView;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.sidepanel.SidePanel;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.hand.HandView;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.pieceselector.BlankPieceSelector;
+import edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction.ActionButtonPanel;
 import edu.upc.prop.scrabble.presenter.swing.screens.menu.pause.PauseMenu;
 
 import javax.swing.*;
@@ -60,6 +61,11 @@ public class GameScreen extends JPanel {
     private PauseMenu pauseMenu;
 
     /**
+     * Component del panell d'accions del jugador
+     */
+    private ActionButtonPanel actionButtonPanel;
+
+    /**
      * Constructor que inicialitza la pantalla amb un disseny BorderLayout i
      * un color de fons verdós.
      */
@@ -110,6 +116,16 @@ public class GameScreen extends JPanel {
     }
 
     /**
+     * Afegeix el panell d'accions que pot fer el jugador.
+     *
+     * @param actionButtonPanel el panell de botons
+     */
+    public void addActionPanel(ActionButtonPanel actionButtonPanel) {
+        add(actionButtonPanel);
+        this.actionButtonPanel = actionButtonPanel;
+    }
+
+    /**
      * Afegeix el menú de pausa a la pantalla i el posa al davant.
      *
      * @param pauseMenu el menú de pausa del joc.
@@ -133,6 +149,7 @@ public class GameScreen extends JPanel {
         putHandView();
         putBlankPieceSelector();
         putPauseButton();
+        putActionButtonPanel();
     }
 
     /**
@@ -187,5 +204,12 @@ public class GameScreen extends JPanel {
      */
     private void putPauseButton() {
         pauseMenu.setBounds(0, 0, getWidth(), getHeight());
+    }
+
+    /**
+     * Col·loca el panell de botons a la vora de la mà del jugador
+     */
+    private void putActionButtonPanel() {
+        actionButtonPanel.setBounds(0, 0, getWidth(), getHeight());
     }
 }

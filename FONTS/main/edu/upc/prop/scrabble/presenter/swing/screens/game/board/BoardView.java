@@ -1,5 +1,6 @@
 package edu.upc.prop.scrabble.presenter.swing.screens.game.board;
 
+import edu.upc.prop.scrabble.data.Movement;
 import edu.upc.prop.scrabble.data.board.PremiumTileType;
 import edu.upc.prop.scrabble.domain.actionmaker.IHandView;
 import edu.upc.prop.scrabble.domain.board.IBoard;
@@ -437,14 +438,6 @@ public class BoardView extends JPanel implements IBoard {
     }
 
     /**
-     * Actualitza el tauler (mètode pendent d'implementar).
-     */
-    @Override
-    public void updateBoard() {
-        // Implementació pendent
-    }
-
-    /**
      * Actualitza la cel·la (x,y) amb una peça definitiva.
      *
      * @param piece lletra de la peça
@@ -489,5 +482,13 @@ public class BoardView extends JPanel implements IBoard {
                 changeTile(new BoardDoubleLetterTile(x, y, handView, this, blankPieceSelector), x, y);
                 break;
         }
+    }
+
+    public void startPlace() {
+
+    }
+
+    public Movement getPlacement() {
+        return null;
     }
 }
