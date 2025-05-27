@@ -67,7 +67,7 @@ public class GameScene extends Scene {
     /**
      * Nom del fitxer on es desa i es carrega la partida guardada.
      */
-    private final String SAVE_FILE_NAME = "save.data";
+    public static final String SAVE_FILE_NAME = "save.data";
 
     /**
      * Constructor que crea la escena del joc.
