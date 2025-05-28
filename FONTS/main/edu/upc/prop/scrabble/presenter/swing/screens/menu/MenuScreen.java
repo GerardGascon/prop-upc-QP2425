@@ -30,11 +30,9 @@ public class MenuScreen extends JPanel {
         rankingButton = new RanquingButton(buttonPanel);
         quitButton = new MenuButton("Sortir");
 
-        /**
         playButton.setOtherButtons(new MenuButton[]{continueButton, rankingButton});
         continueButton.setOtherButtons(new MenuButton[]{playButton, rankingButton});
         rankingButton.setOtherButtons(new MenuButton[]{playButton, continueButton});
-        **/
 
         buttonPanel.setLayout(new GridLayout(4, 1, 0, 20));
         buttonPanel.add(playButton);

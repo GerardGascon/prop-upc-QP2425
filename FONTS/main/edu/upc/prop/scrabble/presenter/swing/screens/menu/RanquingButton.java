@@ -39,10 +39,6 @@ public class RanquingButton extends MenuButton {
      */
     private JTextArea ranquingText;
     /**
-     * Array dels botons que facilita la gestió dels panells del menú
-     */
-    private MenuButton[] otherButtons;
-    /**
      * Contenidor de les dades a mostrar
      */
     private Leaderboard leaderboard;
@@ -57,25 +53,17 @@ public class RanquingButton extends MenuButton {
         addActionListener(_ -> {
             if (otherButtons != null) {
                 for (MenuButton b : otherButtons) {
-                //    if (b != null) b.Close();
+                    if (b != null) b.Close();
                 }
             }
             toggleRanquingPanel();
         });
     }
-    /**
-     * Assigna els botons complementaris amb el qual es coordina l'intercanvi de panells.
-     * Normalment utilitzat per assegurar que només un menú està actiu alhora.
-     * @param otherButtons Els botons amb què es coordina.
-     */
-    public void setOtherButtons(MenuButton[] otherButtons) {
-        this.otherButtons = otherButtons;
-    }
 
     /**
      * Tanca el panell desplegat si està actiu.
      */
-    //@Override
+    @Override
     public void Close() {
         if(!ranquingActive) return;
 
