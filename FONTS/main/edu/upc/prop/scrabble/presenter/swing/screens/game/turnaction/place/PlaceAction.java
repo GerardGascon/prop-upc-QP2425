@@ -49,8 +49,12 @@ public class PlaceAction extends JPanel {
         confirmBtn = new JButton("Confirm");
         confirmBtn.setBounds(1400, 575, 75, 50); //hardcoded
         confirmBtn.addActionListener(_ -> {
+            remove(confirmBtn);
+            remove(cancelBtn);
+            add(placeBtn);
             Movement currentPlacement = boardView.getPlacement();
             placeActionMaker.run(currentPlacement);
+            boardView.endPlace();
         });
 
         cancelBtn = new JButton("Cancel");
@@ -60,6 +64,7 @@ public class PlaceAction extends JPanel {
             remove(cancelBtn);
             add(placeBtn);
             actionButtonPanel.showButtons();
+            boardView.endPlace();
         });
 
         remove(placeBtn);
