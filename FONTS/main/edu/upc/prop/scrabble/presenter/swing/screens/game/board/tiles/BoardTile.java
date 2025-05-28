@@ -185,6 +185,7 @@ public abstract class BoardTile extends JButton {
      * @param letter lletra seleccionada per la fitxa en blanc
      */
     private void placeBlankPiece(String letter) {
+        System.out.println("Place blank piece: " + letter);
         placePiece(letter, 0);
     }
 

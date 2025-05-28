@@ -17,6 +17,7 @@ public class BoardCell extends JPanel {
      * Fitxa que conté la cel·la.
      */
     private BoardTile tile;
+    private BoardTemporalPieceTile temporalPieceTile;
 
     /**
      * Crea una nova cel·la del tauler sense fitxa i amb fons transparent.
@@ -32,12 +33,33 @@ public class BoardCell extends JPanel {
      * @param tile la fitxa que s'afegirà a la cel·la
      */
     public void setTile(BoardTile tile) {
+        if (tile instanceof BoardTemporalPieceTile temporalPieceTile) {
+            setTemporalTile(temporalPieceTile);
+            return;
+        }
+
         if (this.tile != null)
             remove(this.tile);
 
         this.tile = tile;
         add(tile);
 
+        revalidate();
+        repaint();
+    }
+
+    private void setTemporalTile(BoardTemporalPieceTile temporalPieceTile) {
+        this.temporalPieceTile = temporalPieceTile;
+        remove(this.tile);
+        add(this.temporalPieceTile);
+        revalidate();
+        repaint();
+    }
+
+    public void removeTemporalTile() {
+        if (temporalPieceTile != null)
+            remove(temporalPieceTile);
+        add(this.tile);
         revalidate();
         repaint();
     }
