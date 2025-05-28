@@ -1,5 +1,6 @@
 package edu.upc.prop.scrabble.presenter.swing.screens.game.pieceselector;
 
+import edu.upc.prop.scrabble.data.properties.Language;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.IBlankPieceSelector;
 
 import javax.swing.*;
@@ -13,6 +14,7 @@ import java.util.function.Consumer;
  */
 public class BlankPieceSelector extends JPanel implements IBlankPieceSelector {
 
+    private final Language language;
     /**
      * Panell superposat que conté el selector de fitxes.
      */
@@ -21,9 +23,10 @@ public class BlankPieceSelector extends JPanel implements IBlankPieceSelector {
     /**
      * Constructor que inicialitza el panell amb layout nul i fons transparent.
      */
-    public BlankPieceSelector() {
+    public BlankPieceSelector(Language language) {
         setLayout(null);
         setOpaque(false);
+        this.language = language;
     }
 
     /**
@@ -37,7 +40,7 @@ public class BlankPieceSelector extends JPanel implements IBlankPieceSelector {
             remove(overlay);
         }
 
-        overlay = new PieceSelector(this, selectPieceCallback);
+        overlay = new PieceSelector(language, this, selectPieceCallback);
         add(overlay);
         setComponentZOrder(overlay, 0);
         revalidate();

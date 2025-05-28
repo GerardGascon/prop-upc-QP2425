@@ -175,7 +175,7 @@ public class GameScene extends Scene {
         Leaderboard leaderboard = new Leaderboard();
 
         HandView handView = new HandView();
-        BlankPieceSelector blankPieceSelector = new BlankPieceSelector();
+        BlankPieceSelector blankPieceSelector = new BlankPieceSelector(language);
         BoardView boardView = new BoardView(board.getSize(), handView, blankPieceSelector);
         PremiumTileTypeFiller premiumTileTypeFiller = new PremiumTileTypeFiller(board, boardView);
         premiumTileTypeFiller.run();
