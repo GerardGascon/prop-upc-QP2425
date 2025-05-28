@@ -39,7 +39,6 @@ public class ContinueButton extends MenuButton {
      *
      * @param parent El panell principal sobre el qual es mostrarà el menú.
      */
-    //TODO: TREURE COMENTARIS
     public ContinueButton(JPanel parent, JFrame window) {
         super("Continuar");
         this.parentPanel = parent;
@@ -54,14 +53,6 @@ public class ContinueButton extends MenuButton {
             toggleSettingsPanel();
         });
     }
-    /**
-     * Assigna el botó complementari amb el qual es coordina l'intercanvi de panells.
-     * Normalment utilitzat per assegurar que només un menú està actiu alhora.
-     * @param otherButtons El botó amb què es coordina.
-     */
-    //public void setOtherButtons(MenuButton[] otherButtons) {
-    //    this.otherButtons = otherButtons;
-    //}
 
     /**
      * Tanca el panell desplegat pel botó "Continuar", si està actiu.
