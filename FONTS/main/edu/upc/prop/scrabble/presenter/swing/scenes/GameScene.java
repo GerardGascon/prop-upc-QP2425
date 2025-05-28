@@ -73,6 +73,8 @@ public class GameScene extends Scene {
      * Nom del fitxer on es desa i es carrega la partida guardada.
      */
     public static final String SAVE_FILE_NAME = "save.data";
+    private final JFrame window;
+    private final GameScreen gameScreen;
 
     /**
      * Constructor que crea la escena del joc.
@@ -86,6 +88,9 @@ public class GameScene extends Scene {
         ISaveWriter saveWriter = new SaveWriter();
         GameSaver saver = new GameSaver(dataCollector, serializer, saveWriter, SAVE_FILE_NAME);
 
+        this.window = window;
+        gameScreen = new GameScreen();
+
         DataRestorer dataRestorer = new DataRestorer();
         IDeserializer deserializer = new GsonDeserializer();
         ISaveReader saveReader = new SaveReader();
@@ -96,6 +101,12 @@ public class GameScene extends Scene {
         } else {
             createNewGame(properties, window, saver, dataCollector);
         }
+    }
+
+    @Override
+    protected void onDetach() {
+        super.onDetach();
+        window.remove(gameScreen);
     }
 
     /**
@@ -235,17 +246,15 @@ public class GameScene extends Scene {
      * @param pauseMenu          Menú de pausa.
      * @param actionPanel        Panell d'accions.
      */
-    private static void generateWindow(JFrame window, BoardView boardView, SidePanel sidePanel, HandView handView, BlankPieceSelector blankPieceSelector, PauseMenu pauseMenu, ActionButtonPanel actionPanel) {
-        GameScreen screen = new GameScreen();
+    private void generateWindow(JFrame window, BoardView boardView, SidePanel sidePanel, HandView handView, BlankPieceSelector blankPieceSelector, PauseMenu pauseMenu, ActionButtonPanel actionPanel) {
+        gameScreen.addBoard(boardView);
+        gameScreen.addSidePanel(sidePanel);
+        gameScreen.addHandView(handView);
+        gameScreen.addBlankPieceSelector(blankPieceSelector);
+        gameScreen.addPauseButton(pauseMenu);
+        gameScreen.addActionPanel(actionPanel);
 
-        screen.addBoard(boardView);
-        screen.addSidePanel(sidePanel);
-        screen.addHandView(handView);
-        screen.addBlankPieceSelector(blankPieceSelector);
-        screen.addPauseButton(pauseMenu);
-        screen.addActionPanel(actionPanel);
-
-        window.add(screen);
+        window.add(gameScreen);
     }
 
     /**

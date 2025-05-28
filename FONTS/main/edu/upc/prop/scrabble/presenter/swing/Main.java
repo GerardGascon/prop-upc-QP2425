@@ -5,6 +5,7 @@ import edu.upc.prop.scrabble.data.properties.GameProperties;
 import edu.upc.prop.scrabble.data.properties.Language;
 import edu.upc.prop.scrabble.presenter.scenes.GameLoop;
 import edu.upc.prop.scrabble.presenter.swing.scenes.GameScene;
+import edu.upc.prop.scrabble.presenter.swing.scenes.MenuScene;
 
 import javax.swing.*;
 import java.awt.*;
@@ -35,7 +36,7 @@ public class Main {
             GameProperties gameProperties = new GameProperties(Language.Catalan, BoardType.Standard,
                     Arrays.asList("Geri", "Adri"),
                     List.of("CPU 1"), true);
-            GameLoop gameLoop = new GameLoop(GameScene.class, gameProperties, window);
+            GameLoop gameLoop = new GameLoop(MenuScene.class, window);
 //            window.add(new GameMock());
             new Thread(gameLoop::run).start();
         });

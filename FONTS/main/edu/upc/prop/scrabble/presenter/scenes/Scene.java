@@ -45,7 +45,7 @@ public abstract class Scene {
      *
      * @see SceneObject
      */
-    void onDetach() {
+    protected void onDetach() {
         for (SceneObject o : objects) {
             if (o.isEnabled())
                 o.disable();
