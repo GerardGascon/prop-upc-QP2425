@@ -2,6 +2,8 @@ package edu.upc.prop.scrabble.presenter.swing.screens.menu;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Panel amb els elements a mostrar al menú principal
@@ -10,19 +12,25 @@ import java.awt.*;
  */
 public class MenuScreen extends JPanel {
     private final float SIDE_PANEL_WIDTH_PERCENT = 0.4f;
+    private JPanel buttonPanel;
     private JugarButton playButton;
     private ContinueButton continueButton;
     private RanquingButton rankingButton;
     private MenuButton quitButton;
+    private ArrayList<FloatingTile> floatingTiles;
+    private Timer animationTimer;
+
 
     /**
      * Creadora i inicialitzadora
      */
     public MenuScreen(JFrame window) {
+        setDoubleBuffered(true);
         setLayout(null);
         setBackground(new Color(0x54, 0x63, 0xff));
 
-        JPanel buttonPanel = new JPanel();
+        this.buttonPanel = new JPanel();
+        add(buttonPanel);
         buttonPanel.setOpaque(false);
 
         playButton = new JugarButton(buttonPanel, window);
@@ -68,7 +76,7 @@ public class MenuScreen extends JPanel {
     public MenuButton getQuitButton() { return quitButton; }
 
     /**
-     * Dibuixa el component personalitzat, incloent el panell lateral fosc i el títol "Scrabble".
+     * Dibuixa el component personalitzat, incloent-hi el panell lateral fosc i el títol "Scrabble".
      * Aquesta funció s'encarrega de la renderització gràfica del component, utilitzant
      * antialiasing per millorar la qualitat visual del text i les formes.
      * @param g L'objecte Graphics proporcionat pel sistema per dibuixar.
@@ -83,17 +91,43 @@ public class MenuScreen extends JPanel {
         // Side panel
         int width = getWidth();
         int height = getHeight();
-        g2.setColor(new Color(0x2d, 0x2d, 0x2d));
+        g2.setColor(new Color(52, 58, 64));
         g2.fillRect(0, 0, (int)(width * SIDE_PANEL_WIDTH_PERCENT), height);
 
         // Title
         g2.setColor(Color.WHITE);
-        g2.setFont(new Font("SansSerif", Font.BOLD, height / 8));
+        g2.setFont(new Font("SansSerif", Font.BOLD, height / 9));
         FontMetrics fm = g2.getFontMetrics();
         String text = "Scrabble";
-        int textX = width / 20;
-        int textY = height / 7 + fm.getAscent() / 2;
+        int textWidth = fm.stringWidth(text);
+        int textHeight = fm.getHeight();
+        int sidePanelWidth = (int)(width * SIDE_PANEL_WIDTH_PERCENT);
+        int textX = (sidePanelWidth - textWidth) / 2;
+        int titleAreaHeight = height / 3;
+        int textY = (titleAreaHeight - textHeight) / 2 + fm.getAscent();
         g2.drawString(text, textX, textY);
+
+        if (floatingTiles == null) {
+            floatingTiles = new ArrayList<>();
+            String letters = "WORDPLAY";
+            Random rand = new Random();
+            int tileSize = Math.min(width, height) / 12;
+
+            FloatingTile.height = height;
+            FloatingTile.width = width;
+            FloatingTile.sidePanelWidth = sidePanelWidth;
+
+            for (int i = 0; i < letters.length(); i++) {
+                int x = sidePanelWidth + rand.nextInt(width - sidePanelWidth - tileSize);
+                int y = rand.nextInt(height - tileSize);
+                floatingTiles.add(new FloatingTile(String.valueOf(letters.charAt(i)), x, y, tileSize));
+            }
+            startAnimation();
+        }
+
+        for (FloatingTile tile : floatingTiles) tile.draw(g2);
+
+        g2.dispose();
     }
 
     /**
@@ -105,11 +139,45 @@ public class MenuScreen extends JPanel {
     public void doLayout() {
         super.doLayout();
 
-        JPanel buttonPanel = (JPanel) getComponent(0);
-        int panelWidth = getWidth() / 5;
-        int panelHeight = getHeight() / 3;
-        int x = getWidth() / 20;
-        int y = getHeight() - panelHeight - 50;
+        int width = getWidth();
+        int height = getHeight();
+
+        int sidePanelWidth = (int)(width * SIDE_PANEL_WIDTH_PERCENT);
+        int panelWidth = (int)(sidePanelWidth * 0.5);
+        int panelHeight = height / 3;
+
+        int x = (sidePanelWidth - panelWidth) / 2;
+        int y = height - panelHeight - 40; // bottom margin
+
         buttonPanel.setBounds(x, y, panelWidth, panelHeight);
+    }
+
+    private void startAnimation() {
+        animationTimer = new Timer(16, e -> {
+            if (floatingTiles != null && isVisible()) {
+                // Update positions on the current thread
+
+                for (FloatingTile tile : floatingTiles) {
+                    tile.move();
+                }
+
+                // Check collisions
+                for (int i = 0; i < floatingTiles.size(); i++) {
+                    for (int j = i + 1; j < floatingTiles.size(); j++) {
+                        floatingTiles.get(i).checkCollision(floatingTiles.get(j));
+                    }
+                }
+                repaint();
+            }
+        });
+        animationTimer.start();
+    }
+
+    @Override
+    public void removeNotify() {
+        super.removeNotify();
+        if (animationTimer != null) {
+            animationTimer.stop();
+        }
     }
 }
