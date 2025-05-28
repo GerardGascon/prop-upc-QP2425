@@ -8,12 +8,12 @@ import java.util.Random;
 public class FloatingTile {
     static int width, height, sidePanelWidth;
     private String letter;
-    private float x, y;
-    private int size;
+    public float x, y;
+    public int size;
     private float dx, dy;
-    private float speed;
-    private float verticalDir;
-    private float horizontalDir;
+    public float speed, prevSpeed;
+    public float verticalDir;
+    public float horizontalDir;
     private double rotation;
     private final double rotationSpeed;
 
@@ -25,6 +25,7 @@ public class FloatingTile {
         Random rand = new Random();
 
         speed = rand.nextFloat(200, 300);
+        prevSpeed = speed;
         horizontalDir = rand.nextFloat(-1, 1);
         verticalDir = rand.nextFloat(-1, 1);
         rotationSpeed = rand.nextDouble(-180, 180);
@@ -32,6 +33,8 @@ public class FloatingTile {
     }
 
     public void move(float delta) {
+        if (speed > prevSpeed) speed -= 2;
+
         dx = horizontalDir * speed * delta;
         dy = verticalDir * speed * delta;
         x += dx;
@@ -103,7 +106,9 @@ public class FloatingTile {
         g2.rotate(Math.toRadians(rotation), cx, cy);
 
         g2.setColor(new Color(0xff, 0xf9, 0xb5));
-        g2.fillRoundRect((int) x, (int) y, size, size, 10, 10);
+        int arc = (int)(size * 0.4);
+        g2.fillRoundRect((int) x, (int) y, size, size, arc, arc);
+
         g2.setColor(Color.BLACK);
         g2.setFont(new Font("SansSerif", Font.BOLD, size / 2));
         FontMetrics fm = g2.getFontMetrics();
@@ -132,5 +137,18 @@ public class FloatingTile {
         int index = rand.nextInt(names.length);
         return names[index];
     }
+
+    public boolean contains(int px, int py) {
+        return px >= x && px <= x + size && py >= y && py <= y + size;
+    }
+
+    public boolean overlaps(FloatingTile other) {
+        return this != other &&
+                this.x < other.x + other.size &&
+                this.x + this.size > other.x &&
+                this.y < other.y + other.size &&
+                this.y + this.size > other.y;
+    }
+
 }
 

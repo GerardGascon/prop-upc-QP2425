@@ -18,6 +18,8 @@ public class MenuScreen extends JPanel {
     private RanquingButton rankingButton;
     private MenuButton quitButton;
     private ArrayList<FloatingTile> floatingTiles;
+    private FloatingTile selectedTile = null;
+    private Point lastMousePos = null;
 
 
     /**
@@ -169,5 +171,101 @@ public class MenuScreen extends JPanel {
             }
             repaint();
         }
+    }
+
+    {
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mousePressed(java.awt.event.MouseEvent e) {
+                if (floatingTiles == null) return;
+
+                for (FloatingTile tile : floatingTiles) {
+                    if (tile.contains(e.getX(), e.getY())) {
+                        selectedTile = tile;
+                        lastMousePos = e.getPoint();
+                        tile.prevSpeed = tile.speed;
+                        tile.speed = 0;
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void mouseReleased(java.awt.event.MouseEvent e) {
+                if (selectedTile != null) {
+                    selectedTile.speed = selectedTile.prevSpeed;
+                }
+                selectedTile = null;
+                lastMousePos = null;
+            }
+        });
+
+        addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            @Override
+            public void mouseDragged(java.awt.event.MouseEvent e) {
+                if (selectedTile != null && lastMousePos != null) {
+                    int mouseX = e.getX();
+                    int mouseY = e.getY();
+
+                    int newTileX = mouseX - selectedTile.size / 2;
+                    int newTileY = mouseY - selectedTile.size / 2;
+
+                    int minX = FloatingTile.sidePanelWidth;
+                    int maxX = getWidth() - selectedTile.size;
+                    int maxY = getHeight() - selectedTile.size;
+
+                    float tentativeX = Math.max(minX, Math.min(newTileX, maxX));
+                    float tentativeY = Math.max(0, Math.min(newTileY, maxY));
+
+                    selectedTile.x = tentativeX;
+                    selectedTile.y = tentativeY;
+                    selectedTile.speed = 0;
+
+
+                    for (FloatingTile tile : floatingTiles) {
+                        if (tile != selectedTile && selectedTile.overlaps(tile)) {
+                            float dx = tile.x - selectedTile.x;
+                            float dy = tile.y - selectedTile.y;
+                            float dist = (float) Math.sqrt(dx * dx + dy * dy);
+
+                            if (dist == 0) {
+                                dx = 1;
+                                dy = 1;
+                                dist = 1;
+                            }
+
+                            float nx = dx / dist;
+                            float ny = dy / dist;
+
+                            float overlapX = (selectedTile.size + tile.size) / 2f - Math.abs(dx);
+                            float overlapY = (selectedTile.size + tile.size) / 2f - Math.abs(dy);
+
+                            float pushX = nx * overlapX;
+                            float pushY = ny * overlapY;
+
+                            float speedBoost = 750f;
+                            tile.horizontalDir = nx;
+                            tile.verticalDir = ny;
+                            tile.speed = speedBoost;
+
+                            tile.x += pushX * 0.5f;
+                            tile.y += pushY * 0.5f;
+
+                            tile.x = Math.max(FloatingTile.sidePanelWidth + (float) tile.size /10, Math.min(tile.x, getWidth() - tile.size - (float) tile.size /10));
+                            tile.y = Math.max((float) tile.size /10, Math.min(tile.y, getHeight() - tile.size - (float) tile.size /10));
+
+                            if (tile.x == FloatingTile.sidePanelWidth || tile.x == getWidth() - tile.size) {
+                                selectedTile.x -= pushX * 0.5f;
+                            }
+                            if (tile.y == 0 || tile.y == getHeight() - tile.size) {
+                                selectedTile.y -= pushY * 0.5f;
+                            }
+                        }
+                    }
+
+                    repaint();
+                }
+            }
+        });
     }
 }
