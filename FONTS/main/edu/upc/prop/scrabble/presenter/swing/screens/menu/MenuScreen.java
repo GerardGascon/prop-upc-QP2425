@@ -26,7 +26,7 @@ public class MenuScreen extends JPanel {
     public MenuScreen(JFrame window) {
         setDoubleBuffered(true);
         setLayout(null);
-        setBackground(new Color(0x54, 0x63, 0xff));
+        setBackground(new Color(64, 88, 214));
 
         this.buttonPanel = new JPanel();
         add(buttonPanel);
@@ -108,7 +108,7 @@ public class MenuScreen extends JPanel {
 
         if (floatingTiles == null) {
             floatingTiles = new ArrayList<>();
-            String letters = "WORDPLAY";
+            String letters = FloatingTile.getRandomString();
             Random rand = new Random();
             int tileSize = Math.min(width, height) / 12;
 
@@ -116,10 +116,15 @@ public class MenuScreen extends JPanel {
             FloatingTile.width = width;
             FloatingTile.sidePanelWidth = sidePanelWidth;
 
+
             for (int i = 0; i < letters.length(); i++) {
-                int x = sidePanelWidth + rand.nextInt(width - sidePanelWidth - tileSize);
-                int y = rand.nextInt(height - tileSize);
-                floatingTiles.add(new FloatingTile(String.valueOf(letters.charAt(i)), x, y, tileSize));
+                FloatingTile newTile;
+                do {
+                    int x = sidePanelWidth + rand.nextInt(width - sidePanelWidth - tileSize);
+                    int y = rand.nextInt(height - tileSize);
+                    newTile = new FloatingTile(String.valueOf(letters.charAt(i)), x, y, tileSize);
+                } while (newTile.overlapsAny(newTile, floatingTiles));
+                floatingTiles.add(newTile);
             }
         }
 

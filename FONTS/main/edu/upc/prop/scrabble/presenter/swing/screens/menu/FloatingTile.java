@@ -1,6 +1,7 @@
 package edu.upc.prop.scrabble.presenter.swing.screens.menu;
 
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 import java.util.Random;
 
 public class FloatingTile {
@@ -20,7 +21,7 @@ public class FloatingTile {
         this.size = size;
         Random rand = new Random();
 
-        speed = rand.nextFloat(150, 250);
+        speed = rand.nextFloat(200, 300);
         horizontalDir = rand.nextFloat(-1, 1);
         verticalDir = rand.nextFloat(-1, 1);
     }
@@ -84,7 +85,7 @@ public class FloatingTile {
     }
 
     public void draw(Graphics2D g2) {
-        g2.setColor(Color.ORANGE);
+        g2.setColor(new Color(0xff, 0xf9, 0xb5));
         g2.fillRoundRect((int) x, (int) y, size, size, 10, 10);
         g2.setColor(Color.BLACK);
         g2.setFont(new Font("SansSerif", Font.BOLD, size / 2));
@@ -92,6 +93,25 @@ public class FloatingTile {
         int tx = (int) x + (size - fm.stringWidth(letter)) / 2;
         int ty = (int) y + (size + fm.getAscent()) / 2 - 4;
         g2.drawString(letter, tx, ty);
+    }
+
+    public boolean overlapsAny(FloatingTile tile, java.util.List<FloatingTile> others) {
+        Rectangle2D.Float r1 = new Rectangle2D.Float(tile.x, tile.y, tile.size, tile.size);
+        for (FloatingTile other : others) {
+            Rectangle2D.Float r2 = new Rectangle2D.Float(other.x, other.y, other.size, other.size);
+            if (r1.intersects(r2)) return true;
+        }
+        return false;
+    }
+
+    static public String getRandomString() {
+        String[] names = {
+                "GERARD", "BIEL", "GINA", "ALBERT", "FELIPE",
+                "LAKESCHAN", "SCRABBLE", "WORDPLAY", "SKIBIDI"
+        };
+        Random rand = new Random();
+        int index = rand.nextInt(names.length);
+        return names[index];
     }
 }
 
