@@ -496,6 +496,12 @@ public class BoardView extends JPanel implements IBoard {
     }
 
     public void endPlace() {
+        for (BoardTemporalPieceTile tile : temporalPieces) {
+            Vector2 pos = tile.getPosition();
+            board[pos.x][pos.y].removeTemporalTile();
+        }
+        temporalPieces.clear();
+
         for (BoardCell[] boardCells : board) {
             for (BoardCell boardCell : boardCells) {
                 boardCell.getTile().setEnabled(false);
