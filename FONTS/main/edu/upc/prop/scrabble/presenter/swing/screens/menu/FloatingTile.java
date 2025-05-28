@@ -1,6 +1,7 @@
 package edu.upc.prop.scrabble.presenter.swing.screens.menu;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.util.Random;
 
@@ -13,6 +14,8 @@ public class FloatingTile {
     private float speed;
     private float verticalDir;
     private float horizontalDir;
+    private double rotation;
+    private final double rotationSpeed;
 
     public FloatingTile(String letter, int x, int y, int size) {
         this.letter = letter;
@@ -24,6 +27,8 @@ public class FloatingTile {
         speed = rand.nextFloat(200, 300);
         horizontalDir = rand.nextFloat(-1, 1);
         verticalDir = rand.nextFloat(-1, 1);
+        rotationSpeed = rand.nextDouble(-180, 180);
+        rotation = rand.nextDouble(-360, 360);
     }
 
     public void move(float delta) {
@@ -31,6 +36,8 @@ public class FloatingTile {
         dy = verticalDir * speed * delta;
         x += dx;
         y += dy;
+
+        rotation += rotationSpeed * delta;
 
         if (x < sidePanelWidth || x + size > width) horizontalDir *= -1;
         if (y < 0 || y + size > height) verticalDir *= -1;
@@ -88,6 +95,13 @@ public class FloatingTile {
     }
 
     public void draw(Graphics2D g2) {
+        AffineTransform original = g2.getTransform();
+
+        double cx = x + size / 2.0;
+        double cy = y + size / 2.0;
+
+        g2.rotate(Math.toRadians(rotation), cx, cy);
+
         g2.setColor(new Color(0xff, 0xf9, 0xb5));
         g2.fillRoundRect((int) x, (int) y, size, size, 10, 10);
         g2.setColor(Color.BLACK);
@@ -96,6 +110,8 @@ public class FloatingTile {
         int tx = (int) x + (size - fm.stringWidth(letter)) / 2;
         int ty = (int) y + (size + fm.getAscent()) / 2 - 4;
         g2.drawString(letter, tx, ty);
+
+        g2.setTransform(original);
     }
 
     public boolean overlapsAny(FloatingTile tile, java.util.List<FloatingTile> others) {
