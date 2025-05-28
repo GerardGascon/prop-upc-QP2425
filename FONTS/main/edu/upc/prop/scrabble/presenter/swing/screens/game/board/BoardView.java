@@ -221,8 +221,13 @@ public class BoardView extends JPanel implements IBoard {
             return getHorizontalTemporalWord();
         }
 
-        // TODO: Test this case
-        throw new RuntimeException("Still not supported");
+        if (hasAdjacentVerticalPieces())
+            return getVerticalTemporalWord();
+        return getHorizontalTemporalWord();
+    }
+
+    private boolean hasAdjacentVerticalPieces() {
+        return getVerticalTiles().length > 1;
     }
 
     /**

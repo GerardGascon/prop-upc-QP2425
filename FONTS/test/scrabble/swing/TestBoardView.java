@@ -339,4 +339,46 @@ public class TestBoardView extends SwingTest {
 
         finish();
     }
+
+    @Test
+    public void getTemporalPiecesGetsWholeHorizontalWordWhenJustPlacingOne() {
+        HandViewStub handViewStub = new HandViewStub("A", 1);
+        view = new TestWindow<>(500, 500, new BoardView(21, handViewStub, null));
+        Board board = new SuperBoard();
+        Player player = new Player("test", false);
+        PointCalculator pointCalculator = new PointCalculator(board);
+        WordPlacer placer = new WordPlacer(player, board, view.getPanel(), pointCalculator);
+
+        placer.run(new Piece[]{new Piece("P", 3)}, 9, 10, Direction.Horizontal);
+        placer.run(new Piece[]{new Piece("T", 3)}, 11, 10, Direction.Horizontal);
+
+        view.getPanel().placeTemporalPiece("A", 3, 10, 10);
+
+        String temporalWord = view.getPanel().getTemporalWord().word();
+
+        assertEquals("PAT", temporalWord);
+
+        finish();
+    }
+
+    @Test
+    public void getTemporalPiecesGetsWholeVerticalWordWhenJustPlacingOne() {
+        HandViewStub handViewStub = new HandViewStub("A", 1);
+        view = new TestWindow<>(500, 500, new BoardView(21, handViewStub, null));
+        Board board = new SuperBoard();
+        Player player = new Player("test", false);
+        PointCalculator pointCalculator = new PointCalculator(board);
+        WordPlacer placer = new WordPlacer(player, board, view.getPanel(), pointCalculator);
+
+        placer.run(new Piece[]{new Piece("P", 3)}, 10, 9, Direction.Horizontal);
+        placer.run(new Piece[]{new Piece("T", 3)}, 10, 11, Direction.Horizontal);
+
+        view.getPanel().placeTemporalPiece("A", 3, 10, 10);
+
+        String temporalWord = view.getPanel().getTemporalWord().word();
+
+        assertEquals("PAT", temporalWord);
+
+        finish();
+    }
 }

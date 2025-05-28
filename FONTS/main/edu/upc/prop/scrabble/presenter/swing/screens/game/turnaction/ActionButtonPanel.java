@@ -78,8 +78,8 @@ public class ActionButtonPanel extends JPanel {
     }
 
     public void setActionMakers(PlaceActionMaker place, DrawActionMaker draw, SkipActionMaker skip) {
-        placeAction.setActionMaker(place);
-        drawAction.setActionMaker(draw);
+        placeAction.setActionMaker(place, skip);
+        drawAction.setActionMaker(draw, skip);
         skipAction.setSkip(skip);
     }
 
