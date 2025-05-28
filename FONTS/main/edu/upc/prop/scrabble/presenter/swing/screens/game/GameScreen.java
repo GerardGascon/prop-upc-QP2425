@@ -223,7 +223,22 @@ public class GameScreen extends JPanel {
      * Col·loca el panell de botons a la vora de la mà del jugador
      */
     private void putActionButtonPanel() {
-        actionButtonPanel.setBounds(0, 0, getWidth(), getHeight());
+        if (actionButtonPanel != null && handView != null) {
+            int handX = handView.getX();
+            int handY = handView.getY();
+            int handWidth = handView.getWidth();
+            int handHeight = handView.getHeight();
+            int margin = 100;
+            Dimension preferredActionPanelSize = actionButtonPanel.getPreferredSize();
+
+            int actionPanelWidth = preferredActionPanelSize.width;
+            int actionPanelHeight = preferredActionPanelSize.height;
+
+            int actionPanelX = handX + handWidth + margin;
+            int actionPanelY = handY + handHeight - actionPanelHeight;
+
+            actionButtonPanel.setBounds(actionPanelX, actionPanelY, actionPanelWidth, actionPanelHeight);
+        }
     }
 
     /**

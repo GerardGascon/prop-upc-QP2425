@@ -29,7 +29,8 @@ public class ActionButtonPanel extends JPanel {
      * @param skipAction L'objecte SkipAction que gestiona la lògica del botó de passar torn.
      */
     public ActionButtonPanel(DrawAction drawAction, PlaceAction placeAction, SkipAction skipAction) {
-        super(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        super();
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         this.drawAction = drawAction;
         this.placeAction = placeAction;
