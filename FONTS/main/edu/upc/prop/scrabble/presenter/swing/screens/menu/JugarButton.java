@@ -40,12 +40,12 @@ public class JugarButton extends MenuButton {
     /**
      * ComboBox que permet seleccionar la mida del tauler
      */
-    private JComboBox<String> tableSizeComboBox;
+    private JComboBox<BoardType> tableSizeComboBox;
 
     /**
      * ComboBox que permet seleccionar el llenguatge de la partida
      */
-    private JComboBox<String> languageComboBox;
+    private JComboBox<Language> languageComboBox;
     /**
      * ComboBox que permet seleccionar el Tipus del jugador 1
      */
@@ -130,11 +130,11 @@ public class JugarButton extends MenuButton {
     /**
      * String per a guardar el llenguatge de la partida
      */
-    private String selectedLanguage = "English";
+    private Language selectedLanguage = Language.English;
     /**
      * String per a guardar la mida del tauler
      */
-    private String selectedTableSize = "Medium";
+    private BoardType selectedTableSize = BoardType.Standard;
 
     /**
      * String per a guardar el numero de jugadors que no son CPU
@@ -382,31 +382,26 @@ public class JugarButton extends MenuButton {
 
 
 // Language ComboBox
-
-        String[] languageOptions = {"English", "Español", "Català"};
-
-        languageComboBox = new JComboBox<>(languageOptions);
+        languageComboBox = new JComboBox<>(Language.values());
 
         languageComboBox.setSelectedItem(selectedLanguage);
 
         languageComboBox.setBounds((int) (width * 0.225), (int) (height * 0.575), (int) (width * 0.4), componentHeight);
 
-        languageComboBox.addActionListener(e -> selectedLanguage = (String) languageComboBox.getSelectedItem());
+        languageComboBox.addActionListener(e -> selectedLanguage = (Language) languageComboBox.getSelectedItem());
 
         settingsPanel.add(languageComboBox);
 
 
 // Table Size ComboBox
 
-        String[] tableSizeOptions = {"Junior", "Standard", "Super"};
-
-        tableSizeComboBox = new JComboBox<>(tableSizeOptions);
+        tableSizeComboBox = new JComboBox<>(BoardType.values());
 
         tableSizeComboBox.setSelectedItem(selectedTableSize);
 
         tableSizeComboBox.setBounds((int) (width * 0.225), (int) (height * 0.665), (int) (width * 0.4), componentHeight);
 
-        tableSizeComboBox.addActionListener(e -> selectedTableSize = (String) tableSizeComboBox.getSelectedItem());
+        tableSizeComboBox.addActionListener(e -> selectedTableSize = (BoardType) tableSizeComboBox.getSelectedItem());
 
         settingsPanel.add(tableSizeComboBox);
 
@@ -463,29 +458,17 @@ public class JugarButton extends MenuButton {
         types[2] = (String) player3Type.getSelectedItem();
         types[3] = (String) player4Type.getSelectedItem();
 
-// Close settings panel
+        // Close settings panel
         toggleSettingsPanel();
-// Obtain GameProperties
-        Language language = Language.Catalan;
-        if (selectedLanguage.equals("English")) {
-            language = Language.English;
-        } else if (selectedLanguage.equals("Español")) {
-            language = Language.Spanish;
-        } else
-            language = Language.Catalan;
-
-        BoardType boardType = BoardType.Standard;
-        if (selectedTableSize.equals("Junior")) {
-            boardType = BoardType.Junior;
-        } else if (selectedTableSize.equals("Standard")) {
-            boardType = BoardType.Standard;
-        } else boardType = BoardType.Super;
+        // Obtain GameProperties
 
         List<String> players = new ArrayList<>();
         List<String> cpus = new ArrayList<>();
+        int cpuIndex = 1;
         for (int i = 0; i < 4; ++i) {
             if (types[i].equals("CPU")) {
-                cpus.add(names[i]);
+                cpus.add("CPU " + cpuIndex);
+                cpuIndex++;
             } else if (types[i].equals("Real")) {
                 players.add(names[i]);
             }
@@ -494,9 +477,9 @@ public class JugarButton extends MenuButton {
 
         System.out.println(players);
         System.out.println(cpus);
-        System.out.println(boardType);
-        System.out.println(language);
+        System.out.println(selectedTableSize);
+        System.out.println(selectedLanguage);
 
-        SceneManager.getInstance().load(GameScene.class, new GameProperties(language, boardType, players, cpus, false), window);
+        SceneManager.getInstance().load(GameScene.class, new GameProperties(selectedLanguage, selectedTableSize, players, cpus, false), window);
     }
 }
