@@ -21,6 +21,46 @@ import java.util.ArrayList;
  */
 public class PlayerInfo extends JPanel {
 
+    // Constants de marge i proporcions
+    private static final float MARGIN_PERCENTAGE = 0.01f;
+    private static final int MARGIN_MULTIPLIER = 15;
+    private static final float USER_SECTION_WIDTH_PERCENTAGE = 0.85f;
+    private static final float USER_SECTION_HEIGHT_PERCENTAGE = 0.95f;
+
+    // Constants de posicionament vertical
+    private static final float CARD_VERTICAL_OFFSET = 0.024f;
+    private static final float CARD_HEIGHT_ADJUSTMENT = 0.0148f;
+
+    // Constants de corners arrodonits
+    private static final float CARD_CORNER_RADIUS = 0.07111f;
+
+    // Constants de la barra de color
+    private static final float COLOR_BAR_MARGIN = 0.02963f;
+    private static final float COLOR_BAR_HEIGHT_DIVISOR = 2.0f;
+    private static final float COLOR_BAR_HEIGHT_REDUCTION = 0.02963f;
+    private static final float COLOR_BAR_CORNER_RADIUS = 0.04148f;
+
+    // Constants de text
+    private static final int MAX_NAME_LENGTH = 10;
+    private static final float NAME_FONT_DIVISOR = 4.0f;
+    private static final float NAME_FONT_SCALE_FACTOR = 9.0f;
+    private static final float SCORE_FONT_DIVISOR = 2.5f;
+
+    // Constants de posicionament del nom
+    private static final float NAME_Y_MULTIPLIER_4_PLAYERS = 0.8f;
+    private static final float NAME_Y_MULTIPLIER_3_PLAYERS = 0.75f;
+    private static final float NAME_Y_MULTIPLIER_DEFAULT = 0.65f;
+
+    // Constants de posicionament de la puntuació
+    private static final float SCORE_Y_POSITION = 0.7f;
+    private static final float SCORE_Y_OFFSET_DIVISOR = 2.0f;
+
+    // Colors dels jugadors
+    private static final Color PLAYER_COLOR_RED = new Color(0xf5, 0x2e, 0x2e);
+    private static final Color PLAYER_COLOR_BLUE = new Color(0x54, 0x63, 0xff);
+    private static final Color PLAYER_COLOR_YELLOW = new Color(0xff, 0xc7, 0x17);
+    private static final Color PLAYER_COLOR_GREEN = new Color(67, 232, 31);
+
     /**
      * Dibuixa la informació de tots els jugadors al panell.
      *
@@ -30,47 +70,137 @@ public class PlayerInfo extends JPanel {
      * @param players Llista de jugadors amb la seva informació
      */
     public void drawPlayerInfo(Graphics g, int panelHeight, int rectangleWidth, Player[] players) {
-        // Marges adaptatius basats en la mida de la pantalla
-        int USER_MARGIN = (int) (10 * (getWidth() / 1920.0));
-        panelHeight -= USER_MARGIN * 2;
-        int NUM_USER_SECTIONS = players.length;
-        float USER_SECTION_WIDTH_PERCENTAGE = 0.8f;
 
-        for (int i = 0; i < NUM_USER_SECTIONS; i++) {
+        int userMargin = (int) (rectangleWidth * MARGIN_PERCENTAGE);
+        panelHeight -= userMargin * MARGIN_MULTIPLIER;
+        int numUserSections = players.length;
+
+        for (int i = 0; i < numUserSections; i++) {
             // Càlcul de dimensions per a cada targeta de jugador
             int userSectionWidth = (int)(rectangleWidth * USER_SECTION_WIDTH_PERCENTAGE);
-            int userSectionHeight = panelHeight / NUM_USER_SECTIONS - USER_MARGIN * 2;
-            int sectionY = i * (panelHeight / NUM_USER_SECTIONS) + USER_MARGIN * 2;
+            int userSectionHeight = (int) (((float) panelHeight / numUserSections - userMargin * 2) * USER_SECTION_HEIGHT_PERCENTAGE);
+            int sectionY = i * (panelHeight / numUserSections) + userMargin * 2;
             int sectionX = (rectangleWidth - userSectionWidth) / 2;
 
             // Dibuix de la targeta base
-            g.setColor(Color.WHITE);
-            g.fillRoundRect(sectionX, sectionY, userSectionWidth, userSectionHeight, 48, 48);
+            drawPlayerCard(g, panelHeight, sectionX, sectionY, userSectionWidth, userSectionHeight);
 
             // Dibuix de la barra de color identificativa
-            setPlayerColor(g, i);
-            int colorRectHeight = userSectionHeight / 2 - 20;
-            g.fillRoundRect(sectionX + 20, sectionY + 20, userSectionWidth - 40, colorRectHeight, 28, 28);
+            drawColorBar(g, panelHeight, sectionX, sectionY, userSectionWidth, userSectionHeight, i);
 
-            // Configuració de la font per al text
-            g.setColor(Color.BLACK);
-            Font font = new Font("SansSerif", Font.BOLD, userSectionHeight / 4);
-            g.setFont(font);
-            FontMetrics metrics = g.getFontMetrics(font);
+            // Renderització del nom i puntuació del jugador
+            drawPlayerName(g, players[i].getName(), sectionX, sectionY, userSectionWidth, userSectionHeight, numUserSections);
+            drawPlayerScore(g, players[i].getScore(), sectionX, sectionY, userSectionWidth, userSectionHeight);
+        }
+    }
 
-            // Renderització del nom del jugador
-            String name = players[i].getName();
-            int nameWidth = metrics.stringWidth(name);
-            int nameX = sectionX + ((userSectionWidth) - nameWidth) / 2;
-            int nameY = sectionY + ((colorRectHeight * 725)/1000) + (metrics.getAscent() / 2);
-            g.drawString(name, nameX, nameY);
+    /**
+     * Dibuixa la targeta base del jugador.
+     */
+    private void drawPlayerCard(Graphics g, int panelHeight, int sectionX, int sectionY,
+                                int userSectionWidth, int userSectionHeight) {
+        g.setColor(Color.WHITE);
+        int cardY = (int) (sectionY + panelHeight * CARD_VERTICAL_OFFSET);
+        int cardHeight = (int) (userSectionHeight + panelHeight * CARD_HEIGHT_ADJUSTMENT);
+        int cornerRadius = (int) (panelHeight * CARD_CORNER_RADIUS);
 
-            // Renderització de la puntuació
-            String score = String.valueOf(players[i].getScore());
-            int scoreWidth = metrics.stringWidth(score);
-            int scoreX = sectionX + (userSectionWidth - scoreWidth) / 2;
-            int scoreY = sectionY + (userSectionHeight * 190)/300 + colorRectHeight / 2;
-            g.drawString(score, scoreX, scoreY);
+        g.fillRoundRect(sectionX, cardY, userSectionWidth, cardHeight, cornerRadius, cornerRadius);
+    }
+
+    /**
+     * Dibuixa la barra de color identificativa del jugador.
+     */
+    private void drawColorBar(Graphics g, int panelHeight, int sectionX, int sectionY,
+                              int userSectionWidth, int userSectionHeight, int playerIndex) {
+        setPlayerColor(g, playerIndex);
+
+        int colorBarMargin = (int) (panelHeight * COLOR_BAR_MARGIN);
+        int colorRectHeight = (int) ((double) userSectionHeight / COLOR_BAR_HEIGHT_DIVISOR - panelHeight * COLOR_BAR_HEIGHT_REDUCTION);
+        int colorBarX = sectionX + colorBarMargin;
+        int colorBarY = sectionY + colorBarMargin;
+        int colorBarWidth = userSectionWidth - colorBarMargin * 2;
+        int colorBarCornerRadius = (int) (panelHeight * COLOR_BAR_CORNER_RADIUS);
+
+        g.fillRoundRect(colorBarX, colorBarY, colorBarWidth, colorRectHeight, colorBarCornerRadius, colorBarCornerRadius);
+    }
+
+    /**
+     * Dibuixa el nom del jugador.
+     */
+    private void drawPlayerName(Graphics g, String name, int sectionX, int sectionY,
+                                int userSectionWidth, int userSectionHeight, int numUserSections) {
+        g.setColor(Color.BLACK);
+
+        // Configuració de la font per al nom
+        Font nameFont = calculateNameFont(name, userSectionHeight, numUserSections);
+        g.setFont(nameFont);
+        FontMetrics metrics = g.getFontMetrics(nameFont);
+
+        // Posicionament del nom
+        int nameWidth = metrics.stringWidth(name);
+        int nameX = sectionX + (userSectionWidth - nameWidth) / 2;
+        int nameY = calculateNameY(sectionY, userSectionHeight, numUserSections);
+
+        g.drawString(name, nameX, nameY);
+    }
+
+    /**
+     * Dibuixa la puntuació del jugador.
+     */
+    private void drawPlayerScore(Graphics g, int score, int sectionX, int sectionY,
+                                 int userSectionWidth, int userSectionHeight) {
+        // Configuració de la font per a la puntuació
+        Font scoreFont = new Font("SansSerif", Font.BOLD, (int) (userSectionHeight / SCORE_FONT_DIVISOR));
+        g.setFont(scoreFont);
+        FontMetrics metrics = g.getFontMetrics(scoreFont);
+
+        // Posicionament de la puntuació
+        String scoreText = String.valueOf(score);
+        int scoreWidth = metrics.stringWidth(scoreText);
+        int scoreX = sectionX + (userSectionWidth - scoreWidth) / 2;
+        int colorRectHeight = (int) ((double) userSectionHeight / COLOR_BAR_HEIGHT_DIVISOR);
+        int scoreY = (int) (sectionY + (userSectionHeight * SCORE_Y_POSITION) + (double) colorRectHeight / SCORE_Y_OFFSET_DIVISOR);
+
+        g.drawString(scoreText, scoreX, scoreY);
+    }
+
+    /**
+     * Calcula la font apropiada per al nom del jugador.
+     */
+    private Font calculateNameFont(String name, int userSectionHeight, int numUserSections) {
+        float nameFontDivisor = NAME_FONT_DIVISOR;
+
+
+        if (numUserSections == 3) {
+            nameFontDivisor = 5.f;
+        }
+
+        if (numUserSections == 2) {
+            nameFontDivisor = 8.f;
+        }
+
+        int baseFontSize = (int) (userSectionHeight / nameFontDivisor);
+
+        if (name.length() > MAX_NAME_LENGTH) {
+            int adjustedFontSize = (int) (baseFontSize * (NAME_FONT_SCALE_FACTOR / name.length()));
+            return new Font("SansSerif", Font.BOLD, adjustedFontSize);
+        }
+
+        return new Font("SansSerif", Font.BOLD, baseFontSize);
+    }
+
+    /**
+     * Calcula la posició Y per al nom del jugador segons el nombre de jugadors.
+     */
+    private int calculateNameY(int sectionY, int userSectionHeight, int numUserSections) {
+        int colorRectHeight = (int) ((double) userSectionHeight / COLOR_BAR_HEIGHT_DIVISOR);
+
+        if (numUserSections == 4) {
+            return (int) (sectionY + (colorRectHeight * NAME_Y_MULTIPLIER_4_PLAYERS));
+        } else if (numUserSections == 3) {
+            return (int) (sectionY + (colorRectHeight * NAME_Y_MULTIPLIER_3_PLAYERS));
+        } else {
+            return (int) (sectionY + (colorRectHeight * NAME_Y_MULTIPLIER_DEFAULT));
         }
     }
 
@@ -90,10 +220,10 @@ public class PlayerInfo extends JPanel {
      */
     private void setPlayerColor(Graphics g, int selectedPlayer) {
         switch (selectedPlayer) {
-            case 0 -> g.setColor(new Color(0xf5, 0x2e, 0x2e));  // Vermell
-            case 1 -> g.setColor(new Color(0x54, 0x63, 0xff));  // Blau
-            case 2 -> g.setColor(new Color(0xff, 0xc7, 0x17));  // Groc
-            case 3 -> g.setColor(new Color(67, 232, 31));       // Verd
+            case 0 -> g.setColor(PLAYER_COLOR_RED);
+            case 1 -> g.setColor(PLAYER_COLOR_BLUE);
+            case 2 -> g.setColor(PLAYER_COLOR_YELLOW);
+            case 3 -> g.setColor(PLAYER_COLOR_GREEN);
         }
     }
 }

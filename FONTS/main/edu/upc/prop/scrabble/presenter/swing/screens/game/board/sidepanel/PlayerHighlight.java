@@ -27,24 +27,29 @@ public class PlayerHighlight extends JPanel {
      */
     public void drawPlayerHighlight(Graphics g, int panelHeight, int rectangleWidth,
                                     int selectedPlayer, int numberOfPlayers) {
-        // Marges internes per al resaltat
-        final int USER_MARGIN = 10;
-        panelHeight -= USER_MARGIN * 2;
+        //lo mismo que player info para alinear
+        int USER_MARGIN = (int) (rectangleWidth * 0.01f);
+        panelHeight -= USER_MARGIN * 15;
+        int NUM_USER_SECTIONS = numberOfPlayers;
+        float USER_SECTION_WIDTH_PERCENTAGE = 0.85f;
 
-        // Percentatge d'amplada que ocuparà el resaltat
-        final float USER_SECTION_WIDTH_PERCENTAGE = 0.8f;
-        final int NUM_USER_SECTIONS = numberOfPlayers;
-
-        // Càlcul de dimensions del resaltat
         int userSectionWidth = (int)(rectangleWidth * USER_SECTION_WIDTH_PERCENTAGE);
-        int userSectionHeight = panelHeight / NUM_USER_SECTIONS - USER_MARGIN * 2;
+        int userSectionHeight = (int) (((float) panelHeight / NUM_USER_SECTIONS - USER_MARGIN * 2) * 0.95f);
         int sectionY = selectedPlayer * (panelHeight / NUM_USER_SECTIONS) + USER_MARGIN * 2;
         int sectionX = (rectangleWidth - userSectionWidth) / 2;
 
-        // Configuració i dibuix del resaltat
         setPlayerColor(g, selectedPlayer);
-        g.fillRoundRect(sectionX - 10, sectionY - 10,
-                userSectionWidth + 20, userSectionHeight + 20, 58, 58);
+        //margen
+        int highlightMargin = (int) (panelHeight * 0.01f);
+
+        g.fillRoundRect(
+                sectionX - highlightMargin,
+                (int) (sectionY + panelHeight * 0.024f) - highlightMargin,
+                userSectionWidth + highlightMargin * 2,
+                (int) (userSectionHeight + panelHeight * 0.0148f) + highlightMargin * 2,
+                (int) (panelHeight * 0.07111),
+                (int) (panelHeight * 0.07111)
+        );
     }
 
     /**
@@ -64,9 +69,9 @@ public class PlayerHighlight extends JPanel {
     private void setPlayerColor(Graphics g, int selectedPlayer) {
         switch (selectedPlayer) {
             case 0 -> g.setColor(new Color(0xf5, 0x2e, 0x2e));  // Vermell
-            case 1 -> g.setColor(new Color(0x54, 0x63, 0xff));    // Blau
-            case 2 -> g.setColor(new Color(0xff, 0xc7, 0x17));    // Groc
-            case 3 -> g.setColor(new Color(67, 232, 31));        // Verd
+            case 1 -> g.setColor(new Color(0x54, 0x63, 0xff));  // Blau
+            case 2 -> g.setColor(new Color(0xff, 0xc7, 0x17));  // Groc
+            case 3 -> g.setColor(new Color(67, 232, 31));       // Verd
         }
     }
 }
