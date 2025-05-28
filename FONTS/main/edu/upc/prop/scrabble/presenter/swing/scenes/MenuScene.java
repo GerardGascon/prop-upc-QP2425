@@ -23,7 +23,7 @@ public class MenuScene extends Scene {
         this.window = window;
         window.getContentPane().removeAll();
 
-        menuScreen = new MenuScreen();
+        menuScreen = new MenuScreen(window);
 
         menuScreen.getPlayButton().addActionListener(e -> handlePlay());
         menuScreen.getContinueButton().addActionListener(e -> handleContinue());
@@ -33,6 +33,12 @@ public class MenuScene extends Scene {
         window.add(menuScreen);
         window.revalidate();
         window.repaint();
+    }
+
+    @Override
+    protected void onDetach() {
+        super.onDetach();
+        window.remove(menuScreen);
     }
 
     /**

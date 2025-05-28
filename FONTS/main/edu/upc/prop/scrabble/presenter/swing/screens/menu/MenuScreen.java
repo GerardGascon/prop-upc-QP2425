@@ -1,7 +1,5 @@
 package edu.upc.prop.scrabble.presenter.swing.screens.menu;
 
-import edu.upc.prop.scrabble.presenter.scenes.Scene;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -20,15 +18,15 @@ public class MenuScreen extends JPanel {
     /**
      * Creadora i inicialitzadora
      */
-    public MenuScreen() {
+    public MenuScreen(JFrame window) {
         setLayout(null);
         setBackground(new Color(0x54, 0x63, 0xff));
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setOpaque(false);
 
-        playButton = new JugarButton(buttonPanel);
-        continueButton = new ContinueButton(buttonPanel);
+        playButton = new JugarButton(buttonPanel, window);
+        continueButton = new ContinueButton(buttonPanel, window);
         rankingButton = new RanquingButton(buttonPanel);
         quitButton = new MenuButton("Sortir");
 
