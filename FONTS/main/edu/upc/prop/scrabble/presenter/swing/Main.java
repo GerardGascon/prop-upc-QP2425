@@ -33,11 +33,7 @@ public class Main {
             window.setVisible(true);
             disableTraversalKeys();
 
-            GameProperties gameProperties = new GameProperties(Language.Catalan, BoardType.Standard,
-                    Arrays.asList("Geri", "Adri"),
-                    List.of("CPU 1"), true);
             GameLoop gameLoop = new GameLoop(MenuScene.class, window);
-//            window.add(new GameMock());
             new Thread(gameLoop::run).start();
         });
     }
