@@ -1,25 +1,14 @@
-package edu.upc.prop.scrabble.presenter.swing.screens.game;
+package edu.upc.prop.scrabble.presenter.swing.screens.game.endscreen;
 
 import edu.upc.prop.scrabble.data.Player;
-import edu.upc.prop.scrabble.domain.game.IEndScreen;
 import edu.upc.prop.scrabble.presenter.swing.screens.menu.MenuButton;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
+import java.awt.event.InputEvent;
 
-/**
- * EndScreen és un JPanel que mostra els resultats finals d'una partida de Scrabble.
- * Mostra un podi amb els 3 primers jugadors, una llista completa de classificació, i proporciona
- * botons per iniciar una nova partida, tornar al menú, o sortir de l'aplicació.
- *
- * La pantalla presenta un fons amb degradat amb una visualització de podi i
- * targetes de jugadors codificades per colors que mostren puntuacions i posicions.
- *
- * @author Albert Usero
- */
-public class EndScreen extends JPanel implements IEndScreen {
+public class EndScreenOverlay extends JPanel {
     /** Percentatge d'amplada de pantalla ocupat pel panell lateral */
     private final float SIDE_PANEL_WIDTH_PERCENT = 0.35f;
 
@@ -33,10 +22,7 @@ public class EndScreen extends JPanel implements IEndScreen {
     private final int PLAYER_CARD_MARGIN = 10;
 
     /** Array de jugadors de la partida */
-    private Player[] players;
-
-    /** Array de jugadors ordenats per puntuació (ordre descendent) */
-    private Player[] sortedPlayers;
+    private final Player[] players;
 
     /** Panell que conté els botons d'acció */
     private JPanel buttonPanel;
@@ -48,61 +34,17 @@ public class EndScreen extends JPanel implements IEndScreen {
     private ActionListener onNewGameCallback;
 
     /**
-     * Constructor per defecte que crea un EndScreen sense jugadors.
-     * Inicialitza el component amb l'estil per defecte i arrays de jugadors buits.
-     */
-    public EndScreen() {
-        setLayout(null);
-        setBackground(new Color(0x2d, 0x2d, 0x2d));
-        this.players = new Player[0];
-        this.sortedPlayers = new Player[0];
-        initializeButtons();
-    }
-
-    /**
      * Constructor que crea un EndScreen amb els jugadors especificats.
      *
-     * @param players Array de jugadors per mostrar a la pantalla final
+     * @param sortedPlayers Array de jugadors per mostrar a la pantalla final
      */
-    public EndScreen(Player[] players) {
+    public EndScreenOverlay(Player[] sortedPlayers) {
         setLayout(null);
         setBackground(new Color(0x2d, 0x2d, 0x2d));
-        setPlayers(players);
-        initializeButtons();
-    }
-
-    /**
-     * Mostra la pantalla final amb l'array de jugadors ordenats proporcionat.
-     * Fa visible la finestra, la porta al davant i demana el focus.
-     *
-     * @param sortedPlayers Array de jugadors ordenats per puntuació final
-     */
-    @Override
-    public void show(Player[] sortedPlayers) {
-        setPlayers(sortedPlayers);
-        setVisible(true);
-
-        Window window = SwingUtilities.getWindowAncestor(this);
-        if (window != null) {
-            window.toFront();
-            window.requestFocus();
-        }
-
-        repaint();
-        revalidate();
-    }
-
-    /**
-     * Estableix l'array de jugadors per a la pantalla final.
-     * Els jugadors ja haurien d'estar ordenats per puntuació en ordre descendent.
-     *
-     * @param players Array de jugadors ordenats per puntuació, o null per array buit
-     */
-    public void setPlayers(Player[] players) {
-        this.players = players != null ? players : new Player[0];
-        // Els jugadors ja venen ordenats segons la interfície
-        this.sortedPlayers = Arrays.copyOf(this.players, this.players.length);
-        repaint();
+        this.players = sortedPlayers;
+        putButtons();
+        System.out.println("end screen overlay");
+        addMouseWheelListener(InputEvent::consume);
     }
 
     /**
@@ -127,7 +69,7 @@ public class EndScreen extends JPanel implements IEndScreen {
      * Inicialitza i configura el panell de botons amb els botons d'acció.
      * Crea botons per "Nova Partida", "Menú Principal" i "Sortir" amb els seus respectius gestors.
      */
-    private void initializeButtons() {
+    private void putButtons() {
         buttonPanel = new JPanel();
         buttonPanel.setOpaque(false);
         buttonPanel.setLayout(new GridLayout(3, 1, 0, 10));
@@ -224,14 +166,11 @@ public class EndScreen extends JPanel implements IEndScreen {
         int titleY = height / 8;
         g2.drawString(title, titleX, titleY);
 
-        // Subtítulo con el ganador
-        if (sortedPlayers.length > 0) {
-            g2.setFont(new Font("SansSerif", Font.PLAIN, height / 20));
-            fm = g2.getFontMetrics();
-            String winner = "Ganador: " + sortedPlayers[0].getName();
-            int winnerY = titleY + fm.getHeight() + 10;
-            g2.drawString(winner, titleX, winnerY);
-        }
+        g2.setFont(new Font("SansSerif", Font.PLAIN, height / 20));
+        fm = g2.getFontMetrics();
+        String winner = "Ganador: " + players[0].getName();
+        int winnerY = titleY + fm.getHeight() + 10;
+        g2.drawString(winner, titleX, winnerY);
     }
 
     /**
@@ -242,8 +181,6 @@ public class EndScreen extends JPanel implements IEndScreen {
      * @param height Alçada del component
      */
     private void drawResults(Graphics2D g2, int width, int height) {
-        if (sortedPlayers.length == 0) return;
-
         int resultsX = (int) (width * SIDE_PANEL_WIDTH_PERCENT) + 50;
         int resultsWidth = (int) (width * (1 - SIDE_PANEL_WIDTH_PERCENT)) - 100;
         int resultsY = height / 4;
@@ -268,8 +205,6 @@ public class EndScreen extends JPanel implements IEndScreen {
      * @param height Alçada de l'àrea del podi
      */
     private void drawPodium(Graphics2D g2, int x, int y, int width, int height) {
-        if (sortedPlayers.length == 0) return;
-
         int podiumWidth = width / 3;
         int baseHeight = height / 4;
 
@@ -278,11 +213,12 @@ public class EndScreen extends JPanel implements IEndScreen {
         int[] heights = {baseHeight * 2, baseHeight * 3, baseHeight}; // Alturas del podium
         String[] labels = {"2º", "1º", "3º"};
 
-        for (int i = 0; i < 3 && i < sortedPlayers.length; i++) {
+        for (int i = 0; i < 3 && i < players.length; i++) {
             int pos = positions[i];
-            if (pos >= sortedPlayers.length) continue;
+            if (pos >= players.length)
+                continue;
 
-            Player player = sortedPlayers[pos];
+            Player player = players[pos];
             int podiumX = x + i * podiumWidth;
             int podiumHeight = heights[i];
             int podiumY = y + height - podiumHeight;
@@ -338,11 +274,11 @@ public class EndScreen extends JPanel implements IEndScreen {
     private void drawPlayerList(Graphics2D g2, int x, int y, int width) {
         g2.setColor(new Color(255, 255, 255, 200));
         g2.fillRoundRect(x, y, width,
-                Math.min(sortedPlayers.length * (PLAYER_CARD_HEIGHT + PLAYER_CARD_MARGIN), 200),
+                Math.min(players.length * (PLAYER_CARD_HEIGHT + PLAYER_CARD_MARGIN), 200),
                 15, 15);
 
-        for (int i = 0; i < sortedPlayers.length; i++) {
-            Player player = sortedPlayers[i];
+        for (int i = 0; i < players.length; i++) {
+            Player player = players[i];
             int cardY = y + 10 + i * (PLAYER_CARD_HEIGHT + PLAYER_CARD_MARGIN);
 
             if (cardY + PLAYER_CARD_HEIGHT > y + 190) break; // No exceder el área
