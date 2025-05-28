@@ -2,6 +2,7 @@ package edu.upc.prop.scrabble.presenter.swing.screens.game;
 
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.BoardView;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.sidepanel.SidePanel;
+import edu.upc.prop.scrabble.presenter.swing.screens.game.endscreen.EndScreen;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.hand.HandView;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.pieceselector.BlankPieceSelector;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction.ActionButtonPanel;
@@ -64,6 +65,11 @@ public class GameScreen extends JPanel {
      * Component del panell d'accions del jugador
      */
     private ActionButtonPanel actionButtonPanel;
+
+    /**
+     * Component del panell del final de partida
+     */
+    private EndScreen endScreen;
 
     /**
      * Constructor que inicialitza la pantalla amb un disseny BorderLayout i
@@ -136,6 +142,12 @@ public class GameScreen extends JPanel {
         this.pauseMenu = pauseMenu;
     }
 
+    public void addEndScreen(EndScreen endScreen) {
+        add(endScreen);
+        setComponentZOrder(endScreen, 0);
+        this.endScreen = endScreen;
+    }
+
     /**
      * Sobreescriu el mètode de disposició dels components per organitzar-los
      * manualment a la pantalla segons les proporcions establertes.
@@ -150,6 +162,7 @@ public class GameScreen extends JPanel {
         putBlankPieceSelector();
         putPauseButton();
         putActionButtonPanel();
+        putEndScreen();
     }
 
     /**
@@ -211,5 +224,12 @@ public class GameScreen extends JPanel {
      */
     private void putActionButtonPanel() {
         actionButtonPanel.setBounds(0, 0, getWidth(), getHeight());
+    }
+
+    /**
+     * Estableix la mida i posició del panell de fi de partida
+     */
+    private void putEndScreen() {
+        endScreen.setBounds(0, 0, getWidth(), getHeight());
     }
 }

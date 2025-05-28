@@ -137,6 +137,7 @@ public abstract class PlayerObject extends SceneObject implements IGamePlayer {
      */
     @Override
     public final void endTurn() {
+        actionButtonPanel.hideButtons();
         onTurn = false;
     }
 

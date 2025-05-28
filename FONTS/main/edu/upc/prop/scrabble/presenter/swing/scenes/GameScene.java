@@ -23,7 +23,6 @@ import edu.upc.prop.scrabble.domain.board.PremiumTileTypeFiller;
 import edu.upc.prop.scrabble.domain.board.WordPlacer;
 import edu.upc.prop.scrabble.domain.dawg.WordAdder;
 import edu.upc.prop.scrabble.domain.game.GameStepper;
-import edu.upc.prop.scrabble.domain.game.IEndScreen;
 import edu.upc.prop.scrabble.domain.pieces.*;
 import edu.upc.prop.scrabble.domain.turns.Endgame;
 import edu.upc.prop.scrabble.domain.turns.Turn;
@@ -45,7 +44,7 @@ import edu.upc.prop.scrabble.presenter.scenes.Scene;
 import edu.upc.prop.scrabble.presenter.swing.objects.AIPlayerObject;
 import edu.upc.prop.scrabble.presenter.swing.objects.HumanPlayerObject;
 import edu.upc.prop.scrabble.presenter.swing.objects.PlayerObject;
-import edu.upc.prop.scrabble.presenter.swing.screens.game.EndScreen;
+import edu.upc.prop.scrabble.presenter.swing.screens.game.endscreen.EndScreen;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.GameScreen;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.BoardView;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.sidepanel.SidePanel;
@@ -197,7 +196,7 @@ public class GameScene extends Scene {
         Endgame endgame = new Endgame(playersData);
         Turn turnManager = new Turn(endgame, players);
 
-        IEndScreen endScreen = new EndScreen();
+        EndScreen endScreen = new EndScreen();
         GameStepper stepper = new GameStepper(turnManager, leaderboard, playersData, endScreen);
 
         if (isNewGame) {
@@ -218,7 +217,7 @@ public class GameScene extends Scene {
         configurePlayers(players, playersData, stepper, board, boardView, pointCalculator, bag, piecesConverter,
                 anchorUpdater, dawg, crossChecks, handView, panel, sidePanel);
 
-        generateWindow(window, boardView, sidePanel, handView, blankPieceSelector, pauseMenu, panel);
+        generateWindow(window, boardView, sidePanel, handView, blankPieceSelector, pauseMenu, panel, endScreen);
 
         GameData gameData = new GameData();
         gameData.setLanguage(language);
@@ -253,14 +252,16 @@ public class GameScene extends Scene {
      * @param blankPieceSelector Selector de fitxes en blanc.
      * @param pauseMenu          Menú de pausa.
      * @param actionPanel        Panell d'accions.
+     * @param endScreen          Pantalla del final de partida.
      */
-    private void generateWindow(JFrame window, BoardView boardView, SidePanel sidePanel, HandView handView, BlankPieceSelector blankPieceSelector, PauseMenu pauseMenu, ActionButtonPanel actionPanel) {
+    private void generateWindow(JFrame window, BoardView boardView, SidePanel sidePanel, HandView handView, BlankPieceSelector blankPieceSelector, PauseMenu pauseMenu, ActionButtonPanel actionPanel, EndScreen endScreen) {
         gameScreen.addBoard(boardView);
         gameScreen.addSidePanel(sidePanel);
         gameScreen.addHandView(handView);
         gameScreen.addBlankPieceSelector(blankPieceSelector);
         gameScreen.addPauseButton(pauseMenu);
         gameScreen.addActionPanel(actionPanel);
+        gameScreen.addEndScreen(endScreen);
 
         window.add(gameScreen);
     }
