@@ -30,7 +30,7 @@ public abstract class Scene {
      * @param delta Temps transcorregut des de l'última actualització (delta time)
      * @see SceneObject
      */
-    void onProcess(float delta) {
+    protected void onProcess(float delta) {
         for (SceneObject o : objects) {
             if (o.isEnabled())
                 o.onProcess(delta);

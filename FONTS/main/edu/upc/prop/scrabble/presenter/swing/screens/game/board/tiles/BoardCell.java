@@ -59,6 +59,7 @@ public class BoardCell extends JPanel {
     public void removeTemporalTile() {
         if (temporalPieceTile != null)
             remove(temporalPieceTile);
+        temporalPieceTile = null;
         add(this.tile);
         revalidate();
         repaint();
@@ -70,6 +71,8 @@ public class BoardCell extends JPanel {
      * @return la fitxa actual de la cel·la, o null si no en té
      */
     public BoardTile getTile() {
+        if (temporalPieceTile != null)
+            return temporalPieceTile;
         return tile;
     }
 }

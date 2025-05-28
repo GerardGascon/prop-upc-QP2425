@@ -18,7 +18,6 @@ public class MenuScreen extends JPanel {
     private RanquingButton rankingButton;
     private MenuButton quitButton;
     private ArrayList<FloatingTile> floatingTiles;
-    private Timer animationTimer;
 
 
     /**
@@ -122,7 +121,6 @@ public class MenuScreen extends JPanel {
                 int y = rand.nextInt(height - tileSize);
                 floatingTiles.add(new FloatingTile(String.valueOf(letters.charAt(i)), x, y, tileSize));
             }
-            startAnimation();
         }
 
         for (FloatingTile tile : floatingTiles) tile.draw(g2);
@@ -152,32 +150,19 @@ public class MenuScreen extends JPanel {
         buttonPanel.setBounds(x, y, panelWidth, panelHeight);
     }
 
-    private void startAnimation() {
-        animationTimer = new Timer(16, e -> {
-            if (floatingTiles != null && isVisible()) {
-                // Update positions on the current thread
-
-                for (FloatingTile tile : floatingTiles) {
-                    tile.move();
-                }
-
-                // Check collisions
-                for (int i = 0; i < floatingTiles.size(); i++) {
-                    for (int j = i + 1; j < floatingTiles.size(); j++) {
-                        floatingTiles.get(i).checkCollision(floatingTiles.get(j));
-                    }
-                }
-                repaint();
+    public void updateAnimation(float delta) {
+        if (floatingTiles != null && isVisible()) {
+            for (FloatingTile tile : floatingTiles) {
+                tile.move(delta);
             }
-        });
-        animationTimer.start();
-    }
 
-    @Override
-    public void removeNotify() {
-        super.removeNotify();
-        if (animationTimer != null) {
-            animationTimer.stop();
+            // Check collisions
+            for (int i = 0; i < floatingTiles.size(); i++) {
+                for (int j = i + 1; j < floatingTiles.size(); j++) {
+                    floatingTiles.get(i).checkCollision(floatingTiles.get(j));
+                }
+            }
+            repaint();
         }
     }
 }

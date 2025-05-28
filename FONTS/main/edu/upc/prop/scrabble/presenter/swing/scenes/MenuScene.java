@@ -41,6 +41,12 @@ public class MenuScene extends Scene {
         window.remove(menuScreen);
     }
 
+    @Override
+    protected void onProcess(float delta) {
+        super.onProcess(delta);
+        menuScreen.updateAnimation(delta);
+    }
+
     /**
      * Acció cridada al pulsar el botó Jugar
      */
