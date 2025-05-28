@@ -49,10 +49,21 @@ public class DataCollector {
     public PersistentDictionary run() {
         PersistentDictionary data = new PersistentDictionary(null);
         for (IPersistableObject persistableObject : persistableObject) {
+            Class<?> clazz = getSuperclass(persistableObject);
             PersistentObject object = persistableObject.encode();
-            object.setName(persistableObject.getClass().getSimpleName());
+            object.setName(clazz.getSimpleName());
             data.add(object);
         }
         return data;
+    }
+
+    private static Class<?> getSuperclass(IPersistableObject persistableObject) {
+        Class<?> clazz = persistableObject.getClass();
+        Class<?> next = clazz.getSuperclass();
+        while (next != null && !next.equals(Object.class)) {
+            clazz = next;
+            next = clazz.getSuperclass();
+        }
+        return clazz;
     }
 }

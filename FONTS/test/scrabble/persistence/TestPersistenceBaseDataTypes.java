@@ -66,7 +66,7 @@ public class TestPersistenceBaseDataTypes {
 
         array.add(obj);
 
-        assertEquals("potato", array.get(0).parse(String.class));
+        assertEquals("potato", array.get(0, String.class));
     }
 
     @Test

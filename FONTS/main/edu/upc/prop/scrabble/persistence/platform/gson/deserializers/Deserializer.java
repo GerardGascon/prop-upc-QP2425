@@ -1,9 +1,7 @@
 package edu.upc.prop.scrabble.persistence.platform.gson.deserializers;
 
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
+import com.google.gson.*;
+import edu.upc.prop.scrabble.persistence.runtime.data.PersistentArray;
 import edu.upc.prop.scrabble.persistence.runtime.data.PersistentObject;
 
 import java.util.ArrayList;
@@ -62,7 +60,21 @@ abstract class Deserializer {
 //            }
             return element.getAsJsonArray();
         } else if (element.isJsonObject()) {
-            return context.deserialize(element, PersistentObject.class);
+            for (String key : element.getAsJsonObject().keySet()) {
+                JsonElement e = element.getAsJsonObject().get(key);
+
+                if (e.isJsonArray()) {
+                    JsonArray array = e.getAsJsonArray();
+                    List<Object> elements = new ArrayList<>();
+                    for (JsonElement arrayElement : array) {
+                        Object obj = context.deserialize(arrayElement, Object.class);
+                        elements.add(obj);
+                    }
+                    return new PersistentArray(key, elements);
+                } else {
+                    return context.deserialize(element, PersistentObject.class);
+                }
+            }
         }
 
         return null;

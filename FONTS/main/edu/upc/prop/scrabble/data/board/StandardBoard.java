@@ -20,6 +20,15 @@ public class StandardBoard extends Board {
         setTripleLetterTiles();
     }
 
+    public StandardBoard(Board board) {
+        super(board);
+
+        setDoubleWordTiles();
+        setTripleWordTiles();
+        setDoubleLetterTiles();
+        setTripleLetterTiles();
+    }
+
     /**
      * Assigna les caselles que multipliquen la puntuació de la paraula per 2.
      */

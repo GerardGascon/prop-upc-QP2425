@@ -1,9 +1,7 @@
 package edu.upc.prop.scrabble.data.board;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
 import edu.upc.prop.scrabble.data.pieces.Piece;
+import edu.upc.prop.scrabble.persistence.runtime.data.PersistentArray;
 import edu.upc.prop.scrabble.persistence.runtime.data.PersistentDictionary;
 import edu.upc.prop.scrabble.persistence.runtime.data.PersistentObject;
 import edu.upc.prop.scrabble.persistence.runtime.interfaces.IPersistableObject;
@@ -40,6 +38,13 @@ public abstract class Board implements IPersistableObject {
     protected Board(int size) {
         placedTiles = new Piece[size][size];
         premiumTiles = new PremiumTileType[size][size];
+    }
+
+
+    protected Board(Board board) {
+        placedTiles = board.placedTiles.clone();
+        premiumTiles = new PremiumTileType[board.placedTiles.length][board.placedTiles[0].length];
+        empty = board.empty;
     }
 
     /**
@@ -200,7 +205,13 @@ public abstract class Board implements IPersistableObject {
     public PersistentDictionary encode() {
         PersistentDictionary data = new PersistentDictionary();
 
-        data.add(new PersistentObject("placedTiles", placedTiles));
+        PersistentArray tiles = new PersistentArray("placedTiles");
+        for (int y = 0; y < getSize(); y++) {
+            for (int x = 0; x < getSize(); x++) {
+                tiles.add(placedTiles[y][x]);
+            }
+        }
+        data.add(tiles);
 
         return data;
     }
@@ -212,8 +223,14 @@ public abstract class Board implements IPersistableObject {
      */
     @Override
     public void decode(PersistentDictionary data) {
-        PersistentObject placedTiles = data.get("placedTiles");
-        this.placedTiles = new Gson().fromJson(((JsonArray)placedTiles.getValue()), Piece[][].class);
+        PersistentArray placedTiles = (PersistentArray)data.get("placedTiles");
+        int size = (int)Math.sqrt(placedTiles.getLength());
+        this.placedTiles = new Piece[size][size];
+        for (int y = 0; y < size; y++) {
+            for (int x = 0; x < size; x++) {
+                this.placedTiles[y][x] = placedTiles.get(y * size + x, Piece.class);
+            }
+        }
         updateEmptyState();
     }
 

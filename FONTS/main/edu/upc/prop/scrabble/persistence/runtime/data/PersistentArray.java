@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class PersistentArray extends PersistentObject {
     /** Llista d'elements continguts en aquest array persistent */
-    private final List<PersistentObject> elements;
+    private final List<Object> elements;
 
     /**
      * Constructor que inicialitza l'array amb un nom i una llista buida d'elements.
@@ -31,7 +31,7 @@ public class PersistentArray extends PersistentObject {
      * @param name     Nom associat a aquest array persistent.
      * @param elements Llista d'objectes persistents que contindrà l'array.
      */
-    public PersistentArray(String name, List<PersistentObject> elements) {
+    public PersistentArray(String name, List<Object> elements) {
         super(name, null);
         this.elements = elements;
     }
@@ -74,17 +74,11 @@ public class PersistentArray extends PersistentObject {
      *
      * @param value Objecte persistent a afegir.
      */
-    public void add(PersistentObject value) {
+    public void add(Object value) {
         elements.add(value);
     }
 
-    /**
-     * Retorna l'element situat en una posició concreta de l'array.
-     *
-     * @param index Índex de l'element a retornar.
-     * @return Objecte persistent que es troba en la posició indicada.
-     */
-    public PersistentObject get(int index) {
-        return elements.get(index);
+    public <T> T get(int index, Class<T> type) {
+        return parse(elements.get(index), type);
     }
 }

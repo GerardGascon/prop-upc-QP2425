@@ -1,5 +1,7 @@
 package edu.upc.prop.scrabble.persistence.runtime.data;
 
+import com.google.gson.Gson;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,10 +15,15 @@ import java.util.Map;
  * @author Gerard Gascón
  */
 public class PersistentObject {
-    /** Nom identificador de l'objecte persistent */
+    /**
+     * Nom identificador de l'objecte persistent
+     */
     private String name;
+    private static final Gson gson = new Gson();
 
-    /** Valor associat a l'objecte persistent, pot ser de qualsevol tipus */
+    /**
+     * Valor associat a l'objecte persistent, pot ser de qualsevol tipus
+     */
     private final Object value;
 
     /**
@@ -66,11 +73,24 @@ public class PersistentObject {
      * @throws ClassCastException Si el valor no pot ser convertit al tipus especificat.
      */
     public <T> T parse(Class<T> type) throws ClassCastException {
+        return parse(value, type);
+    }
+
+    protected <T> T parse(Object value, Class<T> type) {
+        if (value == null)
+            return null;
+
         if (type.isInstance(value)) {
             return type.cast(value);
-        } else {
+        }
+
+        try {
+            String json = gson.toJson(value);
+            return gson.fromJson(json, type);
+        } catch (Exception e) {
             throw new ClassCastException("Cannot cast object of type "
-                    + value.getClass().getName() + " to " + type.getName());
+                    + value.getClass().getName() + " to " + type.getName()
+                    + ". Conversion failed: " + e.getMessage());
         }
     }
 

@@ -22,6 +22,17 @@ public class SuperBoard extends Board {
         setQuadrupleLetterTiles();
     }
 
+    public SuperBoard(Board board) {
+        super(board);
+
+        setDoubleWordTiles();
+        setTripleWordTiles();
+        setQuadrupleWordTiles();
+        setDoubleLetterTiles();
+        setTripleLetterTiles();
+        setQuadrupleLetterTiles();
+    }
+
     /**
      * Estableix les posicions de les caselles que dupliquen el valor de la paraula.
      */

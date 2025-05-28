@@ -28,7 +28,10 @@ class PersistentArraySerializer implements JsonSerializer<PersistentArray> {
     public JsonElement serialize(PersistentArray src, Type typeOfSrc, JsonSerializationContext context) {
         JsonObject json = new JsonObject();
         JsonArray arrayJson = new JsonArray();
-        IntStream.range(0, src.getLength()).mapToObj(i -> context.serialize(src.get(i))).forEach(arrayJson::add);
+        for (int i = 0; i < src.getLength(); i++) {
+            JsonElement serialize = context.serialize(src.get(i, Object.class));
+            arrayJson.add(serialize);
+        }
         json.add(src.getName(), arrayJson);
         return json;
     }

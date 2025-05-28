@@ -49,10 +49,21 @@ public class DataRestorer {
      */
     public void run(PersistentDictionary dictionary) {
         for (IPersistableObject persistableObject : persistableObject) {
-            PersistentObject object = dictionary.get(persistableObject.getClass().getSimpleName());
+            Class<?> clazz = getSuperclass(persistableObject);
+            PersistentObject object = dictionary.get(clazz.getSimpleName());
             if (object == null)
                 continue;
             persistableObject.decode(object.toDictionary());
         }
+    }
+
+    private static Class<?> getSuperclass(IPersistableObject persistableObject) {
+        Class<?> clazz = persistableObject.getClass();
+        Class<?> next = clazz.getSuperclass();
+        while (next != null && !next.equals(Object.class)) {
+            clazz = next;
+            next = clazz.getSuperclass();
+        }
+        return clazz;
     }
 }

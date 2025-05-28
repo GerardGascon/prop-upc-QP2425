@@ -120,7 +120,8 @@ public class GameScene extends Scene {
     private void createNewGame(GameProperties properties, JFrame window, GameSaver saver, DataCollector dataCollector) {
         Board board = getBoard(properties);
         Player[] playersData = createPlayersData(properties);
-        resolveDependencies(true, window, saver, dataCollector, board, properties.language(), playersData, 0, 0);
+        Bag bag = generateBag(properties.language());
+        resolveDependencies(true, window, saver, dataCollector, board, bag, properties.language(), playersData, 0, 0);
     }
 
     /**
@@ -134,14 +135,21 @@ public class GameScene extends Scene {
      */
     private void loadGame(JFrame window, DataRestorer dataRestorer, GameLoader loader, GameSaver saver, DataCollector dataCollector) {
         Board board = new StandardBoard();
-
+        Bag bag = new Bag();
         GameData gameData = new GameData();
-        dataRestorer.addPersistableObjects(board, gameData);
+
+        dataRestorer.addPersistableObjects(board, gameData, bag);
         loader.run();
+
+        board = switch (gameData.getBoardType()) {
+            case BoardType.Junior -> new JuniorBoard(board);
+            case BoardType.Standard -> new StandardBoard(board);
+            case BoardType.Super -> new SuperBoard(board);
+        };
 
         Player[] playersData = gameData.getPlayers();
 
-        resolveDependencies(false, window, saver, dataCollector, board, gameData.getLanguage(), playersData, gameData.getTurnNumber(), gameData.getSkipCounter());
+        resolveDependencies(false, window, saver, dataCollector, board, bag, gameData.getLanguage(), playersData, gameData.getTurnNumber(), gameData.getSkipCounter());
     }
 
     /**
@@ -157,7 +165,7 @@ public class GameScene extends Scene {
      * @param turnNumber    Número del torn actual.
      * @param skipCounter   Comptador de salts de torn.
      */
-    private void resolveDependencies(boolean isNewGame, JFrame window, GameSaver saver, DataCollector dataCollector, Board board, Language language, Player[] playersData, int turnNumber, int skipCounter) {
+    private void resolveDependencies(boolean isNewGame, JFrame window, GameSaver saver, DataCollector dataCollector, Board board, Bag bag, Language language, Player[] playersData, int turnNumber, int skipCounter) {
         DAWG dawg = new DAWG();
         CrossChecks crossChecks = switch (language) {
             case Language.Catalan -> new CatalanCrossChecks(board.getSize());
@@ -180,7 +188,6 @@ public class GameScene extends Scene {
         PiecesConverterFactory piecesConverterFactory = new PiecesConverterFactory(piecesReader);
         PiecesConverter piecesConverter = piecesConverterFactory.run(language);
 
-        Bag bag = generateBag(language);
         fillDAWG(dawg, language);
 
         Anchors anchors = new Anchors();
@@ -220,7 +227,7 @@ public class GameScene extends Scene {
         gameData.setTurnNumber(turnNumber);
         gameData.setSkipCounter(skipCounter);
 
-        dataCollector.addPersistableObjects(board, gameData);
+        dataCollector.addPersistableObjects(board, gameData, bag);
 
         players[0].startTurn();
     }

@@ -1,11 +1,10 @@
 package edu.upc.prop.scrabble.data;
 
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import edu.upc.prop.scrabble.data.board.BoardType;
 import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.data.properties.Language;
+import edu.upc.prop.scrabble.persistence.runtime.data.PersistentArray;
 import edu.upc.prop.scrabble.persistence.runtime.data.PersistentDictionary;
 import edu.upc.prop.scrabble.persistence.runtime.data.PersistentObject;
 import edu.upc.prop.scrabble.persistence.runtime.interfaces.IPersistableObject;
@@ -108,9 +107,13 @@ public class GameData implements IPersistableObject {
 
         data.add(new PersistentObject("skipCounter", this.skipCounter));
         data.add(new PersistentObject("turnNumber", this.turnNumber));
-        data.add(new PersistentObject("boardType", this.boardType));
-        data.add(new PersistentObject("language", this.language));
-        data.add(new PersistentObject("players", this.players));
+        data.add(new PersistentObject("boardType", this.boardType.toString()));
+        data.add(new PersistentObject("language", this.language.toString()));
+
+        PersistentArray players = new PersistentArray("players");
+        for (Player player : this.players)
+            players.add(player);
+        data.add(players);
 
         return data;
     }
@@ -133,9 +136,11 @@ public class GameData implements IPersistableObject {
         PersistentObject language = data.get("language");
         this.language = Language.valueOf(language.parse(String.class));
 
-        PersistentObject players = data.get("players");
-        this.players = new Gson().fromJson(((JsonArray)players.getValue()), Player[].class);
-//        this.players = players.parse(Player[].class);
+        PersistentArray players = (PersistentArray)data.get("players");
+        this.players = new Player[players.getLength()];
+        for (int i = 0; i < players.getLength(); i++) {
+            this.players[i] = players.get(i, Player.class);
+        }
     }
 }
 

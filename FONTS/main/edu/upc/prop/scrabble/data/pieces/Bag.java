@@ -1,6 +1,8 @@
 package edu.upc.prop.scrabble.data.pieces;
+import edu.upc.prop.scrabble.persistence.runtime.data.PersistentArray;
 import edu.upc.prop.scrabble.persistence.runtime.data.PersistentDictionary;
 import edu.upc.prop.scrabble.persistence.runtime.data.PersistentObject;
+import edu.upc.prop.scrabble.persistence.runtime.interfaces.IPersistableObject;
 
 import java.util.*;
 
@@ -8,7 +10,7 @@ import java.util.*;
  * Representa una bossa de peces del joc de taula Scrabble.
  * @author Gina Escofet González
  */
-public class Bag {
+public class Bag implements IPersistableObject {
     private List<Piece> bag;
 
     /***
@@ -64,10 +66,15 @@ public class Bag {
      * Codifica l'estat actual de la bossa en un diccionari persistent.
      * @return Diccionari persistent amb les dades de la bossa serialitzades.
      */
+    @Override
     public PersistentDictionary encode() {
         PersistentDictionary data = new PersistentDictionary();
 
-        data.add(new PersistentObject("bag", bag.toArray()));
+        PersistentArray bag = new PersistentArray("bag");
+        for (int y = 0; y < getSize(); y++) {
+            bag.add(this.bag.get(y));
+        }
+        data.add(bag);
 
         return data;
     }
@@ -77,26 +84,12 @@ public class Bag {
      * Si les dades són invàlides o buides, inicialitza una bossa buida.
      * @param data Diccionari persistent que conté les dades de la bossa serialitzades.
      */
+    @Override
     public void decode(PersistentDictionary data) {
-        PersistentObject bagData = data.get("bag");
-        if (bagData != null) {
-            Object[] parsedObjects = bagData.parse(Object[].class);
-
-            if (parsedObjects != null) {
-                this.bag = new ArrayList<>();
-                for (Object obj : parsedObjects) {
-                    if (obj instanceof Piece) {
-                        this.bag.add((Piece) obj);
-                    } else {
-                        System.err.println("Error: Found non-Piece object in decoded bag: " + obj);
-                    }
-                }
-            } else {
-                this.bag = new ArrayList<>();
-            }
-        }
-        else {
-            this.bag = new ArrayList<>();
+        PersistentArray bag = (PersistentArray)data.get("bag");
+        int size = bag.getLength();
+        for (int i = 0; i < size; i++) {
+            this.bag.add(bag.get(i, Piece.class));
         }
     }
 }

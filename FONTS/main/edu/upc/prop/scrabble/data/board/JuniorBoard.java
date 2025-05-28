@@ -21,6 +21,15 @@ public class JuniorBoard extends Board {
         setTripleLetterTiles();
     }
 
+    public JuniorBoard(Board board) {
+        super(board);
+
+        setDoubleWordTiles();
+        setTripleWordTiles();
+        setDoubleLetterTiles();
+        setTripleLetterTiles();
+    }
+
     /**
      * Estableix les caselles de doble paraula (Double Word) al tauler Junior.
      */

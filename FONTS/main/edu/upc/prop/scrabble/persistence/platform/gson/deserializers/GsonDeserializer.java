@@ -2,6 +2,7 @@ package edu.upc.prop.scrabble.persistence.platform.gson.deserializers;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import edu.upc.prop.scrabble.persistence.runtime.data.PersistentArray;
 import edu.upc.prop.scrabble.persistence.runtime.data.PersistentDictionary;
 import edu.upc.prop.scrabble.persistence.runtime.data.PersistentObject;
 import edu.upc.prop.scrabble.persistence.runtime.interfaces.IDeserializer;
