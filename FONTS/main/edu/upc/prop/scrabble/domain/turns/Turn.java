@@ -60,16 +60,19 @@ public class Turn {
     public boolean run(TurnResult result) {
         int endTurn = turnNumber % players.length;
         int startTurn = (turnNumber+1) % players.length;
+        players[endTurn].endTurn();
 
         if (result == Skip)
             skipCounter++;
         else
             skipCounter = 0;
 
-        players[endTurn].endTurn();
+        boolean ended = endgame.run(skipCounter);
+        if (ended)
+            return true;
+
         players[startTurn].startTurn();
         turnNumber = turnNumber + 1;
-
-        return endgame.run(skipCounter);
+        return false;
     }
 }
