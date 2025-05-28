@@ -7,6 +7,7 @@ import edu.upc.prop.scrabble.domain.board.IBoard;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles.*;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles.premium.*;
 import edu.upc.prop.scrabble.utils.Direction;
+import edu.upc.prop.scrabble.utils.Vector2;
 
 import javax.swing.*;
 import java.awt.*;
@@ -239,7 +240,8 @@ public class BoardView extends JPanel implements IBoard {
                 word.append(pieceWord.getLetter());
             }
         }
-        return new Movement(word.toString(), sortedTiles.getFirst().getX(), sortedTiles.getFirst().getY(), Direction.Horizontal);
+        Vector2 startPos = sortedTiles.getFirst().getPosition();
+        return new Movement(word.toString(), startPos.x, startPos.y, Direction.Horizontal);
     }
 
     /**
@@ -257,7 +259,8 @@ public class BoardView extends JPanel implements IBoard {
                 word.append(pieceWord.getLetter());
             }
         }
-        return new Movement(word.toString(), sortedTiles.getFirst().getX(), sortedTiles.getFirst().getY(), Direction.Vertical);
+        Vector2 startPos = sortedTiles.getFirst().getPosition();
+        return new Movement(word.toString(), startPos.x, startPos.y, Direction.Vertical);
     }
 
     /**
