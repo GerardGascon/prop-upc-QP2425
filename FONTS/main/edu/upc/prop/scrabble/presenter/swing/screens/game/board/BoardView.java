@@ -488,7 +488,19 @@ public class BoardView extends JPanel implements IBoard {
     }
 
     public void startPlace() {
+        for (BoardCell[] boardCells : board) {
+            for (BoardCell boardCell : boardCells) {
+                boardCell.getTile().setEnabled(true);
+            }
+        }
+    }
 
+    public void endPlace() {
+        for (BoardCell[] boardCells : board) {
+            for (BoardCell boardCell : boardCells) {
+                boardCell.getTile().setEnabled(false);
+            }
+        }
     }
 
     public Movement getPlacement() {

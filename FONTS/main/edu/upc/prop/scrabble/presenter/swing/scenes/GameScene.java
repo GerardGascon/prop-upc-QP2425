@@ -172,6 +172,7 @@ public class GameScene extends Scene {
         BoardView boardView = new BoardView(board.getSize(), handView, blankPieceSelector);
         PremiumTileTypeFiller premiumTileTypeFiller = new PremiumTileTypeFiller(board, boardView);
         premiumTileTypeFiller.run();
+        boardView.endPlace();
 
         PointCalculator pointCalculator = new PointCalculator(board);
 
