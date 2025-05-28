@@ -34,6 +34,9 @@ public class FloatingTile {
 
         if (x < sidePanelWidth || x + size > width) horizontalDir *= -1;
         if (y < 0 || y + size > height) verticalDir *= -1;
+
+        if (dx > -0.5 && dx < 0.5) dx = 3;
+        if (dy > -0.5 && dy < 0.5) dy = -3;
     }
 
     private boolean intersect(float x1, float y1, float r1, float x2, float y2, float r2) {
