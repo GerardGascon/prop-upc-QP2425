@@ -1,9 +1,9 @@
 package edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction.place;
 import edu.upc.prop.scrabble.data.Movement;
-import edu.upc.prop.scrabble.data.pieces.Piece;
+import edu.upc.prop.scrabble.data.exceptions.ScrabbleException;
 import edu.upc.prop.scrabble.domain.actionmaker.PlaceActionMaker;
+import edu.upc.prop.scrabble.domain.actionmaker.SkipActionMaker;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.BoardView;
-import edu.upc.prop.scrabble.presenter.swing.screens.game.hand.HandView;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction.ActionButtonPanel;
 
 import javax.swing.*;
@@ -23,6 +23,7 @@ public class PlaceAction extends JPanel {
     private final BoardView boardView;
     private ActionButtonPanel actionButtonPanel;
     private PlaceActionMaker placeActionMaker;
+    private SkipActionMaker skipActionMaker;
 
     /***
      * Construeix un objecte `PlaceAction`.
@@ -53,7 +54,11 @@ public class PlaceAction extends JPanel {
             remove(cancelBtn);
             add(placeBtn);
             Movement currentPlacement = boardView.getPlacement();
-            placeActionMaker.run(currentPlacement);
+            try {
+                placeActionMaker.run(currentPlacement);
+            } catch (ScrabbleException _) {
+                skipActionMaker.run();
+            }
             boardView.endPlace();
         });
 
@@ -89,8 +94,9 @@ public class PlaceAction extends JPanel {
         this.actionButtonPanel = actionButtonPanel;
     }
 
-    public void setActionMaker(PlaceActionMaker place) {
+    public void setActionMaker(PlaceActionMaker place, SkipActionMaker skip) {
         placeActionMaker = place;
+        skipActionMaker = skip;
     }
 }
 

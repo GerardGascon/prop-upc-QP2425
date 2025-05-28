@@ -1,6 +1,8 @@
 package edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction.draw;
 
+import edu.upc.prop.scrabble.data.exceptions.ScrabbleException;
 import edu.upc.prop.scrabble.domain.actionmaker.DrawActionMaker;
+import edu.upc.prop.scrabble.domain.actionmaker.SkipActionMaker;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.hand.HandView;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction.ActionButtonPanel;
 
@@ -25,6 +27,7 @@ public class DrawAction extends JPanel {
     private final HandView handView;
     private ActionButtonPanel actionButtonPanel;
     private DrawActionMaker drawActionMaker;
+    private SkipActionMaker skipActionMaker;
     private final List<String> pieces = new ArrayList<>();
 
     /**
@@ -64,7 +67,11 @@ public class DrawAction extends JPanel {
     }
 
     private void drawPieces() {
-        drawActionMaker.run(pieces.toArray(String[]::new));
+        try {
+            drawActionMaker.run(pieces.toArray(String[]::new));
+        } catch (ScrabbleException _) {
+            skipActionMaker.run();
+        }
         add(drawBtn);
         remove(confirmBtn);
         remove(finishBtn);
@@ -84,7 +91,8 @@ public class DrawAction extends JPanel {
         this.actionButtonPanel = actionButtonPanel;
     }
 
-    public void setActionMaker(DrawActionMaker draw) {
+    public void setActionMaker(DrawActionMaker draw, SkipActionMaker skip) {
         drawActionMaker = draw;
+        skipActionMaker = skip;
     }
 }
