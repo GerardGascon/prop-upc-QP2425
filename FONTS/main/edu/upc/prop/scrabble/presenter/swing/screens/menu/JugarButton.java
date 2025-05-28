@@ -38,13 +38,6 @@ public class JugarButton extends MenuButton {
     private final JFrame window;
 
     /**
-     * Boto amb el que s'intercanvia els panels.
-     * Si es prem otherbutton mentre s'estan mostrant panels de JugarButton, aleshores
-     * es tanca els panels de continueButton
-     */
-    private MenuButton[] otherButtons;
-
-    /**
      * ComboBox que permet seleccionar la mida del tauler
      */
     private JComboBox<String> tableSizeComboBox;
@@ -165,7 +158,7 @@ public class JugarButton extends MenuButton {
         addActionListener(_ -> {
             if (otherButtons != null) {
                 for (MenuButton b : otherButtons) {
-                    //   if (b != null) b.Close();
+                       if (b != null) b.Close();
                 }
             }
             toggleSettingsPanel();
@@ -173,20 +166,10 @@ public class JugarButton extends MenuButton {
     }
 
     /**
-     * Assigna el botó complementari amb el qual es coordina l'intercanvi de panells.
-     * Normalment utilitzat per assegurar que només un menú està actiu alhora.
-     *
-     * @param otherButtons El botó amb què es coordina.
-     */
-    public void setOtherButtons(MenuButton[] otherButtons) {
-        this.otherButtons = otherButtons;
-    }
-
-    /**
      * Tanca el panell desplegat pel botó "Continuar", si està actiu.
      * Elimina el panell de configuració del contenidor i actualitza la interfície.
      */
-    //@Override
+    @Override
     public void Close() {
         if (!menuActive) return;
 
