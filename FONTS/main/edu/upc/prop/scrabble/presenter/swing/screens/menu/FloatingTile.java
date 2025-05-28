@@ -28,7 +28,7 @@ public class FloatingTile {
         prevSpeed = speed;
         horizontalDir = rand.nextFloat(-1, 1);
         verticalDir = rand.nextFloat(-1, 1);
-        rotationSpeed = rand.nextDouble(-180, 180);
+        rotationSpeed = rand.nextDouble(-90, 90);
         rotation = rand.nextDouble(-360, 360);
     }
 
