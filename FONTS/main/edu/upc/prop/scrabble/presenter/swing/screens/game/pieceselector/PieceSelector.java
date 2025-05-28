@@ -1,5 +1,11 @@
 package edu.upc.prop.scrabble.presenter.swing.screens.game.pieceselector;
 
+import edu.upc.prop.scrabble.data.properties.Language;
+import edu.upc.prop.scrabble.presenter.swing.screens.game.pieceselector.alphabet.Alphabet;
+import edu.upc.prop.scrabble.presenter.swing.screens.game.pieceselector.alphabet.CatalanAlphabet;
+import edu.upc.prop.scrabble.presenter.swing.screens.game.pieceselector.alphabet.EnglishAlphabet;
+import edu.upc.prop.scrabble.presenter.swing.screens.game.pieceselector.alphabet.SpanishAlphabet;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.InputEvent;
@@ -36,15 +42,23 @@ public class PieceSelector extends JPanel {
     /** Etiqueta de capçalera que indica què fer */
     private final JLabel headerLabel;
 
+    private final Alphabet alphabet;
+
     /**
      * Crea un nou selector de peça amb botons de confirmació i cancel·lació.
      *
      * @param parent Panell pare on s’afegeix aquest selector
      * @param selectPieceCallback Funció que s’executa quan es valida i es confirma la lletra introduïda
      */
-    public PieceSelector(JPanel parent, Consumer<String> selectPieceCallback) {
+    public PieceSelector(Language language, JPanel parent, Consumer<String> selectPieceCallback) {
         super(null);
         this.parent = parent;
+
+        alphabet = switch (language) {
+            case English -> new EnglishAlphabet();
+            case Catalan -> new CatalanAlphabet();
+            case Spanish -> new SpanishAlphabet();
+        };
 
         setBounds(0, 0, parent.getWidth(), parent.getHeight());
         setOpaque(false);
@@ -66,12 +80,7 @@ public class PieceSelector extends JPanel {
         add(headerLabel);
         add(popup);
 
-        putBtn.addActionListener(_ -> {
-            parent.remove(this);
-            parent.revalidate();
-            parent.repaint();
-            validatePieceAndPlace(selectPieceCallback);
-        });
+        putBtn.addActionListener(_ -> validatePieceAndPlace(selectPieceCallback));
 
         cancelBtn.addActionListener(_ -> {
             parent.remove(this);
@@ -91,7 +100,13 @@ public class PieceSelector extends JPanel {
      * @param selectPieceCallback Callback que s'executa amb la peça introduïda
      */
     private void validatePieceAndPlace(Consumer<String> selectPieceCallback) {
-        selectPieceCallback.accept(inputField.getText());
+        if (!alphabet.isValid(inputField.getText()))
+            return;
+
+        selectPieceCallback.accept(inputField.getText().trim());
+        parent.remove(this);
+        parent.revalidate();
+        parent.repaint();
     }
 
     /**
