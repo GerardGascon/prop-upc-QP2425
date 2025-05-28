@@ -106,7 +106,7 @@ public class FloatingTile {
 
     static public String getRandomString() {
         String[] names = {
-                "GERARD", "BIEL", "GINA", "ALBERT", "FELIPE",
+                "GERARD", "BIELGINA", "ALBERT", "FELIPE",
                 "LAKESCHAN", "SCRABBLE", "WORDPLAY", "SKIBIDI"
         };
         Random rand = new Random();
