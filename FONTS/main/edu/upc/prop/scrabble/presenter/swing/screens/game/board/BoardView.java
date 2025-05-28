@@ -212,7 +212,7 @@ public class BoardView extends JPanel implements IBoard {
      * @return paraula formada
      * @throws RuntimeException si el cas no està suportat
      */
-    public String getTemporalWord() {
+    public Movement getTemporalWord() {
         if (temporalPieces.size() > 1) {
             if (temporalPieces.get(0).getPosition().x == temporalPieces.get(1).getPosition().x) {
                 return getVerticalTemporalWord();
@@ -229,7 +229,7 @@ public class BoardView extends JPanel implements IBoard {
      *
      * @return paraula horitzontal
      */
-    private String getHorizontalTemporalWord() {
+    private Movement getHorizontalTemporalWord() {
         StringBuilder word = new StringBuilder();
         List<BoardTile> sortedTiles = getSortedTiles(true);
         for (BoardTile boardTile : sortedTiles){
@@ -239,7 +239,7 @@ public class BoardView extends JPanel implements IBoard {
                 word.append(pieceWord.getLetter());
             }
         }
-        return word.toString();
+        return new Movement(word.toString(), sortedTiles.getFirst().getX(), sortedTiles.getFirst().getY(), Direction.Horizontal);
     }
 
     /**
@@ -247,7 +247,7 @@ public class BoardView extends JPanel implements IBoard {
      *
      * @return paraula vertical
      */
-    private String getVerticalTemporalWord() {
+    private Movement getVerticalTemporalWord() {
         StringBuilder word = new StringBuilder();
         List<BoardTile> sortedTiles = getSortedTiles(false);
         for (BoardTile boardTile : sortedTiles){
@@ -257,7 +257,7 @@ public class BoardView extends JPanel implements IBoard {
                 word.append(pieceWord.getLetter());
             }
         }
-        return word.toString();
+        return new Movement(word.toString(), sortedTiles.getFirst().getX(), sortedTiles.getFirst().getY(), Direction.Vertical);
     }
 
     /**
@@ -489,6 +489,6 @@ public class BoardView extends JPanel implements IBoard {
     }
 
     public Movement getPlacement() {
-        return null;
+        return getTemporalWord();
     }
 }

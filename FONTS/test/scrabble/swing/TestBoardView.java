@@ -206,7 +206,7 @@ public class TestBoardView extends SwingTest {
         view.getPanel().placeTemporalPiece("B", 2, 11, 10);
         view.getPanel().placeTemporalPiece("A", 3, 10, 10);
 
-        String temporalWord = view.getPanel().getTemporalWord();
+        String temporalWord = view.getPanel().getTemporalWord().word();
 
         assertEquals("AB", temporalWord);
         finish();
@@ -220,7 +220,7 @@ public class TestBoardView extends SwingTest {
         view.getPanel().placeTemporalPiece("B", 2, 10, 11);
         view.getPanel().placeTemporalPiece("A", 3, 10, 10);
 
-        String temporalWord = view.getPanel().getTemporalWord();
+        String temporalWord = view.getPanel().getTemporalWord().word();
 
         assertEquals("AB", temporalWord);
         finish();
@@ -290,7 +290,7 @@ public class TestBoardView extends SwingTest {
         view.getPanel().placeTemporalPiece("P", 2, 9, 10);
         view.getPanel().placeTemporalPiece("T", 3, 11, 10);
 
-        String temporalWord = view.getPanel().getTemporalWord();
+        String temporalWord = view.getPanel().getTemporalWord().word();
 
         assertEquals("PAT", temporalWord);
 
@@ -311,7 +311,7 @@ public class TestBoardView extends SwingTest {
         view.getPanel().placeTemporalPiece("P", 2, 10, 9);
         view.getPanel().placeTemporalPiece("T", 3, 10, 11);
 
-        String temporalWord = view.getPanel().getTemporalWord();
+        String temporalWord = view.getPanel().getTemporalWord().word();
 
         assertEquals("PAT", temporalWord);
 
@@ -333,7 +333,7 @@ public class TestBoardView extends SwingTest {
         view.getPanel().placeTemporalPiece("P", 2, 10, 9);
         view.getPanel().placeTemporalPiece("T", 3, 10, 11);
 
-        String temporalWord = view.getPanel().getTemporalWord();
+        String temporalWord = view.getPanel().getTemporalWord().word();
 
         assertEquals("PAT", temporalWord);
 
