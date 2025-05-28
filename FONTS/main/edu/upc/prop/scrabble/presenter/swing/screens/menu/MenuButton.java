@@ -18,6 +18,13 @@ public class MenuButton extends JButton {
     private final String text;
 
     /**
+     * Boto amb el que s'intercanvia els panels.
+     * Si es prem otherbutton mentre s'estan mostrant panels de JugarButton, aleshores
+     * es tanca els panels de continueButton
+     */
+    protected MenuButton[] otherButtons;
+
+    /**
      * Crea un nou botó de menú amb el text especificat.
      *
      * @param text el text que es mostrarà al botó.
@@ -44,6 +51,16 @@ public class MenuButton extends JButton {
 
         inputMap.put(KeyStroke.getKeyStroke("ENTER"), "none");
         inputMap.put(KeyStroke.getKeyStroke("released ENTER"), "none");
+    }
+
+    /**
+     * Assigna el botó complementari amb el qual es coordina l'intercanvi de panells.
+     * Normalment utilitzat per assegurar que només un menú està actiu alhora.
+     *
+     * @param otherButtons El botó amb què es coordina.
+     */
+    public void setOtherButtons(MenuButton[] otherButtons) {
+        this.otherButtons = otherButtons;
     }
 
     /**
@@ -126,4 +143,6 @@ public class MenuButton extends JButton {
     }
 
 
+    protected void Close() {
+    }
 }
