@@ -1,7 +1,17 @@
 package edu.upc.prop.scrabble.presenter.swing.screens.menu;
 
+import edu.upc.prop.scrabble.data.Player;
+import edu.upc.prop.scrabble.data.board.BoardType;
+import edu.upc.prop.scrabble.data.properties.GameProperties;
+import edu.upc.prop.scrabble.data.properties.Language;
+import edu.upc.prop.scrabble.presenter.scenes.SceneManager;
+import edu.upc.prop.scrabble.presenter.swing.scenes.GameScene;
+
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.*;
+import java.util.List;
 
 
 /**
@@ -110,8 +120,15 @@ public class JugarButton extends MenuButton {
     /**
      * String per a guardar el nom del jugador 4
      */
-    private String p4Name;
+    private String p4Name = "NOCHECKED";
 
+    /** Array que guarda els noms dels jugadors
+     */
+    private String[] names = new String[] {"p1", "p2", "p3", "p4"};
+
+    /** Array que guarda el tipos dels jugador
+     */
+    private String[] types = new String[] {"NO", "NO", "NO", "NO"};
 
     /**
      * String per a guardar el llenguatge de la partida
@@ -289,7 +306,7 @@ public class JugarButton extends MenuButton {
 
         player1Type.setBounds((int)(width*0.2), (int)(height*0.365), componentWidth, componentHeight);
 
-        player1Type.addActionListener(e -> selectedRealPlayers = (Integer) player1Type.getSelectedItem());
+        player1Type.addActionListener(e -> p1Name = (String) player1Type.getSelectedItem());
 
         settingsPanel.add(player1Type);
 
@@ -300,7 +317,7 @@ public class JugarButton extends MenuButton {
 
         player2Type.setBounds((int)(width*0.4), (int)(height*0.365), componentWidth, componentHeight);
 
-        player2Type.addActionListener(e -> selectedRealPlayers = (Integer) player2Type.getSelectedItem());
+        player2Type.addActionListener(e -> p2Type = (String) player2Type.getSelectedItem());
 
         settingsPanel.add(player2Type);
 
@@ -311,7 +328,7 @@ public class JugarButton extends MenuButton {
 
         player3Type.setBounds((int)(width*0.6), (int)(height*0.365), componentWidth, componentHeight);
 
-        player3Type.addActionListener(e -> selectedRealPlayers = (Integer) player3Type.getSelectedItem());
+        player3Type.addActionListener(e -> p3Type = (String) player3Type.getSelectedItem());
 
         settingsPanel.add(player3Type);
 
@@ -322,7 +339,7 @@ public class JugarButton extends MenuButton {
 
         player4Type.setBounds((int)(width*0.8), (int)(height*0.365), componentWidth, componentHeight);
 
-        player4Type.addActionListener(e -> selectedRealPlayers = (Integer) player4Type.getSelectedItem());
+        player4Type.addActionListener(e -> p4Type = (String) player4Type.getSelectedItem());
 
         settingsPanel.add(player4Type);
 
@@ -335,7 +352,10 @@ public class JugarButton extends MenuButton {
 
         player1Name.setColumns(10);
 
+        player1Name.addActionListener(e-> p1Name = (String) player1Name.getText());
+
         settingsPanel.add(player1Name);
+
 
 
         player2Name = new JTextField();
@@ -440,25 +460,57 @@ public class JugarButton extends MenuButton {
      * Actualment pendent d’implementació.
      */
     private void startGame() {
+        // Recoger nombres directamente al iniciar la partida
+        names[0] = player1Name.getText();
+        names[1] = player2Name.getText();
+        names[2] = player3Name.getText();
+        names[3] = player4Name.getText();
 
-        //GameProperties startGame = new GameProperties();
-// Collect all settings
-        System.out.println("Starting game with:");
-
-        System.out.println("Real Players: " + selectedRealPlayers);
-
-        System.out.println("CPU Players: " + selectedCPUPlayers);
-
-        System.out.println("Language: " + selectedLanguage);
-
-        System.out.println("Table Size: " + selectedTableSize);
+        // Recoger tipos de jugadores
+        types[0] = (String) player1Type.getSelectedItem();
+        types[1] = (String) player2Type.getSelectedItem();
+        types[2] = (String) player3Type.getSelectedItem();
+        types[3] = (String) player4Type.getSelectedItem();
 
 // Close settings panel
-        
         toggleSettingsPanel();
+// Obtain GameProperties
+        Language language = Language.Catalan;
+        if (selectedLanguage.equals("English")) {
+            language = Language.English;
+        }
+        else if (selectedLanguage.equals("Español")) {
+            language = Language.Spanish;
+        }
+        else
+            language = Language.Catalan;
+
+        BoardType boardType = BoardType.Standard;
+        if (selectedTableSize.equals("Junior")) {
+            boardType = BoardType.Junior;
+        }
+        else if (selectedTableSize.equals("Standard")) {
+            boardType = BoardType.Standard;
+        }
+        else boardType = BoardType.Super;
+
+        List<String> players = new ArrayList<>();
+        List<String> cpus = new ArrayList<>();
+        for (int i = 0; i < 4; ++i){
+            if (types[i].equals("CPU")){
+                cpus.add(names[i]);
+            }
+            else if (types[i].equals("Real")){
+                players.add(names[i]);
+            }
+        }
 
 
-// TODO: RECOLECTA DE DADES
+        System.out.println(players);
+        System.out.println(cpus);
+        System.out.println(boardType);
+        System.out.println(language);
 
+        SceneManager.getInstance().load(GameScene.class,new GameProperties(language,boardType,players,cpus,true));
     }
 }
