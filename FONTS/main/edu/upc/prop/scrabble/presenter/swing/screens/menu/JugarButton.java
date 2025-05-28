@@ -17,6 +17,7 @@ import java.util.List;
 /**
  * Botó encarregat de gestionar el menú de jugar i les seves funcionalitats associades,
  * com carregar seleccionar quants jugadors hi hauran, de quin tipus, els seus noms, el llenguatge de la partida i la mida del tauler
+ *
  * @author Biel Pérez Silvestre
  */
 public class JugarButton extends MenuButton {
@@ -29,11 +30,12 @@ public class JugarButton extends MenuButton {
      */
     private boolean menuActive = false;
     /**
-     *Panell de configuració de la partida amb fons degradat,
+     * Panell de configuració de la partida amb fons degradat,
      * títol, etiquetes i separadors visuals,
      * on es col·loquen les opcions per a jugadors, llenguatge i mida del tauler.
      */
     private JPanel settingsPanel;
+    private final JFrame window;
 
     /**
      * Boto amb el que s'intercanvia els panels.
@@ -122,13 +124,15 @@ public class JugarButton extends MenuButton {
      */
     private String p4Name = "NOCHECKED";
 
-    /** Array que guarda els noms dels jugadors
+    /**
+     * Array que guarda els noms dels jugadors
      */
-    private String[] names = new String[] {"p1", "p2", "p3", "p4"};
+    private String[] names = new String[]{"p1", "p2", "p3", "p4"};
 
-    /** Array que guarda el tipos dels jugador
+    /**
+     * Array que guarda el tipos dels jugador
      */
-    private String[] types = new String[] {"NO", "NO", "NO", "NO"};
+    private String[] types = new String[]{"NO", "NO", "NO", "NO"};
 
     /**
      * String per a guardar el llenguatge de la partida
@@ -151,15 +155,17 @@ public class JugarButton extends MenuButton {
 
     /**
      * Creador del botó "Jugar", que desplega el menú per configurar i carregar una partida
+     *
      * @param parent El panell principal sobre el qual es mostrarà el menú.
      */
-    public JugarButton(JPanel parent) {
+    public JugarButton(JPanel parent, JFrame window) {
         super("Jugar");
         this.parentPanel = parent;
+        this.window = window;
         addActionListener(_ -> {
             if (otherButtons != null) {
                 for (MenuButton b : otherButtons) {
-                //   if (b != null) b.Close();
+                    //   if (b != null) b.Close();
                 }
             }
             toggleSettingsPanel();
@@ -169,6 +175,7 @@ public class JugarButton extends MenuButton {
     /**
      * Assigna el botó complementari amb el qual es coordina l'intercanvi de panells.
      * Normalment utilitzat per assegurar que només un menú està actiu alhora.
+     *
      * @param otherButtons El botó amb què es coordina.
      */
     public void setOtherButtons(MenuButton[] otherButtons) {
@@ -223,13 +230,13 @@ public class JugarButton extends MenuButton {
 
                 // Fill
                 GradientPaint gradient = new GradientPaint(
-                        (float) (width*0.4),(float)(height*0.15) ,
+                        (float) (width * 0.4), (float) (height * 0.15),
                         new Color(240, 240, 250),
-                        (float)(width*0.8), (float)(height*0.95), new Color(210, 210, 230)
+                        (float) (width * 0.8), (float) (height * 0.95), new Color(210, 210, 230)
                 );
 
                 g2d.setPaint(gradient);
-                g2d.fillRoundRect((int)(width*0.05), (int)(height*0.05), (int)(width*0.9), (int)(height*0.9), 20, 20);
+                g2d.fillRoundRect((int) (width * 0.05), (int) (height * 0.05), (int) (width * 0.9), (int) (height * 0.9), 20, 20);
 
 // Títol
                 g2d.setFont(new Font("SansSerif", Font.BOLD, 30));
@@ -237,27 +244,27 @@ public class JugarButton extends MenuButton {
                 String title = "Game Settings";
                 FontMetrics fm = g2d.getFontMetrics();
                 int titleWidth = fm.stringWidth(title);
-                g2d.drawString(title, (int) (width*0.4), (int)(height*0.15));
+                g2d.drawString(title, (int) (width * 0.4), (int) (height * 0.15));
 
 // Linea
                 // Linea títol
                 g2d.setColor(new Color(180, 180, 200));
-                g2d.drawLine((int)(width*0.1), (int)(height*0.2), (int)(width*0.9), (int)(height*0.2));
+                g2d.drawLine((int) (width * 0.1), (int) (height * 0.2), (int) (width * 0.9), (int) (height * 0.2));
 
 // Settings títols
                 g2d.setFont(new Font("SansSerif", Font.BOLD, 20));
                 g2d.setColor(new Color(80, 80, 100));
 
-                g2d.drawString("Player 1", (int)(width*0.2), (int)(height*0.3));
-                g2d.drawString("Player 2", (int)(width*0.4), (int)(height*0.3));
-                g2d.drawString("Player 3", (int)(width*0.6), (int)(height*0.3));
-                g2d.drawString("Player 4", (int)(width*0.8), (int)(height*0.3));
+                g2d.drawString("Player 1", (int) (width * 0.2), (int) (height * 0.3));
+                g2d.drawString("Player 2", (int) (width * 0.4), (int) (height * 0.3));
+                g2d.drawString("Player 3", (int) (width * 0.6), (int) (height * 0.3));
+                g2d.drawString("Player 4", (int) (width * 0.8), (int) (height * 0.3));
 
-                g2d.drawString("Type: ", (int)(width*0.1), (int)(height*0.4));
-                g2d.drawString("Name: ", (int)(width*0.1), (int)(height*0.5));
+                g2d.drawString("Type: ", (int) (width * 0.1), (int) (height * 0.4));
+                g2d.drawString("Name: ", (int) (width * 0.1), (int) (height * 0.5));
 
-                g2d.drawString("Language", (int)(width*0.1),(int)(height*0.6));
-                g2d.drawString("Table Size", (int)(width*0.1), (int)(height*0.7));
+                g2d.drawString("Language", (int) (width * 0.1), (int) (height * 0.6));
+                g2d.drawString("Table Size", (int) (width * 0.1), (int) (height * 0.7));
 
                 g2d.dispose();
             }
@@ -288,7 +295,8 @@ public class JugarButton extends MenuButton {
 
     /**
      * Afegeix els components al panell de configuració: un botó per carregar una partida i un altre per cancel·lar.
-     * @param width L’amplada del panell de configuració.
+     *
+     * @param width  L’amplada del panell de configuració.
      * @param height L’alçada del panell de configuració.
      */
     private void addSettingsComponents(int width, int height) {
@@ -304,7 +312,7 @@ public class JugarButton extends MenuButton {
 
         player1Type.setSelectedItem(selectedRealPlayers);
 
-        player1Type.setBounds((int)(width*0.2), (int)(height*0.365), componentWidth, componentHeight);
+        player1Type.setBounds((int) (width * 0.2), (int) (height * 0.365), componentWidth, componentHeight);
 
         player1Type.addActionListener(e -> p1Name = (String) player1Type.getSelectedItem());
 
@@ -315,7 +323,7 @@ public class JugarButton extends MenuButton {
 
         player2Type.setSelectedItem(selectedRealPlayers);
 
-        player2Type.setBounds((int)(width*0.4), (int)(height*0.365), componentWidth, componentHeight);
+        player2Type.setBounds((int) (width * 0.4), (int) (height * 0.365), componentWidth, componentHeight);
 
         player2Type.addActionListener(e -> p2Type = (String) player2Type.getSelectedItem());
 
@@ -326,7 +334,7 @@ public class JugarButton extends MenuButton {
 
         player3Type.setSelectedItem(selectedRealPlayers);
 
-        player3Type.setBounds((int)(width*0.6), (int)(height*0.365), componentWidth, componentHeight);
+        player3Type.setBounds((int) (width * 0.6), (int) (height * 0.365), componentWidth, componentHeight);
 
         player3Type.addActionListener(e -> p3Type = (String) player3Type.getSelectedItem());
 
@@ -337,7 +345,7 @@ public class JugarButton extends MenuButton {
 
         player4Type.setSelectedItem(selectedRealPlayers);
 
-        player4Type.setBounds((int)(width*0.8), (int)(height*0.365), componentWidth, componentHeight);
+        player4Type.setBounds((int) (width * 0.8), (int) (height * 0.365), componentWidth, componentHeight);
 
         player4Type.addActionListener(e -> p4Type = (String) player4Type.getSelectedItem());
 
@@ -348,21 +356,20 @@ public class JugarButton extends MenuButton {
 
         player1Name.setEditable(true);
 
-        player1Name.setBounds((int)(width*0.2), (int)(height*0.47), componentWidth, componentHeight);
+        player1Name.setBounds((int) (width * 0.2), (int) (height * 0.47), componentWidth, componentHeight);
 
         player1Name.setColumns(10);
 
-        player1Name.addActionListener(e-> p1Name = (String) player1Name.getText());
+        player1Name.addActionListener(e -> p1Name = (String) player1Name.getText());
 
         settingsPanel.add(player1Name);
-
 
 
         player2Name = new JTextField();
 
         player2Name.setEditable(true);
 
-        player2Name.setBounds((int)(width*0.4), (int)(height*0.47), componentWidth, componentHeight);
+        player2Name.setBounds((int) (width * 0.4), (int) (height * 0.47), componentWidth, componentHeight);
 
         player2Name.setColumns(10);
 
@@ -373,7 +380,7 @@ public class JugarButton extends MenuButton {
 
         player3Name.setEditable(true);
 
-        player3Name.setBounds((int)(width*0.6), (int)(height*0.47), componentWidth, componentHeight);
+        player3Name.setBounds((int) (width * 0.6), (int) (height * 0.47), componentWidth, componentHeight);
 
         player3Name.setColumns(10);
 
@@ -384,7 +391,7 @@ public class JugarButton extends MenuButton {
 
         player4Name.setEditable(true);
 
-        player4Name.setBounds((int)(width*0.8), (int)(height*0.47), componentWidth, componentHeight);
+        player4Name.setBounds((int) (width * 0.8), (int) (height * 0.47), componentWidth, componentHeight);
 
         player4Name.setColumns(10);
 
@@ -399,7 +406,7 @@ public class JugarButton extends MenuButton {
 
         languageComboBox.setSelectedItem(selectedLanguage);
 
-        languageComboBox.setBounds((int)(width*0.225), (int)(height*0.575), (int)(width*0.4), componentHeight);
+        languageComboBox.setBounds((int) (width * 0.225), (int) (height * 0.575), (int) (width * 0.4), componentHeight);
 
         languageComboBox.addActionListener(e -> selectedLanguage = (String) languageComboBox.getSelectedItem());
 
@@ -414,7 +421,7 @@ public class JugarButton extends MenuButton {
 
         tableSizeComboBox.setSelectedItem(selectedTableSize);
 
-        tableSizeComboBox.setBounds((int)(width*0.225), (int)(height*0.665), (int)(width*0.4), componentHeight);
+        tableSizeComboBox.setBounds((int) (width * 0.225), (int) (height * 0.665), (int) (width * 0.4), componentHeight);
 
         tableSizeComboBox.addActionListener(e -> selectedTableSize = (String) tableSizeComboBox.getSelectedItem());
 
@@ -425,7 +432,7 @@ public class JugarButton extends MenuButton {
 
         JButton startButton = new JButton("Start Game");
 
-        startButton.setBounds((int)(width*0.1), (int)(height*0.85), (int)(width*0.2), componentHeight);
+        startButton.setBounds((int) (width * 0.1), (int) (height * 0.85), (int) (width * 0.2), componentHeight);
 
         startButton.setBackground(new Color(80, 130, 200));
 
@@ -442,7 +449,7 @@ public class JugarButton extends MenuButton {
 
         JButton cancelButton = new JButton("Cancel");
 
-        cancelButton.setBounds((int)(width*0.7), (int)(height*0.85), (int)(width*0.2), componentHeight);
+        cancelButton.setBounds((int) (width * 0.7), (int) (height * 0.85), (int) (width * 0.2), componentHeight);
 
         cancelButton.setBackground(new Color(200, 100, 100));
 
@@ -455,6 +462,7 @@ public class JugarButton extends MenuButton {
         settingsPanel.add(cancelButton);
 
     }
+
     /**
      * Acció que s’executa quan l’usuari, un cop ha assignat la configuració de la partida, decideix començar una partida
      * Actualment pendent d’implementació.
@@ -478,29 +486,24 @@ public class JugarButton extends MenuButton {
         Language language = Language.Catalan;
         if (selectedLanguage.equals("English")) {
             language = Language.English;
-        }
-        else if (selectedLanguage.equals("Español")) {
+        } else if (selectedLanguage.equals("Español")) {
             language = Language.Spanish;
-        }
-        else
+        } else
             language = Language.Catalan;
 
         BoardType boardType = BoardType.Standard;
         if (selectedTableSize.equals("Junior")) {
             boardType = BoardType.Junior;
-        }
-        else if (selectedTableSize.equals("Standard")) {
+        } else if (selectedTableSize.equals("Standard")) {
             boardType = BoardType.Standard;
-        }
-        else boardType = BoardType.Super;
+        } else boardType = BoardType.Super;
 
         List<String> players = new ArrayList<>();
         List<String> cpus = new ArrayList<>();
-        for (int i = 0; i < 4; ++i){
-            if (types[i].equals("CPU")){
+        for (int i = 0; i < 4; ++i) {
+            if (types[i].equals("CPU")) {
                 cpus.add(names[i]);
-            }
-            else if (types[i].equals("Real")){
+            } else if (types[i].equals("Real")) {
                 players.add(names[i]);
             }
         }
@@ -511,6 +514,6 @@ public class JugarButton extends MenuButton {
         System.out.println(boardType);
         System.out.println(language);
 
-        SceneManager.getInstance().load(GameScene.class,new GameProperties(language,boardType,players,cpus,true));
+        SceneManager.getInstance().load(GameScene.class, new GameProperties(language, boardType, players, cpus, false), window);
     }
 }
