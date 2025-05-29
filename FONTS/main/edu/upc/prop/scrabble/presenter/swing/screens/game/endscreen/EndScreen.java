@@ -51,14 +51,14 @@ public class EndScreen extends JPanel implements IEndScreen {
      * Fa visible la finestra, la porta al davant i demana el focus.
      *
      * @param sortedPlayers Array de jugadors ordenats per puntuació final
-     */
+     *f
     @Override
     public void show(Player[] sortedPlayers) {
         if (endScreenOverlay != null)
             return;
 
         new SaveReader().delete(GameScene.SAVE_FILE_NAME);
-        endScreenOverlay = new EndScreenOverlay(sortedPlayers,window);
+        endScreenOverlay = new EndScreenOverlay(sortedPlayers,window, gameProperties);
         endScreenOverlay.setBounds(0, 0, getWidth(), getHeight());
         add(endScreenOverlay);
         endScreenOverlay.requestFocusInWindow();
