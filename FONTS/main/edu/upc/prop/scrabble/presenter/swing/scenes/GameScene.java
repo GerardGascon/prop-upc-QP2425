@@ -198,7 +198,18 @@ public class GameScene extends Scene {
         Endgame endgame = new Endgame(playersData);
         Turn turnManager = new Turn(endgame, players);
 
-        EndScreen endScreen = new EndScreen(window, properties);
+        List<String> playerNames = new ArrayList<>();
+        List<String> cpuNames = new ArrayList<>();
+
+        for (Player playersDatum : playersData) {
+            if (playersDatum.getCPU())
+                cpuNames.add(playersDatum.getName());
+            else
+                playerNames.add(playersDatum.getName());
+        }
+
+        GameProperties gameProperties = new GameProperties(language, board.getType(), playerNames, cpuNames, !isNewGame);
+        EndScreen endScreen = new EndScreen(window, gameProperties);
 
         DataCollector leaderboardCollector = new DataCollector();
         leaderboardCollector.addPersistableObject(leaderboard);
