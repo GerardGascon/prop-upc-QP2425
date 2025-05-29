@@ -31,7 +31,7 @@ public class BoardDoubleWordTile extends BoardTile {
     public BoardDoubleWordTile(int x, int y, IHandView handView, BoardView boardView, IBlankPieceSelector blankPieceSelector) {
         super(x, y, handView, boardView, blankPieceSelector);
         setBackground(new Color(0xff, 0xc0, 0xcb));
-        createTooltip("Puntuació doble de paraula");
+        createTooltip("Double Word Score");
     }
 
     /**

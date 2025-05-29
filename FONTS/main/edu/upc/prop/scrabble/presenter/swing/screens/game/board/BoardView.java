@@ -486,6 +486,9 @@ public class BoardView extends JPanel implements IBoard {
             case DoubleWord:
                 changeTile(new BoardDoubleWordTile(x, y, handView, this, blankPieceSelector), x, y);
                 break;
+            case QuadrupleLetter:
+                changeTile(new BoardQuadrupleLetterTile(x, y, handView, this, blankPieceSelector), x, y);
+                break;
             case TripleLetter:
                 changeTile(new BoardTripleLetterTile(x, y, handView, this, blankPieceSelector), x, y);
                 break;
