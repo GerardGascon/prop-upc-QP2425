@@ -37,7 +37,7 @@ public class RanquingButton extends MenuButton {
     /**
      * Text del botó
      */
-    private JTextArea ranquingText;
+    private JTextPane ranquingText;
     /**
      * Contenidor de les dades a mostrar
      */
@@ -153,9 +153,10 @@ public class RanquingButton extends MenuButton {
         int componentHeight = (int)(height * 0.05);
 
         // Ranking text area
-        ranquingText = new JTextArea();
+        ranquingText = new JTextPane();
+        ranquingText.setContentType("text/html");
         ranquingText.setEditable(false);
-        ranquingText.setFont(new Font("Monospaced", Font.PLAIN, 30));
+        ranquingText.setFont(new Font("SansSerif", Font.PLAIN, 30));
         JScrollPane scrollPane = new JScrollPane(ranquingText);
         ranquingText.setBorder(BorderFactory.createEmptyBorder(10, 15, 10, 15));
         scrollPane.setBounds((int)(width * 0.1), (int)(height * 0.25), (int)(width * 0.8), (int)(height * 0.5));
@@ -221,20 +222,34 @@ public class RanquingButton extends MenuButton {
                 break;
         }
 
-        StringBuilder builder = new StringBuilder();
+        StringBuilder builder = new StringBuilder("<html><body style='font-family:\"SansSerif\", monospace; font-size:30pt;'>");
+
         int pos = 1;
         for (int i = 0; i < ranquingData.length; i++) {
-            // No ensenyar decimals si no cal
             double value = ranquingData[i].value();
-            String valueStr;
-            if (mode.equals("Percentatge de Victòries")) {
-                valueStr = String.format("%.2f", value);
-            } else {
-                valueStr = String.format("%.0f", value);
+            String valueStr = (mode.equals("Percentatge de Victòries")) ?
+                    String.format("%.2f", value) : String.format("%.0f", value);
+
+            if (i != 0 && value != ranquingData[i - 1].value()) ++pos;
+
+            String color;
+            switch (pos) {
+                case 1 -> color = "#FFD700";
+                case 2 -> color = "#C0C0C0";
+                case 3 -> color = "#CD7F32";
+                default -> color = "#000000";
             }
-            if(i != 0 && value != ranquingData[i - 1].value()) ++pos; // Empat de posicions
-            builder.append(String.format("%d. %-10s - %s%n", pos, ranquingData[i].playerName(), valueStr));
+
+            String crown = (pos == 1) ? " ♛" : ""; // chess queen symbol // corona
+
+
+            builder.append(String.format("<div style='color:%s;'>%d. %s - %s%s</div>",
+                    color, pos, ranquingData[i].playerName(), valueStr, crown));
         }
+
+        builder.append("</body></html>");
         ranquingText.setText(builder.toString());
+        ranquingText.setCaretPosition(0);
+
     }
 }
