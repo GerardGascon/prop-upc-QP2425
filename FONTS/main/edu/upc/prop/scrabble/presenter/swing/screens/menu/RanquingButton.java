@@ -117,7 +117,7 @@ public class RanquingButton extends MenuButton {
                 g2d.setPaint(gradient);
                 g2d.fillRoundRect((int)(width * 0.05), (int)(height * 0.05), (int)(width * 0.9), (int)(height * 0.9), 20, 20);
 
-                g2d.setFont(new Font("SansSerif", Font.BOLD, 30));
+                g2d.setFont(new Font("SansSerif", Font.BOLD, 55));
                 g2d.setColor(new Color(80, 60, 50));
                 String title = "Rànquings";
                 FontMetrics fm = g2d.getFontMetrics();
@@ -155,21 +155,24 @@ public class RanquingButton extends MenuButton {
         // Ranking text area
         ranquingText = new JTextArea();
         ranquingText.setEditable(false);
-        ranquingText.setFont(new Font("Monospaced", Font.PLAIN, 16));
+        ranquingText.setFont(new Font("Monospaced", Font.PLAIN, 30));
         JScrollPane scrollPane = new JScrollPane(ranquingText);
+        ranquingText.setBorder(BorderFactory.createEmptyBorder(10, 15, 10, 15));
         scrollPane.setBounds((int)(width * 0.1), (int)(height * 0.25), (int)(width * 0.8), (int)(height * 0.5));
         ranquingPanel.add(scrollPane);
 
         // Mode selector
-        String[] modes = {"Partides Jugades", "Partides Guanyades",
-                          "Percentatge de Victòries", "Màxima Puntuació", "Puntuació Total"};
+        String[] modes = {" Partides Jugades", " Partides Guanyades",
+                          " Percentatge de Victòries", " Màxima Puntuació", " Puntuació Total"};
         modeSelector = new JComboBox<>(modes);
         modeSelector.setSelectedItem("Partides Jugades");
+        modeSelector.setFont(new Font("SansSerif", Font.BOLD, 30));
         modeSelector.setBounds((int)(width * 0.1), (int)(height * 0.2), (int)(width * 0.4), componentHeight);
         modeSelector.addActionListener(this::updateRanquing);
         ranquingPanel.add(modeSelector);
 
         JButton closeButton = new JButton("Tancar");
+        closeButton.setFont(new Font("SansSerif", Font.BOLD, 30));
         closeButton.setBounds((int)(width * 0.7), (int)(height * 0.85), (int)(width * 0.2), componentHeight);
         closeButton.setBackground(new Color(200, 100, 100));
         closeButton.setForeground(Color.WHITE);
@@ -188,23 +191,23 @@ public class RanquingButton extends MenuButton {
         String mode = (String) modeSelector.getSelectedItem();
         PlayerValuePair[] ranquingData = new PlayerValuePair[0];
         switch (mode) {
-            case "Partides Jugades":
+            case " Partides Jugades":
                 GamesPlayedLeaderboard gamesPlayedLeaderboard = new GamesPlayedLeaderboard();
                 ranquingData = gamesPlayedLeaderboard.run(leaderboard.getScoreArray());
                 break;
-            case "Partides Guanyades":
+            case " Partides Guanyades":
                 GamesWonLeaderboard gamesWonLeaderboard = new GamesWonLeaderboard();
                 ranquingData = gamesWonLeaderboard.run(leaderboard.getScoreArray());
                 break;
-            case "Percentatge de Victòries":
+            case " Percentatge de Victòries":
                 WinRateLeaderboard winRateLeaderboard = new WinRateLeaderboard();
                 ranquingData = winRateLeaderboard.run(leaderboard.getScoreArray());
                 break;
-            case "Màxima Puntuació":
+            case " Màxima Puntuació":
                 MaxScoreLeaderboard maxScoreLeaderboard = new MaxScoreLeaderboard();
                 ranquingData = maxScoreLeaderboard.run(leaderboard.getScoreArray());
                 break;
-            case "Puntuació Total":
+            case " Puntuació Total":
                 TotalScoreLeaderboard totalScoreLeaderboard = new TotalScoreLeaderboard();
                 ranquingData = totalScoreLeaderboard.run(leaderboard.getScoreArray());
                 break;
