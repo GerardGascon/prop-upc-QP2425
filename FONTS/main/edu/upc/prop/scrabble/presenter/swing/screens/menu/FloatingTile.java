@@ -28,25 +28,25 @@ public class FloatingTile {
         prevSpeed = speed;
         horizontalDir = rand.nextFloat(-1, 1);
         verticalDir = rand.nextFloat(-1, 1);
-        rotationSpeed = rand.nextDouble(-90, 90);
+        double aux = rand.nextDouble(-90, 90);
+        if(aux == 0) aux = 1.0;
+        rotationSpeed = aux;
         rotation = rand.nextDouble(-360, 360);
     }
 
     public void move(float delta) {
         if (speed > prevSpeed) speed -= 2;
-
+        else if (speed < prevSpeed && speed != 0) speed += 2;
         dx = horizontalDir * speed * delta;
         dy = verticalDir * speed * delta;
-        x += dx;
-        y += dy;
 
         rotation += rotationSpeed * delta;
 
-        if (x < sidePanelWidth || x + size > width) horizontalDir *= -1;
-        if (y < 0 || y + size > height) verticalDir *= -1;
+        if (x + dx < sidePanelWidth || x + dx + size > width) horizontalDir *= -1;
+        else x += dx;
 
-        if (dx > -0.5 && dx < 0.5) dx = 3;
-        if (dy > -0.5 && dy < 0.5) dy = -3;
+        if (y + dy < 0 || y + dy + size > height) verticalDir *= -1;
+        else y += dy;
     }
 
     private boolean intersect(float x1, float y1, float r1, float x2, float y2, float r2) {
@@ -61,9 +61,9 @@ public class FloatingTile {
             float middlePointX = (x + other.x) / 2f;
             float middlePointY = (y + other.y) / 2f;
 
-            float speed = this.speed;
-            this.speed = other.speed;
-            other.speed = speed;
+            float speed = (this.speed + other.speed) / 4;
+            this.speed = this.speed/2 + speed;
+            other.speed = other.speed/2 + speed;
 
             if (middlePointX > x){
                 horizontalDir = -Math.abs(horizontalDir);

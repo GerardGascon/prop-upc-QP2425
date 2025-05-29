@@ -241,6 +241,8 @@ public class MenuScreen extends JPanel {
             @Override
             public void mouseDragged(java.awt.event.MouseEvent e) {
                 if (selectedTile != null && lastMousePos != null) {
+                    selectedTile.speed = 0;
+
                     long now = System.currentTimeMillis();
                     Point currentMousePos = e.getPoint();
 
@@ -258,7 +260,7 @@ public class MenuScreen extends JPanel {
 
                     selectedTile.x = Math.max(minX, Math.min(newTileX, maxX));
                     selectedTile.y = Math.max(0, Math.min(newTileY, maxY));
-                    selectedTile.speed = 0;
+
 
                     for (FloatingTile tile : floatingTiles) {
                         if (tile != selectedTile && selectedTile.overlaps(tile)) {
