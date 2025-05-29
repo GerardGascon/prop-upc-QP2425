@@ -187,7 +187,6 @@ public class RanquingButton extends MenuButton {
     private void updateRanquing(ActionEvent e) {
         String mode = (String) modeSelector.getSelectedItem();
         PlayerValuePair[] ranquingData = new PlayerValuePair[0];
-        Leaderboard leaderboard = new Leaderboard(); // A QUITAR!
         switch (mode) {
             case "Partides Jugades":
                 GamesPlayedLeaderboard gamesPlayedLeaderboard = new GamesPlayedLeaderboard();
