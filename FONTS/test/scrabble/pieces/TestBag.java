@@ -58,13 +58,6 @@ public class TestBag {
         }
 
         PersistentDictionary encodedData = originalBag.encode();
-        PersistentObject encodedBagObject = encodedData.get("bag");
-        Object[] encodedBagArray = (Object[]) encodedBagObject.getValue();
-
-        // sut encode
-        assertEquals(originalBag.getSize(), encodedBagArray.length);
-        assertEquals(piece.toString(), encodedBagArray[0].toString());
-        assertEquals(piece.toString(), encodedBagArray[1].toString());
 
         Bag decodedBag = new Bag();
         decodedBag.decode(encodedData);

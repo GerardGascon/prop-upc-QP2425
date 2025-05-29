@@ -19,10 +19,11 @@ import edu.upc.prop.scrabble.presenter.localization.PiecesReader;
 import edu.upc.prop.scrabble.utils.IRand;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
 import scrabble.stubs.EndScreenStub;
 import scrabble.stubs.GamePlayerStub;
+import scrabble.stubs.GameSaverMock;
 import scrabble.stubs.RandStub;
+import scrabble.swing.stubs.HandViewStub;
 
 import java.util.Arrays;
 
@@ -33,15 +34,14 @@ public class TestDrawActionMaker {
     Bag bag;
     DrawActionMaker sut;
 
-    @Mock
-    private GameSaver gameSaver;
+    private final GameSaver gameSaver = new GameSaverMock();
 
     @Before
     public void setUp() {
         bag = new Bag();
         player = new Player("testPlayer", false);
         IRand rand = new RandStub(0);
-        IHandView display = null;
+        IHandView display = new HandViewStub("A", 1);
         Turn turn = new Turn(new Endgame(new Player[]{player}), new IGamePlayer[]{new GamePlayerStub()});
         IEndScreen endScreen = new EndScreenStub();
         GameStepper stepper = new GameStepper(turn, new Leaderboard(), new Player[]{player}, endScreen, gameSaver);
