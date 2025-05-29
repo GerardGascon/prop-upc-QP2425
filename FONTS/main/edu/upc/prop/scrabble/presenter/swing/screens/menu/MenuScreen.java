@@ -1,5 +1,7 @@
 package edu.upc.prop.scrabble.presenter.swing.screens.menu;
 
+import edu.upc.prop.scrabble.data.leaderboard.Leaderboard;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -32,7 +34,7 @@ public class MenuScreen extends JPanel {
     /**
      * Creadora i inicialitzadora
      */
-    public MenuScreen(JFrame window) {
+    public MenuScreen(JFrame window, Leaderboard leaderboard) {
         setDoubleBuffered(true);
         setLayout(null);
         setBackground(new Color(64, 88, 214));
@@ -43,7 +45,7 @@ public class MenuScreen extends JPanel {
 
         playButton = new JugarButton(buttonPanel, window);
         continueButton = new ContinueButton(buttonPanel, window);
-        rankingButton = new RanquingButton(buttonPanel);
+        rankingButton = new RanquingButton(buttonPanel, leaderboard);
         quitButton = new MenuButton("Sortir");
 
         playButton.setOtherButtons(new MenuButton[]{continueButton, rankingButton});

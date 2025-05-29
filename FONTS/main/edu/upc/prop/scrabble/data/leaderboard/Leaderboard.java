@@ -1,5 +1,6 @@
 package edu.upc.prop.scrabble.data.leaderboard;
 
+import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.persistence.runtime.data.PersistentArray;
 import edu.upc.prop.scrabble.persistence.runtime.data.PersistentDictionary;
 import edu.upc.prop.scrabble.persistence.runtime.data.PersistentObject;
@@ -45,7 +46,12 @@ public class Leaderboard implements IPersistableObject {
     @Override
     public PersistentDictionary encode() {
         PersistentDictionary data = new PersistentDictionary();
-        data.add(new PersistentObject("leaderboard", leaderBoard.toArray(Score[]::new)));
+
+        PersistentArray leaderboard = new PersistentArray("leaderboard");
+        for (Score score : leaderBoard)
+            leaderboard.add(score);
+        data.add(leaderboard);
+
         return data;
     }
 
@@ -57,7 +63,8 @@ public class Leaderboard implements IPersistableObject {
      */
     @Override
     public void decode(PersistentDictionary data) {
-        PersistentObject leaderboard = data.get("leaderboard");
-        leaderBoard.addAll(Arrays.stream(leaderboard.parse(Score[].class)).toList());
+        PersistentArray leaderboard = (PersistentArray)data.get("leaderboard");
+        for (int i = 0; i < leaderboard.getLength(); i++)
+            this.leaderBoard.add(leaderboard.get(i, Score.class));
     }
 }

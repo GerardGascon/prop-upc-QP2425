@@ -41,15 +41,17 @@ public class RanquingButton extends MenuButton {
     /**
      * Contenidor de les dades a mostrar
      */
-    private Leaderboard leaderboard;
+    private final Leaderboard leaderboard;
 
     /**
      * Creador del botó "Rànquing"
      * @param parent El panell principal sobre el qual es mostrarà el menú.
+     * @param leaderboard El rànquing amb les dades a mostrar.
      */
-    public RanquingButton(JPanel parent) {
+    public RanquingButton(JPanel parent, Leaderboard leaderboard) {
         super("Rànquing");
         this.parentPanel = parent;
+        this.leaderboard = leaderboard;
         addActionListener(_ -> {
             if (otherButtons != null) {
                 for (MenuButton b : otherButtons) {
