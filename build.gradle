@@ -89,17 +89,3 @@ tasks.register('runSwing', JavaExec) {
     dependsOn generateRunFiles
 }
 
-def executableClasses = ['RunHandTests', 'RunBoardTests']
-
-executableClasses.each { className ->
-    tasks.register("run${className}", JavaExec) {
-        group = 'verification'
-        description = "Runs ${className} using a custom test runner main method."
-        classpath = sourceSets.testrunner.runtimeClasspath
-        standardInput = System.in
-        mainClass.set(className)
-        jvmArgs "-Drun.origin=runTests"
-        dependsOn 'classes'
-    }
-}
-
