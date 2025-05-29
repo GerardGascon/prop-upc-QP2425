@@ -126,9 +126,11 @@ public class HandView extends JPanel implements IHandView {
      */
     @Override
     public void piecePlaced() {
-        remove(selectedPieceButton);
-        selectedPieceButtons.add(selectedPieceButton);
-        selectedPieceButton = null;
+        if (selectedPieceButton != null) {
+            remove(selectedPieceButton);
+            selectedPieceButtons.add(selectedPieceButton);
+            selectedPieceButton = null;
+        }
         revalidate();
         repaint();
     }
