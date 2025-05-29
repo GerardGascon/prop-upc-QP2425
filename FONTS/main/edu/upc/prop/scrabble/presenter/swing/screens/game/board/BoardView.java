@@ -214,6 +214,9 @@ public class BoardView extends JPanel implements IBoard {
      * @throws RuntimeException si el cas no està suportat
      */
     public Movement getTemporalWord() {
+        if (temporalPieces.isEmpty())
+            return null;
+
         if (temporalPieces.size() > 1) {
             if (temporalPieces.get(0).getPosition().x == temporalPieces.get(1).getPosition().x) {
                 return getVerticalTemporalWord();
