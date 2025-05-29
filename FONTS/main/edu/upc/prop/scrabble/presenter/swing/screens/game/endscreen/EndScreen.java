@@ -23,16 +23,26 @@ import java.util.Arrays;
  * @author Albert Usero
  */
 public class EndScreen extends JPanel implements IEndScreen {
-
+    /**
+     * Overlay que conté els elements visuals de la pantalla final
+     */
     private EndScreenOverlay endScreenOverlay;
 
+    /**
+     * Propietats de la partida actual
+     */
     private GameProperties gameProperties;
 
-    JFrame window;
+    /**
+     * Finestra principal de l'aplicació
+     */
+    private JFrame window;
 
     /**
-     * Constructor per defecte que crea un EndScreen sense jugadors.
-     * Inicialitza el component amb l'estil per defecte i arrays de jugadors buits.
+     * Constructor que crea un EndScreen amb la finestra i propietats especificades.
+     *
+     * @param window Finestra principal de l'aplicació
+     * @param gameProperties Propietats de la partida actual
      */
     public EndScreen(JFrame window, GameProperties gameProperties) {
         setLayout(null);

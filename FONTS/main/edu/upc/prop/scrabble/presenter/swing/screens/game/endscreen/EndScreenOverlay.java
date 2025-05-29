@@ -17,6 +17,17 @@ import java.util.Random;
 
 import static java.awt.SystemColor.window;
 
+/**
+ * Pantalla final del joc que mostra els resultats de la partida.
+ * Aquesta classe crea una interfície visual amb un podi per als primers 3 jugadors,
+ * una llista completa de classificació, animacions de confeti i botons d'acció.
+ *
+ * La pantalla està dividida en dues àrees principals:
+ * - Panell lateral esquerre amb botons d'acció
+ * - Àrea principal amb resultats i animacions
+ *
+ * @author Albert Usero
+ */
 public class EndScreenOverlay extends JPanel {
     /** Percentatge d'amplada de pantalla ocupat pel panell lateral */
     private final float SIDE_PANEL_WIDTH_PERCENT = 0.35f;
@@ -36,29 +47,34 @@ public class EndScreenOverlay extends JPanel {
     /** Marge màxim en píxels entre targetes de jugadors */
     private final int MAX_PLAYER_CARD_MARGIN = 8;
 
-    /** Array de jugadors de la partida */
+    /** Array de jugadors de la partida ordenats per puntuació */
     private final Player[] players;
 
-    /** Panell que conté els botons d'acció */
+    /** Panell que conté els botons d'acció (Nova Partida, Menú Principal, Sortir) */
     private JPanel buttonPanel;
 
-    /** Lista de partículas de confeti */
+    /** Lista de partículas de confeti per a l'animació */
     private List<ConfettiParticle> confettiParticles;
 
-    /** Timer para animación de confeti */
+    /** Timer per animar les partícules de confeti */
     private Timer confettiTimer;
 
-    /** Random para generar confeti */
+    /** Generador de números aleatoris per al confeti */
     private Random random;
 
+    /** Finestra principal de l'aplicació */
     private JFrame window;
 
+    /** Propietats de la partida actual */
     private GameProperties gameProperties;
 
     /**
-     * Constructor que crea un EndScreen amb els jugadors especificats.
+     * Constructor que crea una pantalla final amb els jugadors especificats.
+     * Inicialitza la interfície, configura els botons d'acció i comença l'animació de confeti.
      *
-     * @param sortedPlayers Array de jugadors per mostrar a la pantalla final
+     * @param sortedPlayers Array de jugadors ordenats per puntuació (primer element = guanyador)
+     * @param window Finestra principal de l'aplicació
+     * @param gameProperties Propietats de la partida actual
      */
     public EndScreenOverlay(Player[] sortedPlayers, JFrame window, GameProperties gameProperties) {
         setLayout(null);
@@ -76,7 +92,9 @@ public class EndScreenOverlay extends JPanel {
     }
 
     /**
-     * Inicializa el sistema de confeti
+     * Inicialitza el sistema d'animació de confeti.
+     * Crea 50 partícules de confeti i configura un timer per actualitzar-les
+     * cada 50 mil·lisegons.
      */
     private void initConfetti() {
         // Crear partículas de confeti
@@ -93,7 +111,8 @@ public class EndScreenOverlay extends JPanel {
     }
 
     /**
-     * Actualiza las partículas de confeti
+     * Actualitza la posició i estat de totes les partícules de confeti.
+     * Les partícules que surten de la pantalla es reinicialitzen al centre del podi.
      */
     private void updateConfetti() {
         int width = getWidth();
@@ -112,7 +131,12 @@ public class EndScreenOverlay extends JPanel {
 
     /**
      * Inicialitza i configura el panell de botons amb els botons d'acció.
-     * Crea botons per "Nova Partida", "Menú Principal" i "Sortir" amb els seus respectius gestors.
+     * Crea botons per "Nueva Partida", "Menú Principal" i "Salir" amb els seus respectius gestors.
+     *
+     * Els botons permeten:
+     * - Nova Partida: Iniciar una nova partida amb les mateixes configuracions
+     * - Menú Principal: Tornar al menú principal
+     * - Sortir: Tancar l'aplicació
      */
     private void putButtons() {
         buttonPanel = new JPanel();
@@ -141,8 +165,12 @@ public class EndScreenOverlay extends JPanel {
     }
 
     /**
-     * Calcula la altura y margen dinámicos para las tarjetas de jugadores
-     * basándose en el espacio disponible y el número de jugadores
+     * Calcula les dimensions dinàmiques per a les targetes de jugadors.
+     * Ajusta l'alçada de les targetes i els marges basant-se en l'espai disponible
+     * i el nombre de jugadors per assegurar que tots es mostrin correctament.
+     *
+     * @param availableHeight Alçada disponible per a la llista de jugadors
+     * @return Array amb dos elements: [alçada de targeta, marge entre targetes]
      */
     private int[] calculateCardDimensions(int availableHeight) {
         int numPlayers = players.length;
@@ -165,9 +193,10 @@ public class EndScreenOverlay extends JPanel {
 
     /**
      * Mètode de pintat personalitzat que renderitza la interfície completa de la pantalla final.
-     * Dibuixa el fons, títol i resultats amb antialiasing activat.
+     * Dibuixa el fons dividit, el títol amb el guanyador, els resultats amb podi i
+     * les animacions de confeti. Utilitza antialiasing per millorar la qualitat visual.
      *
-     * @param g Context gràfic per dibuixar
+     * @param g Context gràfic per dibuixar els elements visuals
      */
     @Override
     protected void paintComponent(Graphics g) {
@@ -196,7 +225,10 @@ public class EndScreenOverlay extends JPanel {
     }
 
     /**
-     * Dibuja las partículas de confeti
+     * Dibuixa les partícules de confeti amb rotació i colors variats.
+     * Cada partícula es renderitza com un quadrat petit amb el seu color i rotació específics.
+     *
+     * @param g2 Context Graphics2D per dibuixar les partícules
      */
     private void drawConfetti(Graphics2D g2) {
         for (ConfettiParticle particle : confettiParticles) {
@@ -209,10 +241,12 @@ public class EndScreenOverlay extends JPanel {
 
     /**
      * Dibuixa el fons dividit amb un panell lateral fosc i àrea principal amb degradat.
+     * El panell lateral (esquerre) té un color fosc uniforme mentre que l'àrea principal
+     * (dreta) presenta un degradat blau que va des de blau clar a blau fosc.
      *
-     * @param g2 Context Graphics2D per dibuixar
-     * @param width Amplada del component
-     * @param height Alçada del component
+     * @param g2 Context Graphics2D per dibuixar el fons
+     * @param width Amplada total del component
+     * @param height Alçada total del component
      */
     private void drawBackground(Graphics2D g2, int width, int height) {
         // Panel lateral izquierdo (más oscuro)
@@ -231,34 +265,38 @@ public class EndScreenOverlay extends JPanel {
 
     /**
      * Dibuixa el títol i l'anunci del guanyador a la part superior de la pantalla.
+     * Mostra "Partida acabada!" com a títol principal i "Guanyador: [nom]" com a subtítol.
+     * La mida de la font s'ajusta proporcionalment a l'alçada de la pantalla.
      *
-     * @param g2 Context Graphics2D per dibuixar
-     * @param width Amplada del component
-     * @param height Alçada del component
+     * @param g2 Context Graphics2D per dibuixar el text
+     * @param width Amplada total del component
+     * @param height Alçada total del component
      */
     private void drawTitle(Graphics2D g2, int width, int height) {
         g2.setColor(Color.WHITE);
         g2.setFont(new Font("SansSerif", Font.BOLD, height / 20));
         FontMetrics fm = g2.getFontMetrics();
 
-        String title = "¡Partida Terminada!";
+        String title = "Partida acabada!";
         int titleX = width / 40;
         int titleY = height / 12;
         g2.drawString(title, titleX, titleY);
 
         g2.setFont(new Font("SansSerif", Font.PLAIN, height / 20));
         fm = g2.getFontMetrics();
-        String winner = "Ganador: " + players[0].getName();
+        String winner = "Guanyador: " + players[0].getName();
         int winnerY = titleY + fm.getHeight() + 5;
         g2.drawString(winner, titleX, winnerY);
     }
 
     /**
      * Dibuixa la secció de resultats incloent tant el podi com la llista completa de jugadors.
+     * Organitza l'espai disponible distribuint-lo entre el podi (40% de l'alçada) i
+     * la llista de jugadors (espai restant).
      *
-     * @param g2 Context Graphics2D per dibuixar
-     * @param width Amplada del component
-     * @param height Alçada del component
+     * @param g2 Context Graphics2D per dibuixar els resultats
+     * @param width Amplada total del component
+     * @param height Alçada total del component
      */
     private void drawResults(Graphics2D g2, int width, int height) {
         int resultsX = (int) (width * SIDE_PANEL_WIDTH_PERCENT) + 30;
@@ -279,10 +317,11 @@ public class EndScreenOverlay extends JPanel {
 
     /**
      * Dibuixa la visualització del podi per als 3 primers jugadors.
-     * El podi mostra les posicions 1a, 2a i 3a amb diferents alçades
-     * i mostra noms de jugadors i puntuacions encima dels bloques.
+     * El podi mostra les posicions 1a, 2a i 3a amb diferents alçades (1r més alt, 2n mitjà, 3r més baix).
+     * Cada posició mostra el nom del jugador, la seva puntuació i un número de posició.
+     * Els colors dels blocs del podi corresponen als colors assignats a cada jugador.
      *
-     * @param g2 Context Graphics2D per dibuixar
+     * @param g2 Context Graphics2D per dibuixar el podi
      * @param x Coordenada X de l'àrea del podi
      * @param y Coordenada Y de l'àrea del podi
      * @param width Amplada de l'àrea del podi
@@ -349,13 +388,14 @@ public class EndScreenOverlay extends JPanel {
     /**
      * Dibuixa la llista completa de classificació de tots els jugadors.
      * Cada jugador es mostra en format targeta amb posició, nom i puntuació.
-     * Las tarjetas se ajustan dinámicamente para mostrar todos los jugadores sin scroll.
+     * Les targetes s'ajusten dinàmicament per mostrar tots els jugadors sense necessitat de scroll.
+     * La llista té un fons semi-transparent amb vores arrodonides.
      *
-     * @param g2 Context Graphics2D per dibuixar
+     * @param g2 Context Graphics2D per dibuixar la llista
      * @param x Coordenada X de l'àrea de la llista de jugadors
      * @param y Coordenada Y de l'àrea de la llista de jugadors
      * @param width Amplada de l'àrea de la llista de jugadors
-     * @param availableHeight Altura disponible para la lista
+     * @param availableHeight Altura disponible per a la llista completa
      */
     private void drawPlayerList(Graphics2D g2, int x, int y, int width, int availableHeight) {
         if (players.length == 0) return;
@@ -386,17 +426,18 @@ public class EndScreenOverlay extends JPanel {
     }
 
     /**
-     * Dibuixa una targeta individual de jugador mostrant el seu rang, nom, puntuació i indicador de CPU.
+     * Dibuixa una targeta individual de jugador mostrant el seu rang, nom i puntuació.
      * Cada targeta està codificada per colors basant-se en la posició del jugador.
-     * El tamaño del texto se ajusta dinámicamente según la altura de la tarjeta.
+     * El tamany del text s'ajusta dinàmicament segons l'alçada de la targeta per
+     * mantenir la llegibilitat independentment del nombre de jugadors.
      *
-     * @param g2 Context Graphics2D per dibuixar
+     * @param g2 Context Graphics2D per dibuixar la targeta
      * @param player Objecte Player que conté la informació del jugador
      * @param x Coordenada X de la targeta
      * @param y Coordenada Y de la targeta
      * @param width Amplada de la targeta
      * @param height Alçada de la targeta
-     * @param position Posició de classificació del jugador (1r, 2n, etc.)
+     * @param position Posició de classificació del jugador (1r, 2n, 3r, etc.)
      */
     private void drawPlayerCard(Graphics2D g2, Player player, int x, int y, int width, int height, int position) {
         // Fondo de la carta
@@ -441,7 +482,13 @@ public class EndScreenOverlay extends JPanel {
 
     /**
      * Estableix el color gràfic basat en l'índex del jugador utilitzant un esquema de colors predefinit.
-     * Els colors van rotant entre vermell, blau, groc i verd per fins a 4 jugadors.
+     * Els colors assignats són:
+     * - Jugador 1: Vermell (#f52e2e)
+     * - Jugador 2: Blau (#5463ff)
+     * - Jugador 3: Groc (#ffc717)
+     * - Jugador 4: Verd (#1f9e40)
+     *
+     * Els colors es repeteixen cíclicament per a més de 4 jugadors.
      *
      * @param g Context gràfic on establir el color
      * @param playerIndex Índex del jugador (basat en 0)
@@ -457,7 +504,8 @@ public class EndScreenOverlay extends JPanel {
 
     /**
      * Posiciona el panell de botons a la cantonada inferior esquerra de la pantalla.
-     * Es crida automàticament durant les actualitzacions del layout.
+     * El panell s'ajusta automàticament segons les dimensions de la finestra.
+     * Es crida automàticament durant les actualitzacions del layout del component.
      */
     @Override
     public void doLayout() {
@@ -472,20 +520,48 @@ public class EndScreenOverlay extends JPanel {
     }
 
     /**
-     * Clase interna para representar una partícula de confeti
+     * Classe interna que representa una partícula de confeti per a l'animació.
+     * Cada partícula té propietats de posició, velocitat, rotació i aparença visual.
+     * Les partícules cauen per gravetat i es mouen amb efectes de resistència de l'aire.
+     *
+     * Les partícules es reinicialitzen automàticament quan surten de la pantalla,
+     * creant un efecte continu de confeti que cau des del centre del podi.
      */
     private class ConfettiParticle {
+        /** Posició X actual de la partícula */
         float x, y;
+
+        /** Velocitat horitzontal i vertical de la partícula */
         float velocityX, velocityY;
+
+        /** Angle de rotació actual de la partícula */
         float rotation;
+
+        /** Velocitat de rotació de la partícula */
         float rotationSpeed;
+
+        /** Color de la partícula */
         Color color;
+
+        /** Mida de la partícula en píxels */
         int size;
 
+        /**
+         * Constructor que inicialitza una nova partícula de confeti.
+         * Estableix valors aleatoris per a posició, velocitat, rotació i aparença.
+         */
         public ConfettiParticle() {
             reset(getWidth() / 2, getWidth(), getHeight());
         }
 
+        /**
+         * Reinicialitza la partícula amb nous valors aleatoris.
+         * Posiciona la partícula prop del centre del podi amb velocitat i propietats aleatòries.
+         *
+         * @param centerX Coordenada X del centre on apareixerà la partícula
+         * @param screenWidth Amplada de la pantalla per als càlculs de límits
+         * @param screenHeight Alçada de la pantalla per als càlculs de límits
+         */
         public void reset(int centerX, int screenWidth, int screenHeight) {
             // Posición inicial cerca del centro del podio
             x = centerX + random.nextInt(200) - 100;
@@ -514,6 +590,10 @@ public class EndScreenOverlay extends JPanel {
             size = random.nextInt(8) + 4;
         }
 
+        /**
+         * Actualitza la posició i estat de la partícula per al següent frame d'animació.
+         * Aplica gravetat, resistència de l'aire i rotació per crear un moviment realista.
+         */
         public void update() {
             x += velocityX;
             y += velocityY;
