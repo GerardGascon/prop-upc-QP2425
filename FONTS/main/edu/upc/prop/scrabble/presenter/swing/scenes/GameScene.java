@@ -175,6 +175,14 @@ public class GameScene extends Scene {
         };
 
         Leaderboard leaderboard = new Leaderboard();
+        DataRestorer dataRestorer = new DataRestorer();
+        IDeserializer deserializer = new GsonDeserializer();
+        ISaveReader saveReader = new SaveReader();
+        GameLoader loader = new GameLoader(dataRestorer, deserializer, saveReader, LEADERBOARD_FILE_NAME);
+        dataRestorer.addPersistableObject(leaderboard);
+
+        if (saveReader.exists(LEADERBOARD_FILE_NAME))
+            loader.run();
 
         HandView handView = new HandView();
         BlankPieceSelector blankPieceSelector = new BlankPieceSelector(language);
