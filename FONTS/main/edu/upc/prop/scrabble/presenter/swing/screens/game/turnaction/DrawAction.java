@@ -47,12 +47,12 @@ public class DrawAction extends JPanel {
      * Quan es prem, el botó canvia a un botó "Confirm" per executar l'acció real.
      */
     private void createDrawButton() {
-        drawBtn = new JButton("Draw");
+        drawBtn = new JButton("Robar");
         drawBtn.addActionListener(_ -> startDraw());
     }
 
     private void startDraw() {
-        confirmBtn = new JButton("Confirm");
+        confirmBtn = new JButton("Confirmar");
         confirmBtn.addActionListener(_ -> {
             handView.getSelectedPiece();
             if (handView.getSelectedPiece() != null) {
@@ -60,10 +60,17 @@ public class DrawAction extends JPanel {
                 handView.piecePlaced();
             }
         });
-        finishBtn = new JButton("Finish");
-        finishBtn.addActionListener(_ -> drawPieces());
+        finishBtn = new JButton("Acabar");
+        finishBtn.addActionListener(_ -> {
+                drawPieces();
+                removeAll();
+                add(drawBtn);
+                actionButtonPanel.showButtons();
+                revalidate();
+                repaint();
+        });
 
-        cancelBtn = new JButton("Cancel");
+        cancelBtn = new JButton("Cancel·lar");
         cancelBtn.addActionListener(_ -> {
                     removeAll();
                     add(drawBtn);

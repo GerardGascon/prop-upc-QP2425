@@ -42,13 +42,13 @@ public class PlaceAction extends JPanel {
      * Quan es prem, elimina aquest botó i mostra els botons "Confirm" i "Cancel".
      */
     private void createPlaceButton() {
-        placeBtn = new JButton("Place");
+        placeBtn = new JButton("Col·locar");
         placeBtn.addActionListener(_ -> startPlace());
         add(placeBtn);
     }
 
     private void startPlace() {
-        confirmBtn = new JButton("Confirm");
+        confirmBtn = new JButton("Confirmar");
         confirmBtn.addActionListener(_ -> {
             Movement currentPlacement = boardView.getPlacement();
             if (currentPlacement == null)
@@ -66,7 +66,7 @@ public class PlaceAction extends JPanel {
             repaint();
         });
 
-        cancelBtn = new JButton("Cancel");
+        cancelBtn = new JButton("Cancel·lar");
         cancelBtn.addActionListener(_ -> {
             removeAll();
             add(placeBtn);
