@@ -20,6 +20,13 @@ public class MenuScreen extends JPanel {
     private ArrayList<FloatingTile> floatingTiles;
     private FloatingTile selectedTile = null;
     private Point lastMousePos = null;
+    private long lastDragTime = 0;
+    private Point lastDragPos = null;
+    private static final int DRAG_HISTORY_SIZE = 10;
+    private final Point[] dragHistory = new Point[DRAG_HISTORY_SIZE];
+    private final long[] dragTimeHistory = new long[DRAG_HISTORY_SIZE];
+    private int dragHistoryIndex = 0;
+    private boolean dragHistoryFull = false;
 
 
     /**
@@ -193,10 +200,40 @@ public class MenuScreen extends JPanel {
             @Override
             public void mouseReleased(java.awt.event.MouseEvent e) {
                 if (selectedTile != null) {
-                    selectedTile.speed = selectedTile.prevSpeed;
+                    int newestIndex = (dragHistoryIndex - 1 + DRAG_HISTORY_SIZE) % DRAG_HISTORY_SIZE;
+                    int oldestIndex = dragHistoryFull ? dragHistoryIndex : 0;
+
+                    Point newest = dragHistory[newestIndex];
+                    Point oldest = dragHistory[oldestIndex];
+                    long timeDiff = dragTimeHistory[newestIndex] - dragTimeHistory[oldestIndex];
+
+                    if (timeDiff > 0 && newest != null && oldest != null && !newest.equals(oldest)) {
+                        float dt = timeDiff / 1000.0f;
+                        float dx = newest.x - oldest.x;
+                        float dy = newest.y - oldest.y;
+                        float dist = (float) Math.sqrt(dx * dx + dy * dy);
+                        float speed = dist / dt;
+
+                        speed = Math.max(selectedTile.prevSpeed, Math.min(1250f, speed));
+
+                        if (speed > 0) {
+                            selectedTile.speed = speed;
+                            selectedTile.horizontalDir = dx / dist;
+                            selectedTile.verticalDir = dy / dist;
+                        }
+                    }
                 }
+
                 selectedTile = null;
                 lastMousePos = null;
+                lastDragPos = null;
+
+                for (int i = 0; i < DRAG_HISTORY_SIZE; i++) {
+                    dragHistory[i] = null;
+                    dragTimeHistory[i] = 0;
+                }
+                dragHistoryIndex = 0;
+                dragHistoryFull = false;
             }
         });
 
@@ -204,23 +241,24 @@ public class MenuScreen extends JPanel {
             @Override
             public void mouseDragged(java.awt.event.MouseEvent e) {
                 if (selectedTile != null && lastMousePos != null) {
-                    int mouseX = e.getX();
-                    int mouseY = e.getY();
+                    long now = System.currentTimeMillis();
+                    Point currentMousePos = e.getPoint();
 
-                    int newTileX = mouseX - selectedTile.size / 2;
-                    int newTileY = mouseY - selectedTile.size / 2;
+                    dragHistory[dragHistoryIndex] = currentMousePos;
+                    dragTimeHistory[dragHistoryIndex] = now;
+                    dragHistoryIndex = (dragHistoryIndex + 1) % DRAG_HISTORY_SIZE;
+                    if (dragHistoryIndex == 0) dragHistoryFull = true;
+
+                    int newTileX = currentMousePos.x - selectedTile.size / 2;
+                    int newTileY = currentMousePos.y - selectedTile.size / 2;
 
                     int minX = FloatingTile.sidePanelWidth;
                     int maxX = getWidth() - selectedTile.size;
                     int maxY = getHeight() - selectedTile.size;
 
-                    float tentativeX = Math.max(minX, Math.min(newTileX, maxX));
-                    float tentativeY = Math.max(0, Math.min(newTileY, maxY));
-
-                    selectedTile.x = tentativeX;
-                    selectedTile.y = tentativeY;
+                    selectedTile.x = Math.max(minX, Math.min(newTileX, maxX));
+                    selectedTile.y = Math.max(0, Math.min(newTileY, maxY));
                     selectedTile.speed = 0;
-
 
                     for (FloatingTile tile : floatingTiles) {
                         if (tile != selectedTile && selectedTile.overlaps(tile)) {
@@ -243,10 +281,27 @@ public class MenuScreen extends JPanel {
                             float pushX = nx * overlapX;
                             float pushY = ny * overlapY;
 
-                            float speedBoost = 750f;
+                            float dragSpeed = 0f;
+                            if (dragHistoryFull || dragHistoryIndex > 1) {
+                                int lastIndex = (dragHistoryIndex - 1 + DRAG_HISTORY_SIZE) % DRAG_HISTORY_SIZE;
+                                int prevIndex = (dragHistoryIndex - 2 + DRAG_HISTORY_SIZE) % DRAG_HISTORY_SIZE;
+                                Point lastPos = dragHistory[lastIndex];
+                                Point prevPos = dragHistory[prevIndex];
+                                long dt = dragTimeHistory[lastIndex] - dragTimeHistory[prevIndex];
+
+                                if (lastPos != null && prevPos != null && dt > 0) {
+                                    float vx = lastPos.x - prevPos.x;
+                                    float vy = lastPos.y - prevPos.y;
+                                    float distMoved = (float) Math.sqrt(vx * vx + vy * vy);
+                                    dragSpeed = distMoved / (dt / 1000.0f);
+                                }
+                            }
+
+                            // Set collided tile direction + scaled speed
+                            float impactSpeed = Math.max(tile.prevSpeed, Math.min(1250f, dragSpeed));
+                            tile.speed = impactSpeed;
                             tile.horizontalDir = nx;
                             tile.verticalDir = ny;
-                            tile.speed = speedBoost;
 
                             tile.x += pushX * 0.5f;
                             tile.y += pushY * 0.5f;
