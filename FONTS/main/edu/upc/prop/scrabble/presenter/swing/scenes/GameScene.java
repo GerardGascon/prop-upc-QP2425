@@ -62,6 +62,8 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static edu.upc.prop.scrabble.presenter.swing.scenes.MenuScene.LEADERBOARD_FILE_NAME;
+
 /**
  * Classe que representa l'escena principal del joc de Scrabble.
  *
@@ -197,7 +199,13 @@ public class GameScene extends Scene {
         Turn turnManager = new Turn(endgame, players);
 
         EndScreen endScreen = new EndScreen();
-        GameStepper stepper = new GameStepper(turnManager, leaderboard, playersData, endScreen);
+
+        DataCollector leaderboardCollector = new DataCollector();
+        leaderboardCollector.addPersistableObject(leaderboard);
+        ISerializer serializer = new GsonSerializer();
+        ISaveWriter saveWriter = new SaveWriter();
+        GameSaver leaderboardSaver = new GameSaver(leaderboardCollector, serializer, saveWriter, LEADERBOARD_FILE_NAME);
+        GameStepper stepper = new GameStepper(turnManager, leaderboard, playersData, endScreen, leaderboardSaver);
 
         if (isNewGame) {
             HandFiller handFiller = new HandFiller(bag, playersData, new Rand());
