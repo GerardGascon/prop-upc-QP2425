@@ -23,11 +23,6 @@ import java.util.Arrays;
  * @author Albert Usero
  */
 public class EndScreen extends JPanel implements IEndScreen {
-    /** Callback per tornar al menú principal */
-    private ActionListener onMenuCallback;
-
-    /** Callback per iniciar una nova partida */
-    private ActionListener onNewGameCallback;
 
     private EndScreenOverlay endScreenOverlay;
 
@@ -65,23 +60,5 @@ public class EndScreen extends JPanel implements IEndScreen {
         setComponentZOrder(endScreenOverlay, 0);
         revalidate();
         repaint();
-    }
-
-    /**
-     * Estableix la funció callback que s'executarà quan es cliqui el botó "Menú Principal".
-     *
-     * @param callback ActionListener per gestionar els clics del botó menú
-     */
-    public void setOnMenuCallback(ActionListener callback) {
-        this.onMenuCallback = callback;
-    }
-
-    /**
-     * Estableix la funció callback que s'executarà quan es cliqui el botó "Nova Partida".
-     *
-     * @param callback ActionListener per gestionar els clics del botó nova partida
-     */
-    public void setOnNewGameCallback(ActionListener callback) {
-        this.onNewGameCallback = callback;
     }
 }

@@ -36,12 +36,6 @@ public class EndScreenOverlay extends JPanel {
     /** Panell que conté els botons d'acció */
     private JPanel buttonPanel;
 
-    /** Callback per tornar al menú principal */
-    private ActionListener onMenuCallback;
-
-    /** Callback per iniciar una nova partida */
-    private ActionListener onNewGameCallback;
-
     /** Lista de partículas de confeti */
     private List<ConfettiParticle> confettiParticles;
 
@@ -110,24 +104,6 @@ public class EndScreenOverlay extends JPanel {
     }
 
     /**
-     * Estableix la funció callback que s'executarà quan es cliqui el botó "Menú Principal".
-     *
-     * @param callback ActionListener per gestionar els clics del botó menú
-     */
-    public void setOnMenuCallback(ActionListener callback) {
-        this.onMenuCallback = callback;
-    }
-
-    /**
-     * Estableix la funció callback que s'executarà quan es cliqui el botó "Nova Partida".
-     *
-     * @param callback ActionListener per gestionar els clics del botó nova partida
-     */
-    public void setOnNewGameCallback(ActionListener callback) {
-        this.onNewGameCallback = callback;
-    }
-
-    /**
      * Inicialitza i configura el panell de botons amb els botons d'acció.
      * Crea botons per "Nova Partida", "Menú Principal" i "Sortir" amb els seus respectius gestors.
      */
@@ -138,19 +114,13 @@ public class EndScreenOverlay extends JPanel {
 
         MenuButton newGameButton = new MenuButton("Nueva Partida");
         newGameButton.addActionListener(e -> {
-            if (onNewGameCallback != null) {
-                GameProperties b = new GameProperties(gameProperties.language(),gameProperties.boardType(),gameProperties.players(), gameProperties.Cpus(), false);
-                SceneManager.getInstance().load(GameScene.class, b, window);
-                onNewGameCallback.actionPerformed(e);
-            }
+            GameProperties properties = new GameProperties(gameProperties.language(),gameProperties.boardType(),gameProperties.players(), gameProperties.Cpus(), false);
+            SceneManager.getInstance().load(GameScene.class, properties, window);
         });
 
         MenuButton menuButton = new MenuButton("Menú Principal");
         menuButton.addActionListener(e -> {
-            if (onMenuCallback != null) {
-                SceneManager.getInstance().load(MenuScene.class, window);
-                onMenuCallback.actionPerformed(e);
-            }
+            SceneManager.getInstance().load(MenuScene.class, window);
         });
 
         MenuButton quitButton = new MenuButton("Salir");
