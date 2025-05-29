@@ -3,9 +3,6 @@ package edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction;
 import edu.upc.prop.scrabble.domain.actionmaker.DrawActionMaker;
 import edu.upc.prop.scrabble.domain.actionmaker.PlaceActionMaker;
 import edu.upc.prop.scrabble.domain.actionmaker.SkipActionMaker;
-import edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction.draw.DrawAction;
-import edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction.place.PlaceAction;
-import edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction.skip.SkipAction;
 
 import javax.swing.*;
 import java.awt.*;

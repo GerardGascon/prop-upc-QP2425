@@ -1,9 +1,8 @@
-package edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction.skip;
+package edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction;
 
 import edu.upc.prop.scrabble.domain.actionmaker.SkipActionMaker;
 
 import javax.swing.*;
-import java.awt.event.ActionListener;
 
 /**
  * Classe per gestionar la lògica del botó de Skip (Saltar) en una partida.

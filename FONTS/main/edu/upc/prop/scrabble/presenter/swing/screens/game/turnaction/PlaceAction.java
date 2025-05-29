@@ -1,11 +1,10 @@
-package edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction.place;
+package edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction;
 import edu.upc.prop.scrabble.data.Movement;
 import edu.upc.prop.scrabble.data.exceptions.ScrabbleException;
 import edu.upc.prop.scrabble.domain.actionmaker.PlaceActionMaker;
 import edu.upc.prop.scrabble.domain.actionmaker.SkipActionMaker;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.BoardView;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.hand.HandView;
-import edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction.ActionButtonPanel;
 
 import javax.swing.*;
 

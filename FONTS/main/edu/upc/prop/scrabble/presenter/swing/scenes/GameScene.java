@@ -52,9 +52,9 @@ import edu.upc.prop.scrabble.presenter.swing.screens.game.hand.HandView;
 import edu.upc.prop.scrabble.domain.actionmaker.IHandView;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.pieceselector.BlankPieceSelector;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction.ActionButtonPanel;
-import edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction.draw.DrawAction;
-import edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction.place.PlaceAction;
-import edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction.skip.SkipAction;
+import edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction.DrawAction;
+import edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction.PlaceAction;
+import edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction.SkipAction;
 import edu.upc.prop.scrabble.presenter.swing.screens.menu.pause.PauseMenu;
 import edu.upc.prop.scrabble.utils.Rand;
 

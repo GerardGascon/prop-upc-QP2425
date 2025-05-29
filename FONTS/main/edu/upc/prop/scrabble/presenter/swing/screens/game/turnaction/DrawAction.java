@@ -1,10 +1,9 @@
-package edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction.draw;
+package edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction;
 
 import edu.upc.prop.scrabble.data.exceptions.ScrabbleException;
 import edu.upc.prop.scrabble.domain.actionmaker.DrawActionMaker;
 import edu.upc.prop.scrabble.domain.actionmaker.SkipActionMaker;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.hand.HandView;
-import edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction.ActionButtonPanel;
 
 import javax.swing.*;
 import java.util.ArrayList;
