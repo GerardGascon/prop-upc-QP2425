@@ -3,12 +3,15 @@ package edu.upc.prop.scrabble.presenter.swing.screens.menu;
 import edu.upc.prop.scrabble.data.board.BoardType;
 import edu.upc.prop.scrabble.data.properties.GameProperties;
 import edu.upc.prop.scrabble.data.properties.Language;
+import edu.upc.prop.scrabble.persistence.platform.gson.streamers.SaveReader;
 import edu.upc.prop.scrabble.presenter.scenes.SceneManager;
 import edu.upc.prop.scrabble.presenter.swing.scenes.GameScene;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+
+import static edu.upc.prop.scrabble.presenter.swing.scenes.GameScene.SAVE_FILE_NAME;
 
 
 /**
@@ -43,6 +46,11 @@ public class ContinueButton extends MenuButton {
         super("Continuar");
         this.parentPanel = parent;
         this.window = window;
+
+        if (!new SaveReader().exists(SAVE_FILE_NAME)){
+            setBackground(new Color(255, 255, 255, 100));
+            setEnabled(false);
+        }
 
         addActionListener(_ -> {
             if (otherButtons != null) {
@@ -102,11 +110,20 @@ public class ContinueButton extends MenuButton {
                 int height = getHeight();
 
                 // Fill
-                GradientPaint gradient = new GradientPaint(
-                        (float) (width * 0.4), (float) (height * 0.15),
-                        new Color(240, 240, 250),
-                        (float) (width * 0.8), (float) (height * 0.95), new Color(210, 210, 230)
-                );
+                GradientPaint gradient;
+                if (isEnabled()){
+                    gradient = new GradientPaint(
+                            (float) (width * 0.4), (float) (height * 0.15),
+                            new Color(240, 240, 250),
+                            (float) (width * 0.8), (float) (height * 0.95), new Color(210, 210, 230)
+                    );
+                } else {
+                    gradient = new GradientPaint(
+                            (float) (width * 0.4), (float) (height * 0.15),
+                            new Color(240, 240, 250, 100),
+                            (float) (width * 0.8), (float) (height * 0.95), new Color(210, 210, 230, 100)
+                    );
+                }
 
                 g2d.setPaint(gradient);
                 g2d.fillRoundRect((int) (width * 0.05), (int) (height * 0.05), (int) (width * 0.9), (int) (height * 0.9), 20, 20);
