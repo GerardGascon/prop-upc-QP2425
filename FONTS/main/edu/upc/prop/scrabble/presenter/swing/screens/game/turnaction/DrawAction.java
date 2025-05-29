@@ -77,10 +77,12 @@ public class DrawAction extends JPanel {
                     actionButtonPanel.showButtons();
                     revalidate();
                     repaint();
+                    handView.cancelPlace();
         });
 
         pieces.clear();
         removeAll();
+        handView.startPlace();
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setOpaque(false);
