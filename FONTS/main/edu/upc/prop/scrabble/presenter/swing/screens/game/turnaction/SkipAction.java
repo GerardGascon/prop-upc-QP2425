@@ -22,7 +22,6 @@ public class SkipAction extends JPanel {
         setOpaque(false);
 
         skipBtn = new JButton("Skip");
-        skipBtn.setBounds(1400, 650, 75, 50); //hardcoded
         skipBtn.addActionListener(_ -> skipTurn());
         add(skipBtn);
     }

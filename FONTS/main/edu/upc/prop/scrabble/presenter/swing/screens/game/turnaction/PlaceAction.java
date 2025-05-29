@@ -43,21 +43,18 @@ public class PlaceAction extends JPanel {
      */
     private void createPlaceButton() {
         placeBtn = new JButton("Place");
-        placeBtn.setBounds(1400, 575, 75, 50); //hardcoded
         placeBtn.addActionListener(_ -> startPlace());
         add(placeBtn);
     }
 
     private void startPlace() {
         confirmBtn = new JButton("Confirm");
-        confirmBtn.setBounds(1400, 575, 75, 50); //hardcoded
         confirmBtn.addActionListener(_ -> {
             Movement currentPlacement = boardView.getPlacement();
             if (currentPlacement == null)
                 return;
 
-            remove(confirmBtn);
-            remove(cancelBtn);
+            removeAll();
             add(placeBtn);
             try {
                 placeActionMaker.run(currentPlacement);
@@ -65,26 +62,36 @@ public class PlaceAction extends JPanel {
                 skipActionMaker.run();
             }
             boardView.endPlace();
+            revalidate();
+            repaint();
         });
 
         cancelBtn = new JButton("Cancel");
-        cancelBtn.setBounds(1400, 575, 75, 50); //hardcoded
         cancelBtn.addActionListener(_ -> {
-            remove(confirmBtn);
-            remove(cancelBtn);
+            removeAll();
             add(placeBtn);
             actionButtonPanel.showButtons();
             boardView.endPlace();
             handView.cancelPlace();
+            revalidate();
+            repaint();
         });
+        removeAll();
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setOpaque(false);
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
 
-        remove(placeBtn);
-        add(confirmBtn);
-        add(cancelBtn);
+        buttonPanel.add(confirmBtn);
+        buttonPanel.add(Box.createVerticalStrut(5));
+        buttonPanel.add(cancelBtn);
+
+        add(buttonPanel);
 
         actionButtonPanel.startPlace();
         boardView.startPlace();
         handView.startPlace();
+        revalidate();
+        repaint();
     }
 
     /**

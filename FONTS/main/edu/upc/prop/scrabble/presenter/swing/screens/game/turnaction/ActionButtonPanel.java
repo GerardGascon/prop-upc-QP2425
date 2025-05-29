@@ -39,11 +39,13 @@ public class ActionButtonPanel extends JPanel {
         add(placeAction);
         add(skipAction);
 
+        drawAction.setAlignmentX(Component.CENTER_ALIGNMENT);
+        placeAction.setAlignmentX(Component.CENTER_ALIGNMENT);
+        skipAction.setAlignmentX(Component.CENTER_ALIGNMENT);
+
         drawAction.setParent(this);
         placeAction.setParent(this);
 
-        // setPreferredSize(new Dimension(WIDTH, HEIGHT));
-        // setBounds(X, Y, WIDTH, HEIGHT);
     }
 
     public void showButtons() {
