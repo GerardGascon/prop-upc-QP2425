@@ -12,14 +12,12 @@ import edu.upc.prop.scrabble.domain.turns.Turn;
 import edu.upc.prop.scrabble.persistence.runtime.controllers.GameSaver;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
 import scrabble.stubs.EndScreenStub;
 import scrabble.stubs.GamePlayerStub;
 import scrabble.stubs.GameSaverMock;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
 
 public class TestSkipActionMaker {
     private SkipActionMaker skipActionMaker;
