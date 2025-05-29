@@ -1,11 +1,10 @@
-package edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction.place;
+package edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction;
 import edu.upc.prop.scrabble.data.Movement;
 import edu.upc.prop.scrabble.data.exceptions.ScrabbleException;
 import edu.upc.prop.scrabble.domain.actionmaker.PlaceActionMaker;
 import edu.upc.prop.scrabble.domain.actionmaker.SkipActionMaker;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.BoardView;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.hand.HandView;
-import edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction.ActionButtonPanel;
 
 import javax.swing.*;
 
@@ -43,22 +42,19 @@ public class PlaceAction extends JPanel {
      * Quan es prem, elimina aquest botó i mostra els botons "Confirm" i "Cancel".
      */
     private void createPlaceButton() {
-        placeBtn = new JButton("Place");
-        placeBtn.setBounds(1400, 575, 75, 50); //hardcoded
+        placeBtn = new JButton("Col·locar");
         placeBtn.addActionListener(_ -> startPlace());
         add(placeBtn);
     }
 
     private void startPlace() {
-        confirmBtn = new JButton("Confirm");
-        confirmBtn.setBounds(1400, 575, 75, 50); //hardcoded
+        confirmBtn = new JButton("Confirmar");
         confirmBtn.addActionListener(_ -> {
             Movement currentPlacement = boardView.getPlacement();
             if (currentPlacement == null)
                 return;
 
-            remove(confirmBtn);
-            remove(cancelBtn);
+            removeAll();
             add(placeBtn);
             try {
                 placeActionMaker.run(currentPlacement);
@@ -66,26 +62,36 @@ public class PlaceAction extends JPanel {
                 skipActionMaker.run();
             }
             boardView.endPlace();
+            revalidate();
+            repaint();
         });
 
-        cancelBtn = new JButton("Cancel");
-        cancelBtn.setBounds(1400, 575, 75, 50); //hardcoded
+        cancelBtn = new JButton("Cancel·lar");
         cancelBtn.addActionListener(_ -> {
-            remove(confirmBtn);
-            remove(cancelBtn);
+            removeAll();
             add(placeBtn);
             actionButtonPanel.showButtons();
             boardView.endPlace();
             handView.cancelPlace();
+            revalidate();
+            repaint();
         });
+        removeAll();
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setOpaque(false);
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
 
-        remove(placeBtn);
-        add(confirmBtn);
-        add(cancelBtn);
+        buttonPanel.add(confirmBtn);
+        buttonPanel.add(Box.createVerticalStrut(5));
+        buttonPanel.add(cancelBtn);
+
+        add(buttonPanel);
 
         actionButtonPanel.startPlace();
         boardView.startPlace();
         handView.startPlace();
+        revalidate();
+        repaint();
     }
 
     /**

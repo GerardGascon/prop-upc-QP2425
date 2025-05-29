@@ -1,9 +1,8 @@
-package edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction.skip;
+package edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction;
 
 import edu.upc.prop.scrabble.domain.actionmaker.SkipActionMaker;
 
 import javax.swing.*;
-import java.awt.event.ActionListener;
 
 /**
  * Classe per gestionar la lògica del botó de Skip (Saltar) en una partida.
@@ -22,8 +21,7 @@ public class SkipAction extends JPanel {
     public SkipAction() {
         setOpaque(false);
 
-        skipBtn = new JButton("Skip");
-        skipBtn.setBounds(1400, 650, 75, 50); //hardcoded
+        skipBtn = new JButton("Passar");
         skipBtn.addActionListener(_ -> skipTurn());
         add(skipBtn);
     }

@@ -3,9 +3,6 @@ package edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction;
 import edu.upc.prop.scrabble.domain.actionmaker.DrawActionMaker;
 import edu.upc.prop.scrabble.domain.actionmaker.PlaceActionMaker;
 import edu.upc.prop.scrabble.domain.actionmaker.SkipActionMaker;
-import edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction.draw.DrawAction;
-import edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction.place.PlaceAction;
-import edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction.skip.SkipAction;
 
 import javax.swing.*;
 import java.awt.*;
@@ -42,11 +39,13 @@ public class ActionButtonPanel extends JPanel {
         add(placeAction);
         add(skipAction);
 
+        drawAction.setAlignmentX(Component.CENTER_ALIGNMENT);
+        placeAction.setAlignmentX(Component.CENTER_ALIGNMENT);
+        skipAction.setAlignmentX(Component.CENTER_ALIGNMENT);
+
         drawAction.setParent(this);
         placeAction.setParent(this);
 
-        // setPreferredSize(new Dimension(WIDTH, HEIGHT));
-        // setBounds(X, Y, WIDTH, HEIGHT);
     }
 
     public void showButtons() {

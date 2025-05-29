@@ -33,7 +33,6 @@ import edu.upc.prop.scrabble.utils.Direction;
 import edu.upc.prop.scrabble.utils.IRand;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
 import scrabble.stubs.*;
 
 import static org.junit.Assert.*;
@@ -46,8 +45,8 @@ public class TestPlaceActionMaker {
     private PlaceActionMaker sut;
     private Player player;
 
-    @Mock
-    private GameSaver gameSaver;
+
+    private final GameSaver gameSaver = new GameSaverMock();
 
     @Before
     public void setup() {

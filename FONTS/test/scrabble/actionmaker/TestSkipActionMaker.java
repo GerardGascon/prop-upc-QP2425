@@ -2,6 +2,7 @@ package scrabble.actionmaker;
 
 import edu.upc.prop.scrabble.data.Player;
 import edu.upc.prop.scrabble.data.leaderboard.Leaderboard;
+import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.domain.actionmaker.SkipActionMaker;
 import edu.upc.prop.scrabble.domain.game.GameStepper;
 import edu.upc.prop.scrabble.domain.game.IEndScreen;
@@ -11,9 +12,9 @@ import edu.upc.prop.scrabble.domain.turns.Turn;
 import edu.upc.prop.scrabble.persistence.runtime.controllers.GameSaver;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
 import scrabble.stubs.EndScreenStub;
 import scrabble.stubs.GamePlayerStub;
+import scrabble.stubs.GameSaverMock;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -23,13 +24,14 @@ public class TestSkipActionMaker {
     private GamePlayerStub player1Stub;
     private GamePlayerStub player2Stub;
 
-    @Mock
-    private GameSaver gameSaver;
+    private final GameSaver gameSaver = new GameSaverMock();
 
     @Before
     public void setUp() {
         Player player1 = new Player("testPlayer1", false);
         Player player2 = new Player("testPlayer2", false);
+        player1.addPiece(new Piece("A", 1, false));
+        player2.addPiece(new Piece("A", 1, false));
         player1Stub = new GamePlayerStub();
         player2Stub = new GamePlayerStub();
 

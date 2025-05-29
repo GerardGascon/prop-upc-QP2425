@@ -39,7 +39,7 @@ public class TestPersistenceBaseDataTypes {
     public void savedValueThrowsExceptionIfValueIsWrongType() {
         PersistentObject sut = new PersistentObject("name", true);
 
-        assertThrows(ClassCastException.class, () -> sut.parse(String.class));
+        assertThrows(ClassCastException.class, () -> sut.parse(Integer.class));
     }
 
     @Test
@@ -61,10 +61,9 @@ public class TestPersistenceBaseDataTypes {
 
     @Test
     public void getValueFromArrayReturnsObject() {
-        PersistentObject obj = new PersistentObject("name", "potato");
         PersistentArray array = new PersistentArray("name");
 
-        array.add(obj);
+        array.add("potato");
 
         assertEquals("potato", array.get(0, String.class));
     }

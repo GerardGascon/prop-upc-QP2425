@@ -1,12 +1,12 @@
-package edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction.draw;
+package edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction;
 
 import edu.upc.prop.scrabble.data.exceptions.ScrabbleException;
 import edu.upc.prop.scrabble.domain.actionmaker.DrawActionMaker;
 import edu.upc.prop.scrabble.domain.actionmaker.SkipActionMaker;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.hand.HandView;
-import edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction.ActionButtonPanel;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +21,8 @@ public class DrawAction extends JPanel {
     private JButton drawBtn;
     private JButton confirmBtn;
     private JButton finishBtn;
+    private JButton cancelBtn;
+
     /**
      * Vista de la mà del jugador, des d'on es recuperen les peces seleccionades per intercanviar.
      */
@@ -45,14 +47,12 @@ public class DrawAction extends JPanel {
      * Quan es prem, el botó canvia a un botó "Confirm" per executar l'acció real.
      */
     private void createDrawButton() {
-        drawBtn = new JButton("Draw");
-        drawBtn.setBounds(1400, 575, 75, 50); //hardcoded
+        drawBtn = new JButton("Robar");
         drawBtn.addActionListener(_ -> startDraw());
     }
 
     private void startDraw() {
-        confirmBtn = new JButton("Confirm");
-        confirmBtn.setBounds(1400, 575, 75, 50); //hardcoded
+        confirmBtn = new JButton("Confirmar");
         confirmBtn.addActionListener(_ -> {
             handView.getSelectedPiece();
             if (handView.getSelectedPiece() != null) {
@@ -60,13 +60,43 @@ public class DrawAction extends JPanel {
                 handView.piecePlaced();
             }
         });
-        finishBtn = new JButton("Finish");
-        finishBtn.setBounds(1400, 575, 75, 50); //hardcoded
-        finishBtn.addActionListener(_ -> drawPieces());
-        remove(drawBtn);
-        add(confirmBtn);
-        add(finishBtn);
+        finishBtn = new JButton("Acabar");
+        finishBtn.addActionListener(_ -> {
+                drawPieces();
+                removeAll();
+                add(drawBtn);
+                actionButtonPanel.showButtons();
+                revalidate();
+                repaint();
+        });
+
+        cancelBtn = new JButton("Cancel·lar");
+        cancelBtn.addActionListener(_ -> {
+                    removeAll();
+                    add(drawBtn);
+                    actionButtonPanel.showButtons();
+                    revalidate();
+                    repaint();
+        });
+
+        pieces.clear();
+        removeAll();
+
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setOpaque(false);
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
+
+        buttonPanel.add(confirmBtn);
+        buttonPanel.add(Box.createVerticalStrut(5));
+        buttonPanel.add(finishBtn);
+        buttonPanel.add(Box.createVerticalStrut(5));
+        buttonPanel.add(cancelBtn);
+
+        add(buttonPanel);
+
         actionButtonPanel.startDraw();
+        revalidate();
+        repaint();
     }
 
     private void drawPieces() {

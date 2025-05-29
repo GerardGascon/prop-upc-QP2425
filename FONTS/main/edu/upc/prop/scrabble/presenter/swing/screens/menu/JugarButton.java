@@ -286,7 +286,7 @@ public class JugarButton extends MenuButton {
 
 
 // Real Players ComboBox
-        String[] playerTypes = {"Real", "CPU", "NO"};
+        String[] playerTypes = {"Real", "CPU", "___"};
 
         int componentWidth = (int) (width * 0.1);
         int componentHeight = (int) (height * 0.05);
@@ -297,10 +297,12 @@ public class JugarButton extends MenuButton {
 
         player1Type.setBounds((int) (width * 0.2), (int) (height * 0.365), componentWidth, componentHeight);
 
-        player1Type.addActionListener(e -> p1Name = (String) player1Type.getSelectedItem());
+        player1Type.addActionListener(e -> {
+            player1Name.setEnabled(Objects.equals(player1Type.getSelectedItem(), playerTypes[0]));
+            }
+        );
 
         settingsPanel.add(player1Type);
-
 
         player2Type = new JComboBox<>(playerTypes);
 
@@ -308,8 +310,10 @@ public class JugarButton extends MenuButton {
 
         player2Type.setBounds((int) (width * 0.4), (int) (height * 0.365), componentWidth, componentHeight);
 
-        player2Type.addActionListener(e -> p2Type = (String) player2Type.getSelectedItem());
-
+        player2Type.addActionListener(e -> {
+                    player2Name.setEnabled(Objects.equals(player2Type.getSelectedItem(), playerTypes[0]));
+                }
+        );
         settingsPanel.add(player2Type);
 
 
@@ -319,8 +323,10 @@ public class JugarButton extends MenuButton {
 
         player3Type.setBounds((int) (width * 0.6), (int) (height * 0.365), componentWidth, componentHeight);
 
-        player3Type.addActionListener(e -> p3Type = (String) player3Type.getSelectedItem());
-
+        player3Type.addActionListener(e -> {
+                    player3Name.setEnabled(Objects.equals(player3Type.getSelectedItem(), playerTypes[0]));
+                }
+        );
         settingsPanel.add(player3Type);
 
 
@@ -330,8 +336,10 @@ public class JugarButton extends MenuButton {
 
         player4Type.setBounds((int) (width * 0.8), (int) (height * 0.365), componentWidth, componentHeight);
 
-        player4Type.addActionListener(e -> p4Type = (String) player4Type.getSelectedItem());
-
+        player4Type.addActionListener(e -> {
+                    player4Name.setEnabled(Objects.equals(player4Type.getSelectedItem(), playerTypes[0]));
+                }
+        );
         settingsPanel.add(player4Type);
 
 
@@ -445,6 +453,15 @@ public class JugarButton extends MenuButton {
      * Acció que s’executa quan l’usuari, un cop ha assignat la configuració de la partida, decideix començar una partida
      * Actualment pendent d’implementació.
      */
+
+    private boolean checkEmptyName(){
+        for (int i = 0; i < 4; ++i){
+            if ((types[i].equals("Real")) && names[i].equals(""))
+                return true;
+        }
+        return false;
+    }
+
     private void startGame() {
         // Recoger nombres directamente al iniciar la partida
         names[0] = player1Name.getText();
@@ -473,13 +490,8 @@ public class JugarButton extends MenuButton {
                 players.add(names[i]);
             }
         }
-
-
-        System.out.println(players);
-        System.out.println(cpus);
-        System.out.println(selectedTableSize);
-        System.out.println(selectedLanguage);
-
-        SceneManager.getInstance().load(GameScene.class, new GameProperties(selectedLanguage, selectedTableSize, players, cpus, false), window);
+        if (!checkEmptyName() && (players.size() + cpus.size()) >= 2) {
+            SceneManager.getInstance().load(GameScene.class, new GameProperties(selectedLanguage, selectedTableSize, players, cpus, false), window);
+        }
     }
 }
