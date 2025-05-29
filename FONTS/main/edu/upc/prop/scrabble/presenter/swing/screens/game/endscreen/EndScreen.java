@@ -1,6 +1,7 @@
 package edu.upc.prop.scrabble.presenter.swing.screens.game.endscreen;
 
 import edu.upc.prop.scrabble.data.Player;
+import edu.upc.prop.scrabble.data.properties.GameProperties;
 import edu.upc.prop.scrabble.domain.game.IEndScreen;
 import edu.upc.prop.scrabble.persistence.platform.gson.streamers.SaveReader;
 import edu.upc.prop.scrabble.presenter.swing.scenes.GameScene;
@@ -30,13 +31,19 @@ public class EndScreen extends JPanel implements IEndScreen {
 
     private EndScreenOverlay endScreenOverlay;
 
+    private GameProperties gameProperties;
+
+    JFrame window;
+
     /**
      * Constructor per defecte que crea un EndScreen sense jugadors.
      * Inicialitza el component amb l'estil per defecte i arrays de jugadors buits.
      */
-    public EndScreen() {
+    public EndScreen(JFrame window, GameProperties gameProperties) {
         setLayout(null);
         setOpaque(false);
+        this.window = window;
+        this.gameProperties = gameProperties;
     }
 
     /**
@@ -51,7 +58,7 @@ public class EndScreen extends JPanel implements IEndScreen {
             return;
 
         new SaveReader().delete(GameScene.SAVE_FILE_NAME);
-        endScreenOverlay = new EndScreenOverlay(sortedPlayers);
+        endScreenOverlay = new EndScreenOverlay(sortedPlayers,window);
         endScreenOverlay.setBounds(0, 0, getWidth(), getHeight());
         add(endScreenOverlay);
         endScreenOverlay.requestFocusInWindow();

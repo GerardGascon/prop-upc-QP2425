@@ -198,7 +198,7 @@ public class GameScene extends Scene {
         Endgame endgame = new Endgame(playersData);
         Turn turnManager = new Turn(endgame, players);
 
-        EndScreen endScreen = new EndScreen();
+        EndScreen endScreen = new EndScreen(window, properties);
 
         DataCollector leaderboardCollector = new DataCollector();
         leaderboardCollector.addPersistableObject(leaderboard);
