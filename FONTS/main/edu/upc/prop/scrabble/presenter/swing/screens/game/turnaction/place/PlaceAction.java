@@ -4,6 +4,7 @@ import edu.upc.prop.scrabble.data.exceptions.ScrabbleException;
 import edu.upc.prop.scrabble.domain.actionmaker.PlaceActionMaker;
 import edu.upc.prop.scrabble.domain.actionmaker.SkipActionMaker;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.BoardView;
+import edu.upc.prop.scrabble.presenter.swing.screens.game.hand.HandView;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction.ActionButtonPanel;
 
 import javax.swing.*;
@@ -21,6 +22,7 @@ public class PlaceAction extends JPanel {
     private JButton cancelBtn;
     /** Vista del tauler de joc, per accedir a la col·locació actual. */
     private final BoardView boardView;
+    private final HandView handView;
     private ActionButtonPanel actionButtonPanel;
     private PlaceActionMaker placeActionMaker;
     private SkipActionMaker skipActionMaker;
@@ -29,9 +31,10 @@ public class PlaceAction extends JPanel {
      * Construeix un objecte `PlaceAction`.
      * @param boardView La vista del tauler de la partida per interactuar amb les peces seleccionades.
      */
-    public PlaceAction(BoardView boardView) {
+    public PlaceAction(BoardView boardView, HandView handView) {
         setOpaque(false);
         this.boardView = boardView;
+        this.handView = handView;
         createPlaceButton();
     }
 
@@ -70,6 +73,7 @@ public class PlaceAction extends JPanel {
             add(placeBtn);
             actionButtonPanel.showButtons();
             boardView.endPlace();
+            handView.cancelPlace();
         });
 
         remove(placeBtn);
@@ -78,6 +82,7 @@ public class PlaceAction extends JPanel {
 
         actionButtonPanel.startPlace();
         boardView.startPlace();
+        handView.startPlace();
     }
 
     /**

@@ -25,6 +25,7 @@ public class HandView extends JPanel implements IHandView {
      * Només es pot seleccionar una peça a la vegada.
      */
     private HandPieceButton selectedPieceButton;
+    private final List<HandPieceButton> selectedPieceButtons = new ArrayList<>();
     /**
      * Espai horitzontal (en píxels) entre les peces de la mà del jugador.
      */
@@ -94,16 +95,6 @@ public class HandView extends JPanel implements IHandView {
         repaint();
     }
     /**
-     * Elimina la peça seleccionada de la mà (després que hagi estat jugada).
-     */
-    @Override
-    public void piecePlaced() {
-        remove(selectedPieceButton);
-        selectedPieceButton = null;
-        revalidate();
-        repaint();
-    }
-    /**
      * Pinta el fons arrodonit de la mà del jugador.
      */
     @Override
@@ -129,5 +120,29 @@ public class HandView extends JPanel implements IHandView {
             pieceButton.setMinimumSize(size);
             pieceButton.setMaximumSize(size);
         }
+    }
+    /**
+     * Elimina la peça seleccionada de la mà (després que hagi estat jugada).
+     */
+    @Override
+    public void piecePlaced() {
+        remove(selectedPieceButton);
+        selectedPieceButtons.add(selectedPieceButton);
+        selectedPieceButton = null;
+        revalidate();
+        repaint();
+    }
+
+    public void cancelPlace() {
+        for (HandPieceButton pieceButton : selectedPieceButtons) {
+            add(pieceButton);
+        }
+        revalidate();
+        repaint();
+    }
+
+    public void startPlace() {
+        selectedPieceButton = null;
+        selectedPieceButtons.clear();
     }
 }
