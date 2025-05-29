@@ -58,7 +58,7 @@ public class EndScreen extends JPanel implements IEndScreen {
             return;
 
         new SaveReader().delete(GameScene.SAVE_FILE_NAME);
-        endScreenOverlay = new EndScreenOverlay(sortedPlayers,window);
+        endScreenOverlay = new EndScreenOverlay(sortedPlayers,window, gameProperties);
         endScreenOverlay.setBounds(0, 0, getWidth(), getHeight());
         add(endScreenOverlay);
         endScreenOverlay.requestFocusInWindow();
