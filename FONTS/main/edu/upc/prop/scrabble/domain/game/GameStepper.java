@@ -5,6 +5,7 @@ import edu.upc.prop.scrabble.data.leaderboard.Leaderboard;
 import edu.upc.prop.scrabble.data.leaderboard.Score;
 import edu.upc.prop.scrabble.domain.turns.Turn;
 import edu.upc.prop.scrabble.domain.turns.TurnResult;
+import edu.upc.prop.scrabble.persistence.runtime.controllers.GameSaver;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -37,6 +38,8 @@ public class GameStepper {
      */
     private final IEndScreen endScreen;
 
+    private final GameSaver leaderboardSaver;
+
     /**
      * Constructor de GameStepper.
      * @param turn Objecte que gestiona els torns.
@@ -44,11 +47,12 @@ public class GameStepper {
      * @param players Jugadors de la partida.
      * @param endScreen Pantalla final a mostrar quan acaba la partida.
      */
-    public GameStepper(Turn turn, Leaderboard leaderboard,Player[] players,IEndScreen endScreen) {
+    public GameStepper(Turn turn, Leaderboard leaderboard,Player[] players,IEndScreen endScreen, GameSaver leaderBoardSaver) {
         this.turn = turn;
         this.leaderboard = leaderboard;
         this.players = players;
         this.endScreen = endScreen;
+        this.leaderboardSaver = leaderBoardSaver;
     }
 
     /**
@@ -66,10 +70,14 @@ public class GameStepper {
            int maxScore = sortedPlayers[0].getScore();
 
            for (Player player : players) {
+               if (player.getCPU())
+                   continue;
+
                boolean winner = (player.getScore() == maxScore);
                leaderboard.addScore(new Score(player.getScore(),winner,player.getName()));
            }
            endScreen.show(sortedPlayers);
+           leaderboardSaver.run();
        }
     }
 }

@@ -28,10 +28,12 @@ import edu.upc.prop.scrabble.domain.pieces.PiecesConverter;
 import edu.upc.prop.scrabble.domain.turns.Endgame;
 import edu.upc.prop.scrabble.domain.turns.IGamePlayer;
 import edu.upc.prop.scrabble.domain.turns.Turn;
+import edu.upc.prop.scrabble.persistence.runtime.controllers.GameSaver;
 import edu.upc.prop.scrabble.utils.Direction;
 import edu.upc.prop.scrabble.utils.IRand;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
 import scrabble.stubs.*;
 
 import static org.junit.Assert.*;
@@ -43,6 +45,9 @@ public class TestPlaceActionMaker {
     private DAWG dawg;
     private PlaceActionMaker sut;
     private Player player;
+
+    @Mock
+    private GameSaver gameSaver;
 
     @Before
     public void setup() {
@@ -59,7 +64,7 @@ public class TestPlaceActionMaker {
         CrossChecks crossChecks = new EnglishCrossChecks(board.getSize());
         Turn turn = new Turn(new Endgame(new Player[]{player}), new IGamePlayer[]{new GamePlayerStub()});
         IEndScreen endScreen = new EndScreenStub();
-        GameStepper stepper = new GameStepper(turn, new Leaderboard(), new Player[]{player}, endScreen);
+        GameStepper stepper = new GameStepper(turn, new Leaderboard(), new Player[]{player}, endScreen, gameSaver);
         Anchors anchors = new Anchors();
         AnchorUpdater anchorUpdater = new AnchorUpdater(anchors, board, piecesConverter);
         sut = new PlaceActionMaker(player, bag, wordPlacer,

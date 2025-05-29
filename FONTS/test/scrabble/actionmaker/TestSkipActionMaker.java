@@ -8,8 +8,10 @@ import edu.upc.prop.scrabble.domain.game.IEndScreen;
 import edu.upc.prop.scrabble.domain.turns.Endgame;
 import edu.upc.prop.scrabble.domain.turns.IGamePlayer;
 import edu.upc.prop.scrabble.domain.turns.Turn;
+import edu.upc.prop.scrabble.persistence.runtime.controllers.GameSaver;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
 import scrabble.stubs.EndScreenStub;
 import scrabble.stubs.GamePlayerStub;
 
@@ -21,6 +23,9 @@ public class TestSkipActionMaker {
     private GamePlayerStub player1Stub;
     private GamePlayerStub player2Stub;
 
+    @Mock
+    private GameSaver gameSaver;
+
     @Before
     public void setUp() {
         Player player1 = new Player("testPlayer1", false);
@@ -31,7 +36,7 @@ public class TestSkipActionMaker {
         Endgame endgame = new Endgame(new Player[]{player1, player2});
         Turn turn = new Turn(endgame, new IGamePlayer[]{player1Stub, player2Stub});
         IEndScreen endScreen = new EndScreenStub();
-        GameStepper stepper = new GameStepper(turn, new Leaderboard(), new Player[]{player1, player2}, endScreen);
+        GameStepper stepper = new GameStepper(turn, new Leaderboard(), new Player[]{player1, player2}, endScreen, gameSaver);
         skipActionMaker = new SkipActionMaker(stepper);
     }
 
