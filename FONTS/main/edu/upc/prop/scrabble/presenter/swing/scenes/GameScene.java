@@ -210,7 +210,7 @@ public class GameScene extends Scene {
         PauseMenu pauseMenu = new PauseMenu(saver);
 
         DrawAction drawAction = new DrawAction(handView);
-        PlaceAction placeAction = new PlaceAction(boardView);
+        PlaceAction placeAction = new PlaceAction(boardView, handView);
         SkipAction skipAction = new SkipAction();
         ActionButtonPanel panel = new ActionButtonPanel(drawAction, placeAction, skipAction);
 
