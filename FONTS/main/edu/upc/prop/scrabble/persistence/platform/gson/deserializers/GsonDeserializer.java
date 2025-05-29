@@ -18,6 +18,9 @@ import edu.upc.prop.scrabble.persistence.runtime.interfaces.IDeserializer;
  * @author Gerard Gascón
  */
 public class GsonDeserializer implements IDeserializer {
+    /**
+     * Serialitzador de json de google.
+     */
     private final Gson gson;
 
     /**

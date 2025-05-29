@@ -31,7 +31,7 @@ public class BoardQuadrupleLetterTile extends BoardTile {
     public BoardQuadrupleLetterTile(int x, int y, IHandView handView, BoardView boardView, IBlankPieceSelector blankPieceSelector) {
         super(x, y, handView, boardView, blankPieceSelector);
         setBackground(new Color(30, 50, 152));
-        createTooltip("Quadruple Letter Score");
+        createTooltip("Quadruple lletra");
     }
 
     /**

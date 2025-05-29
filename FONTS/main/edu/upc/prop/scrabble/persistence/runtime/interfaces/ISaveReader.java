@@ -21,5 +21,12 @@ public interface ISaveReader {
      * @return true si el fitxer existeix.
      */
     boolean exists(String fileName);
+
+    /**
+     * Elimina l'arxiu de guardat indicat.
+     *
+     * @param fileName nom de l'arxiu de guardat a eliminar.
+     * @return <b>true</b> si l'arxiu existeix i s'ha eliminat amb èxit.
+     */
     boolean delete(String fileName);
 }

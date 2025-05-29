@@ -16,7 +16,13 @@ import java.util.Arrays;
  * @author Gerard Gascón
  */
 public class PiecesConverterFactory {
+    /**
+     * Lector de fitxers de peces.
+     */
     private final IFileReader piecesReader;
+    /**
+     * Generador de peces en funció d'un fitxer de peces.
+     */
     private final PieceGenerator pieceGenerator = new PieceGenerator();
 
     /**

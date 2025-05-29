@@ -40,7 +40,11 @@ public abstract class Board implements IPersistableObject {
         premiumTiles = new PremiumTileType[size][size];
     }
 
-
+    /**
+     * Crea una còpia del tauler tenint en compte només les fitxes.
+     *
+     * @param board el tauler a copiar.
+     */
     protected Board(Board board) {
         placedTiles = board.placedTiles.clone();
         premiumTiles = new PremiumTileType[board.placedTiles.length][board.placedTiles[0].length];

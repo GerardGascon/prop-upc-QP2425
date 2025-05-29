@@ -31,7 +31,7 @@ public class BoardTripleWordTile extends BoardTile {
     public BoardTripleWordTile(int x, int y, IHandView handView, BoardView boardView, IBlankPieceSelector blankPieceSelector) {
         super(x, y, handView, boardView, blankPieceSelector);
         setBackground(new Color(0xb2, 0x22, 0x22));
-        createTooltip("Triple Word Score");
+        createTooltip("Triple paraula");
     }
 
     /**

@@ -76,6 +76,14 @@ public class PersistentObject {
         return parse(value, type);
     }
 
+    /**
+     * Intenta convertir el valor a un tipus específic.
+     *
+     * @param value valor a convertir.
+     * @param type Classe del tipus al qual es vol fer el càsting.
+     * @return El valor convertit al tipus especificat.
+     * @param <T> Classe del tipus al qual es vol fer el càsting.
+     */
     protected <T> T parse(Object value, Class<T> type) {
         if (value == null)
             return null;

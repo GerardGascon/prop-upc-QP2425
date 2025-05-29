@@ -74,7 +74,13 @@ public class GameScene extends Scene {
      * Nom del fitxer on es desa i es carrega la partida guardada.
      */
     public static final String SAVE_FILE_NAME = "save.data";
+    /**
+     * Finestra dins la qual se situa la {@link GameScene#gameScreen}.
+     */
     private final JFrame window;
+    /**
+     * Pantalla on es col·loca tota l'ínterficie gràfica de l'escena de joc.
+     */
     private final GameScreen gameScreen;
 
     /**
@@ -104,6 +110,9 @@ public class GameScene extends Scene {
         }
     }
 
+    /**
+     * Procediment cridat en el moment de destruir l'escena.
+     */
     @Override
     protected void onDetach() {
         super.onDetach();
@@ -258,6 +267,12 @@ public class GameScene extends Scene {
         players[0].startTurn();
     }
 
+    /**
+     * Col·loca les fitxes damunt la vista del tauler
+     *
+     * @param board tauler present en la capa de dades.
+     * @param boardView tauler present a la capa de presentació.
+     */
     private static void placePieces(Board board, BoardView boardView) {
         for (int i = 0; i < board.getSize(); i++) {
             for (int j = 0; j < board.getSize(); j++) {

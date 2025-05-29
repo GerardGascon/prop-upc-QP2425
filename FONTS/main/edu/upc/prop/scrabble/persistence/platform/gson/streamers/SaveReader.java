@@ -54,6 +54,12 @@ public class SaveReader extends SaveDataStreamer implements ISaveReader {
         return path.exists();
     }
 
+    /**
+     * Elimina l'arxiu de guardat indicat.
+     *
+     * @param fileName nom de l'arxiu de guardat a eliminar.
+     * @return <b>true</b> si l'arxiu existeix i s'ha eliminat amb èxit.
+     */
     @Override
     public boolean delete(String fileName) {
         File path = getAbsolutePath(fileName);

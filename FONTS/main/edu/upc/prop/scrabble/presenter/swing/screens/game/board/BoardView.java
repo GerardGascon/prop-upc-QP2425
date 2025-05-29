@@ -40,6 +40,9 @@ public class BoardView extends JPanel implements IBoard {
      */
     private final IBlankPieceSelector blankPieceSelector;
 
+    /**
+     * Caselles del tauler on s'hi col·loquen les fitxes.
+     */
     private final BoardCell[][] board;
 
     /**
@@ -498,6 +501,9 @@ public class BoardView extends JPanel implements IBoard {
         }
     }
 
+    /**
+     * Inicia la rutina de col·locar fitxes.
+     */
     public void startPlace() {
         for (BoardCell[] boardCells : board) {
             for (BoardCell boardCell : boardCells) {
@@ -506,6 +512,9 @@ public class BoardView extends JPanel implements IBoard {
         }
     }
 
+    /**
+     * Acaba la rutina de col·locar fitxes.
+     */
     public void endPlace() {
         for (BoardTemporalPieceTile tile : temporalPieces) {
             Vector2 pos = tile.getPosition();
@@ -520,6 +529,11 @@ public class BoardView extends JPanel implements IBoard {
         }
     }
 
+    /**
+     * Retorna el moviment que ha col·locat el jugador en el tauler.
+     *
+     * @return el moviment que vol fer el jugador.
+     */
     public Movement getPlacement() {
         return getTemporalWord();
     }

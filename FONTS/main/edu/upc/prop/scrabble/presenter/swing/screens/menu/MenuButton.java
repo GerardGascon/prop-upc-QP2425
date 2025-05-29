@@ -143,6 +143,9 @@ public class MenuButton extends JButton {
     }
 
 
+    /**
+     * Tancar el menú que ha obert aquest botó.
+     */
     protected void Close() {
     }
 }

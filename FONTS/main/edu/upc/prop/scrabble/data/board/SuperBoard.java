@@ -22,6 +22,11 @@ public class SuperBoard extends Board {
         setQuadrupleLetterTiles();
     }
 
+    /**
+     * Crea una còpia del tauler i el converteix en un {@code SuperBoard} tenint en compte només les fitxes.
+     *
+     * @param board el tauler a copiar.
+     */
     public SuperBoard(Board board) {
         super(board);
 

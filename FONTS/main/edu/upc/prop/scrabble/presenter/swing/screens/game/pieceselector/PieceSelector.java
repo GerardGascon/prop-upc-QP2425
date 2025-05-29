@@ -42,6 +42,7 @@ public class PieceSelector extends JPanel {
     /** Etiqueta de capçalera que indica què fer */
     private final JLabel headerLabel;
 
+    /** Alfabet en ús durant la partida */
     private final Alphabet alphabet;
 
     /**

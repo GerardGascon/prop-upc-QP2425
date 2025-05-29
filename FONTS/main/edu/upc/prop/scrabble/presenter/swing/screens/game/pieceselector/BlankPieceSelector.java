@@ -13,7 +13,9 @@ import java.util.function.Consumer;
  * @author Gerard Gascón
  */
 public class BlankPieceSelector extends JPanel implements IBlankPieceSelector {
-
+    /**
+     * Idioma en el qual s'està jugant la partida
+     */
     private final Language language;
     /**
      * Panell superposat que conté el selector de fitxes.

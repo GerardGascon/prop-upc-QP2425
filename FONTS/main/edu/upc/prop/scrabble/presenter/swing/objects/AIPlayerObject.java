@@ -10,14 +10,27 @@ import java.util.List;
 
 /**
  * Representa un objecte jugador controlat per intel·ligència artificial (IA).
- * Estén la classe PlayerObject afegint funcionalitat específica per a jugadors IA.
+ * Estén la classe {@link PlayerObject} afegint funcionalitat específica per a jugadors IA.
+ * Aquesta classe s'encarrega de gestionar les accions automàtiques durant el torn del jugador.
  *
  * @author Gerard Gascón
  */
 public class AIPlayerObject extends PlayerObject {
+
+    /**
+     * Indica si és el torn actual del jugador IA.
+     */
     private boolean onTurn;
+
+    /**
+     * Instància de la IA encarregada de decidir les accions del jugador.
+     */
     private AI ai;
 
+    /**
+     * Inicia el torn del jugador IA.
+     * Es configura el panell d'accions i s'oculta per preparar les accions automàtiques.
+     */
     @Override
     public void startTurn() {
         super.startTurn();
@@ -28,6 +41,14 @@ public class AIPlayerObject extends PlayerObject {
         onTurn = true;
     }
 
+    /**
+     * Processa les accions del jugador IA durant el seu torn.
+     * Aquesta funció és cridada regularment amb una actualització del temps de joc.
+     * Si la IA retorna un moviment, es col·loca la peça; en cas contrari,
+     * es decideix aleatòriament entre saltar el torn o robar peces.
+     *
+     * @param update valor flotant indicant el temps des de l'última actualització.
+     */
     @Override
     public void onProcess(float update) {
         if (!onTurn)
@@ -53,7 +74,7 @@ public class AIPlayerObject extends PlayerObject {
     /**
      * Configura l'objecte jugador amb una instància d'IA per controlar-lo.
      *
-     * @param ai Instància de la intel·ligència artificial que gestionarà el jugador.
+     * @param ai instància de la intel·ligència artificial que gestionarà el jugador.
      */
     public void configureAI(AI ai) {
         this.ai = ai;

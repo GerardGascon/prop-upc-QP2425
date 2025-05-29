@@ -14,9 +14,11 @@ import edu.upc.prop.scrabble.presenter.swing.screens.game.board.sidepanel.SidePa
 import edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction.ActionButtonPanel;
 
 /**
- * Classe abstracta que representa un objecte jugador dins de l'escena,
- * integrant les accions de joc i la interfície amb la vista de la mà.
- * Implementa la interfície IGamePlayer per a la gestió de torns.
+ * Classe abstracta que representa un objecte jugador dins de l'escena de joc.
+ * Integra accions de joc com col·locar, robar o passar el torn, així com la comunicació amb la vista.
+ * Implementa la interfície {@link IGamePlayer} per permetre la seva gestió durant els torns de partida.
+ * <p>
+ * Aquesta classe serveix com a base tant per a jugadors controlats per IA com per a jugadors humans.
  *
  * @author Gerard Gascón
  */
@@ -33,44 +35,51 @@ public abstract class PlayerObject extends SceneObject implements IGamePlayer {
     private boolean onTurn = false;
 
     /**
-     * Dades del jugador (nom, mà, etc.).
+     * Objecte que conté les dades del jugador (mà de fitxes, nom, puntuació, etc.).
      */
     protected Player player;
 
     /**
-     * Acció encarregada de col·locar fitxes al tauler.
+     * Acció per col·locar fitxes al tauler.
      */
     protected PlaceActionMaker placeActionMaker;
 
     /**
-     * Acció encarregada de robar fitxes de la bossa.
+     * Acció per robar fitxes de la bossa.
      */
     protected DrawActionMaker drawActionMaker;
 
     /**
-     * Acció encarregada de saltar el torn.
+     * Acció per saltar el torn.
      */
     protected SkipActionMaker skipActionMaker;
 
     /**
-     * Vista que mostra les fitxes a la mà del jugador.
+     * Vista encarregada de mostrar les fitxes a la mà del jugador.
      */
     private IHandView handView;
 
+    /**
+     * Panell amb els botons d'acció (col·locar, robar, passar).
+     */
     protected ActionButtonPanel actionButtonPanel;
+
+    /**
+     * Panell lateral que mostra la informació dels jugadors (puntuació, torns, etc.).
+     */
     private SidePanel sidePanel;
 
     /**
-     * Configura el jugador amb les accions i dades necessàries.
+     * Configura l'objecte jugador amb els valors necessaris per interactuar amb el joc.
      *
-     * @param playerIndex Índex del jugador.
+     * @param playerIndex Índex del jugador dins de la partida.
      * @param placeActionMaker Acció per col·locar fitxes.
-     * @param player Dades del jugador.
+     * @param player Objecte que conté les dades del jugador.
      * @param drawActionMaker Acció per robar fitxes.
-     * @param skipActionMaker Acció per saltar torn.
+     * @param skipActionMaker Acció per saltar el torn.
      * @param handView Vista de la mà del jugador.
-     * @param actionButtonPanel Panell dels botons d'acció
-     * @param sidePanel Panell lateral on es mostren les puntuacions dels jugadors
+     * @param actionButtonPanel Panell de botons d'acció del torn.
+     * @param sidePanel Panell lateral amb informació dels jugadors.
      */
     public final void configure(int playerIndex, PlaceActionMaker placeActionMaker, Player player, DrawActionMaker drawActionMaker, SkipActionMaker skipActionMaker, IHandView handView, ActionButtonPanel actionButtonPanel, SidePanel sidePanel) {
         this.playerIndex = playerIndex;
@@ -84,7 +93,8 @@ public abstract class PlayerObject extends SceneObject implements IGamePlayer {
     }
 
     /**
-     * Inicia el torn del jugador mostrant les fitxes a la vista.
+     * Inicia el torn del jugador.
+     * Mostra les fitxes de la mà a la vista i marca el jugador com a actiu.
      */
     @Override
     public void startTurn() {
@@ -95,9 +105,9 @@ public abstract class PlayerObject extends SceneObject implements IGamePlayer {
 
     /**
      * Intenta col·locar una fitxa al tauler segons el moviment indicat.
-     * En cas d'error, salta automàticament el torn.
+     * Si es produeix una excepció, es passa automàticament el torn.
      *
-     * @param movement Moviment que indica on col·locar la fitxa.
+     * @param movement Objecte que indica la posició i fitxa a col·locar.
      */
     protected final void placePiece(Movement movement) {
         try {
@@ -108,10 +118,10 @@ public abstract class PlayerObject extends SceneObject implements IGamePlayer {
     }
 
     /**
-     * Intenta robar les fitxes indicades.
-     * En cas d'error, salta automàticament el torn.
+     * Intenta robar les fitxes indicades de la mà.
+     * Si es produeix un error, es passa el torn.
      *
-     * @param piece Array de fitxes que es volen robar.
+     * @param piece Array de fitxes que el jugador vol robar.
      */
     protected final void drawPieces(Piece[] piece) {
         try {
@@ -126,7 +136,8 @@ public abstract class PlayerObject extends SceneObject implements IGamePlayer {
     }
 
     /**
-     * Salta el torn actual.
+     * Passa el torn actual del jugador.
+     * Executa l'acció de "skip" definida per a aquest jugador.
      */
     protected final void skipTurn() {
         skipActionMaker.run();
@@ -134,6 +145,7 @@ public abstract class PlayerObject extends SceneObject implements IGamePlayer {
 
     /**
      * Finalitza el torn del jugador.
+     * Amaga els botons d'acció i desactiva l'estat de torn actiu.
      */
     @Override
     public final void endTurn() {
@@ -144,7 +156,7 @@ public abstract class PlayerObject extends SceneObject implements IGamePlayer {
     /**
      * Indica si el jugador està actiu en el torn actual.
      *
-     * @return true si el jugador té el torn, false en cas contrari.
+     * @return {@code true} si el jugador està en el seu torn, {@code false} si no ho està.
      */
     @Override
     public final boolean isActive() {

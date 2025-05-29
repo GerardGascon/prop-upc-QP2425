@@ -21,6 +21,11 @@ public class JuniorBoard extends Board {
         setTripleLetterTiles();
     }
 
+    /**
+     * Crea una còpia del tauler i el converteix en un {@code JuniorBoard} tenint en compte només les fitxes.
+     *
+     * @param board el tauler a copiar.
+     */
     public JuniorBoard(Board board) {
         super(board);
 

@@ -18,6 +18,9 @@ import java.util.List;
  * @author Gerard Gascón
  */
 public class DataRestorer {
+    /**
+     * Llista de tots els objectes amb dades serialitzables.
+     */
     private final List<IPersistableObject> persistableObject = new ArrayList<>();
 
     /**
@@ -57,6 +60,14 @@ public class DataRestorer {
         }
     }
 
+    /**
+     * Retorna el nom de la superclasse d'una classe.
+     * <p>
+     * Si una classe no és filla de cap, retorna la mateixa classe.
+     *
+     * @param persistableObject la classe de la qual obtenir la superclasse.
+     * @return El tipus de la superclasse.
+     */
     private static Class<?> getSuperclass(IPersistableObject persistableObject) {
         Class<?> clazz = persistableObject.getClass();
         Class<?> next = clazz.getSuperclass();

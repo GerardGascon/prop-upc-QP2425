@@ -78,6 +78,14 @@ public class PersistentArray extends PersistentObject {
         elements.add(value);
     }
 
+    /**
+     * Retorna un element de l'array.
+     *
+     * @param index Índex de l'element a retornar.
+     * @param type Tipus de l'element a retornar.
+     * @return L'element localitzat en l'índex indicat.
+     * @param <T> Tipus de l'element a retornar.
+     */
     public <T> T get(int index, Class<T> type) {
         return parse(elements.get(index), type);
     }

@@ -31,7 +31,7 @@ public class BoardDoubleLetterTile extends BoardTile {
     public BoardDoubleLetterTile(int x, int y, IHandView handView, BoardView boardView, IBlankPieceSelector blankPieceSelector) {
         super(x, y, handView, boardView, blankPieceSelector);
         setBackground(new Color(0x87, 0xce, 0xeb));
-        createTooltip("Double Letter Score");
+        createTooltip("Doble lletra");
     }
 
     /**

@@ -31,7 +31,7 @@ public class BoardQuadrupleWordTile extends BoardTile {
     public BoardQuadrupleWordTile(int x, int y, IHandView handView, BoardView boardView, IBlankPieceSelector blankPieceSelector) {
         super(x, y, handView, boardView, blankPieceSelector);
         setBackground(new Color(0x80, 0x00, 0x00));
-        createTooltip("Quadruple Word Score");
+        createTooltip("Quadruple paraula");
     }
 
     /**

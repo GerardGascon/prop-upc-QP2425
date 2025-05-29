@@ -31,7 +31,7 @@ public class BoardTripleLetterTile extends BoardTile {
     public BoardTripleLetterTile(int x, int y, IHandView handView, BoardView boardView, IBlankPieceSelector blankPieceSelector) {
         super(x, y, handView, boardView, blankPieceSelector);
         setBackground(new Color(0x41, 0x69, 0xe1));
-        createTooltip("Triple Letter Score");
+        createTooltip("Triple lletra");
     }
 
     /**

@@ -20,6 +20,11 @@ public class StandardBoard extends Board {
         setTripleLetterTiles();
     }
 
+    /**
+     * Crea una còpia del tauler i el converteix en un {@code StandardBoard} tenint en compte només les fitxes.
+     *
+     * @param board el tauler a copiar.
+     */
     public StandardBoard(Board board) {
         super(board);
 

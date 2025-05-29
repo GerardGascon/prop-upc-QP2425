@@ -1,6 +1,21 @@
 package edu.upc.prop.scrabble.presenter.swing.screens.game.pieceselector.alphabet;
 
+/**
+ * Representa l'alfabet utilitzat en el joc per a la llengua catalana.
+ * <p>
+ * Aquesta classe concreta hereta d’{@link Alphabet} i inicialitza
+ * el conjunt de lletres vàlides segons l'alfabet català, incloent-hi
+ * lletres específiques com la "Ç", "L·L" i "NY".
+ * </p>
+ *
+ * @author Gerard Gascón
+ */
 public class CatalanAlphabet extends Alphabet {
+
+    /**
+     * Crea una nova instància de l'alfabet català inicialitzant
+     * totes les lletres vàlides que poden aparèixer en una peça del joc.
+     */
     public CatalanAlphabet() {
         alphabet.add("A");
         alphabet.add("B");

@@ -30,7 +30,7 @@ public class BoardCenterTile extends BoardTile {
     public BoardCenterTile(int x, int y, IHandView handView, BoardView boardView, IBlankPieceSelector blankPieceSelector) {
         super(x, y, handView, boardView, blankPieceSelector);
         setBackground(new Color(0xff, 0xc0, 0xcb));
-        createTooltip("Start here (Double Word Score)");
+        createTooltip("Comença aquí (Doble paraula)");
     }
 
     /**
