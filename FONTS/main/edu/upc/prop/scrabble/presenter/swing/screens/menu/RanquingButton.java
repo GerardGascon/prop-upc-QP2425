@@ -162,12 +162,20 @@ public class RanquingButton extends MenuButton {
         ranquingPanel.add(scrollPane);
 
         // Mode selector
-        String[] modes = {" Partides Jugades", " Partides Guanyades",
-                          " Percentatge de Victòries", " Màxima Puntuació", " Puntuació Total"};
+        String[] modes = {"Partides Jugades", "Partides Guanyades",
+                          "Percentatge de Victòries", "Màxima Puntuació", "Puntuació Total"};
         modeSelector = new JComboBox<>(modes);
         modeSelector.setSelectedItem("Partides Jugades");
         modeSelector.setFont(new Font("SansSerif", Font.BOLD, 30));
         modeSelector.setBounds((int)(width * 0.1), (int)(height * 0.2), (int)(width * 0.4), componentHeight);
+        modeSelector.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                label.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 0));
+                return label;
+            }
+        });
         modeSelector.addActionListener(this::updateRanquing);
         ranquingPanel.add(modeSelector);
 
@@ -191,23 +199,23 @@ public class RanquingButton extends MenuButton {
         String mode = (String) modeSelector.getSelectedItem();
         PlayerValuePair[] ranquingData = new PlayerValuePair[0];
         switch (mode) {
-            case " Partides Jugades":
+            case "Partides Jugades":
                 GamesPlayedLeaderboard gamesPlayedLeaderboard = new GamesPlayedLeaderboard();
                 ranquingData = gamesPlayedLeaderboard.run(leaderboard.getScoreArray());
                 break;
-            case " Partides Guanyades":
+            case "Partides Guanyades":
                 GamesWonLeaderboard gamesWonLeaderboard = new GamesWonLeaderboard();
                 ranquingData = gamesWonLeaderboard.run(leaderboard.getScoreArray());
                 break;
-            case " Percentatge de Victòries":
+            case "Percentatge de Victòries":
                 WinRateLeaderboard winRateLeaderboard = new WinRateLeaderboard();
                 ranquingData = winRateLeaderboard.run(leaderboard.getScoreArray());
                 break;
-            case " Màxima Puntuació":
+            case "Màxima Puntuació":
                 MaxScoreLeaderboard maxScoreLeaderboard = new MaxScoreLeaderboard();
                 ranquingData = maxScoreLeaderboard.run(leaderboard.getScoreArray());
                 break;
-            case " Puntuació Total":
+            case "Puntuació Total":
                 TotalScoreLeaderboard totalScoreLeaderboard = new TotalScoreLeaderboard();
                 ranquingData = totalScoreLeaderboard.run(leaderboard.getScoreArray());
                 break;
