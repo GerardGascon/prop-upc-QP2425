@@ -437,13 +437,6 @@ public class EndScreenOverlay extends JPanel {
         String score = player.getScore() + " pts";
         int scoreX = x + width - fm.stringWidth(score) - 15;
         g2.drawString(score, scoreX, y + height / 2 + fm.getAscent() / 2);
-
-        // Indicador CPU (solo si hay espacio suficiente)
-        if (player.getCPU() && height > MIN_PLAYER_CARD_HEIGHT + 10) {
-            g2.setColor(new Color(120, 120, 120));
-            g2.setFont(new Font("SansSerif", Font.ITALIC, smallFontSize));
-            g2.drawString("(CPU)", x + 60, y + height / 2 + 15);
-        }
     }
 
     /**
