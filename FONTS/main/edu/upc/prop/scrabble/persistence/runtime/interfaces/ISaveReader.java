@@ -21,4 +21,5 @@ public interface ISaveReader {
      * @return true si el fitxer existeix.
      */
     boolean exists(String fileName);
+    boolean delete(String fileName);
 }

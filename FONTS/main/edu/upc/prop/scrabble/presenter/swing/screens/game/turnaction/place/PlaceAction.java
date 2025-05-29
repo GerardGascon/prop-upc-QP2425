@@ -53,10 +53,13 @@ public class PlaceAction extends JPanel {
         confirmBtn = new JButton("Confirm");
         confirmBtn.setBounds(1400, 575, 75, 50); //hardcoded
         confirmBtn.addActionListener(_ -> {
+            Movement currentPlacement = boardView.getPlacement();
+            if (currentPlacement == null)
+                return;
+
             remove(confirmBtn);
             remove(cancelBtn);
             add(placeBtn);
-            Movement currentPlacement = boardView.getPlacement();
             try {
                 placeActionMaker.run(currentPlacement);
             } catch (ScrabbleException _) {

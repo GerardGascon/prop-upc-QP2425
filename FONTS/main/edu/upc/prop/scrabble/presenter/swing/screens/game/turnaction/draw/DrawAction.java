@@ -54,8 +54,11 @@ public class DrawAction extends JPanel {
         confirmBtn = new JButton("Confirm");
         confirmBtn.setBounds(1400, 575, 75, 50); //hardcoded
         confirmBtn.addActionListener(_ -> {
-            pieces.add(handView.getSelectedPiece());
-            handView.piecePlaced();
+            handView.getSelectedPiece();
+            if (handView.getSelectedPiece() != null) {
+                pieces.add(handView.getSelectedPiece());
+                handView.piecePlaced();
+            }
         });
         finishBtn = new JButton("Finish");
         finishBtn.setBounds(1400, 575, 75, 50); //hardcoded
@@ -67,6 +70,9 @@ public class DrawAction extends JPanel {
     }
 
     private void drawPieces() {
+        if (pieces.isEmpty())
+            return;
+
         try {
             drawActionMaker.run(pieces.toArray(String[]::new));
         } catch (ScrabbleException _) {

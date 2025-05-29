@@ -175,6 +175,14 @@ public class GameScene extends Scene {
         };
 
         Leaderboard leaderboard = new Leaderboard();
+        DataRestorer dataRestorer = new DataRestorer();
+        IDeserializer deserializer = new GsonDeserializer();
+        ISaveReader saveReader = new SaveReader();
+        GameLoader loader = new GameLoader(dataRestorer, deserializer, saveReader, LEADERBOARD_FILE_NAME);
+        dataRestorer.addPersistableObject(leaderboard);
+
+        if (saveReader.exists(LEADERBOARD_FILE_NAME))
+            loader.run();
 
         HandView handView = new HandView();
         BlankPieceSelector blankPieceSelector = new BlankPieceSelector(language);
@@ -198,7 +206,18 @@ public class GameScene extends Scene {
         Endgame endgame = new Endgame(playersData);
         Turn turnManager = new Turn(endgame, players);
 
-        EndScreen endScreen = new EndScreen();
+        List<String> playerNames = new ArrayList<>();
+        List<String> cpuNames = new ArrayList<>();
+
+        for (Player playersDatum : playersData) {
+            if (playersDatum.getCPU())
+                cpuNames.add(playersDatum.getName());
+            else
+                playerNames.add(playersDatum.getName());
+        }
+
+        GameProperties gameProperties = new GameProperties(language, board.getType(), playerNames, cpuNames, !isNewGame);
+        EndScreen endScreen = new EndScreen(window, gameProperties);
 
         DataCollector leaderboardCollector = new DataCollector();
         leaderboardCollector.addPersistableObject(leaderboard);

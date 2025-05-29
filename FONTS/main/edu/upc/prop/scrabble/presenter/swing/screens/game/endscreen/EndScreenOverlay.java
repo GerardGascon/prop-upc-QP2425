@@ -1,25 +1,40 @@
 package edu.upc.prop.scrabble.presenter.swing.screens.game.endscreen;
 
 import edu.upc.prop.scrabble.data.Player;
+import edu.upc.prop.scrabble.data.properties.GameProperties;
+import edu.upc.prop.scrabble.presenter.scenes.SceneManager;
+import edu.upc.prop.scrabble.presenter.swing.scenes.GameScene;
+import edu.upc.prop.scrabble.presenter.swing.scenes.MenuScene;
 import edu.upc.prop.scrabble.presenter.swing.screens.menu.MenuButton;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+import static java.awt.SystemColor.window;
 
 public class EndScreenOverlay extends JPanel {
     /** Percentatge d'amplada de pantalla ocupat pel panell lateral */
     private final float SIDE_PANEL_WIDTH_PERCENT = 0.35f;
 
     /** Percentatge d'alçada de pantalla ocupat per l'àrea del podi */
-    private final float PODIUM_HEIGHT_PERCENT = 0.6f;
+    private final float PODIUM_HEIGHT_PERCENT = 0.4f;
 
-    /** Alçada en píxels de cada targeta de jugador a la llista de classificació */
-    private final int PLAYER_CARD_HEIGHT = 80;
+    /** Alçada mínima en píxels de cada targeta de jugador */
+    private final int MIN_PLAYER_CARD_HEIGHT = 40;
 
-    /** Marge en píxels entre targetes de jugadors */
-    private final int PLAYER_CARD_MARGIN = 10;
+    /** Alçada màxima en píxels de cada targeta de jugador */
+    private final int MAX_PLAYER_CARD_HEIGHT = 60;
+
+    /** Marge mínim en píxels entre targetes de jugadors */
+    private final int MIN_PLAYER_CARD_MARGIN = 4;
+
+    /** Marge màxim en píxels entre targetes de jugadors */
+    private final int MAX_PLAYER_CARD_MARGIN = 8;
 
     /** Array de jugadors de la partida */
     private final Player[] players;
@@ -27,42 +42,72 @@ public class EndScreenOverlay extends JPanel {
     /** Panell que conté els botons d'acció */
     private JPanel buttonPanel;
 
-    /** Callback per tornar al menú principal */
-    private ActionListener onMenuCallback;
+    /** Lista de partículas de confeti */
+    private List<ConfettiParticle> confettiParticles;
 
-    /** Callback per iniciar una nova partida */
-    private ActionListener onNewGameCallback;
+    /** Timer para animación de confeti */
+    private Timer confettiTimer;
+
+    /** Random para generar confeti */
+    private Random random;
+
+    private JFrame window;
+
+    private GameProperties gameProperties;
 
     /**
      * Constructor que crea un EndScreen amb els jugadors especificats.
      *
      * @param sortedPlayers Array de jugadors per mostrar a la pantalla final
      */
-    public EndScreenOverlay(Player[] sortedPlayers) {
+    public EndScreenOverlay(Player[] sortedPlayers, JFrame window, GameProperties gameProperties) {
         setLayout(null);
         setBackground(new Color(0x2d, 0x2d, 0x2d));
         this.players = sortedPlayers;
+        this.confettiParticles = new ArrayList<>();
+        this.random = new Random();
+        this.window = window;
+        this.gameProperties = gameProperties;
+
         putButtons();
+        initConfetti();
         System.out.println("end screen overlay");
         addMouseWheelListener(InputEvent::consume);
     }
 
     /**
-     * Estableix la funció callback que s'executarà quan es cliqui el botó "Menú Principal".
-     *
-     * @param callback ActionListener per gestionar els clics del botó menú
+     * Inicializa el sistema de confeti
      */
-    public void setOnMenuCallback(ActionListener callback) {
-        this.onMenuCallback = callback;
+    private void initConfetti() {
+        // Crear partículas de confeti
+        for (int i = 0; i < 50; i++) {
+            confettiParticles.add(new ConfettiParticle());
+        }
+
+        // Timer para animar el confeti
+        confettiTimer = new Timer(50, e -> {
+            updateConfetti();
+            repaint();
+        });
+        confettiTimer.start();
     }
 
     /**
-     * Estableix la funció callback que s'executarà quan es cliqui el botó "Nova Partida".
-     *
-     * @param callback ActionListener per gestionar els clics del botó nova partida
+     * Actualiza las partículas de confeti
      */
-    public void setOnNewGameCallback(ActionListener callback) {
-        this.onNewGameCallback = callback;
+    private void updateConfetti() {
+        int width = getWidth();
+        int height = getHeight();
+        int podiumCenterX = (int) (width * SIDE_PANEL_WIDTH_PERCENT) + (int) (width * (1 - SIDE_PANEL_WIDTH_PERCENT)) / 2;
+
+        for (ConfettiParticle particle : confettiParticles) {
+            particle.update();
+
+            // Reiniciar partícula si sale de la pantalla
+            if (particle.y > height || particle.x < 0 || particle.x > width) {
+                particle.reset(podiumCenterX, width, height);
+            }
+        }
     }
 
     /**
@@ -76,16 +121,13 @@ public class EndScreenOverlay extends JPanel {
 
         MenuButton newGameButton = new MenuButton("Nueva Partida");
         newGameButton.addActionListener(e -> {
-            if (onNewGameCallback != null) {
-                onNewGameCallback.actionPerformed(e);
-            }
+            GameProperties properties = new GameProperties(gameProperties.language(),gameProperties.boardType(),gameProperties.players(), gameProperties.Cpus(), false);
+            SceneManager.getInstance().load(GameScene.class, properties, window);
         });
 
         MenuButton menuButton = new MenuButton("Menú Principal");
         menuButton.addActionListener(e -> {
-            if (onMenuCallback != null) {
-                onMenuCallback.actionPerformed(e);
-            }
+            SceneManager.getInstance().load(MenuScene.class, window);
         });
 
         MenuButton quitButton = new MenuButton("Salir");
@@ -96,6 +138,29 @@ public class EndScreenOverlay extends JPanel {
         buttonPanel.add(quitButton);
 
         add(buttonPanel);
+    }
+
+    /**
+     * Calcula la altura y margen dinámicos para las tarjetas de jugadores
+     * basándose en el espacio disponible y el número de jugadores
+     */
+    private int[] calculateCardDimensions(int availableHeight) {
+        int numPlayers = players.length;
+
+        // Calcular altura óptima de tarjeta y margen
+        int totalMargins = (numPlayers - 1) * MAX_PLAYER_CARD_MARGIN + 20; // 20 para padding superior e inferior
+        int availableForCards = availableHeight - totalMargins;
+        int optimalCardHeight = availableForCards / numPlayers;
+
+        // Limitar entre valores mínimos y máximos
+        int cardHeight = Math.max(MIN_PLAYER_CARD_HEIGHT, Math.min(MAX_PLAYER_CARD_HEIGHT, optimalCardHeight));
+
+        // Recalcular margen basándose en la altura de tarjeta final
+        int usedHeightForCards = cardHeight * numPlayers;
+        int remainingHeight = availableHeight - usedHeightForCards - 20; // 20 para padding
+        int margin = Math.max(MIN_PLAYER_CARD_MARGIN, Math.min(MAX_PLAYER_CARD_MARGIN, remainingHeight / Math.max(1, numPlayers - 1)));
+
+        return new int[]{cardHeight, margin};
     }
 
     /**
@@ -124,7 +189,22 @@ public class EndScreenOverlay extends JPanel {
         // Dibujar podium/resultados
         drawResults(g2, width, height);
 
+        // Dibujar confeti
+        drawConfetti(g2);
+
         g2.dispose();
+    }
+
+    /**
+     * Dibuja las partículas de confeti
+     */
+    private void drawConfetti(Graphics2D g2) {
+        for (ConfettiParticle particle : confettiParticles) {
+            g2.setColor(particle.color);
+            g2.rotate(particle.rotation, particle.x, particle.y);
+            g2.fillRect((int)particle.x, (int)particle.y, particle.size, particle.size);
+            g2.rotate(-particle.rotation, particle.x, particle.y);
+        }
     }
 
     /**
@@ -158,18 +238,18 @@ public class EndScreenOverlay extends JPanel {
      */
     private void drawTitle(Graphics2D g2, int width, int height) {
         g2.setColor(Color.WHITE);
-        g2.setFont(new Font("SansSerif", Font.BOLD, height / 12));
+        g2.setFont(new Font("SansSerif", Font.BOLD, height / 20));
         FontMetrics fm = g2.getFontMetrics();
 
         String title = "¡Partida Terminada!";
         int titleX = width / 40;
-        int titleY = height / 8;
+        int titleY = height / 12;
         g2.drawString(title, titleX, titleY);
 
         g2.setFont(new Font("SansSerif", Font.PLAIN, height / 20));
         fm = g2.getFontMetrics();
         String winner = "Ganador: " + players[0].getName();
-        int winnerY = titleY + fm.getHeight() + 10;
+        int winnerY = titleY + fm.getHeight() + 5;
         g2.drawString(winner, titleX, winnerY);
     }
 
@@ -181,22 +261,26 @@ public class EndScreenOverlay extends JPanel {
      * @param height Alçada del component
      */
     private void drawResults(Graphics2D g2, int width, int height) {
-        int resultsX = (int) (width * SIDE_PANEL_WIDTH_PERCENT) + 50;
-        int resultsWidth = (int) (width * (1 - SIDE_PANEL_WIDTH_PERCENT)) - 100;
-        int resultsY = height / 4;
-        int resultsHeight = (int) (height * PODIUM_HEIGHT_PERCENT);
+        int resultsX = (int) (width * SIDE_PANEL_WIDTH_PERCENT) + 30;
+        int resultsWidth = (int) (width * (1 - SIDE_PANEL_WIDTH_PERCENT)) - 60;
+        int resultsY = height / 6;
+        int podiumHeight = (int) (height * PODIUM_HEIGHT_PERCENT);
 
         // Dibujar podium para los 3 primeros
-        drawPodium(g2, resultsX, resultsY, resultsWidth, resultsHeight);
+        drawPodium(g2, resultsX, resultsY, resultsWidth, podiumHeight);
 
-        // Dibujar lista completa de jugadores
-        drawPlayerList(g2, resultsX, resultsY + resultsHeight + 20, resultsWidth);
+        // Calcular espacio disponible para la lista
+        int listStartY = resultsY + podiumHeight + 60;
+        int availableHeight = height - listStartY - 60;
+
+        // Dibujar lista completa de jugadores (sin limitación de altura)
+        drawPlayerList(g2, resultsX, listStartY, resultsWidth, availableHeight);
     }
 
     /**
      * Dibuixa la visualització del podi per als 3 primers jugadors.
      * El podi mostra les posicions 1a, 2a i 3a amb diferents alçades
-     * i mostra noms de jugadors i puntuacions.
+     * i mostra noms de jugadors i puntuacions encima dels bloques.
      *
      * @param g2 Context Graphics2D per dibuixar
      * @param x Coordenada X de l'àrea del podi
@@ -225,71 +309,86 @@ public class EndScreenOverlay extends JPanel {
 
             // Dibujar bloque del podium
             setPlayerColor(g2, pos);
-            g2.fillRoundRect(podiumX + 10, podiumY, podiumWidth - 20, podiumHeight, 20, 20);
+            g2.fillRoundRect(podiumX + 10, podiumY, podiumWidth - 20, podiumHeight, 15, 15);
 
             // Dibujar borde
             g2.setColor(Color.WHITE);
-            g2.setStroke(new BasicStroke(3));
-            g2.drawRoundRect(podiumX + 10, podiumY, podiumWidth - 20, podiumHeight, 20, 20);
+            g2.setStroke(new BasicStroke(2));
+            g2.drawRoundRect(podiumX + 10, podiumY, podiumWidth - 20, podiumHeight, 15, 15);
 
-            // Dibujar posición
+            // Dibujar posición (más grande)
             g2.setColor(Color.WHITE);
-            g2.setFont(new Font("SansSerif", Font.BOLD, 24));
+            g2.setFont(new Font("SansSerif", Font.BOLD, 44));
             FontMetrics fm = g2.getFontMetrics();
             String label = labels[i];
             int labelX = podiumX + (podiumWidth - fm.stringWidth(label)) / 2;
-            int labelY = podiumY + 30;
+            int labelY = podiumY + 36;
             g2.drawString(label, labelX, labelY);
 
+            // Dibujar puntuación dentro del podio (más grande)
+            g2.setFont(new Font("SansSerif", Font.PLAIN, 28));
+            fm = g2.getFontMetrics();
+            String score = player.getScore() + " pts";
+            int scoreX = podiumX + (podiumWidth - fm.stringWidth(score)) / 2;
+            int scoreY = podiumY + podiumHeight - 15;
+            g2.drawString(score, scoreX, scoreY);
+
             // Dibujar nombre del jugador
-            g2.setFont(new Font("SansSerif", Font.BOLD, 16));
+            g2.setFont(new Font("SansSerif", Font.BOLD, 40));
             fm = g2.getFontMetrics();
             String name = player.getName();
             if (fm.stringWidth(name) > podiumWidth - 20) {
                 name = name.substring(0, Math.min(8, name.length())) + "...";
             }
             int nameX = podiumX + (podiumWidth - fm.stringWidth(name)) / 2;
-            int nameY = labelY + 25;
+            int nameY = podiumY - 10;
             g2.drawString(name, nameX, nameY);
-
-            // Dibujar puntuación
-            g2.setFont(new Font("SansSerif", Font.PLAIN, 14));
-            fm = g2.getFontMetrics();
-            String score = player.getScore() + " pts";
-            int scoreX = podiumX + (podiumWidth - fm.stringWidth(score)) / 2;
-            int scoreY = nameY + 20;
-            g2.drawString(score, scoreX, scoreY);
         }
     }
 
     /**
-     * Dibuixa la llista completa de classificació de tots els jugadors en format desplaçable.
+     * Dibuixa la llista completa de classificació de tots els jugadors.
      * Cada jugador es mostra en format targeta amb posició, nom i puntuació.
+     * Las tarjetas se ajustan dinámicamente para mostrar todos los jugadores sin scroll.
      *
      * @param g2 Context Graphics2D per dibuixar
      * @param x Coordenada X de l'àrea de la llista de jugadors
      * @param y Coordenada Y de l'àrea de la llista de jugadors
      * @param width Amplada de l'àrea de la llista de jugadors
+     * @param availableHeight Altura disponible para la lista
      */
-    private void drawPlayerList(Graphics2D g2, int x, int y, int width) {
-        g2.setColor(new Color(255, 255, 255, 200));
-        g2.fillRoundRect(x, y, width,
-                Math.min(players.length * (PLAYER_CARD_HEIGHT + PLAYER_CARD_MARGIN), 200),
-                15, 15);
+    private void drawPlayerList(Graphics2D g2, int x, int y, int width, int availableHeight) {
+        if (players.length == 0) return;
 
+        // Calcular dimensiones dinámicas
+        int[] dimensions = calculateCardDimensions(availableHeight);
+        int cardHeight = dimensions[0];
+        int cardMargin = dimensions[1];
+
+        // Calcular altura total necesaria
+        int totalHeight = players.length * cardHeight + (players.length - 1) * cardMargin + 20;
+
+        // Dibujar fondo de la lista
+        g2.setColor(new Color(255, 255, 255, 220));
+        g2.fillRoundRect(x, y, width, totalHeight, 12, 12);
+
+        // Dibujar borde de la lista
+        g2.setColor(new Color(200, 200, 200));
+        g2.setStroke(new BasicStroke(1));
+        g2.drawRoundRect(x, y, width, totalHeight, 12, 12);
+
+        // Dibujar cada carta de jugador
         for (int i = 0; i < players.length; i++) {
             Player player = players[i];
-            int cardY = y + 10 + i * (PLAYER_CARD_HEIGHT + PLAYER_CARD_MARGIN);
-
-            if (cardY + PLAYER_CARD_HEIGHT > y + 190) break; // No exceder el área
-
-            drawPlayerCard(g2, player, x + 10, cardY, width - 20, PLAYER_CARD_HEIGHT, i + 1);
+            int cardY = y + 10 + i * (cardHeight + cardMargin);
+            drawPlayerCard(g2, player, x + 10, cardY, width - 20, cardHeight, i + 1);
         }
     }
 
     /**
      * Dibuixa una targeta individual de jugador mostrant el seu rang, nom, puntuació i indicador de CPU.
      * Cada targeta està codificada per colors basant-se en la posició del jugador.
+     * El tamaño del texto se ajusta dinámicamente según la altura de la tarjeta.
      *
      * @param g2 Context Graphics2D per dibuixar
      * @param player Objecte Player que conté la informació del jugador
@@ -302,37 +401,48 @@ public class EndScreenOverlay extends JPanel {
     private void drawPlayerCard(Graphics2D g2, Player player, int x, int y, int width, int height, int position) {
         // Fondo de la carta
         g2.setColor(Color.WHITE);
-        g2.fillRoundRect(x, y, width, height, 10, 10);
+        g2.fillRoundRect(x, y, width, height, 8, 8);
 
         // Color del jugador (borde izquierdo)
         setPlayerColor(g2, position - 1);
-        g2.fillRoundRect(x, y, 8, height, 10, 10);
+        g2.fillRoundRect(x, y, 6, height, 8, 8);
+
+        // Calcular tamaño de fuente basado en la altura de la tarjeta
+        int baseFontSize = Math.max(12, Math.min(25, height / 2));
+        int smallFontSize = Math.max(10, baseFontSize - 3);
 
         // Posición
         g2.setColor(Color.BLACK);
-        g2.setFont(new Font("SansSerif", Font.BOLD, 20));
+        g2.setFont(new Font("SansSerif", Font.BOLD, baseFontSize));
         FontMetrics fm = g2.getFontMetrics();
         String pos = position + "º";
-        g2.drawString(pos, x + 20, y + height / 2 + fm.getAscent() / 2);
+        g2.drawString(pos, x + 15, y + height / 2 + fm.getAscent() / 2);
 
         // Nombre del jugador
-        g2.setFont(new Font("SansSerif", Font.BOLD, 16));
+        g2.setFont(new Font("SansSerif", Font.BOLD, baseFontSize));
         fm = g2.getFontMetrics();
         String name = player.getName();
-        g2.drawString(name, x + 70, y + height / 2);
+        // Truncar nombre si es muy largo
+        if (fm.stringWidth(name) > width / 2) {
+            while (fm.stringWidth(name + "...") > width / 2 && name.length() > 3) {
+                name = name.substring(0, name.length() - 1);
+            }
+            name += "...";
+        }
+        g2.drawString(name, x + 60, y + height / 2 + fm.getAscent() / 2);
 
         // Puntuación
-        g2.setFont(new Font("SansSerif", Font.PLAIN, 16));
+        g2.setFont(new Font("SansSerif", Font.PLAIN, baseFontSize));
         fm = g2.getFontMetrics();
-        String score = player.getScore() + " puntos";
-        int scoreX = x + width - fm.stringWidth(score) - 20;
+        String score = player.getScore() + " pts";
+        int scoreX = x + width - fm.stringWidth(score) - 15;
         g2.drawString(score, scoreX, y + height / 2 + fm.getAscent() / 2);
 
-        // Indicador de CPU si es necesario
-        if (player.getCPU()) {
-            g2.setColor(new Color(100, 100, 100));
-            g2.setFont(new Font("SansSerif", Font.ITALIC, 12));
-            g2.drawString("(CPU)", x + 70, y + height / 2 + 15);
+        // Indicador CPU (solo si hay espacio suficiente)
+        if (player.getCPU() && height > MIN_PLAYER_CARD_HEIGHT + 10) {
+            g2.setColor(new Color(120, 120, 120));
+            g2.setFont(new Font("SansSerif", Font.ITALIC, smallFontSize));
+            g2.drawString("(CPU)", x + 60, y + height / 2 + 15);
         }
     }
 
@@ -366,5 +476,63 @@ public class EndScreenOverlay extends JPanel {
         int buttonPanelY = getHeight() - buttonPanelHeight - 40;
 
         buttonPanel.setBounds(buttonPanelX, buttonPanelY, buttonPanelWidth, buttonPanelHeight);
+    }
+
+    /**
+     * Clase interna para representar una partícula de confeti
+     */
+    private class ConfettiParticle {
+        float x, y;
+        float velocityX, velocityY;
+        float rotation;
+        float rotationSpeed;
+        Color color;
+        int size;
+
+        public ConfettiParticle() {
+            reset(getWidth() / 2, getWidth(), getHeight());
+        }
+
+        public void reset(int centerX, int screenWidth, int screenHeight) {
+            // Posición inicial cerca del centro del podio
+            x = centerX + random.nextInt(200) - 100;
+            y = -random.nextInt(50);
+
+            // Velocidad inicial
+            velocityX = (random.nextFloat() - 0.5f) * 4;
+            velocityY = random.nextFloat() * 2 + 1;
+
+            // Rotación
+            rotation = random.nextFloat() * (float) Math.PI * 2;
+            rotationSpeed = (random.nextFloat() - 0.5f) * 0.2f;
+
+            // Color aleatorio brillante
+            Color[] colors = {
+                    new Color(255, 0, 100),   // Rosa
+                    new Color(0, 150, 255),   // Azul
+                    new Color(255, 200, 0),   // Dorado
+                    new Color(0, 255, 150),   // Verde
+                    new Color(255, 100, 0),   // Naranja
+                    new Color(200, 0, 255)    // Morado
+            };
+            color = colors[random.nextInt(colors.length)];
+
+            // Tamaño
+            size = random.nextInt(8) + 4;
+        }
+
+        public void update() {
+            x += velocityX;
+            y += velocityY;
+
+            // Aplicar gravedad
+            velocityY += 0.1f;
+
+            // Rotación
+            rotation += rotationSpeed;
+
+            // Resistencia del aire
+            velocityX *= 0.99f;
+        }
     }
 }

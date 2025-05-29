@@ -214,6 +214,9 @@ public class BoardView extends JPanel implements IBoard {
      * @throws RuntimeException si el cas no està suportat
      */
     public Movement getTemporalWord() {
+        if (temporalPieces.isEmpty())
+            return null;
+
         if (temporalPieces.size() > 1) {
             if (temporalPieces.get(0).getPosition().x == temporalPieces.get(1).getPosition().x) {
                 return getVerticalTemporalWord();
@@ -482,6 +485,9 @@ public class BoardView extends JPanel implements IBoard {
                 break;
             case DoubleWord:
                 changeTile(new BoardDoubleWordTile(x, y, handView, this, blankPieceSelector), x, y);
+                break;
+            case QuadrupleLetter:
+                changeTile(new BoardQuadrupleLetterTile(x, y, handView, this, blankPieceSelector), x, y);
                 break;
             case TripleLetter:
                 changeTile(new BoardTripleLetterTile(x, y, handView, this, blankPieceSelector), x, y);
