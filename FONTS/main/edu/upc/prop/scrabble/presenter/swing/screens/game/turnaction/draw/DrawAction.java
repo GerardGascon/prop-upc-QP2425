@@ -63,6 +63,7 @@ public class DrawAction extends JPanel {
         finishBtn = new JButton("Finish");
         finishBtn.setBounds(1400, 575, 75, 50); //hardcoded
         finishBtn.addActionListener(_ -> drawPieces());
+        pieces.clear();
         remove(drawBtn);
         add(confirmBtn);
         add(finishBtn);
