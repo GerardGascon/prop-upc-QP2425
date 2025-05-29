@@ -53,4 +53,18 @@ public class SaveReader extends SaveDataStreamer implements ISaveReader {
         File path = getAbsolutePath(fileName);
         return path.exists();
     }
+
+    @Override
+    public boolean delete(String fileName) {
+        File path = getAbsolutePath(fileName);
+        if (!path.exists())
+            return false;
+
+        try {
+            return path.delete();
+        } catch (Exception e) {
+            System.err.println("Error borrant el fitxer: " + path + " - " + e.getMessage());
+            return false;
+        }
+    }
 }
