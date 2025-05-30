@@ -490,8 +490,19 @@ public class JugarButton extends MenuButton {
                 players.add(names[i]);
             }
         }
-        if (!checkEmptyName() && (players.size() + cpus.size()) >= 2) {
+        if (!checkEmptyName() && (players.size() + cpus.size()) >= 2 && !repitedNames(players)) {
             SceneManager.getInstance().load(GameScene.class, new GameProperties(selectedLanguage, selectedTableSize, players, cpus, false), window);
         }
     }
+
+    private boolean repitedNames(List<String> players) {
+        Set<String> uniqueNames = new HashSet<>();
+        for (String player : players) {
+            if (!uniqueNames.add(player)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
