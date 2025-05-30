@@ -156,17 +156,22 @@ public class WordAdder {
      * @param node Node el qual recalcularà el seu codi hash i propagarà.
      * @see Node
      */
-    private void updateHashCodeAndPropagate(Node node){
-        if(node == null)
+    private void updateHashCodeAndPropagate(Node node) {
+        if (node == null)
             return;
 
         int oldHash = node.hashCode();
         node.calculateHashCode();
-        if(oldHash == node.hashCode())
+        if (oldHash == node.hashCode())
             return;
+
+        for (Node successor : node.getSuccessors().values()) {
+            successor.setParent(node);
+        }
 
         dawg.removeNode(oldHash);
         dawg.addNode(node);
+
         updateHashCodeAndPropagate(node.getParent());
     }
 }

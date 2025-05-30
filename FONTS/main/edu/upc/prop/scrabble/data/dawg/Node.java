@@ -38,7 +38,7 @@ public class Node {
     /**
      * Indica el node predecessor al node actual.
      */
-    private final Node parent;
+    private Node parent;
 
     /**
      * Crea un node amb les característiques donades.
@@ -97,6 +97,10 @@ public class Node {
         return parent;
     }
 
+    public void setParent(Node parent) {
+        this.parent = parent;
+    }
+
     /**
      * @return True si el node és final de paraula, altrament False
      */
@@ -153,5 +157,10 @@ public class Node {
     @Override
     public int hashCode() {
         return hashCode;
+    }
+
+    @Override
+    public String toString() {
+        return character == null ? "" : parent.toString() + character;
     }
 }

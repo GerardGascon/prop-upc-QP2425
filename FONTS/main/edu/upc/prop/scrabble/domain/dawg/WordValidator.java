@@ -33,6 +33,10 @@ public class WordValidator {
      * @see DAWG
      */
     public boolean run(String word){
+        if (word.equals("TRAINTS")){
+            System.out.println("TRAINTS");
+        }
+
         Node current = dawg.getRoot();
         for(int i = 0; i < word.length(); i++) {
             Node successor = current.getSuccessor(word.charAt(i));
