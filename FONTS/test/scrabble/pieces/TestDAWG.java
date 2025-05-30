@@ -45,6 +45,30 @@ public class TestDAWG {
         assertTrue(sut.run("LLAVERO"));
         assertFalse(sut.run("LLAVER"));
     }
+    @Test
+    public void aopsiduhgfuqeriof(){
+        DAWG dawg = new DAWG();
+        WordAdder adder = new WordAdder(dawg);
+        WordValidator sut = new WordValidator(dawg);
+
+        adder.run("TRAINT");
+        adder.run("TRAMAT");
+        adder.run("TRAMATS");
+
+        assertFalse(sut.run("TRAINTS"));
+    }
+    @Test
+    public void qwioeurhf(){
+        DAWG dawg = new DAWG();
+        WordAdder adder = new WordAdder(dawg);
+        WordValidator sut = new WordValidator(dawg);
+
+        adder.run("PANAXES");
+        adder.run("PAPPIES");
+        adder.run("PAPPIEST");
+
+        assertFalse(sut.run("PANAXEST"));
+    }
 
     @Test
     public void testCatalanDictionary() throws IOException, URISyntaxException {

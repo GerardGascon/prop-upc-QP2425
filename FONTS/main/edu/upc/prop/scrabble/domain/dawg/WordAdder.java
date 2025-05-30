@@ -81,6 +81,8 @@ public class WordAdder {
             parent.addSuccessor(currentChar, nextNode);
             updateHashCodeAndPropagate(parent);
         }
+
+        parent.addSuccessorPath(currentChar);
     }
 
     /**

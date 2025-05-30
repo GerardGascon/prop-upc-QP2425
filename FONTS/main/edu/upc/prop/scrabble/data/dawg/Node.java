@@ -1,7 +1,9 @@
 package edu.upc.prop.scrabble.data.dawg;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Classe per representar nodes que formaran el DAWG.
@@ -39,6 +41,8 @@ public class Node {
      * Indica el node predecessor al node actual.
      */
     private Node parent;
+
+    private final Map<Character, Set<Character>> parents = new HashMap<>();
 
     /**
      * Crea un node amb les característiques donades.
@@ -162,5 +166,22 @@ public class Node {
     @Override
     public String toString() {
         return character == null ? "" : parent.toString() + character;
+    }
+
+    public void addSuccessorPath(char currentChar) {
+        if (parent == null)
+            return;
+        Node successor = getSuccessor(currentChar);
+        if (parents.containsKey(parent.character)) {
+            parents.get(parent.character).add(successor.character);
+        } else {
+            HashSet<Character> successors = new HashSet<>();
+            successors.add(successor.character);
+            parents.put(parent.character, successors);
+        }
+    }
+
+    public boolean isValidPath(char previous, char next) {
+        return parents.containsKey(previous) && parents.get(previous).contains(next);
     }
 }
