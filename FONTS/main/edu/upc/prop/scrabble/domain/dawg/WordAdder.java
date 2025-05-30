@@ -15,12 +15,11 @@ public class WordAdder {
      * @see DAWG
      */
     private final DAWG dawg;
-    // Al estar ordenados los diccionarios nos guardamos la palabra anterior para aprovecharnos de eso
     /**
      * Última paraula emmagatzemada. Servirà per aprofitar que s'han d'afegir paraules
      * en ordre alfabètic.
      */
-    private String lastWordAdded = " ";
+    private String lastWordAdded = "";
 
     /**
      * Crea un nou WordAdder.
@@ -49,40 +48,20 @@ public class WordAdder {
      * servirà perquè a 'run' es marqui com a final de paraula.
      * @param word Paraula a afegir.
      * @param commonPrefix Prefix en comú de la paraula a afegir amb l'última afegida.
-     * @param startingPoint Node en el qual cal començar a afegir nodes.
+     * @param current Node en el qual cal començar a afegir nodes.
      * @return Últim node creat per representar la paraula.
      * @see Node
      * @see DAWG
      */
-    private Node addNecessaryNodes(String word, int commonPrefix, Node startingPoint) {
+    private Node addNecessaryNodes(String word, int commonPrefix, Node current) {
         for(int i = commonPrefix; i < word.length(); i++) {
             char currentChar = word.charAt(i);
-            boolean isEndOfWord = i == word.length() - 1;
-            int depth = startingPoint.getDepth() + 1;
-
-            Node successor = findOrCreateNode(currentChar, isEndOfWord, depth, startingPoint);
-            tryAddSuccessor(startingPoint, currentChar, successor);
-
-            startingPoint = successor;
-        }
-        return startingPoint;
-    }
-
-    /**
-     * Si el node predecessor no té com a successor un caràcter com el que volem afegir,
-     * afegim com a successor el caràcter i node donats.
-     * @param parent Node predecessor
-     * @param currentChar Caràcter a considerar per crear o no el successor
-     * @param nextNode Node el qual representaría el caràcter en cas que s'afegeixi.
-     * @see Node
-     */
-    private void tryAddSuccessor(Node parent, char currentChar, Node nextNode) {
-        if (parent.getSuccessor(currentChar) == null) {
-            parent.addSuccessor(currentChar, nextNode);
-            updateHashCodeAndPropagate(parent);
+            current = current.getOrAddEdge(currentChar);
         }
 
-        parent.addSuccessorPath(currentChar);
+        current.setEndOfWord(true);
+
+        return current;
     }
 
     /**
@@ -92,10 +71,7 @@ public class WordAdder {
      * @see Node
      */
     private void setNodeAsEndOfWord(Node current) {
-        if(!current.isEndOfWord()){
-            current.setEndOfWord(true);
-            updateHashCodeAndPropagate(current);
-        }
+        current.setEndOfWord(true);
     }
 
     /**
@@ -128,52 +104,5 @@ public class WordAdder {
                 return i;
         }
         return minLength;
-    }
-
-    /**
-     * Tracta de trobar un node amb certes característiques. En cas que no
-     * existeixi en crea un i el retorna. Altrament retorna el prèviament existent.
-     * @param character Caràcter del node a trobar/crear.
-     * @param isEndOfWord Característica és final de paraula o no del node a trobar/crear.
-     * @param depth Profunditat del node a crear/trobar.
-     * @param parent Node predecessor del node a crear/trobar.
-     * @return Node amb les característiques introduïdes.
-     * @see Node
-     * @see DAWG
-     */
-    private Node findOrCreateNode(char character, boolean isEndOfWord, int depth, Node parent) {
-        Node newNode = new Node(character, depth, parent, isEndOfWord);
-        Node existingNode = dawg.getNode(newNode.hashCode());
-
-        if (existingNode != null && existingNode.equals(newNode))
-            return existingNode;
-
-        dawg.addNode(newNode);
-        return newNode;
-    }
-
-    /**
-     * Recalcula el codi hash del node donat i propaga el canvi
-     * als seus predecessors.
-     * @param node Node el qual recalcularà el seu codi hash i propagarà.
-     * @see Node
-     */
-    private void updateHashCodeAndPropagate(Node node) {
-        if (node == null)
-            return;
-
-        int oldHash = node.hashCode();
-        node.calculateHashCode();
-        if (oldHash == node.hashCode())
-            return;
-
-        for (Node successor : node.getSuccessors().values()) {
-            successor.setParent(node);
-        }
-
-        dawg.removeNode(oldHash);
-        dawg.addNode(node);
-
-        updateHashCodeAndPropagate(node.getParent());
     }
 }

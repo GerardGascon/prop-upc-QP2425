@@ -35,17 +35,10 @@ public class WordValidator {
     public boolean run(String word){
         Node current = dawg.getRoot();
         for(int i = 0; i < word.length(); i++) {
-            Node successor = current.getSuccessor(word.charAt(i));
-            if (successor == null) return false;
-
-            if (i > 0 && i < word.length() - 1) {
-                if (!successor.isValidPath(word.charAt(i - 1), word.charAt(i + 1)))
-                    return false;
-            }
-
-            current = successor;
+            current = current.getSuccessor(word.charAt(i));
+            if (current == null)
+                return false;
         }
         return current.isEndOfWord();
     }
-
 }

@@ -17,49 +17,12 @@ public class Node {
      */
     private boolean isEndOfWord;
     /**
-     * Emmagatzema el caràcter que representa el node
-     */
-    private final Character character;
-    /**
      * Mapa caràcter-Node per indicar els possibles caràcters
      * successors del Node i en cas que existeixin, el Node
      * al qual avançar.
      *
      */
-    private final Map<Character, Node> successors;
-    /**
-     * Número creat a partir de les característiques del node
-     * que pretén representar-lo de manera única i inequívocament.
-     */
-    private int hashCode;
-    /**
-     * Indica a quants nodes de distància del node arrel
-     * està situat aquest node.
-     */
-    private final int depth;
-    /**
-     * Indica el node predecessor al node actual.
-     */
-    private Node parent;
-
-    private final Map<Character, Set<Character>> parents = new HashMap<>();
-
-    /**
-     * Crea un node amb les característiques donades.
-     * Calcula el seu codi de hash actual.
-     * @param character Caràcter que representarà el node
-     * @param depth Profunditat respete l'arrel del node
-     * @param parent node predecessor al node creat
-     * @param isEndOfWord Boole+a que indica si el node pot ser o no final de paraula.
-     */
-    public Node(Character character, int depth, Node parent, boolean isEndOfWord) {
-        this.isEndOfWord = isEndOfWord;
-        this.character = character;
-        this.successors = new HashMap<>();
-        this.depth = depth;
-        this.parent = parent;
-        calculateHashCode();
-    }
+    private final Map<Character, Node> successors = new HashMap<>();
 
     /**
      * Obtenim informació sobre els caràcters successors del node i si sí que
@@ -79,33 +42,6 @@ public class Node {
     public Map<Character, Node> getSuccessors() { return successors;}
 
     /**
-     * Afegeix un nou successor
-     * @param character Caràcter que representa el successor
-     * @param successor Node successor a afegir
-     */
-    public void addSuccessor(Character character, Node successor) {
-        successors.put(character, successor);
-    }
-
-    /**
-     * @return Profunditat del node
-     */
-    public int getDepth() {
-        return depth;
-    }
-
-    /**
-     * @return Node predecessor
-     */
-    public Node getParent() {
-        return parent;
-    }
-
-    public void setParent(Node parent) {
-        this.parent = parent;
-    }
-
-    /**
      * @return True si el node és final de paraula, altrament False
      */
     public boolean isEndOfWord() {
@@ -117,28 +53,22 @@ public class Node {
      * @param endOfWord Valor al qual volem establir end of word
      */
     public void setEndOfWord(boolean endOfWord) {
-        if(this.isEndOfWord != endOfWord) {
-            this.isEndOfWord = endOfWord;
-        }
+        this.isEndOfWord = endOfWord;
     }
 
     /**
-     * Calcula i actualitza codi de Hash del node segons els
-     * valors que té actualment.
+     * Afegeix un node o obté aquell node si ja existeix.
+     *
+     * @param character El caràcter que identifica el node.
+     * @return El node ja existent o una nova instància d'aquell node.
      */
-    public void calculateHashCode() {
-        int result = 17;
-        result = 31 * result;
-        if (isEndOfWord) result += 1;
-        result = 31 * result;
-        if(character != null) result += character.hashCode();
-        result = 31 * result + depth;
-        result = 31 * result + successors.size();
-        for (Map.Entry<Character, Node> entry : successors.entrySet()) {
-            result = 31 * result + entry.getKey().hashCode();
-            result = 31 * result + entry.getValue().hashCode();
+    public Node getOrAddEdge(char character) {
+        Node successor = successors.get(character);
+        if (successor == null) {
+            successor = new Node();
+            successors.put(character, successor);
         }
-        this.hashCode = result;
+        return successor;
     }
 
     /**
@@ -153,35 +83,5 @@ public class Node {
 
         Node node = (Node) o;
         return hashCode() == node.hashCode();
-    }
-
-    /**
-     * @return Hash code del node
-     */
-    @Override
-    public int hashCode() {
-        return hashCode;
-    }
-
-    @Override
-    public String toString() {
-        return character == null ? "" : parent.toString() + character;
-    }
-
-    public void addSuccessorPath(char currentChar) {
-        if (parent == null)
-            return;
-        Node successor = getSuccessor(currentChar);
-        if (parents.containsKey(parent.character)) {
-            parents.get(parent.character).add(successor.character);
-        } else {
-            HashSet<Character> successors = new HashSet<>();
-            successors.add(successor.character);
-            parents.put(parent.character, successors);
-        }
-    }
-
-    public boolean isValidPath(char previous, char next) {
-        return parents.containsKey(previous) && parents.get(previous).contains(next);
     }
 }

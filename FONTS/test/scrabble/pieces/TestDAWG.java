@@ -46,7 +46,7 @@ public class TestDAWG {
         assertFalse(sut.run("LLAVER"));
     }
     @Test
-    public void aopsiduhgfuqeriof(){
+    public void checkIfThereIsAnErrorOnGeneration1(){
         DAWG dawg = new DAWG();
         WordAdder adder = new WordAdder(dawg);
         WordValidator sut = new WordValidator(dawg);
@@ -58,7 +58,7 @@ public class TestDAWG {
         assertFalse(sut.run("TRAINTS"));
     }
     @Test
-    public void qwioeurhf(){
+    public void checkIfThereIsAnErrorOnGeneration2(){
         DAWG dawg = new DAWG();
         WordAdder adder = new WordAdder(dawg);
         WordValidator sut = new WordValidator(dawg);
