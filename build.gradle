@@ -37,6 +37,7 @@ sourceSets {
 
     test {
         java.srcDir 'FONTS/test'
+        resources.srcDir 'FONTS/test/resources'
     }
 
     testrunner {
