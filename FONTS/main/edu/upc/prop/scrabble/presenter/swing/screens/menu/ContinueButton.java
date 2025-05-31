@@ -182,7 +182,7 @@ public class ContinueButton extends MenuButton {
         int componentWidth = (int) (width * 0.15);
         int componentHeight = (int) (height * 0.15);
         // Load Game Button
-        JButton loadGameButton = new JButton("Load Game");
+        JButton loadGameButton = new JButton("Carregar Partida");
 
         loadGameButton.setBounds((int) (width * 0.25), (int) (height * 0.45), componentWidth, componentHeight);
 
@@ -197,7 +197,7 @@ public class ContinueButton extends MenuButton {
         settingsPanel.add(loadGameButton);
 
         // Cancel Button
-        JButton cancelButton = new JButton("Cancel");
+        JButton cancelButton = new JButton("Cancelar");
 
         cancelButton.setBounds((int) (width * 0.55), (int) (height * 0.45), componentWidth, componentHeight);
 

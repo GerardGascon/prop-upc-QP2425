@@ -224,7 +224,7 @@ public class JugarButton extends MenuButton {
 // Títol
                 g2d.setFont(new Font("SansSerif", Font.BOLD, 30));
                 g2d.setColor(new Color(60, 60, 80));
-                String title = "Game Settings";
+                String title = "Configuració de Partida";
                 FontMetrics fm = g2d.getFontMetrics();
                 int titleWidth = fm.stringWidth(title);
                 g2d.drawString(title, (int) (width * 0.4), (int) (height * 0.15));
@@ -238,16 +238,16 @@ public class JugarButton extends MenuButton {
                 g2d.setFont(new Font("SansSerif", Font.BOLD, 20));
                 g2d.setColor(new Color(80, 80, 100));
 
-                g2d.drawString("Player 1", (int) (width * 0.2), (int) (height * 0.3));
-                g2d.drawString("Player 2", (int) (width * 0.4), (int) (height * 0.3));
-                g2d.drawString("Player 3", (int) (width * 0.6), (int) (height * 0.3));
-                g2d.drawString("Player 4", (int) (width * 0.8), (int) (height * 0.3));
+                g2d.drawString("Jugador 1", (int) (width * 0.2), (int) (height * 0.3));
+                g2d.drawString("Jugador 2", (int) (width * 0.4), (int) (height * 0.3));
+                g2d.drawString("Jugador 3", (int) (width * 0.6), (int) (height * 0.3));
+                g2d.drawString("Jugador 4", (int) (width * 0.8), (int) (height * 0.3));
 
-                g2d.drawString("Type: ", (int) (width * 0.1), (int) (height * 0.4));
-                g2d.drawString("Name: ", (int) (width * 0.1), (int) (height * 0.5));
+                g2d.drawString("Tipus: ", (int) (width * 0.1), (int) (height * 0.4));
+                g2d.drawString("Nom: ", (int) (width * 0.1), (int) (height * 0.5));
 
-                g2d.drawString("Language", (int) (width * 0.1), (int) (height * 0.6));
-                g2d.drawString("Table Size", (int) (width * 0.1), (int) (height * 0.7));
+                g2d.drawString("Llengua", (int) (width * 0.1), (int) (height * 0.6));
+                g2d.drawString("Mida Tauler", (int) (width * 0.1), (int) (height * 0.7));
 
                 g2d.dispose();
             }
@@ -416,7 +416,7 @@ public class JugarButton extends MenuButton {
 
 // Add Start Game button
 
-        JButton startButton = new JButton("Start Game");
+        JButton startButton = new JButton("Començar Partida");
 
         startButton.setBounds((int) (width * 0.1), (int) (height * 0.85), (int) (width * 0.2), componentHeight);
 
@@ -433,7 +433,7 @@ public class JugarButton extends MenuButton {
 
 // Add Cancel button
 
-        JButton cancelButton = new JButton("Cancel");
+        JButton cancelButton = new JButton("Cancelar");
 
         cancelButton.setBounds((int) (width * 0.7), (int) (height * 0.85), (int) (width * 0.2), componentHeight);
 
