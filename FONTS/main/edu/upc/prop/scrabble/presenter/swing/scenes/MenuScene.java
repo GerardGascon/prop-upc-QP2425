@@ -55,12 +55,22 @@ public class MenuScene extends Scene {
         window.repaint();
     }
 
+
+    /**
+     * Mètode cridat quan l’escena és desconnectada (per exemple, en canviar a una altra escena).
+     * Elimina el panell del menú de la finestra.
+     */
     @Override
     protected void onDetach() {
         super.onDetach();
         window.remove(menuScreen);
     }
 
+    /**
+     * Mètode cridat de forma periòdica pel bucle del joc per actualitzar l’animació del menú.
+     *
+     * @param delta Temps (en segons) des de l’última actualització.
+     */
     @Override
     protected void onProcess(float delta) {
         super.onProcess(delta);

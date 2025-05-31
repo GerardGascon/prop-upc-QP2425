@@ -240,7 +240,7 @@ public class RanquingButton extends MenuButton {
                 default -> color = "#000000";
             }
 
-            String crown = (pos == 1) ? " ♛" : ""; // chess queen symbol // corona
+            String crown = (pos == 1) ? " ♛" : "";
 
 
             builder.append(String.format("<div style='color:%s;'>%d. %s - %s%s</div>",
@@ -250,6 +250,5 @@ public class RanquingButton extends MenuButton {
         builder.append("</body></html>");
         ranquingText.setText(builder.toString());
         ranquingText.setCaretPosition(0);
-
     }
 }
