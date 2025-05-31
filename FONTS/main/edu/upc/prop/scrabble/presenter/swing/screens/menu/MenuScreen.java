@@ -184,6 +184,10 @@ public class MenuScreen extends JPanel {
                     floatingTiles.get(i).checkCollision(floatingTiles.get(j));
                 }
             }
+            if(selectedTile != null) {
+                selectedTile.prevSpeed = selectedTile.speed;
+                selectedTile.speed = 0;
+            }
             repaint();
         }
     }
@@ -257,7 +261,6 @@ public class MenuScreen extends JPanel {
             @Override
             public void mouseDragged(java.awt.event.MouseEvent e) {
                 if (selectedTile != null && lastMousePos != null) {
-                    selectedTile.speed = 0;
 
                     long now = System.currentTimeMillis();
                     Point currentMousePos = e.getPoint();
@@ -335,7 +338,6 @@ public class MenuScreen extends JPanel {
                             }
                         }
                     }
-
                     repaint();
                 }
             }
