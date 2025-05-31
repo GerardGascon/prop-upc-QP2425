@@ -143,7 +143,7 @@ public class EndScreenOverlay extends JPanel {
         buttonPanel.setOpaque(false);
         buttonPanel.setLayout(new GridLayout(3, 1, 0, 10));
 
-        MenuButton newGameButton = new MenuButton("Nueva Partida");
+        MenuButton newGameButton = new MenuButton("Nova Partida");
         newGameButton.addActionListener(e -> {
             GameProperties properties = new GameProperties(gameProperties.language(),gameProperties.boardType(),gameProperties.players(), gameProperties.Cpus(), false);
             SceneManager.getInstance().load(GameScene.class, properties, window);
@@ -154,7 +154,7 @@ public class EndScreenOverlay extends JPanel {
             SceneManager.getInstance().load(MenuScene.class, window);
         });
 
-        MenuButton quitButton = new MenuButton("Salir");
+        MenuButton quitButton = new MenuButton("Sortir");
         quitButton.addActionListener(e -> System.exit(0));
 
         buttonPanel.add(newGameButton);
