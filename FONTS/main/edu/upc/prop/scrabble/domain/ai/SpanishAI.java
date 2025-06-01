@@ -29,6 +29,30 @@ import java.util.Map;
  * @author Felipe Martínez
  */
 public class SpanishAI extends AI {
+    /**
+     * Constructor per a la implementació d'IA en castellà.
+     * <p>
+     * Inicialitza els components necessaris perquè la IA pugui calcular moviments
+     * vàlids en partides amb l'idioma castellà, incloent el tractament especial
+     * per a les lletres específiques del castellà com 'Ñ' o 'CH'.
+     * Hereta la funcionalitat bàsica de la classe pare {@link AI}.
+     *
+     * @param piecesConverter  Convertidor de peces per a la gestió de fitxes
+     * @param pointCalculator  Calculador de puntuacions per a moviments
+     * @param dawg             Estructura de dades DAWG que conté el diccionari català
+     * @param board            Tauler actual del joc
+     * @param bot              Jugador controlat per la IA
+     * @param anchors          Gestor d'àncores per a posicionament de paraules
+     * @param crossChecks      Verificador de creuaments vàlids entre paraules
+     * @see AI
+     * @see PiecesConverter
+     * @see PointCalculator
+     * @see DAWG
+     * @see Board
+     * @see Player
+     * @see Anchors
+     * @see CrossChecks
+     */
     public SpanishAI(PiecesConverter piecesConverter, PointCalculator pointCalculator, DAWG dawg, Board board, Player bot, Anchors anchors, CrossChecks crossChecks) {
         super(piecesConverter, pointCalculator, dawg, board, bot, anchors, crossChecks);
     }

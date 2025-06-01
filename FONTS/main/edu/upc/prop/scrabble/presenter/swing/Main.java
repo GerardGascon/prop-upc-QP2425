@@ -22,6 +22,13 @@ import java.util.List;
  */
 public class Main {
     /**
+     * Constructor privat per evitar la instanciació.
+     */
+    private Main() {
+        throw new UnsupportedOperationException("Aquesta classe no pot ser instanciada");
+    }
+
+    /**
      * Mètode principal que inicia l'aplicació.
      * Executa la creació de la finestra en el fil d'esdeveniments de Swing.
      *

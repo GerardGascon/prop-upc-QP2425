@@ -15,6 +15,12 @@ import java.util.Map;
  * @see Score
  */
 public class GamesWonLeaderboard {
+    /**
+     * Crea una instància del filtre per nombre de partides guanyades.
+     */
+    public GamesWonLeaderboard() {
+
+    }
 
     /**
      * Executa el procés de classificació de jugadors segons el nombre de partides guanyades.

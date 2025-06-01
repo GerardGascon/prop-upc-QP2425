@@ -28,6 +28,13 @@ public class GameData implements IPersistableObject {
     private Player[] players;
 
     /**
+     * Crea una instància de les dades d'una partida
+     */
+    public GameData() {
+
+    }
+
+    /**
      * Estableix el comptador de salts de torn.
      * @param skipCounter nombre de torns consecutius saltats
      */

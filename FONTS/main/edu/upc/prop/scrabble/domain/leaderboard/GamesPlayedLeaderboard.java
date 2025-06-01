@@ -11,17 +11,25 @@ import java.util.Map;
  * Processa un conjunt de resultats {@link Score} i agrupa les dades
  * per nom de jugador, retornant una classificació ordenada per nombre
  * de partides jugades (de més a menys).
+ *
  * @author Felipe Martínez Lassalle
  * @see edu.upc.prop.scrabble.data.leaderboard.Leaderboard
  * @see Score
  */
 public class GamesPlayedLeaderboard {
+    /**
+     * Crea una instància del filtre en funció del nombre de partides jugades
+     */
+    public GamesPlayedLeaderboard() {
+
+    }
 
     /**
      * Executa el procés de classificació de jugadors segons el nombre de partides jugades.
+     *
      * @param scores Array de resultats {@link Score} corresponents a partides prèvies.
      * @return Un array de {@link PlayerValuePair}, ordenat descendentment pel nombre de partides jugades.
-     *         Cada element representa un jugador i la seva quantitat total de partides.
+     * Cada element representa un jugador i la seva quantitat total de partides.
      * @see PlayerValuePair
      * @see Score
      */

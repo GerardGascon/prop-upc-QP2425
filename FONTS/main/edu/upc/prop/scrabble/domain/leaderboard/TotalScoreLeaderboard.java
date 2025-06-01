@@ -14,6 +14,12 @@ import java.util.Map;
  * @see edu.upc.prop.scrabble.data.leaderboard.Leaderboard
  */
 public class TotalScoreLeaderboard {
+    /**
+     * Crea una instància del filtre per la suma de puntuació en totes les partides.
+     */
+    public TotalScoreLeaderboard() {
+
+    }
 
     /**
      * Executa el controlador per generar la classificació de puntuació total.

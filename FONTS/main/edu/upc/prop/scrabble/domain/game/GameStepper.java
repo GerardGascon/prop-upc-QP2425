@@ -38,6 +38,10 @@ public class GameStepper {
      */
     private final IEndScreen endScreen;
 
+    /**
+     * Objecte encarregat de guardar la partida
+     * @see GameSaver
+     */
     private final GameSaver leaderboardSaver;
 
     /**
@@ -46,6 +50,7 @@ public class GameStepper {
      * @param leaderboard Leaderboard on es registren les puntuacions.
      * @param players Jugadors de la partida.
      * @param endScreen Pantalla final a mostrar quan acaba la partida.
+     * @param leaderBoardSaver Objecte per guardar la partida.
      */
     public GameStepper(Turn turn, Leaderboard leaderboard,Player[] players,IEndScreen endScreen, GameSaver leaderBoardSaver) {
         this.turn = turn;

@@ -15,6 +15,12 @@ import java.util.Map;
  * @see Score
  */
 public class MaxScoreLeaderboard {
+    /**
+     * Crea una instància de l'ordenació per puntuació màxima
+     */
+    public MaxScoreLeaderboard() {
+
+    }
 
     /**
      * Executa el procés de classificació de jugadors segons la seva puntuació més alta en una sola partida.

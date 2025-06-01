@@ -44,6 +44,7 @@ public class ContinueButton extends MenuButton {
      * Creador del botó "Continuar", que desplega el menú per carregar una partida guardada.
      *
      * @param parent El panell principal sobre el qual es mostrarà el menú.
+     * @param window La finestra principal on es troba el programa.
      */
     public ContinueButton(JPanel parent, JFrame window) {
         super("Continuar");

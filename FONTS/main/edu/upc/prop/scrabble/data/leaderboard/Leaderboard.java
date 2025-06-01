@@ -22,7 +22,14 @@ public class Leaderboard implements IPersistableObject {
     /**
      * Llista que conté tots els resultats {@link Score} registrats.
      */
-    private ArrayList<Score> leaderBoard = new ArrayList<>();
+    private final ArrayList<Score> leaderBoard = new ArrayList<>();
+
+    /**
+     * Crea una instància del rànquing.
+     */
+    public Leaderboard() {
+
+    }
 
     /**
      * Retorna els resultats en forma d'array per facilitar-ne la gestió

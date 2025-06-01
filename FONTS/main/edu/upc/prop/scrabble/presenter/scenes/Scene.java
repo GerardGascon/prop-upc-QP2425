@@ -61,14 +61,16 @@ public abstract class Scene {
     }
 
     /**
-     * Instancia un nou objecte dins de l'escena.
+     * Instància un nou objecte dins de l'escena.
      * <p>
      * Aquest mètode intenta crear una nova instància de la classe especificada i afegir-la a l'escena.
-     * Si la classe té un constructor amb paràmetres, llença una excepció, ja que no es donen suport constructors parametritzats.
+     * Si la classe té un constructor amb paràmetres, llença una excepció,
+     * ja que no es donen suport constructors parametritzats.
      * </p>
      *
-     * @param o La classe de l'objecte a instanciar
-     * @return L'objecte instanciat
+     * @param <T> El tipus de l'objecte que s'instancia, que ha d'extendre SceneObject
+     * @param o   La classe de l'objecte a instanciar
+     * @return    L'objecte instanciat
      * @throws SceneObjectWithParametrizedConstructorException Si l'objecte té un constructor amb paràmetres
      * @throws RuntimeException Si hi ha algun error durant la creació de l'objecte
      * @see SceneObject

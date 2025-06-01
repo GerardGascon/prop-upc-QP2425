@@ -42,11 +42,14 @@ public class DrawActionMaker {
     private final PiecesConverter piecesConverter;
 
     /**
-     * Constructor per defecte d'un DrawActionMaker amb bag, player, rand i handView.
-     * @param bag La bossa de fitxes actual del joc.
-     * @param player El jugador que vol canviar fitxes.
-     * @param rand Instància del generador de nombres aleatoris.
-     * @param handView Interfície que representa la mà actual del jugador.
+     * Constructor per defecte d'un DrawActionMaker amb bag, player, rand, handView, stepper i piecesConverter.
+     *
+     * @param bag             La bossa de fitxes actual del joc.
+     * @param player          El jugador que vol canviar fitxes.
+     * @param rand            Instància del generador de nombres aleatoris.
+     * @param handView        Interfície que representa la mà actual del jugador.
+     * @param stepper         Gestor del torn de joc.
+     * @param piecesConverter Convertidor de fitxes segons idioma.
      */
     public DrawActionMaker(Bag bag, Player player, IRand rand, IHandView handView, GameStepper stepper, PiecesConverter piecesConverter) {
         this.player = player;

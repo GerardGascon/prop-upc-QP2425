@@ -21,6 +21,13 @@ import java.nio.file.Path;
  */
 abstract class LocaleReader {
     /**
+     * Crea una instància d'un lector d'arxius d'idiomes
+     */
+    public LocaleReader() {
+
+    }
+
+    /**
      * Obtén la ruta absoluta al fitxer especificat dins del directori de localització.
      * <p>
      * Aquest mètode construeix el camí absolut a partir de la ubicació del programa i

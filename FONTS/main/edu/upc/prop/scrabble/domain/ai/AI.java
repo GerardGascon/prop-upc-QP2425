@@ -256,10 +256,12 @@ public abstract class AI {
     protected abstract void processNextLeftPiece(String partialWord, int limit, Map.Entry<Character, Node> entry, Piece usedPiece);
 
     /**
-     * Gestiona backtracking
-     * @param partialWord Tros de la paraula actual
-     * @param limit Com de lluny podem anar
-     * @param usedPiece Peça utilitzada a la iteració actual
+     * Gestiona el procés de backtracking avançant a la següent peça a l'esquerra.
+     *
+     * @param partialWord Tros de la paraula construïda fins ara.
+     * @param node Node actual dins de l'estructura DAWG.
+     * @param limit Límit màxim de posicions que es poden explorar cap enrere.
+     * @param usedPiece Peça utilitzada en la iteració actual que s'elimina temporalment per provar altres opcions.
      * @see DAWG
      * @see Node
      * @see Piece

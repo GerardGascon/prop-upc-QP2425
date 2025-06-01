@@ -14,6 +14,12 @@ import java.util.Map;
  * @see GamesWinsPair
  */
 public class WinRateLeaderboard {
+    /**
+     * Crea una instància del filtre pel percentatge de victòries.
+     */
+    public WinRateLeaderboard() {
+
+    }
 
     /**
      * Executa el controlador per calcular i ordenar el percentatge de victòries dels jugadors.

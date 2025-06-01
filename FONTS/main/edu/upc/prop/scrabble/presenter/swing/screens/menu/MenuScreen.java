@@ -13,26 +13,69 @@ import java.util.Random;
  * @see JPanel
  */
 public class MenuScreen extends JPanel {
+    /**
+     * Percentatge de l'amplada del panell lateral respecte al panell total.
+     */
     private final float SIDE_PANEL_WIDTH_PERCENT = 0.4f;
-    private JPanel buttonPanel;
-    private JugarButton playButton;
-    private ContinueButton continueButton;
-    private RanquingButton rankingButton;
-    private MenuButton quitButton;
+
+    /**
+     * Panell contenidor dels botons del menú.
+     */
+    private final JPanel buttonPanel;
+
+    /**
+     * Botó per sortir del joc.
+     */
+    private final MenuButton quitButton;
+
+    /**
+     * Llista de peces flotants visibles al menú.
+     */
     private ArrayList<FloatingTile> floatingTiles;
+
+    /**
+     * Referència a la peça flotant actualment seleccionada per l'usuari.
+     */
     private FloatingTile selectedTile = null;
+
+    /**
+     * Posició anterior del ratolí durant l'arrossegament.
+     */
     private Point lastMousePos = null;
-    private long lastDragTime = 0;
-    private Point lastDragPos = null;
+
+    /**
+     * Nombre màxim d'entrades a l'historial de posicions durant l'arrossegament.
+     */
     private static final int DRAG_HISTORY_SIZE = 10;
+
+    /**
+     * Historial circular de posicions del ratolí durant l'arrossegament.
+     */
     private final Point[] dragHistory = new Point[DRAG_HISTORY_SIZE];
+
+    /**
+     * Historial circular de timestamps corresponents a cada entrada de `dragHistory`.
+     */
     private final long[] dragTimeHistory = new long[DRAG_HISTORY_SIZE];
+
+    /**
+     * Índex actual dins de l'historial circular d'arrossegament.
+     */
     private int dragHistoryIndex = 0;
+
+    /**
+     * Indica si l'historial d'arrossegament s'ha omplert completament almenys una vegada.
+     */
     private boolean dragHistoryFull = false;
 
 
     /**
-     * Creadora i inicialitzadora
+     * Creadora del panell de menú principal.
+     * Inicialitza els botons, configura el panell de botons, el color de fons i
+     * prepara les interaccions amb el ratolí.
+     *
+     * @param window Finestra principal del joc.
+     * @param leaderboard Rànquing global per accedir des del botó de rànquing.
      */
     public MenuScreen(JFrame window, Leaderboard leaderboard) {
         setDoubleBuffered(true);
@@ -43,9 +86,9 @@ public class MenuScreen extends JPanel {
         add(buttonPanel);
         buttonPanel.setOpaque(false);
 
-        playButton = new JugarButton(buttonPanel, window);
-        continueButton = new ContinueButton(buttonPanel, window);
-        rankingButton = new RanquingButton(buttonPanel, leaderboard);
+        JugarButton playButton = new JugarButton(buttonPanel, window);
+        ContinueButton continueButton = new ContinueButton(buttonPanel, window);
+        RanquingButton rankingButton = new RanquingButton(buttonPanel, leaderboard);
         quitButton = new MenuButton("Sortir");
 
         playButton.setOtherButtons(new MenuButton[]{continueButton, rankingButton});
@@ -59,28 +102,11 @@ public class MenuScreen extends JPanel {
         buttonPanel.add(quitButton);
 
         add(buttonPanel);
+        subscribeToMouse();
     }
 
     /**
-     * Consultora
-     * @return Botó Jugar
-     */
-    public JugarButton getPlayButton() { return playButton; }
-
-    /**
-     * Consultora
-     * @return Botó Continuar
-     */
-    public ContinueButton getContinueButton() { return continueButton; }
-
-    /**
-     * Consultora
-     * @return Botó Ranquing
-     */
-    public RanquingButton getRankingButton() { return rankingButton; }
-
-    /**
-     * Consultora
+     * Retorna el botó per sortir del joc.
      * @return Botó Sortir
      */
     public MenuButton getQuitButton() { return quitButton; }
@@ -192,15 +218,15 @@ public class MenuScreen extends JPanel {
         }
     }
 
-    {
-        /**
-         * Inicialitza els listeners de ratolí per detectar:
-         * <ul>
-         *     <li>Selecció de peces mitjançant clic (mousePressed)</li>
-         *     <li>Arrossegament i llançament amb velocitat simulada (mouseDragged + mouseReleased)</li>
-         * </ul>
-         * Aquesta funcionalitat permet una interacció natural i dinàmica amb les peces del menú.
-         */
+    /**
+     * Inicialitza els listeners de ratolí per detectar:
+     * <ul>
+     *     <li>Selecció de peces mitjançant clic (mousePressed)</li>
+     *     <li>Arrossegament i llançament amb velocitat simulada (mouseDragged + mouseReleased)</li>
+     * </ul>
+     * Aquesta funcionalitat permet una interacció natural i dinàmica amb les peces del menú.
+     */
+    private void subscribeToMouse() {
         addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mousePressed(java.awt.event.MouseEvent e) {
@@ -246,7 +272,6 @@ public class MenuScreen extends JPanel {
 
                 selectedTile = null;
                 lastMousePos = null;
-                lastDragPos = null;
 
                 for (int i = 0; i < DRAG_HISTORY_SIZE; i++) {
                     dragHistory[i] = null;
@@ -319,8 +344,7 @@ public class MenuScreen extends JPanel {
                             }
 
                             // Set collided tile direction + scaled speed
-                            float impactSpeed = Math.max(tile.prevSpeed, Math.min(1250f, dragSpeed));
-                            tile.speed = impactSpeed;
+                            tile.speed = Math.max(tile.prevSpeed, Math.min(1250f, dragSpeed));
                             tile.horizontalDir = nx;
                             tile.verticalDir = ny;
 

@@ -207,8 +207,10 @@ public class CrossCheckUpdater {
     }
 
     /**
-     * @param word Paraula sobre la qual volem obtenir el node final
-     * @return Node que representa el caràcter final de la paraula donada.
+     * Retorna el node final que representa l’últim caràcter de la paraula donada dins de l’estructura DAWG.
+     *
+     * @param word Paraula sobre la qual es vol obtenir el node final.
+     * @return Node que representa el caràcter final de la paraula; null si algun caràcter no existeix a la cadena.
      * @see Node
      */
     private Node getFinalNode(String word) {

@@ -13,6 +13,9 @@ public class SkipAction extends JPanel {
      * Botó que representa l'acció de saltar el torn.
      */
     private final JButton skipBtn;
+    /**
+     * Controlador per a passar el torn.
+     */
     private SkipActionMaker skip;
 
     /***

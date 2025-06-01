@@ -1,6 +1,5 @@
 package edu.upc.prop.scrabble.presenter.swing.screens.menu;
 
-import edu.upc.prop.scrabble.data.Player;
 import edu.upc.prop.scrabble.data.board.BoardType;
 import edu.upc.prop.scrabble.data.properties.GameProperties;
 import edu.upc.prop.scrabble.data.properties.Language;
@@ -35,6 +34,9 @@ public class JugarButton extends MenuButton {
      * on es col·loquen les opcions per a jugadors, llenguatge i mida del tauler.
      */
     private JPanel settingsPanel;
+    /**
+     * La finestra principal del programa.
+     */
     private final JFrame window;
 
     /**
@@ -81,51 +83,14 @@ public class JugarButton extends MenuButton {
     private JTextField player4Name;
 
     /**
-     * String per a guardar el tipus del player 1
-     */
-    private String p1Type;
-
-    /**
-     * String per a guardar el tipus del player 2
-     */
-    private String p2Type;
-
-    /**
-     * String per a guardar el tipus del player 3
-     */
-    private String p3Type;
-
-    /**
-     * String per a guardar el tipus del jugador 4
-     */
-    private String p4Type;
-
-    /**
-     * String per a guardar el nom del jugador 1
-     */
-    private String p1Name;
-    /**
-     * String per a guardar el nom del jugador 2
-     */
-    private String p2Name;
-    /**
-     * String per a guardar el nom del jugador 3
-     */
-    private String p3Name;
-    /**
-     * String per a guardar el nom del jugador 4
-     */
-    private String p4Name = "NOCHECKED";
-
-    /**
      * Array que guarda els noms dels jugadors
      */
-    private String[] names = new String[]{"p1", "p2", "p3", "p4"};
+    private final String[] names = new String[]{"p1", "p2", "p3", "p4"};
 
     /**
      * Array que guarda el tipos dels jugador
      */
-    private String[] types = new String[]{"NO", "NO", "NO", "NO"};
+    private final String[] types = new String[]{"NO", "NO", "NO", "NO"};
 
     /**
      * String per a guardar el llenguatge de la partida
@@ -136,20 +101,12 @@ public class JugarButton extends MenuButton {
      */
     private BoardType selectedTableSize = BoardType.Standard;
 
-    /**
-     * String per a guardar el numero de jugadors que no son CPU
-     */
-    private int selectedRealPlayers = 2;
-    /**
-     * String per a guardar el numero de jugadors que son CPU
-     */
-    private int selectedCPUPlayers = 0;
-
 
     /**
      * Creador del botó "Jugar", que desplega el menú per configurar i carregar una partida
      *
      * @param parent El panell principal sobre el qual es mostrarà el menú.
+     * @param window La finestra principal del programa
      */
     public JugarButton(JPanel parent, JFrame window) {
         super("Jugar");
@@ -293,6 +250,7 @@ public class JugarButton extends MenuButton {
 
         player1Type = new JComboBox<>(playerTypes);
 
+        int selectedRealPlayers = 2;
         player1Type.setSelectedItem(selectedRealPlayers);
 
         player1Type.setBounds((int) (width * 0.2), (int) (height * 0.365), componentWidth, componentHeight);
@@ -500,7 +458,7 @@ public class JugarButton extends MenuButton {
 
     /**
      * Busca si hi ha en l'array players algun element repetit
-     * @param players
+     * @param players Els noms dels jugadors
      * @return true si hi ha aglun nom repetit, fals d'altra manera
      */
     private boolean repitedNames(List<String> players) {

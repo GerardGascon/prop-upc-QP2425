@@ -141,6 +141,13 @@ public class PlayerInfo extends JPanel {
      */
     private static final Color PLAYER_COLOR_GREEN = new Color(67, 232, 31);
 
+    /**
+     * Crea una instància del panell amb informació del jugador
+     */
+    public PlayerInfo() {
+
+    }
+
 
     /**
      * Dibuixa la informació de tots els jugadors al panell.
@@ -176,7 +183,16 @@ public class PlayerInfo extends JPanel {
     }
 
     /**
-     * Dibuixa la targeta base del jugador.
+     * Dibuixa la targeta blanca de fons per a cada jugador, amb cantonades arrodonides.
+     * <p>
+     * Aquesta targeta serveix com a contenidor visual per a la informació del jugador.
+     *
+     * @param g Context gràfic.
+     * @param panelHeight Alçada total del panell.
+     * @param sectionX Coordenada X d'inici de la targeta.
+     * @param sectionY Coordenada Y d'inici de la targeta.
+     * @param userSectionWidth Amplada de la targeta.
+     * @param userSectionHeight Alçada de la targeta.
      */
     private void drawPlayerCard(Graphics g, int panelHeight, int sectionX, int sectionY,
                                 int userSectionWidth, int userSectionHeight) {
@@ -189,7 +205,18 @@ public class PlayerInfo extends JPanel {
     }
 
     /**
-     * Dibuixa la barra de color identificativa del jugador.
+     * Dibuixa una barra de color identificativa per al jugador,
+     * situada a la part superior de la targeta.
+     * <p>
+     * El color de la barra canvia segons l'índex del jugador (vermell, blau, groc o verd).
+     *
+     * @param g Context gràfic.
+     * @param panelHeight Alçada del panell principal.
+     * @param sectionX Coordenada X d'inici de la barra.
+     * @param sectionY Coordenada Y d'inici de la barra.
+     * @param userSectionWidth Amplada de la barra.
+     * @param userSectionHeight Alçada de la secció del jugador.
+     * @param playerIndex Índex del jugador (0-3).
      */
     private void drawColorBar(Graphics g, int panelHeight, int sectionX, int sectionY,
                               int userSectionWidth, int userSectionHeight, int playerIndex) {
@@ -206,7 +233,20 @@ public class PlayerInfo extends JPanel {
     }
 
     /**
-     * Dibuixa el nom del jugador.
+     * Dibuixa el nom del jugador dins de la seva targeta, centrant-lo horitzontalment
+     * i posicionant-lo verticalment segons el nombre total de jugadors.
+     * <p>
+     * El nom s'ajusta automàticament en mida mitjançant una font adaptativa
+     * per assegurar una correcta visualització, especialment en casos de noms llargs
+     * o quan hi ha menys jugadors a la partida.
+     *
+     * @param g Context gràfic on es dibuixarà el nom.
+     * @param name Nom del jugador a renderitzar.
+     * @param sectionX Coordenada X d'inici de la targeta.
+     * @param sectionY Coordenada Y d'inici de la targeta.
+     * @param userSectionWidth Amplada de la targeta del jugador.
+     * @param userSectionHeight Alçada de la targeta del jugador.
+     * @param numUserSections Nombre total de jugadors (influència en la mida i posició del text).
      */
     private void drawPlayerName(Graphics g, String name, int sectionX, int sectionY,
                                 int userSectionWidth, int userSectionHeight, int numUserSections) {
@@ -226,7 +266,16 @@ public class PlayerInfo extends JPanel {
     }
 
     /**
-     * Dibuixa la puntuació del jugador.
+     * Dibuixa la puntuació actual del jugador dins la seva targeta.
+     * <p>
+     * La puntuació se centra horitzontalment i es col·loca per sota de la barra de color.
+     *
+     * @param g Context gràfic.
+     * @param score Puntuació actual del jugador.
+     * @param sectionX Coordenada X d'inici de la targeta.
+     * @param sectionY Coordenada Y d'inici de la targeta.
+     * @param userSectionWidth Amplada de la targeta.
+     * @param userSectionHeight Alçada de la targeta.
      */
     private void drawPlayerScore(Graphics g, int score, int sectionX, int sectionY,
                                  int userSectionWidth, int userSectionHeight) {
@@ -246,7 +295,16 @@ public class PlayerInfo extends JPanel {
     }
 
     /**
-     * Calcula la font apropiada per al nom del jugador.
+     * Calcula la mida i el tipus de lletra apropiats per al nom del jugador segons
+     * l'alçada disponible i la longitud del nom.
+     *
+     * Si hi ha menys jugadors, es pot usar una mida de lletra més gran. Si el nom
+     * és massa llarg, es redueix proporcionalment la mida per evitar que surti del marge.
+     *
+     * @param name Nom del jugador.
+     * @param userSectionHeight Alçada de la secció del jugador al panell.
+     * @param numUserSections Nombre total de jugadors (i per tant, seccions).
+     * @return La font ajustada per mostrar el nom del jugador.
      */
     private Font calculateNameFont(String name, int userSectionHeight, int numUserSections) {
         float nameFontDivisor = NAME_FONT_DIVISOR;
@@ -271,7 +329,16 @@ public class PlayerInfo extends JPanel {
     }
 
     /**
-     * Calcula la posició Y per al nom del jugador segons el nombre de jugadors.
+     * Calcula la posició vertical (Y) on s'ha de col·locar el nom del jugador,
+     * en funció del nombre total de jugadors i l'alçada de la barra de color.
+     *
+     * Aquesta posició varia lleugerament per evitar sobreposicions visuals i
+     * mantenir una estètica coherent amb el nombre de jugadors en pantalla.
+     *
+     * @param sectionY Coordenada vertical inicial de la secció.
+     * @param userSectionHeight Alçada total de la secció assignada al jugador.
+     * @param numUserSections Nombre total de jugadors.
+     * @return Coordenada Y on s'ha de dibuixar el nom del jugador.
      */
     private int calculateNameY(int sectionY, int userSectionHeight, int numUserSections) {
         int colorRectHeight = (int) ((double) userSectionHeight / COLOR_BAR_HEIGHT_DIVISOR);

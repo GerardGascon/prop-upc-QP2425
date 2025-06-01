@@ -163,17 +163,23 @@ public class GameScene extends Scene {
     }
 
     /**
-     * Resol i configura totes les dependències necessàries per al funcionament del joc.
+     * Resol i configura totes les dependències necessàries per al correcte funcionament del joc.
+     * <p>
+     * Aquest mètode inicialitza estructures clau com el DAWG, la vista del tauler, la calculadora de punts,
+     * els jugadors, el gestor de torns, i altres components essencials per a l'execució del joc.
+     * També prepara la interfície gràfica i el sistema de guardat i recuperació de dades.
+     * </p>
      *
-     * @param isNewGame     Indica si aquesta partida és nova.
-     * @param window        Finestra principal.
-     * @param saver         Objecte encarregat de guardar la partida.
-     * @param dataCollector Objecte encarregat de recopilar dades persistents.
-     * @param board         Tauler del joc.
-     * @param language      Idioma del joc.
-     * @param playersData   Dades dels jugadors.
-     * @param turnNumber    Número del torn actual.
-     * @param skipCounter   Comptador de salts de torn.
+     * @param isNewGame     Indica si la partida és nova (true) o una continuació (false).
+     * @param window        Finestra principal de la interfície gràfica.
+     * @param saver         Objecte encarregat de gestionar el guardat de la partida.
+     * @param dataCollector Objecte encarregat de recopilar i persistir dades durant el joc.
+     * @param board         Tauler del joc amb les seves propietats i estat.
+     * @param bag           Bossa de fitxes utilitzada durant la partida.
+     * @param language      Idioma escollit per al joc (per a diccionaris i configuracions).
+     * @param playersData   Array amb les dades bàsiques dels jugadors participants.
+     * @param turnNumber    Número del torn actual (per continuar partides guardades).
+     * @param skipCounter   Comptador de salts de torn (per gestió de torns passats).
      */
     private void resolveDependencies(boolean isNewGame, JFrame window, GameSaver saver, DataCollector dataCollector, Board board, Bag bag, Language language, Player[] playersData, int turnNumber, int skipCounter) {
         DAWG dawg = new DAWG();
@@ -389,7 +395,7 @@ public class GameScene extends Scene {
     /**
      * Configura les propietats i dependències de cada jugador per al desenvolupament correcte del joc.
      *
-     * @param playerObjects   Objectes PlayerObject.
+     * @param playerObjects   Objectes PlayerObject que representen els jugadors.
      * @param players         Dades bàsiques dels jugadors.
      * @param stepper         Gestor de torns.
      * @param board           Tauler del joc.
@@ -402,6 +408,7 @@ public class GameScene extends Scene {
      * @param crossChecks     Validació de paraules creuades.
      * @param handView        Vista de la mà del jugador.
      * @param actionPanel     Panell d'accions del jugador.
+     * @param sidePanel       Panell lateral associat al jugador.
      */
     private void configurePlayers(PlayerObject[] playerObjects, Player[] players, GameStepper stepper, Board board,
                                   BoardView boardView, PointCalculator pointCalculator, Bag bag,
@@ -416,6 +423,7 @@ public class GameScene extends Scene {
     /**
      * Configura un jugador amb totes les seves dependències i accions.
      *
+     * @param playerIndex     Índex o identificador del jugador.
      * @param playerObject    Objecte que representa el jugador (humà o IA).
      * @param player          Dades bàsiques del jugador.
      * @param stepper         Gestor del torn de joc.
@@ -429,6 +437,7 @@ public class GameScene extends Scene {
      * @param crossChecks     Objecte per a la validació de paraules creuades.
      * @param handView        Vista de la mà del jugador.
      * @param actionPanel     Panell d'accions del jugador.
+     * @param sidePanel       Panell lateral associat al jugador.
      */
     private void configurePlayer(int playerIndex, PlayerObject playerObject, Player player, GameStepper stepper, Board board,
                                  BoardView boardView, PointCalculator pointCalculator, Bag bag,

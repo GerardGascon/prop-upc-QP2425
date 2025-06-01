@@ -17,6 +17,13 @@ import java.awt.*;
 public class PlayerHighlight extends JPanel {
 
     /**
+     * Crea una instància de l'indicador de torn dels jugadors
+     */
+    public PlayerHighlight() {
+
+    }
+
+    /**
      * Dibuixa el resaltat del jugador actual al panell.
      *
      * @param g Context gràfic on es dibuixarà el resaltat

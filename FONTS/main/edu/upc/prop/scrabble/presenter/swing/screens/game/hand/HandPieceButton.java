@@ -80,12 +80,16 @@ public class HandPieceButton extends JButton {
 
     /**
      * Retorna la lletra associada al botó.
+     *
+     * @return La lletra o dígraf
      */
     public String getLetter() {
         return letter;
     }
     /**
      * Retorna la puntuació de la lletra.
+     *
+     * @return La puntuació de la lletra
      */
     public int getPoints() {
         return points;

@@ -19,9 +19,18 @@ import javax.swing.*;
  * @see Scene
  */
 public class MenuScene extends Scene {
+    /**
+     * Finestra principal del programa
+     */
     private final JFrame window;
-    private MenuScreen menuScreen;
+    /**
+     * Panell on es col·loquen els elements de la vista
+     */
+    private final MenuScreen menuScreen;
 
+    /**
+     * Nom de l'arxiu de dades del rànquing
+     */
     public static final String LEADERBOARD_FILE_NAME = "leaderboard.data";
 
     /**
@@ -45,9 +54,6 @@ public class MenuScene extends Scene {
 
         menuScreen = new MenuScreen(window, leaderboard);
 
-        menuScreen.getPlayButton().addActionListener(e -> handlePlay());
-        menuScreen.getContinueButton().addActionListener(e -> handleContinue());
-        menuScreen.getRankingButton().addActionListener(e -> handleRanking());
         menuScreen.getQuitButton().addActionListener(e -> System.exit(0));
 
         window.add(menuScreen);
@@ -76,19 +82,5 @@ public class MenuScene extends Scene {
         super.onProcess(delta);
         menuScreen.updateAnimation(delta);
     }
-
-    /**
-     * Acció cridada al pulsar el botó Jugar
-     */
-    private void handlePlay() { System.out.println("Play button clicked"); }
-    /**
-     * Acció cridada al pulsar el botó Continuar
-     */
-    private void handleContinue() { System.out.println("Continue button clicked"); }
-
-    /**
-     * Acció cridada al pulsar el botó Rànquing
-     */
-    private void handleRanking() { System.out.println("Ranking button clicked"); }
 
 }
