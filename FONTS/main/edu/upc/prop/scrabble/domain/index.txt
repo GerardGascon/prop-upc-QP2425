@@ -1,4 +1,0 @@
-Classes que s'ocupen dels controladors de la capa de dades i de la seva coordinacio.
-
-Segueix els principis de MVP (Model-View-Presenter) i responsabilitat unica aixi que cada classe representa 1 accio
-concreta.

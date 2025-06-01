@@ -1,1 +1,0 @@
-Aquestes excepcions son totes les rellevants que es llancen des de les classes presents a la capa domini.

@@ -1,3 +1,0 @@
-Aquestes classes s'utilitzen per a el processament dels diferents moviments possibles.
-
-S'utilitzen per a convertir una entrada de dades en tots els canvis necessaris de dades i fa crides a totes les vistes que s'hagin d'actualitzar.
