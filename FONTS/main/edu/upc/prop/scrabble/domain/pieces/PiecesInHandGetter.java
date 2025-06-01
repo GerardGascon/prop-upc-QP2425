@@ -51,6 +51,13 @@ public class PiecesInHandGetter {
         return piecesList.toArray(Piece[]::new);
     }
 
+    /**
+     * Comprova si la mà del jugador conté totes les peces indicades.
+     * Es crea una còpia de la mà per evitar modificar-la durant la comprovació.
+     *
+     * @param pieces Array de peces que volem verificar si estan a la mà del jugador.
+     * @return {@code true} si totes les peces estan presents a la mà; {@code false} altrament.
+     */
     private boolean hasPieces(Piece[] pieces) {
         List<Piece> hand = new ArrayList<>(Arrays.asList(player.getHand()));
 
@@ -61,7 +68,16 @@ public class PiecesInHandGetter {
 
         return true;
     }
-
+    /**
+     * Comprova si una peça específica està present dins d'una llista de peces,
+     * i la elimina un cop trobada per evitar comptar-la més d'una vegada.
+     * Gestiona especialment les peces "blank" (comodins), que es reconeixen
+     * pel seu atribut isBlank.
+     *
+     * @param piece Peça que es vol buscar.
+     * @param pieces Llista mutable de peces on es fa la cerca.
+     * @return {@code true} si la peça es troba i s'elimina de la llista; {@code false} si no.
+     */
     private boolean hasPiece(Piece piece, List<Piece> pieces) {
         if (piece.isBlank()){
             for (int i = 0; i < pieces.size(); i++) {
