@@ -1,3 +1,0 @@
-Directori que conté classes per guardar informacio del tauler de joc.
-
-Hi ha tres tipus de mides: Junior 11x11, Standard 15x15 i Super 21x21.

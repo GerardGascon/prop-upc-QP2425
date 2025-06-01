@@ -1,4 +1,0 @@
-Directori on es guarden les classes que guarden informacio de les caracteristiques d'una partida com idioma, tipus de
-tauler, jugadors...
-
-Language es un enumerat que guarda els possibles idiomes: angles, catala, castella

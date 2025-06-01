@@ -1,5 +1,0 @@
-Directori que conte les estructures de dades necessaries per emmagatzemnar el DAWG.
-
-S'emmagatzemen diccionaris indexats per hash.
-
-Un node emmagatzema una lletra, relacions i estat.

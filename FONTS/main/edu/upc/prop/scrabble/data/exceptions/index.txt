@@ -1,6 +1,0 @@
-Directori que conte excepcions creades per gestionar certes excepcions a la capa de dades del joc com
-PlayerDoesNotHavePieceException o ScrabbleException.
-
-Es llança PlayerDoesNotHavePieceException quan s'utilitza una peça que el jugador no te a la ma.
-
-ScrabbleException gestiona les excepcions basiques del joc.

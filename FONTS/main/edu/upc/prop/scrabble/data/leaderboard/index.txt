@@ -1,3 +1,0 @@
-Directori que conte la informacio sobre el ranquing de puntuacions amb metodes per afegir i recuperar Score.
-
-Score emmagatzema la puntuacio, l'estat de guanyador i el nom de jugador

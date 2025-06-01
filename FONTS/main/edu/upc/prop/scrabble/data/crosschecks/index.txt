@@ -1,9 +1,0 @@
-Directori que guarda classes que guarden logica de verificacio de moviments en funcio del tauler.
-
-Te en compte paraules existents, restriccions verticals i horitzontals.
-
-Per catala es te en compte: ç, l·l, ny
-
-Per castella es te en compte: ll, rr, ch, ñ
-
-Per angles es tenen en compte les 26 lletres basiques

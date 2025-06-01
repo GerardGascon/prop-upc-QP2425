@@ -1,5 +1,0 @@
-Directori que conte totes les classes de la capa de dades.
-
-Classes abstractes i de logica minima.
-
-LLeugera, testejable i independent.
