@@ -1,4 +1,4 @@
-package edu.upc.prop.scrabble.presenter.swing.screens.game.board.sidepanel;
+package edu.upc.prop.scrabble.presenter.swing.screens.game.sidepanel;
 
 import edu.upc.prop.scrabble.data.Player;
 

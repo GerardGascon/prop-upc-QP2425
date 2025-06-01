@@ -10,7 +10,7 @@ import edu.upc.prop.scrabble.domain.actionmaker.SkipActionMaker;
 import edu.upc.prop.scrabble.domain.turns.IGamePlayer;
 import edu.upc.prop.scrabble.presenter.scenes.SceneObject;
 import edu.upc.prop.scrabble.domain.actionmaker.IHandView;
-import edu.upc.prop.scrabble.presenter.swing.screens.game.board.sidepanel.SidePanel;
+import edu.upc.prop.scrabble.presenter.swing.screens.game.sidepanel.SidePanel;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction.ActionButtonPanel;
 
 /**

@@ -47,7 +47,7 @@ import edu.upc.prop.scrabble.presenter.swing.objects.PlayerObject;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.endscreen.EndScreen;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.GameScreen;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.BoardView;
-import edu.upc.prop.scrabble.presenter.swing.screens.game.board.sidepanel.SidePanel;
+import edu.upc.prop.scrabble.presenter.swing.screens.game.sidepanel.SidePanel;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.hand.HandView;
 import edu.upc.prop.scrabble.domain.actionmaker.IHandView;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.pieceselector.BlankPieceSelector;
@@ -55,7 +55,7 @@ import edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction.ActionButto
 import edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction.DrawAction;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction.PlaceAction;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction.SkipAction;
-import edu.upc.prop.scrabble.presenter.swing.screens.menu.pause.PauseMenu;
+import edu.upc.prop.scrabble.presenter.swing.screens.game.pause.PauseMenu;
 import edu.upc.prop.scrabble.utils.Rand;
 
 import javax.swing.*;

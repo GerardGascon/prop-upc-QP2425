@@ -1,1 +1,0 @@
-Classe que s'ocupa de llançar una excepcio quan s'intenta crear un SceneObject amb parametres erronis

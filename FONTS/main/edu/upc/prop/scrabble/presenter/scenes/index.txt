@@ -1,1 +1,0 @@
-Classes que s'ocupen de la gestio d'escenes

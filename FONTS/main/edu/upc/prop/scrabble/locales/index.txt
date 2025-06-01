@@ -1,2 +1,0 @@
-Directori que conte els arxius d'extensio .txt amb la llista de paraules dels diccionaris en catala, castella i angles.
-I tambe la informacio de les peces per jugar en cada idioma.
