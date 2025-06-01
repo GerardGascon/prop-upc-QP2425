@@ -1,5 +1,8 @@
 package scrabble.swing.utils;
 
+import org.junit.Assume;
+import org.junit.BeforeClass;
+
 import javax.swing.*;
 import java.util.LinkedList;
 import java.util.Objects;
@@ -12,6 +15,11 @@ public abstract class SwingTest {
 
     static {
         IS_RUN_TESTS = "runTests".equals(System.getProperty("run.origin"));
+    }
+
+    @BeforeClass
+    public static void skipIfHeadless() {
+        Assume.assumeTrue("Skipping GUI test in headless mode", !java.awt.GraphicsEnvironment.isHeadless());
     }
 
     protected static void sleep(long millis) {
