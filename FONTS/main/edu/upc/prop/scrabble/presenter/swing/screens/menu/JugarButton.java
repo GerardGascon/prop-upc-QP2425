@@ -309,8 +309,6 @@ public class JugarButton extends MenuButton {
 
         player1Name.setColumns(10);
 
-        player1Name.addActionListener(e -> p1Name = (String) player1Name.getText());
-
         settingsPanel.add(player1Name);
 
 
