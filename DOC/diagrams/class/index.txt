@@ -1,1 +1,0 @@
-Directori que conte els diagrames UML de classes.
