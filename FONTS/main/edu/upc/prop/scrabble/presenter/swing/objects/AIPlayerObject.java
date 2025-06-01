@@ -28,6 +28,13 @@ public class AIPlayerObject extends PlayerObject {
     private AI ai;
 
     /**
+     * Crea una instància d'un jugador controlat per IA.
+     */
+    public AIPlayerObject() {
+
+    }
+
+    /**
      * Inicia el torn del jugador IA.
      * Es configura el panell d'accions i s'oculta per preparar les accions automàtiques.
      */

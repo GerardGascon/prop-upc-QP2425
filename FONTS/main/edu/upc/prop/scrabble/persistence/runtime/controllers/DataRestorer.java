@@ -24,6 +24,12 @@ public class DataRestorer {
     private final List<IPersistableObject> persistableObject = new ArrayList<>();
 
     /**
+     * Crea una instància del restaurador de dades.
+     */
+    public DataRestorer() {
+    }
+
+    /**
      * Afegeix un objecte persistible a la col·lecció per a restaurar.
      *
      * @param persistableObject Objecte que implementa IPersistableObject per afegir.

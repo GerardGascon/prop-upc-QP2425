@@ -8,6 +8,12 @@ package edu.upc.prop.scrabble.presenter.swing.objects;
  * @author Gerard Gascón
  */
 public class HumanPlayerObject extends PlayerObject {
+    /**
+     * Crea una instància de jugador humà.
+     */
+    public HumanPlayerObject() {
+        super();
+    }
 
     /**
      * Inicia el torn del jugador humà.

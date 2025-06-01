@@ -232,6 +232,11 @@ public class BoardView extends JPanel implements IBoard {
         return getHorizontalTemporalWord();
     }
 
+    /**
+     * Comprova si té alguna fitxa adjacent en vertical.
+     *
+     * @return true si té una fitxa adjacent.
+     */
     private boolean hasAdjacentVerticalPieces() {
         return getVerticalTiles().length > 1;
     }

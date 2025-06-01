@@ -6,6 +6,9 @@ package edu.upc.prop.scrabble.utils;
  * @param <X> El tipus del primer element del parell.
  * @param <Y> El tipus del segon element del parell.
  *
+ * @param first El primer element del parell.
+ * @param second El segon element del parell.
+ *
  * @author Gerard Gascón
  */
 public record Pair<X, Y>(X first, Y second) {

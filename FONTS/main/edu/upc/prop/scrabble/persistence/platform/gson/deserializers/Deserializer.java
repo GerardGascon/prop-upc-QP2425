@@ -18,6 +18,11 @@ import java.util.Map;
  * @author Gerard Gascón
  */
 abstract class Deserializer {
+    /**
+     * Crea una instància de deserialitzador de dades de persistència.
+     */
+    public Deserializer() {
+    }
 
     /**
      * Processa un element JSON i el converteix en un objecte Java equivalent.

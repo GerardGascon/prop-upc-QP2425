@@ -24,6 +24,8 @@ public class BlankPieceSelector extends JPanel implements IBlankPieceSelector {
 
     /**
      * Constructor que inicialitza el panell amb layout nul i fons transparent.
+     *
+     * @param language l'idioma en el que s'està jugant la partida.
      */
     public BlankPieceSelector(Language language) {
         setLayout(null);

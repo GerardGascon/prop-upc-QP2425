@@ -24,6 +24,12 @@ public class DataCollector {
     private final List<IPersistableObject> persistableObject = new ArrayList<>();
 
     /**
+     * Crea una instància d'un recolector de dades.
+     */
+    public DataCollector() {
+    }
+
+    /**
      * Afegeix un objecte persistible a la col·lecció.
      *
      * @param persistableObject Objecte que implementa IPersistableObject per afegir.

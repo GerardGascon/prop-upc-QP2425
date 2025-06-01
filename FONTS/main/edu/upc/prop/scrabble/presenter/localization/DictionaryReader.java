@@ -15,6 +15,13 @@ import edu.upc.prop.scrabble.domain.pieces.IFileReader;
 public class DictionaryReader extends LocaleReader implements IFileReader {
 
     /**
+     * Crea un lector d'arxius de diccionari.
+     */
+    public DictionaryReader() {
+        super();
+    }
+
+    /**
      * Llegeix el fitxer de diccionari segons l'idioma especificat.
      * <p>
      * Aquest mètode comprova l'idioma donat i retorna el contingut del fitxer de diccionari

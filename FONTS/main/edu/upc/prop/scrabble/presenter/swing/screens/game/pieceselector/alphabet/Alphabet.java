@@ -13,6 +13,12 @@ import java.util.HashSet;
  * @author Gerard Gascón
  */
 public abstract class Alphabet {
+    /**
+     * Crea una instància de l'alfabet
+     */
+    public Alphabet() {
+
+    }
 
     /**
      * Conjunt de cadenes que representen les peces vàlides dins de l'alfabet.
