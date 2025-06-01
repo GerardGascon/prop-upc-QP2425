@@ -5,18 +5,62 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.util.Random;
 
+/**
+ * Classe auxiliar que gestiona les peces flotants del menú principal.
+ * Aquestes peces es mouen lliurement per la pantalla i poden col·lisionar entre elles.
+ * @author Felipe Martínez Lassalle
+ */
 public class FloatingTile {
+    /**
+     * Dimensions del panell on es renderitzen les peces.
+     */
     static int width, height, sidePanelWidth;
+    /**
+     * Lletra que conté la peça.
+     */
     private String letter;
+    /**
+     * Coordenades de la peça dins del panell.
+     */
     public float x, y;
+    /**
+     * Mida (costat) de la peça.
+     */
     public int size;
+    /**
+     * Desplaçament calculat en cada actualització de moviment.
+     */
     private float dx, dy;
+    /**
+     * Velocitats de la peça.
+     */
     public float speed, prevSpeed;
+    /**
+     * Direcció vertical del moviment (-1 a 1).
+     */
     public float verticalDir;
+    /**
+     * Direcció horitzontal del moviment (-1 a 1).
+     */
     public float horizontalDir;
+    /**
+     * Grau de rotació actual de la peça.
+     */
     private double rotation;
+    /**
+     * Velocitat de rotació de la peça (graus per segon).
+     */
     private final double rotationSpeed;
 
+    /**
+     * Constructor de la peça flotant.
+     * Inicialitza els valors de posició, mida, direccions aleatòries, velocitat i rotació.
+     *
+     * @param letter Lletra que mostrarà la peça.
+     * @param x      Posició inicial horitzontal.
+     * @param y      Posició inicial vertical.
+     * @param size   Mida de la peça.
+     */
     public FloatingTile(String letter, int x, int y, int size) {
         this.letter = letter;
         this.x = x;
@@ -34,6 +78,11 @@ public class FloatingTile {
         rotation = rand.nextDouble(-360, 360);
     }
 
+    /**
+     * Actualitza la posició de la peça en funció del temps passat.
+     *
+     * @param delta Temps transcorregut en segons.
+     */
     public void move(float delta) {
         if (speed > prevSpeed) speed -= 2;
         else if (speed < prevSpeed && speed != 0) speed += 2;
@@ -49,6 +98,17 @@ public class FloatingTile {
         else y += dy;
     }
 
+    /**
+     * Comprova si dues peces es creuen com a cercles (per detectar col·lisions).
+     *
+     * @param x1 Coordenada X del primer centre.
+     * @param y1 Coordenada Y del primer centre.
+     * @param r1 Radi del primer cercle.
+     * @param x2 Coordenada X del segon centre.
+     * @param y2 Coordenada Y del segon centre.
+     * @param r2 Radi del segon cercle.
+     * @return Cert si els cercles es tallen.
+     */
     private boolean intersect(float x1, float y1, float r1, float x2, float y2, float r2) {
         float dx = x2 - x1;
         float dy = y2 - y1;
@@ -56,6 +116,12 @@ public class FloatingTile {
         return distance <= (r1 + r2) && distance >= Math.abs(r1 - r2);
     }
 
+    /**
+     * Comprova i gestiona la col·lisió amb una altra peça.
+     * Ajusta la direcció i velocitat de totes dues peces.
+     *
+     * @param other L'altra peça amb la qual pot col·lidir.
+     */
     public void checkCollision(FloatingTile other) {
         if (intersect(x, y, size / 2f, other.x, other.y, other.size / 2f)) {
             float middlePointX = (x + other.x) / 2f;
@@ -97,6 +163,12 @@ public class FloatingTile {
         }
     }
 
+
+    /**
+     * Dibuixa la peça a la pantalla amb rotació i estil.
+     *
+     * @param g2 Objecte gràfic per al dibuix.
+     */
     public void draw(Graphics2D g2) {
         AffineTransform original = g2.getTransform();
 
@@ -119,6 +191,13 @@ public class FloatingTile {
         g2.setTransform(original);
     }
 
+    /**
+     * Comprova si una peça se solapa amb qualsevol altra d'una llista.
+     *
+     * @param tile  Peça a comprovar.
+     * @param others Llista de peces amb les quals comparar.
+     * @return Cert si se solapa amb alguna altra peça.
+     */
     public boolean overlapsAny(FloatingTile tile, java.util.List<FloatingTile> others) {
         Rectangle2D.Float r1 = new Rectangle2D.Float(tile.x, tile.y, tile.size, tile.size);
         for (FloatingTile other : others) {
@@ -128,6 +207,11 @@ public class FloatingTile {
         return false;
     }
 
+    /**
+     * Retorna una cadena de text aleatòria d'un conjunt predefinit.
+     *
+     * @return Cadena de text aleatòria.
+     */
     static public String getRandomString() {
         String[] names = {
                 "GERARD", "BIELGINA", "ALBERT", "FELIPE",
@@ -138,10 +222,23 @@ public class FloatingTile {
         return names[index];
     }
 
+    /**
+     * Comprova si un punt es troba dins la peça.
+     *
+     * @param px Coordenada X del punt.
+     * @param py Coordenada Y del punt.
+     * @return Cert si el punt es troba dins els límits de la peça.
+     */
     public boolean contains(int px, int py) {
         return px >= x && px <= x + size && py >= y && py <= y + size;
     }
 
+    /**
+     * Comprova si aquesta peça se solapa amb una altra.
+     *
+     * @param other L'altra peça.
+     * @return Cert si hi ha solapament entre les dues peces.
+     */
     public boolean overlaps(FloatingTile other) {
         return this != other &&
                 this.x < other.x + other.size &&

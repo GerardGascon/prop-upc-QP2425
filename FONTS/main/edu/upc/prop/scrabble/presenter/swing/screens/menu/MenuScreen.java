@@ -166,6 +166,12 @@ public class MenuScreen extends JPanel {
         buttonPanel.setBounds(x, y, panelWidth, panelHeight);
     }
 
+    /**
+     * Actualitza la posició i animació de les peces flotants.
+     * També comprova col·lisions entre peces per ajustar la seva direcció i velocitat.
+     *
+     * @param delta Temps transcorregut des de l'última actualització (en segons).
+     */
     public void updateAnimation(float delta) {
         if (floatingTiles != null && isVisible()) {
             for (FloatingTile tile : floatingTiles) {
@@ -178,11 +184,23 @@ public class MenuScreen extends JPanel {
                     floatingTiles.get(i).checkCollision(floatingTiles.get(j));
                 }
             }
+            if(selectedTile != null) {
+                selectedTile.prevSpeed = selectedTile.speed;
+                selectedTile.speed = 0;
+            }
             repaint();
         }
     }
 
     {
+        /**
+         * Inicialitza els listeners de ratolí per detectar:
+         * <ul>
+         *     <li>Selecció de peces mitjançant clic (mousePressed)</li>
+         *     <li>Arrossegament i llançament amb velocitat simulada (mouseDragged + mouseReleased)</li>
+         * </ul>
+         * Aquesta funcionalitat permet una interacció natural i dinàmica amb les peces del menú.
+         */
         addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mousePressed(java.awt.event.MouseEvent e) {
@@ -243,7 +261,6 @@ public class MenuScreen extends JPanel {
             @Override
             public void mouseDragged(java.awt.event.MouseEvent e) {
                 if (selectedTile != null && lastMousePos != null) {
-                    selectedTile.speed = 0;
 
                     long now = System.currentTimeMillis();
                     Point currentMousePos = e.getPoint();
@@ -321,7 +338,6 @@ public class MenuScreen extends JPanel {
                             }
                         }
                     }
-
                     repaint();
                 }
             }
