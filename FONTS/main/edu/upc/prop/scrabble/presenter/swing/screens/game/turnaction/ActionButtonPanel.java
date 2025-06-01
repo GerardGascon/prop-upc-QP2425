@@ -47,7 +47,10 @@ public class ActionButtonPanel extends JPanel {
         placeAction.setParent(this);
 
     }
-
+    /**
+     * Mostra tots els botons d'acció al panell, eliminant qualsevol contingut previ.
+     * És útil per reiniciar la visualització i assegurar-se que tots els botons apareixen.
+     */
     public void showButtons() {
         removeAll();
         add(drawAction);
@@ -56,27 +59,43 @@ public class ActionButtonPanel extends JPanel {
         revalidate();
         repaint();
     }
-
+    /**
+     * Amaga tots els botons del panell eliminant-los i actualitzant la interfície gràfica.
+     * Útil quan no es vol mostrar cap acció disponible.
+     */
     public void hideButtons() {
         removeAll();
         revalidate();
         repaint();
     }
-
+    /**
+     * Configura el panell per a l'estat "Draw" (robar peces),
+     * eliminant els botons de col·locar i passar per evitar accions incompatibles.
+     */
     public void startDraw() {
         remove(placeAction);
         remove(skipAction);
         revalidate();
         repaint();
     }
-
+    /**
+     * Configura el panell per a l'estat "Place" (col·locar peces),
+     * eliminant els botons de robar i passar per evitar accions incompatibles.
+     */
     public void startPlace() {
         remove(drawAction);
         remove(skipAction);
         revalidate();
         repaint();
     }
-
+    /**
+     * Assigna els objectes ActionMaker corresponents als botons de col·locar, robar i passar.
+     * Això permet que cada botó tingui la lògica correcta associada segons l'estat actual del joc.
+     *
+     * @param place Objecte que gestiona la lògica d'accions de col·locar peces.
+     * @param draw Objecte que gestiona la lògica d'accions de robar peces.
+     * @param skip Objecte que gestiona la lògica d'accions de passar torn.
+     */
     public void setActionMakers(PlaceActionMaker place, DrawActionMaker draw, SkipActionMaker skip) {
         placeAction.setActionMaker(place, skip);
         drawAction.setActionMaker(draw, skip);

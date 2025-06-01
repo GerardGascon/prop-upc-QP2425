@@ -46,7 +46,14 @@ public class PlaceAction extends JPanel {
         placeBtn.addActionListener(_ -> startPlace());
         add(placeBtn);
     }
-
+    /**
+     * Inicia el procés de col·locació de peces al tauler.
+     * Aquest mètode reemplaça el botó "Col·locar" pels botons "Confirmar" i "Cancel·lar",
+     * i configura la lògica d'aquests dos últims botons.
+     * - En prémer "Confirmar", s'intenta executar l'acció de col·locació via PlaceActionMaker.
+     *   En cas d'error, es crida l'acció de passar torn.
+     * - En prémer "Cancel·lar", es cancela la col·locació i es restaura la vista inicial.
+     */
     private void startPlace() {
         confirmBtn = new JButton("Confirmar");
         confirmBtn.addActionListener(_ -> {
@@ -104,10 +111,22 @@ public class PlaceAction extends JPanel {
         return false;
     }
 
+    /**
+     * Assigna el panell pare que conté aquest panell d'accions.
+     * Això permet la comunicació i control entre els botons d'accions i el panell que els conté.
+     *
+     * @param actionButtonPanel Panell que conté aquest PlaceAction.
+     */
     public void setParent(ActionButtonPanel actionButtonPanel) {
         this.actionButtonPanel = actionButtonPanel;
     }
-
+    /**
+     * Assigna els objectes que gestionen la lògica de les accions de col·locar i passar torn.
+     * Així aquest component pot cridar la funcionalitat adequada quan s'activen els botons.
+     *
+     * @param place Objecte que gestiona la lògica per col·locar peces.
+     * @param skip Objecte que gestiona la lògica per passar el torn.
+     */
     public void setActionMaker(PlaceActionMaker place, SkipActionMaker skip) {
         placeActionMaker = place;
         skipActionMaker = skip;
