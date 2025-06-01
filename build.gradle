@@ -11,33 +11,34 @@ ext {
     swingMainClass = 'edu.upc.prop.scrabble.presenter.swing.Main'
 }
 
-// Apply a specific Java toolchain to ease working on different environments.
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(22)
     }
 }
 
-
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    // this is just an example of importing an external library, you do not need to use it in your project
     implementation 'com.google.code.gson:gson:2.8.9'
-    testImplementation('junit:junit:4.13.1')
+    testImplementation 'junit:junit:4.13.1'
 }
 
 sourceSets {
     main {
         java.srcDir 'FONTS/main'
     }
-
     test {
         java.srcDir 'FONTS/test'
         resources.srcDir 'FONTS/test/resources'
     }
+}
+
+tasks.register('copyDependencies', Copy) {
+    from configurations.runtimeClasspath
+    into layout.buildDirectory.dir('libs')
 }
 
 tasks.register('copyTextFiles', Copy) {
@@ -47,22 +48,36 @@ tasks.register('copyTextFiles', Copy) {
 }
 
 tasks.register('generateRunFiles') {
+    dependsOn 'copyDependencies'
     doLast {
         def outputDir = layout.buildDirectory.dir("classes/java/main").get().asFile
+        def libsDir = new File(layout.buildDirectory.get().asFile, "libs")
+
+        def relativeLibsPath = outputDir.toPath().relativize(libsDir.toPath()).toString().replace('\\', '/')
+
+        def classpathEntries = ['.']
+        libsDir.listFiles()?.each { file ->
+            if (file.name.endsWith('.jar')) {
+                classpathEntries << ("${relativeLibsPath}/${file.name}" as String)
+            }
+        }
+
+        def classpath = classpathEntries.join(File.pathSeparator)
 
         def batchFile = new File(outputDir, "scrabble.bat")
         batchFile.text = '@echo off\n' +
-                'java edu.upc.prop.scrabble.presenter.swing.Main'
+                "java -cp \"$classpath\" ${swingMainClass}\n"
 
         def shellFile = new File(outputDir, "scrabble.sh")
         shellFile.text = '#!/bin/bash\n' +
-                'java edu.upc.prop.scrabble.presenter.swing.Main'
+                "java -cp \"$classpath\" ${swingMainClass}\n"
     }
 }
 
 tasks.named('build') {
-    dependsOn copyTextFiles
-    dependsOn generateRunFiles
+    dependsOn 'copyTextFiles'
+    dependsOn 'copyDependencies'
+    dependsOn 'generateRunFiles'
 }
 
 tasks.register('runSwing', JavaExec) {
@@ -71,5 +86,6 @@ tasks.register('runSwing', JavaExec) {
     mainClass.set(swingMainClass)
     standardInput = System.in
     dependsOn copyTextFiles
+    dependsOn copyDependencies
     dependsOn generateRunFiles
 }
