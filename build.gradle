@@ -8,7 +8,6 @@ version = '1.0-SNAPSHOT'
 layout.buildDirectory.set(file("EXE"))
 
 ext {
-    terminalMainClass = 'edu.upc.prop.scrabble.presenter.terminal.Main'
     swingMainClass = 'edu.upc.prop.scrabble.presenter.swing.Main'
 }
 
@@ -39,12 +38,6 @@ sourceSets {
         java.srcDir 'FONTS/test'
         resources.srcDir 'FONTS/test/resources'
     }
-
-    testrunner {
-        java.srcDir 'FONTS/testrunner'
-        compileClasspath += sourceSets.main.output + sourceSets.test.output + configurations.testRuntimeClasspath
-        runtimeClasspath += output + compileClasspath
-    }
 }
 
 tasks.register('copyTextFiles', Copy) {
@@ -72,15 +65,6 @@ tasks.named('build') {
     dependsOn generateRunFiles
 }
 
-tasks.register('runTerminal', JavaExec) {
-    group = 'application'
-    classpath = sourceSets.main.runtimeClasspath
-    mainClass.set(terminalMainClass)
-    standardInput = System.in
-    dependsOn copyTextFiles
-    dependsOn generateRunFiles
-}
-
 tasks.register('runSwing', JavaExec) {
     group = 'application'
     classpath = sourceSets.main.runtimeClasspath
@@ -89,4 +73,3 @@ tasks.register('runSwing', JavaExec) {
     dependsOn copyTextFiles
     dependsOn generateRunFiles
 }
-
