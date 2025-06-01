@@ -55,7 +55,7 @@ import edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction.ActionButto
 import edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction.DrawAction;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction.PlaceAction;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction.SkipAction;
-import edu.upc.prop.scrabble.presenter.swing.screens.menu.pause.PauseMenu;
+import edu.upc.prop.scrabble.presenter.swing.screens.game.pause.PauseMenu;
 import edu.upc.prop.scrabble.utils.Rand;
 
 import javax.swing.*;

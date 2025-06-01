@@ -6,7 +6,7 @@ import edu.upc.prop.scrabble.presenter.swing.screens.game.endscreen.EndScreen;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.hand.HandView;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.pieceselector.BlankPieceSelector;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction.ActionButtonPanel;
-import edu.upc.prop.scrabble.presenter.swing.screens.menu.pause.PauseMenu;
+import edu.upc.prop.scrabble.presenter.swing.screens.game.pause.PauseMenu;
 
 import javax.swing.*;
 import java.awt.*;

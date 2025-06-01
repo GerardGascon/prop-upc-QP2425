@@ -1,4 +1,4 @@
-package edu.upc.prop.scrabble.presenter.swing.screens.menu.pause;
+package edu.upc.prop.scrabble.presenter.swing.screens.game.pause;
 
 import edu.upc.prop.scrabble.persistence.runtime.controllers.GameSaver;
 
