@@ -142,6 +142,11 @@ public class GameScreen extends JPanel {
         this.pauseMenu = pauseMenu;
     }
 
+    /**
+     * Afegeix la pantalla de fi de partida i la posa al davant.
+     *
+     * @param endScreen la pantalla de fi de partida.
+     */
     public void addEndScreen(EndScreen endScreen) {
         add(endScreen);
         setComponentZOrder(endScreen, 0);
