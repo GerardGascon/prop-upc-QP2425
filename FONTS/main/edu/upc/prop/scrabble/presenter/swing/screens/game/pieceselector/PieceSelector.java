@@ -48,6 +48,7 @@ public class PieceSelector extends JPanel {
     /**
      * Crea un nou selector de peça amb botons de confirmació i cancel·lació.
      *
+     * @param language Idioma en el que s'està jugant la partida
      * @param parent Panell pare on s’afegeix aquest selector
      * @param selectPieceCallback Funció que s’executa quan es valida i es confirma la lletra introduïda
      */

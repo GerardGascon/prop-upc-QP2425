@@ -98,6 +98,9 @@ class PieceWriter extends JTextField {
      * totes les lletres a majúscules.
      */
     private static class UppercaseDocument extends PlainDocument {
+        /**
+         * Nombre màxim de caràcters
+         */
         private final int maxChars;
 
         /**

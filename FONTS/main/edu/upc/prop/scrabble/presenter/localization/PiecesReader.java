@@ -17,6 +17,13 @@ import edu.upc.prop.scrabble.domain.pieces.IFileReader;
  */
 public class PiecesReader extends LocaleReader implements IFileReader {
     /**
+     * Crea una instància del lector d'arxius de fitxes
+     */
+    public PiecesReader() {
+        super();
+    }
+    
+    /**
      * Llegeix el fitxer de peces corresponent a l'idioma especificat.
      * <p>
      * Aquest mètode comprova l'idioma passat com a paràmetre i retorna el contingut
