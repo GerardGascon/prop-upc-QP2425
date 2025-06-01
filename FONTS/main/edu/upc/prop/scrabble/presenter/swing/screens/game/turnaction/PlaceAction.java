@@ -41,6 +41,7 @@ public class PlaceAction extends JPanel {
     /***
      * Construeix un objecte {@code PlaceAction}.
      * @param boardView La vista del tauler de la partida per interactuar amb les peces seleccionades.
+     * @param handView La vista on es mostren les fitxes del jugador
      */
     public PlaceAction(BoardView boardView, HandView handView) {
         setOpaque(false);
