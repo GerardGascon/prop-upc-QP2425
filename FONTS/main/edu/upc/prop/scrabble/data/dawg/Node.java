@@ -12,6 +12,20 @@ import java.util.Set;
  * @see DAWG
  */
 public class Node {
+
+    /**
+     * Constructor que inicialitza un node buit.
+     * <p>
+     * Crea un node que:
+     * <ul>
+     *   <li>No és final de paraula per defecte ({@code isEndOfWord = false})</li>
+     *   <li>No té cap successor inicialment (mapa de successors buit)</li>
+     * </ul>
+     * Els successors s'afegeixen posteriorment mitjançant {@link #getOrAddEdge(char)}.
+     */
+    public Node() {
+    }
+
     /**
      * Indica si el node pot arribar a ser un final de paraula
      */

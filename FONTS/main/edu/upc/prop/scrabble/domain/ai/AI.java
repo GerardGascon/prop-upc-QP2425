@@ -256,7 +256,7 @@ public abstract class AI {
     protected abstract void processNextLeftPiece(String partialWord, int limit, Map.Entry<Character, Node> entry, Piece usedPiece);
 
     /**
-     * Gestor de backtracking
+     * Gestiona backtracking
      * @param partialWord Tros de la paraula actual
      * @param limit Com de lluny podem anar
      * @param usedPiece Peça utilitzada a la iteració actual
@@ -353,6 +353,7 @@ public abstract class AI {
     }
 
     /**
+     * Retorna el node final que representa certa paraula
      * @param word Paraula sobre la qual volem obtenir el node final
      * @return Node que representa el caràcter final de la paraula donada.
      * @see Node

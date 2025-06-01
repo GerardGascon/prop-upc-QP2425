@@ -40,6 +40,7 @@ public class Player {
     }
 
     /**
+     * Retorna el nom del jugador/a
      * @return Nom del jugador/a
      */
     public String getName() {
@@ -47,6 +48,7 @@ public class Player {
     }
 
     /**
+     * Retorna si es CPU o no
      * @return Cert si és CPU, fals altrament
      */
     public boolean getCPU() {
@@ -54,7 +56,7 @@ public class Player {
     }
 
     /**
-     *
+     * Retorna la puntuació actual
      * @return Puntuació actual del jugador/a
      */
     public int getScore() {

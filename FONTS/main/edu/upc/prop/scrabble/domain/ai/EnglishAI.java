@@ -30,6 +30,30 @@ import java.util.Map;
  * @author Felipe Martínez
  */
 public class EnglishAI extends AI {
+
+    /**
+     * Constructor per a la implementació d'IA en anglès.
+     * <p>
+     * Inicialitza els components necessaris perquè la IA pugui calcular moviments
+     * vàlids en partides amb l'idioma anglès. Hereta la funcionalitat bàsica
+     * de la classe pare AI.
+     *
+     * @param piecesConverter  Convertidor de peces per a la gestió de fitxes
+     * @param pointCalculator  Calculador de puntuacions per a moviments
+     * @param dawg             Estructura de dades DAWG que conté el diccionari anglès
+     * @param board            Tauler actual del joc
+     * @param bot              Jugador controlat per la IA
+     * @param anchors          Gestor d'àncores per a posicionament de paraules
+     * @param crossChecks      Verificador de creuaments vàlids entre paraules
+     * @see AI
+     * @see PiecesConverter
+     * @see PointCalculator
+     * @see DAWG
+     * @see Board
+     * @see Player
+     * @see Anchors
+     * @see CrossChecks
+     */
     public EnglishAI(PiecesConverter piecesConverter, PointCalculator pointCalculator, DAWG dawg, Board board, Player bot, Anchors anchors, CrossChecks crossChecks) {
         super(piecesConverter, pointCalculator, dawg, board, bot, anchors, crossChecks);
     }
