@@ -450,10 +450,9 @@ public class JugarButton extends MenuButton {
     }
 
     /**
-     * Acció que s’executa quan l’usuari, un cop ha assignat la configuració de la partida, decideix començar una partida
-     * Actualment pendent d’implementació.
+     * Busca si hi ha algun jugador real sense nom assignat
+     * @return true si existeix dit cas, fals d'altra manera
      */
-
     private boolean checkEmptyName(){
         for (int i = 0; i < 4; ++i){
             if ((types[i].equals("Real")) && names[i].equals(""))
@@ -462,6 +461,10 @@ public class JugarButton extends MenuButton {
         return false;
     }
 
+    /**
+     * Acció que s’executa quan l’usuari, un cop ha assignat la configuració de la partida, decideix començar una partida
+     * Actualment pendent d’implementació.
+     */
     private void startGame() {
         // Recoger nombres directamente al iniciar la partida
         names[0] = player1Name.getText();
@@ -495,6 +498,11 @@ public class JugarButton extends MenuButton {
         }
     }
 
+    /**
+     * Busca si hi ha en l'array players algun element repetit
+     * @param players
+     * @return true si hi ha aglun nom repetit, fals d'altra manera
+     */
     private boolean repitedNames(List<String> players) {
         Set<String> uniqueNames = new HashSet<>();
         for (String player : players) {
