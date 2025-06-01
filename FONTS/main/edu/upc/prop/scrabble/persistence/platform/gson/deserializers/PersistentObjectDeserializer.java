@@ -21,6 +21,13 @@ import java.util.Map.Entry;
  */
 class PersistentObjectDeserializer extends Deserializer implements JsonDeserializer<PersistentObject> {
     /**
+     * Crea una instància del serialitzador per a PersistentObjects
+     */
+    public PersistentObjectDeserializer() {
+        super();
+    }
+
+    /**
      * Deserialitza un element JSON en un PersistentObject.
      *
      * @param json      L'element JSON que conté la representació de l'objecte persistent.

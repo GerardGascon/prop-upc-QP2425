@@ -17,6 +17,13 @@ import java.util.Objects;
  */
 class PersistentDictionarySerializer implements JsonSerializer<PersistentDictionary> {
     /**
+     * Crea una instància d'un serialitzador de diccionaris
+     */
+    public PersistentDictionarySerializer() {
+
+    }
+
+    /**
      * Serialitza un PersistentDictionary a un JsonElement.
      *
      * @param src L'objecte PersistentDictionary a serialitzar.

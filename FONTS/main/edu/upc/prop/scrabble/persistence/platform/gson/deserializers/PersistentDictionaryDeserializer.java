@@ -20,6 +20,13 @@ import java.util.Map;
  */
 class PersistentDictionaryDeserializer extends Deserializer implements JsonDeserializer<PersistentDictionary> {
     /**
+     * Crea una instància d'un deserialitzador de diccionaris
+     */
+    public PersistentDictionaryDeserializer() {
+        super();
+    }
+
+    /**
      * Deserialitza un element JSON en un PersistentDictionary.
      *
      * @param json      L'element JSON que conté la representació del diccionari.

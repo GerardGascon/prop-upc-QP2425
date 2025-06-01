@@ -19,6 +19,9 @@ public class PersistentObject {
      * Nom identificador de l'objecte persistent
      */
     private String name;
+    /**
+     * Serialitzador de JSON
+     */
     private static final Gson gson = new Gson();
 
     /**

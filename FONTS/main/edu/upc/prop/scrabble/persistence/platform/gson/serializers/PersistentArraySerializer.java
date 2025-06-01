@@ -17,6 +17,13 @@ import java.util.stream.IntStream;
  */
 class PersistentArraySerializer implements JsonSerializer<PersistentArray> {
     /**
+     * Crea una instància d'un serialitzador d'arrays
+     */
+    public PersistentArraySerializer() {
+
+    }
+
+    /**
      * Serialitza un PersistentArray a un JsonElement.
      *
      * @param src L'objecte PersistentArray a serialitzar.

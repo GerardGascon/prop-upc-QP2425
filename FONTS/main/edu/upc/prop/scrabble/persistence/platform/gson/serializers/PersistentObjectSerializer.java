@@ -17,6 +17,13 @@ import java.lang.reflect.Type;
  */
 class PersistentObjectSerializer implements JsonSerializer<PersistentObject> {
     /**
+     * Crea una instància del serialitzador per a PersistentObjects
+     */
+    public PersistentObjectSerializer() {
+
+    }
+
+    /**
      * Serialitza un PersistentObject a un JsonElement.
      *
      * @param src L'objecte PersistentObject a serialitzar.

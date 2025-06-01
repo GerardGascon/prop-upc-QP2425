@@ -16,6 +16,13 @@ import edu.upc.prop.scrabble.utils.Pair;
  */
 public class PieceGenerator {
     /**
+     * Crea una instància del generador de fitxes.
+     */
+    public PieceGenerator() {
+
+    }
+
+    /**
      * Converteix el contingut d’un fitxer de fitxes en un array d’objectes `Piece` i les seves quantitats.
      * <p>
      * El fitxer es processa línia per línia, on cada línia ha de contenir la informació sobre el caràcter,
