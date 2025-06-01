@@ -18,6 +18,13 @@ import java.nio.file.Files;
  */
 public class SaveReader extends SaveDataStreamer implements ISaveReader {
     /**
+     * Crea una instància del lector d'arxius de guardat
+     */
+    public SaveReader() {
+        super();
+    }
+
+    /**
      * Llegeix el contingut d'un fitxer de guardat en format text.
      * <p>
      * Utilitza la codificació UTF-8 per llegir el fitxer. Si el fitxer no existeix,

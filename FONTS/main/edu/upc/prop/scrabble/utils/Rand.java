@@ -12,7 +12,17 @@ import java.util.Random;
  * @author Gerard Gascón
  */
 public class Rand implements IRand {
+    /**
+     * Implementació del generador a utilitzar
+     */
     private final Random random = new Random();
+
+    /**
+     * Crea una instància del generador de nombres aleatoris
+     */
+    public Rand() {
+
+    }
 
     /**
      * Retorna un enter aleatori. Aquest mètode genera enters aleatoris dins de tot el rang possible d'enters.

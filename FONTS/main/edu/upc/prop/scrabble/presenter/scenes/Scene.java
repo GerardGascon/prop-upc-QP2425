@@ -22,6 +22,13 @@ public abstract class Scene {
     private final List<SceneObject> objects = new ArrayList<>();
 
     /**
+     * Crea una instància d'una escena
+     */
+    public Scene() {
+
+    }
+
+    /**
      * Actualitza contínuament els objectes presents a l'escena.
      * <p>
      * Aquest mètode s'anomena repetidament per processar les actualitzacions dels objectes.

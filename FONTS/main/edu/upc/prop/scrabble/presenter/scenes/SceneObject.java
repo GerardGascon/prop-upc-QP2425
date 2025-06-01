@@ -22,6 +22,13 @@ public abstract class SceneObject {
     private Scene scene;
 
     /**
+     * Crea una instància d'objecte d'escena
+     */
+    public SceneObject() {
+
+    }
+
+    /**
      * Assigna l'escena a la qual pertany aquest objecte.
      *
      * @param scene L'escena a associar amb aquest objecte

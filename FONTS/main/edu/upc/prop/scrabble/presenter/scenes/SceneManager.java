@@ -52,6 +52,9 @@ public class SceneManager {
         return instance;
     }
 
+    /**
+     * Crea una instància del gestor d'escenes
+     */
     private SceneManager() {
     }
 
@@ -97,6 +100,11 @@ public class SceneManager {
      *
      * @param sceneClass   Classe de l'escena a instanciar
      * @param dependencies Paràmetres per passar al constructor
+     *
+     * @throws InstantiationException si hi ha un problema mentre s'instancia l'escena
+     * @throws IllegalAccessException si hi ha un problema mentre s'instancia l'escena
+     * @throws InvocationTargetException si hi ha un problema mentre s'instancia l'escena
+     *
      * @return La instància de l'escena creada
      */
     private Scene instantiateScene(Class<? extends Scene> sceneClass, Object... dependencies) throws InstantiationException, IllegalAccessException, InvocationTargetException {

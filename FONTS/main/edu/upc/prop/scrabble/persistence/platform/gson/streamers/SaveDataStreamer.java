@@ -16,6 +16,13 @@ import java.nio.file.Path;
  */
 abstract class SaveDataStreamer {
     /**
+     * Crea una instància d'un gestor dels arxius de guardat
+     */
+    public SaveDataStreamer() {
+
+    }
+
+    /**
      * Obté el camí absolut d'un fitxer de guardat dins del directori del projecte.
      * <p>
      * Construeix la ruta relativa al directori 'edu/upc/prop/scrabble/save' i

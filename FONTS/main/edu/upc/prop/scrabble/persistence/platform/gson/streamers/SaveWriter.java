@@ -18,6 +18,13 @@ import java.nio.file.Path;
  */
 public class SaveWriter extends SaveDataStreamer implements ISaveWriter {
     /**
+     * Crea una instància del lector d'arxius de guardat
+     */
+    public SaveWriter() {
+        super();
+    }
+
+    /**
      * Escriu el contingut proporcionat en un fitxer.
      * <p>
      * Si hi ha algun error durant l'escriptura, imprimeix un missatge d'error.

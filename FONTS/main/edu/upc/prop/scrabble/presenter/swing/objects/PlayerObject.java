@@ -70,6 +70,13 @@ public abstract class PlayerObject extends SceneObject implements IGamePlayer {
     private SidePanel sidePanel;
 
     /**
+     * Crea una instància d'un objecte d'escena de jugador
+     */
+    public PlayerObject() {
+
+    }
+
+    /**
      * Configura l'objecte jugador amb els valors necessaris per interactuar amb el joc.
      *
      * @param playerIndex Índex del jugador dins de la partida.
