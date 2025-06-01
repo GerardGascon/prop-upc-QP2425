@@ -12,6 +12,9 @@ import java.util.HashSet;
  * @author Gina Escofet González
  */
 public abstract class PiecesConverter {
+    /**
+     * Les fitxes de la partida
+     */
     private final HashSet<Piece> pieces = new HashSet<>();
 
     /**
