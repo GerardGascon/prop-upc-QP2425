@@ -42,6 +42,7 @@ public class Node {
     public Map<Character, Node> getSuccessors() { return successors;}
 
     /**
+     * Retorna si un node és final de paraula o no
      * @return True si el node és final de paraula, altrament False
      */
     public boolean isEndOfWord() {
