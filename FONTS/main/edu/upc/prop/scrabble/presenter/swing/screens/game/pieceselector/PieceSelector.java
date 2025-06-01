@@ -68,9 +68,9 @@ public class PieceSelector extends JPanel {
         popup = new PieceSelectorPanel(null);
 
         inputField = new PieceWriter();
-        putBtn = new PieceSelectorButton("Put");
-        cancelBtn = new PieceSelectorButton("Cancel");
-        headerLabel = new JLabel("Enter a piece");
+        putBtn = new PieceSelectorButton("Col·loca");
+        cancelBtn = new PieceSelectorButton("Cancel·la");
+        headerLabel = new JLabel("Introdueix una fitxa");
         headerLabel.setForeground(Color.WHITE);
         headerLabel.setFont(new Font("SansSerif", Font.BOLD, 24));
         headerLabel.setHorizontalAlignment(SwingConstants.CENTER);
