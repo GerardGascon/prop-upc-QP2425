@@ -52,11 +52,11 @@ tasks.register('generateRunFiles') {
 
         def batchFile = new File(outputDir, "scrabble.bat")
         batchFile.text = '@echo off\n' +
-                'java edu.upc.prop.scrabble.Main'
+                'java edu.upc.prop.scrabble.presenter.swing.Main'
 
         def shellFile = new File(outputDir, "scrabble.sh")
         shellFile.text = '#!/bin/bash\n' +
-                'java edu.upc.prop.scrabble.Main'
+                'java edu.upc.prop.scrabble.presenter.swing.Main'
     }
 }
 
