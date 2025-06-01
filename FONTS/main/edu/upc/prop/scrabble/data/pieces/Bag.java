@@ -11,7 +11,10 @@ import java.util.*;
  * @author Gina Escofet González
  */
 public class Bag implements IPersistableObject {
-    private List<Piece> bag;
+    /**
+     * La llista de les fitxes presents dins seu
+     */
+    private final List<Piece> bag;
 
     /***
      * Creadora d'una bossa buida.

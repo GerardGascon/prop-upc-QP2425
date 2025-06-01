@@ -9,6 +9,9 @@ import edu.upc.prop.scrabble.utils.Pair;
  * @author Gina Escofet González
  */
 public class BagFiller {
+    /**
+     * Generador de fitxes
+     */
     private final PieceGenerator pieceGenerator;
 
     /***

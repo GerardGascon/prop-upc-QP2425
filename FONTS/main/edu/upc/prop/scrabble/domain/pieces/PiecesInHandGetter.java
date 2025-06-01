@@ -13,8 +13,17 @@ import java.util.*;
  * @author Gina Escofet González
  */
 public class PiecesInHandGetter {
+    /**
+     * El jugador al qual representa aquesta classe
+     */
     private final Player player;
+    /**
+     * La bossa on s'emmagatzemen les fitxes
+     */
     private final Bag bag;
+    /**
+     * Generador de nombres aleatoris
+     */
     private final IRand rand;
 
     /***

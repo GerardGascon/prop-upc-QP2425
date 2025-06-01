@@ -21,13 +21,25 @@ public class PlaceAction extends JPanel {
     private JButton cancelBtn;
     /** Vista del tauler de joc, per accedir a la col·locació actual. */
     private final BoardView boardView;
+    /**
+     * La vista on es mostren les fitxes de la mà
+     */
     private final HandView handView;
+    /**
+     * El panell amb els botons d'acció
+     */
     private ActionButtonPanel actionButtonPanel;
+    /**
+     * El controlador per col·locar fitxes
+     */
     private PlaceActionMaker placeActionMaker;
+    /**
+     * El controlador per passar el torn
+     */
     private SkipActionMaker skipActionMaker;
 
     /***
-     * Construeix un objecte `PlaceAction`.
+     * Construeix un objecte {@code PlaceAction}.
      * @param boardView La vista del tauler de la partida per interactuar amb les peces seleccionades.
      */
     public PlaceAction(BoardView boardView, HandView handView) {
@@ -52,7 +64,7 @@ public class PlaceAction extends JPanel {
      * i configura la lògica d'aquests dos últims botons.
      * - En prémer "Confirmar", s'intenta executar l'acció de col·locació via PlaceActionMaker.
      *   En cas d'error, es crida l'acció de passar torn.
-     * - En prémer "Cancel·lar", es cancela la col·locació i es restaura la vista inicial.
+     * - En prémer "Cancel·lar", es cancel·la la col·locació i es restaura la vista inicial.
      */
     private void startPlace() {
         confirmBtn = new JButton("Confirmar");

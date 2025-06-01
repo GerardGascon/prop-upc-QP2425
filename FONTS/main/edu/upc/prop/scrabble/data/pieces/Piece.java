@@ -7,8 +7,17 @@ import java.util.Objects;
  * @author Gina Escofet González
  */
 public final class Piece {
+    /**
+     * La lletra o dígraf que representa
+     */
     private String letter;
+    /**
+     * La puntuació d'aquesta fitxa
+     */
     private final int value;
+    /**
+     * Si és o no un escarràs
+     */
     private final boolean isBlank;
 
     /**

@@ -13,9 +13,17 @@ import java.awt.*;
  * @author Gina Escofet González
  */
 public class ActionButtonPanel extends JPanel {
-
+    /**
+     * Botó per robar fitxes
+     */
     private final DrawAction drawAction;
+    /**
+     * Botó per col·locar fitxes
+     */
     private final PlaceAction placeAction;
+    /**
+     * Botó per passar el torn
+     */
     private final SkipAction skipAction;
 
     /**

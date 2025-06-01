@@ -56,6 +56,8 @@ public class HandPieceButton extends JButton {
     }
     /**
      * Personalitza el renderitzat del botó per mostrar la peça estilitzada.
+     *
+     * @param g El component gràfic de Swing
      */
     @Override
     protected void paintComponent(Graphics g) {
@@ -104,6 +106,8 @@ public class HandPieceButton extends JButton {
     }
     /**
      * Dibuixa la lletra centrada al botó. Fa un escalat si la lletra és múltiple (ex: "QU").
+     *
+     * @param g El component gràfic 2D de Swing
      */
     private void drawLetter(Graphics2D g) {
         g.setColor(Color.BLACK);
@@ -125,6 +129,8 @@ public class HandPieceButton extends JButton {
     }
     /**
      * Dibuixa la puntuació en petit a la cantonada inferior dreta.
+     *
+     * @param g El component gràfic 2D de Swing
      */
     private void drawScore(Graphics2D g) {
         String score = Integer.toString(points);

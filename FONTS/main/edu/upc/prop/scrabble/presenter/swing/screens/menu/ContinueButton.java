@@ -25,6 +25,9 @@ public class ContinueButton extends MenuButton {
      * Panell principal sobre el qual es mostren els menús desplegables del botó.
      */
     private final JPanel parentPanel;
+    /**
+     * La finestra principal del programa
+     */
     private final JFrame window;
     /**
      * Indica si el menú desplegable del botó "Continuar" està actualment actiu o no.

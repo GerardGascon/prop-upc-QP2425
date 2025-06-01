@@ -13,10 +13,16 @@ import java.util.ArrayList;
 /***
  * Filtra les peces d'una nova col·locació de paraula que se superposen amb les peces existents al tauler.
  * Gestiona tant l'orientació vertical com l'horitzontal de la paraula.
- * @author Gina Escofet GonzÃ¡lez
+ * @author Gina Escofet González
  */
 public class MovementCleaner {
+    /**
+     * El tauler de la partida
+     */
     private final Board board;
+    /**
+     * El conversor de fitxes
+     */
     private final PiecesConverter piecesConverter;
 
     /***
@@ -56,6 +62,13 @@ public class MovementCleaner {
         }
     }
 
+    /**
+     * Neteja un moviment horitzontal
+     *
+     * @param movement El moviment de paraula proposat que conté: la paraula a col·locar, les coordenades d'inici (x,y), i
+     * la direcció de col·locació (horitzontal).
+     * @return Matriu de peces necessàries per completar la col·locació de la paraula.
+     */
     private Pair<Piece, Vector2>[] CleanHorizontal(Movement movement) {
         ArrayList<Pair<Piece, Vector2>> requiredPieces= new ArrayList<>();
         int x = movement.x();
@@ -71,6 +84,13 @@ public class MovementCleaner {
 
     }
 
+    /**
+     * Neteja un moviment vertical
+     *
+     * @param movement El moviment de paraula proposat que conté: la paraula a col·locar, les coordenades d'inici (x,y), i
+     * la direcció de col·locació (vertical).
+     * @return Matriu de peces necessàries per completar la col·locació de la paraula.
+     */
     private Pair<Piece, Vector2>[] CleanVertical(Movement movement) {
         ArrayList<Pair<Piece, Vector2>> requiredPieces = new ArrayList<>();
         int x = movement.x();

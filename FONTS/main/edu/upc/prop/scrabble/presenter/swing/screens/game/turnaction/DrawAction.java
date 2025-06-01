@@ -19,17 +19,38 @@ public class DrawAction extends JPanel {
      * Botó principal que permet iniciar l'acció de robar peces.
      */
     private JButton drawBtn;
+    /**
+     * Botó de confirmar l'intercanvi d'una fitxa
+     */
     private JButton confirmBtn;
+    /**
+     * Botó per finalitzar l'intercanvi
+     */
     private JButton finishBtn;
+    /**
+     * Botó per cancelar l'intercanvi
+     */
     private JButton cancelBtn;
 
     /**
      * Vista de la mà del jugador, des d'on es recuperen les peces seleccionades per intercanviar.
      */
     private final HandView handView;
+    /**
+     * Panell on es troben tots els botons d'accions
+     */
     private ActionButtonPanel actionButtonPanel;
+    /**
+     * Controlador que s'encarrega d'executar l'acció de robar fitxes
+     */
     private DrawActionMaker drawActionMaker;
+    /**
+     * Controlador que s'encarrega d'executar l'acció de passar el torn
+     */
     private SkipActionMaker skipActionMaker;
+    /**
+     * Llista de les fitxes a intercanviar
+     */
     private final List<String> pieces = new ArrayList<>();
 
     /**
@@ -51,6 +72,9 @@ public class DrawAction extends JPanel {
         drawBtn.addActionListener(_ -> startDraw());
     }
 
+    /**
+     * Inicia l'acció de robar fitxes
+     */
     private void startDraw() {
         confirmBtn = new JButton("Confirmar");
         confirmBtn.addActionListener(_ -> {
@@ -101,6 +125,9 @@ public class DrawAction extends JPanel {
         repaint();
     }
 
+    /**
+     * Executa l'acció de robar fitxes
+     */
     private void drawPieces() {
         if (pieces.isEmpty())
             return;
@@ -119,16 +146,29 @@ public class DrawAction extends JPanel {
      * Indica si aquest panell és opac.
      * Retorna sempre fals per assegurar que el fons sigui transparent,
      * evitant que el panell dibuixi un fons sòlid que pugui tapar altres components visuals.
+     *
+     * @return false sempre
      */
     @Override
     public boolean isOpaque() {
         return false;
     }
 
+    /**
+     * Assigna el panell de botons on es troba aquesta classe
+     *
+     * @param actionButtonPanel el panell de botons d'acció
+     */
     public void setParent(ActionButtonPanel actionButtonPanel) {
         this.actionButtonPanel = actionButtonPanel;
     }
 
+    /**
+     * Assigna els controladors d'accions
+     *
+     * @param draw Controlador per robar fitxes
+     * @param skip Controlador per passar el torn
+     */
     public void setActionMaker(DrawActionMaker draw, SkipActionMaker skip) {
         drawActionMaker = draw;
         skipActionMaker = skip;

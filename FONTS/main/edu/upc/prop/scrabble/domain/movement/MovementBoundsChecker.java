@@ -11,7 +11,13 @@ import edu.upc.prop.scrabble.utils.Direction;
  * @author Gina Escofet González
  */
 public class MovementBoundsChecker {
+    /**
+     * El tauler de la partida
+     */
     private final Board board;
+    /**
+     * El conversor de fitxes
+     */
     private final PiecesConverter piecesConverter;
 
     /**
@@ -42,6 +48,12 @@ public class MovementBoundsChecker {
         }
     }
 
+    /**
+     * Verifica si es troba dins dels límits horitzontalment
+     *
+     * @param movement El moviment a efectuar
+     * @return Cert si la paraula sencera cap horitzontalment
+     */
     private boolean VerifyHorizontal(Movement movement) {
         int x = movement.x();
         int y = movement.y();
@@ -50,6 +62,12 @@ public class MovementBoundsChecker {
         return board.isCellValid(x, y) && board.isCellValid(x + n - 1, y);
     }
 
+    /**
+     * Verifica si es troba dins dels límits verticalment
+     *
+     * @param movement El moviment a efectuar
+     * @return Cert si la paraula sencera cap verticalment
+     */
     private boolean VerifyVertical(Movement movement) {
         int x = movement.x();
         int y = movement.y();

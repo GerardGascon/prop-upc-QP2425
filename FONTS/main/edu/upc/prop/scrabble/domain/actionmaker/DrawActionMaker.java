@@ -16,11 +16,29 @@ import edu.upc.prop.scrabble.utils.IRand;
  * @author Gina Escofet González
  */
 public class DrawActionMaker {
+    /**
+     * El jugador al qual pertany aquesta classe
+     */
     private final Player player;
+    /**
+     * El controlador per robar fitxes
+     */
     private final PieceDrawer pieceDrawer;
+    /**
+     * La bossa on es troben les fitxes
+     */
     private final Bag bag;
+    /**
+     * La vista on es mostren les fitxes de la mà
+     */
     private final IHandView handView;
+    /**
+     * El controlador que s'encarrega de controlar el flux del joc
+     */
     private final GameStepper stepper;
+    /**
+     * El controlador que converteix un String en una Piece de la mà
+     */
     private final PiecesConverter piecesConverter;
 
     /**

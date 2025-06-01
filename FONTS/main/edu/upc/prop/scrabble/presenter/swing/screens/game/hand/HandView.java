@@ -25,6 +25,9 @@ public class HandView extends JPanel implements IHandView {
      * Només es pot seleccionar una peça a la vegada.
      */
     private HandPieceButton selectedPieceButton;
+    /**
+     * Les fitxes que s'han seleccionat durant el moviment a efectuar
+     */
     private final List<HandPieceButton> selectedPieceButtons = new ArrayList<>();
     /**
      * Espai horitzontal (en píxels) entre les peces de la mà del jugador.
@@ -96,6 +99,8 @@ public class HandView extends JPanel implements IHandView {
     }
     /**
      * Pinta el fons arrodonit de la mà del jugador.
+     *
+     * @param g El component gràfic de Swing
      */
     @Override
     protected void paintComponent(Graphics g) {
@@ -135,6 +140,9 @@ public class HandView extends JPanel implements IHandView {
         repaint();
     }
 
+    /**
+     * Cancela l'acció de col·locar fitxes.
+     */
     public void cancelPlace() {
         for (HandPieceButton pieceButton : selectedPieceButtons) {
             add(pieceButton);
@@ -143,6 +151,9 @@ public class HandView extends JPanel implements IHandView {
         repaint();
     }
 
+    /**
+     * Inicia l'acció de col·locar fitxes.
+     */
     public void startPlace() {
         selectedPieceButton = null;
         selectedPieceButtons.clear();

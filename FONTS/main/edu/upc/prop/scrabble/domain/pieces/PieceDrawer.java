@@ -14,8 +14,17 @@ import java.util.*;
  * @author Gina Escofet González
  */
 public class PieceDrawer {
+    /**
+     * La bossa on es troben les fitxes
+     */
     private final Bag bag;
+    /**
+     * El jugador que està utilitzant aquest botó
+     */
     private final Player player;
+    /**
+     * Generador de nombres aleatoris
+     */
     private final IRand rand;
 
     /**

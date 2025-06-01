@@ -10,7 +10,13 @@ import java.util.ArrayList;
  * @author Gina Escofet González
  */
 public class PiecesInHandVerifier {
+    /**
+     * El jugador al qual representa aquest controlador
+     */
     private final Player player;
+    /**
+     * El convertidor de fitxes, utilitzat per convertir un string en una fitxa de la mà del jugador
+     */
     private final PiecesConverter piecesConverter;
 
     /***
