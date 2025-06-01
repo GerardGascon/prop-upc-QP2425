@@ -21,45 +21,126 @@ import java.util.ArrayList;
  */
 public class PlayerInfo extends JPanel {
 
-    // Constants de marge i proporcions
+    /**
+     * Marge percentual respecte a l'amplada del rectangle.
+     */
     private static final float MARGIN_PERCENTAGE = 0.01f;
+
+    /**
+     * Multiplicador per al càlcul del marge total.
+     */
     private static final int MARGIN_MULTIPLIER = 15;
+
+    /**
+     * Percentatge d'amplada que ocupa la secció d'usuari respecte a l'amplada disponible.
+     */
     private static final float USER_SECTION_WIDTH_PERCENTAGE = 0.85f;
+
+    /**
+     * Percentatge d'alçada que ocupa la secció d'usuari respecte a l'espai assignat.
+     */
     private static final float USER_SECTION_HEIGHT_PERCENTAGE = 0.95f;
 
-    // Constants de posicionament vertical
+    /**
+     * Desplaçament vertical inicial de les targetes dels jugadors.
+     */
     private static final float CARD_VERTICAL_OFFSET = 0.024f;
+
+    /**
+     * Ajust addicional en l'alçada de les targetes.
+     */
     private static final float CARD_HEIGHT_ADJUSTMENT = 0.0148f;
 
-    // Constants de corners arrodonits
+    /**
+     * Radi de les cantonades arrodonides de les targetes (en percentatge respecte a l'alçada).
+     */
     private static final float CARD_CORNER_RADIUS = 0.07111f;
 
-    // Constants de la barra de color
+    /**
+     * Marge de la barra de color respecte a l'alçada del panell.
+     */
     private static final float COLOR_BAR_MARGIN = 0.02963f;
+
+    /**
+     * Divisor per calcular l'alçada de la barra de color.
+     */
     private static final float COLOR_BAR_HEIGHT_DIVISOR = 2.0f;
+
+    /**
+     * Reducció addicional de l'alçada de la barra de color.
+     */
     private static final float COLOR_BAR_HEIGHT_REDUCTION = 0.02963f;
+
+    /**
+     * Radi de les cantonades de la barra de color.
+     */
     private static final float COLOR_BAR_CORNER_RADIUS = 0.04148f;
 
-    // Constants de text
+    /**
+     * Longitud màxima del nom del jugador abans d'ajustar la mida de la font.
+     */
     private static final int MAX_NAME_LENGTH = 10;
+
+    /**
+     * Divisor base per calcular la mida de la font del nom.
+     */
     private static final float NAME_FONT_DIVISOR = 4.0f;
+
+    /**
+     * Factor d'escala per ajustar la font quan el nom és llarg.
+     */
     private static final float NAME_FONT_SCALE_FACTOR = 9.0f;
+
+    /**
+     * Divisor per calcular la mida de la font de la puntuació.
+     */
     private static final float SCORE_FONT_DIVISOR = 2.5f;
 
-    // Constants de posicionament del nom
+    /**
+     * Multiplicador per a la posició vertical del nom amb 4 jugadors.
+     */
     private static final float NAME_Y_MULTIPLIER_4_PLAYERS = 0.8f;
+
+    /**
+     * Multiplicador per a la posició vertical del nom amb 3 jugadors.
+     */
     private static final float NAME_Y_MULTIPLIER_3_PLAYERS = 0.75f;
+
+    /**
+     * Multiplicador per a la posició vertical del nom per defecte.
+     */
     private static final float NAME_Y_MULTIPLIER_DEFAULT = 0.65f;
 
-    // Constants de posicionament de la puntuació
+    /**
+     * Posició vertical relativa per a la puntuació.
+     */
     private static final float SCORE_Y_POSITION = 0.7f;
+
+    /**
+     * Divisor per a l'offset vertical de la puntuació.
+     */
     private static final float SCORE_Y_OFFSET_DIVISOR = 2.0f;
 
-    // Colors dels jugadors
+    /**
+     * Color del jugador 1 (vermell).
+     */
     private static final Color PLAYER_COLOR_RED = new Color(0xf5, 0x2e, 0x2e);
+
+    /**
+     * Color del jugador 2 (blau).
+     */
     private static final Color PLAYER_COLOR_BLUE = new Color(0x54, 0x63, 0xff);
+
+    /**
+     * Color del jugador 3 (groc).
+     */
     private static final Color PLAYER_COLOR_YELLOW = new Color(0xff, 0xc7, 0x17);
+
+    /**
+     * Color del jugador 4 (verd).
+     */
     private static final Color PLAYER_COLOR_GREEN = new Color(67, 232, 31);
+
 
     /**
      * Dibuixa la informació de tots els jugadors al panell.
