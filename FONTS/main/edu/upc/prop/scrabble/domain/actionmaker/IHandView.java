@@ -26,6 +26,11 @@ public interface IHandView {
      * @param pieces Array de fitxes que s'han de mostrar a la mà de l'usuari.
      */
     void showPieces(Piece[] pieces);
-
+    /**
+     * Notifica a la vista que una fitxa ha estat col·locada al tauler.
+     * Això permet a la interfície actualitzar l'estat visual de la mà del jugador,
+     * per exemple, desactivant o ocultant la fitxa que s'ha fet servir.
+     */
     void piecePlaced();
+
 }
