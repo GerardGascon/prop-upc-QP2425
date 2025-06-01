@@ -1,4 +1,4 @@
-name: ci.yml
+name: Test Gradle
 on:
   push:
 
@@ -14,4 +14,4 @@ jobs:
           distribution: oracle
           java-version: 22
       - name: Run tests
-        run: chmod +x ./gradlew && ./gradlew test
+        run: chmod +x ./gradlew && ./gradlew test -Djava.awt.headless=true
