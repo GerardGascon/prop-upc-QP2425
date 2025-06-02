@@ -1,17 +1,11 @@
 package edu.upc.prop.scrabble.presenter.swing;
 
-import edu.upc.prop.scrabble.data.board.BoardType;
-import edu.upc.prop.scrabble.data.properties.GameProperties;
-import edu.upc.prop.scrabble.data.properties.Language;
 import edu.upc.prop.scrabble.presenter.scenes.GameLoop;
-import edu.upc.prop.scrabble.presenter.swing.scenes.GameScene;
 import edu.upc.prop.scrabble.presenter.swing.scenes.MenuScene;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 
 /**
  * Punt d'entrada principal de l'aplicació Scrabble amb interfície Swing.

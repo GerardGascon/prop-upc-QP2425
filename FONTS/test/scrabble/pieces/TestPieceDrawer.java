@@ -9,7 +9,7 @@ import edu.upc.prop.scrabble.utils.IRand;
 import org.junit.Test;
 import scrabble.stubs.RandStub;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class TestPieceDrawer {
     @Test

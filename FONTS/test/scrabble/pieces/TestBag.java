@@ -3,7 +3,6 @@ package scrabble.pieces;
 import edu.upc.prop.scrabble.data.pieces.Bag;
 import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.persistence.runtime.data.PersistentDictionary;
-import edu.upc.prop.scrabble.persistence.runtime.data.PersistentObject;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

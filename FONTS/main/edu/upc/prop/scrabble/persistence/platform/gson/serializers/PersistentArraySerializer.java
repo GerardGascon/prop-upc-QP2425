@@ -4,7 +4,6 @@ import com.google.gson.*;
 import edu.upc.prop.scrabble.persistence.runtime.data.PersistentArray;
 
 import java.lang.reflect.Type;
-import java.util.stream.IntStream;
 
 /**
  * Serialitzador per a PersistentArray que utilitza Gson.

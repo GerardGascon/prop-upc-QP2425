@@ -3,7 +3,6 @@ package edu.upc.prop.scrabble.domain.ai;
 import edu.upc.prop.scrabble.data.Anchors;
 import edu.upc.prop.scrabble.data.Movement;
 import edu.upc.prop.scrabble.data.board.Board;
-import edu.upc.prop.scrabble.data.crosschecks.CrossChecks;
 import edu.upc.prop.scrabble.domain.pieces.PiecesConverter;
 import edu.upc.prop.scrabble.utils.Direction;
 

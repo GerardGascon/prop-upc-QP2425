@@ -2,8 +2,8 @@ package edu.upc.prop.scrabble.domain.leaderboard;
 
 import edu.upc.prop.scrabble.data.leaderboard.Score;
 
-import java.util.TreeMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Controlador encarregat de generar una classificació de jugadors

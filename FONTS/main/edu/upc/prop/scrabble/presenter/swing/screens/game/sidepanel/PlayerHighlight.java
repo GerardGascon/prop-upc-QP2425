@@ -1,7 +1,5 @@
 package edu.upc.prop.scrabble.presenter.swing.screens.game.sidepanel;
 
-import edu.upc.prop.scrabble.data.Player;
-
 import javax.swing.*;
 import java.awt.*;
 

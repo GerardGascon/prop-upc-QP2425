@@ -1,8 +1,8 @@
 package edu.upc.prop.scrabble.domain.movement;
 
+import edu.upc.prop.scrabble.data.Movement;
 import edu.upc.prop.scrabble.data.board.Board;
 import edu.upc.prop.scrabble.data.pieces.Piece;
-import edu.upc.prop.scrabble.data.Movement;
 import edu.upc.prop.scrabble.domain.pieces.PiecesConverter;
 import edu.upc.prop.scrabble.utils.Direction;
 import edu.upc.prop.scrabble.utils.Pair;

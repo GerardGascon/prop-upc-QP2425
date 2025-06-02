@@ -2,17 +2,12 @@ package scrabble.persistence;
 
 import edu.upc.prop.scrabble.data.GameData;
 import edu.upc.prop.scrabble.data.Player;
-import edu.upc.prop.scrabble.data.board.Board;
 import edu.upc.prop.scrabble.data.board.BoardType;
-import edu.upc.prop.scrabble.data.board.StandardBoard;
-import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.data.properties.Language;
 import edu.upc.prop.scrabble.persistence.runtime.data.PersistentDictionary;
-import edu.upc.prop.scrabble.persistence.runtime.data.PersistentObject;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 
 public class TestGameData {
     @Test

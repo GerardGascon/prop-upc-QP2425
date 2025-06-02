@@ -2,7 +2,6 @@ package edu.upc.prop.scrabble.persistence.platform.gson.streamers;
 
 import edu.upc.prop.scrabble.persistence.runtime.interfaces.ISaveWriter;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;

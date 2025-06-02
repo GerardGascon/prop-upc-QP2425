@@ -6,7 +6,8 @@ import edu.upc.prop.scrabble.domain.pieces.*;
 import org.junit.Test;
 import scrabble.stubs.PiecesReaderStub;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
 
 public class TestPiecesConverterFactory {
     @Test

@@ -1,10 +1,10 @@
 package scrabble.board;
 
-import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.data.board.Board;
 import edu.upc.prop.scrabble.data.board.JuniorBoard;
 import edu.upc.prop.scrabble.data.board.StandardBoard;
 import edu.upc.prop.scrabble.data.board.SuperBoard;
+import edu.upc.prop.scrabble.data.pieces.Piece;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

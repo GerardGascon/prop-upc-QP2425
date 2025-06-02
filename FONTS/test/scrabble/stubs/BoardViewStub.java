@@ -2,7 +2,6 @@ package scrabble.stubs;
 
 import edu.upc.prop.scrabble.data.board.PremiumTileType;
 import edu.upc.prop.scrabble.domain.board.IBoard;
-import edu.upc.prop.scrabble.utils.Vector2;
 
 public class BoardViewStub implements IBoard {
     private boolean updateCallReceived = false;

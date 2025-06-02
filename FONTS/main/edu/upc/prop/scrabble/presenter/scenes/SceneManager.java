@@ -4,7 +4,8 @@ import edu.upc.prop.scrabble.utils.Pair;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Comparator;
 
 /**
  * Classe utilitzada per gestionar totes les escenes presents al joc i per canviar entre elles.
