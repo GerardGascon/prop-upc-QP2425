@@ -4,15 +4,12 @@ import edu.upc.prop.scrabble.data.Player;
 import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.hand.HandPieceButton;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.hand.HandView;
-
 import org.junit.After;
 import org.junit.Test;
 import scrabble.swing.utils.SwingTest;
 import scrabble.swing.utils.TestWindow;
 
 import javax.swing.*;
-
-import java.util.Arrays;
 
 import static org.junit.Assert.*;
 

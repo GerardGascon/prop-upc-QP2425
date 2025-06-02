@@ -1,6 +1,5 @@
 package edu.upc.prop.scrabble.data;
 
-import edu.upc.prop.scrabble.data.dawg.Node;
 import edu.upc.prop.scrabble.utils.Vector2;
 
 import java.util.ArrayList;

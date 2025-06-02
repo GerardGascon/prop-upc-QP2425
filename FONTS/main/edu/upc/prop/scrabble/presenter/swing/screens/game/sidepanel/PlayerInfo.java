@@ -4,7 +4,6 @@ import edu.upc.prop.scrabble.data.Player;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 
 /**
  * Component gràfic que mostra la informació dels jugadors durant la partida.

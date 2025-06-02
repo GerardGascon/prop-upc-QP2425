@@ -6,7 +6,6 @@ import edu.upc.prop.scrabble.data.properties.Language;
 import edu.upc.prop.scrabble.presenter.scenes.SceneManager;
 import edu.upc.prop.scrabble.presenter.swing.scenes.GameScene;
 
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.*;

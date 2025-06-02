@@ -11,7 +11,10 @@ import edu.upc.prop.scrabble.domain.board.PremiumTileTypeFiller;
 import edu.upc.prop.scrabble.domain.board.WordPlacer;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.BoardView;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles.*;
-import edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles.premium.*;
+import edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles.premium.BoardCenterTile;
+import edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles.premium.BoardDoubleLetterTile;
+import edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles.premium.BoardQuadrupleWordTile;
+import edu.upc.prop.scrabble.presenter.swing.screens.game.board.tiles.premium.BoardTripleLetterTile;
 import edu.upc.prop.scrabble.utils.Direction;
 import org.junit.After;
 import org.junit.Test;
@@ -19,7 +22,8 @@ import scrabble.swing.stubs.HandViewStub;
 import scrabble.swing.utils.SwingTest;
 import scrabble.swing.utils.TestWindow;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class TestBoardView extends SwingTest {
     private TestWindow<BoardView> view;

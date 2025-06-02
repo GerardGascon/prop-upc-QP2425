@@ -5,12 +5,8 @@ import edu.upc.prop.scrabble.data.properties.GameProperties;
 import edu.upc.prop.scrabble.domain.game.IEndScreen;
 import edu.upc.prop.scrabble.persistence.platform.gson.streamers.SaveReader;
 import edu.upc.prop.scrabble.presenter.swing.scenes.GameScene;
-import edu.upc.prop.scrabble.presenter.swing.screens.menu.MenuButton;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionListener;
-import java.util.Arrays;
 
 /**
  * EndScreen és un JPanel que mostra els resultats finals d'una partida de Scrabble.

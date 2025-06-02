@@ -1,12 +1,12 @@
 package edu.upc.prop.scrabble.presenter.swing.screens.game;
 
 import edu.upc.prop.scrabble.presenter.swing.screens.game.board.BoardView;
-import edu.upc.prop.scrabble.presenter.swing.screens.game.sidepanel.SidePanel;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.endscreen.EndScreen;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.hand.HandView;
-import edu.upc.prop.scrabble.presenter.swing.screens.game.pieceselector.BlankPieceSelector;
-import edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction.ActionButtonPanel;
 import edu.upc.prop.scrabble.presenter.swing.screens.game.pause.PauseMenu;
+import edu.upc.prop.scrabble.presenter.swing.screens.game.pieceselector.BlankPieceSelector;
+import edu.upc.prop.scrabble.presenter.swing.screens.game.sidepanel.SidePanel;
+import edu.upc.prop.scrabble.presenter.swing.screens.game.turnaction.ActionButtonPanel;
 
 import javax.swing.*;
 import java.awt.*;

@@ -19,7 +19,7 @@ import scrabble.stubs.BoardViewStub;
 
 import java.util.Arrays;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
 
 public class TestMovementCleaner {
     private Piece[] extractNecessaryPieces(Pair<Piece, Vector2>[] necessaryPiecesPositions) {

@@ -9,13 +9,10 @@ import edu.upc.prop.scrabble.presenter.swing.screens.menu.MenuButton;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
-import static java.awt.SystemColor.window;
 
 /**
  * Pantalla final del joc que mostra els resultats de la partida.

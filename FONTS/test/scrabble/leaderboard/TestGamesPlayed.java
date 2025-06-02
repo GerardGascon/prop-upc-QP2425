@@ -6,7 +6,7 @@ import edu.upc.prop.scrabble.domain.leaderboard.GamesPlayedLeaderboard;
 import edu.upc.prop.scrabble.domain.leaderboard.PlayerValuePair;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class TestGamesPlayed {
 

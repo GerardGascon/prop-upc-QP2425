@@ -2,7 +2,6 @@ package edu.upc.prop.scrabble.data;
 
 
 import edu.upc.prop.scrabble.data.board.BoardType;
-import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.data.properties.Language;
 import edu.upc.prop.scrabble.persistence.runtime.data.PersistentArray;
 import edu.upc.prop.scrabble.persistence.runtime.data.PersistentDictionary;

@@ -1,8 +1,8 @@
 package edu.upc.prop.scrabble.domain.board;
 
 import edu.upc.prop.scrabble.data.Player;
-import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.data.board.Board;
+import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.utils.Direction;
 import edu.upc.prop.scrabble.utils.Vector2;
 

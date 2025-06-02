@@ -13,7 +13,7 @@ import edu.upc.prop.scrabble.domain.pieces.PiecesConverter;
 import edu.upc.prop.scrabble.utils.Direction;
 import edu.upc.prop.scrabble.utils.Vector2;
 
-import java.util.*;
+import java.util.Map;
 
 /**
  * Intel·ligència artificial que computa el moviment a realitzar

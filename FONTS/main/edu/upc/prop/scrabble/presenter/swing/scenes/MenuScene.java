@@ -1,7 +1,6 @@
 package edu.upc.prop.scrabble.presenter.swing.scenes;
 
 import edu.upc.prop.scrabble.data.leaderboard.Leaderboard;
-import edu.upc.prop.scrabble.data.leaderboard.Score;
 import edu.upc.prop.scrabble.persistence.platform.gson.deserializers.GsonDeserializer;
 import edu.upc.prop.scrabble.persistence.platform.gson.streamers.SaveReader;
 import edu.upc.prop.scrabble.persistence.runtime.controllers.DataRestorer;

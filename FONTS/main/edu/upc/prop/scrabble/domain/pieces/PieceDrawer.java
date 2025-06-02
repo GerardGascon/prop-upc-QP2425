@@ -6,7 +6,8 @@ import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.domain.exceptions.NotEnoughPiecesInBagException;
 import edu.upc.prop.scrabble.utils.IRand;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Gestiona l'intercanvi de peces entre la mà d'un jugador i la bossa del joc.

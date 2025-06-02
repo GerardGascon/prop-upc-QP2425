@@ -2,11 +2,11 @@ package scrabble.leaderboard;
 
 import edu.upc.prop.scrabble.data.leaderboard.Leaderboard;
 import edu.upc.prop.scrabble.data.leaderboard.Score;
-import edu.upc.prop.scrabble.domain.leaderboard.TotalScoreLeaderboard;
 import edu.upc.prop.scrabble.domain.leaderboard.PlayerValuePair;
+import edu.upc.prop.scrabble.domain.leaderboard.TotalScoreLeaderboard;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class TestTotalScore {
 

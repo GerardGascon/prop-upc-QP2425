@@ -6,6 +6,7 @@ EXE/generated
 EXE/reports
 EXE/test-results
 EXE/tmp
+EXE/resources
 
 # TODO: Remove this before sending the project
-EXE/
+#EXE/

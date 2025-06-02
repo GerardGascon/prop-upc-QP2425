@@ -1,7 +1,7 @@
 package edu.upc.prop.scrabble.domain.pieces;
 
-import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.data.Player;
+import edu.upc.prop.scrabble.data.pieces.Piece;
 
 import java.util.ArrayList;
 

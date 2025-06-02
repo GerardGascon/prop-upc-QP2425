@@ -3,7 +3,6 @@ package edu.upc.prop.scrabble.data.board;
 import edu.upc.prop.scrabble.data.pieces.Piece;
 import edu.upc.prop.scrabble.persistence.runtime.data.PersistentArray;
 import edu.upc.prop.scrabble.persistence.runtime.data.PersistentDictionary;
-import edu.upc.prop.scrabble.persistence.runtime.data.PersistentObject;
 import edu.upc.prop.scrabble.persistence.runtime.interfaces.IPersistableObject;
 
 /**

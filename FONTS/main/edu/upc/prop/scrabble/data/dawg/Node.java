@@ -1,9 +1,7 @@
 package edu.upc.prop.scrabble.data.dawg;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Classe per representar nodes que formaran el DAWG.

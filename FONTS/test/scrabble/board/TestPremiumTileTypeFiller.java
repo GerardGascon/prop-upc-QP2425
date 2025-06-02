@@ -1,6 +1,9 @@
 package scrabble.board;
 
-import edu.upc.prop.scrabble.data.board.*;
+import edu.upc.prop.scrabble.data.board.Board;
+import edu.upc.prop.scrabble.data.board.JuniorBoard;
+import edu.upc.prop.scrabble.data.board.StandardBoard;
+import edu.upc.prop.scrabble.data.board.SuperBoard;
 import edu.upc.prop.scrabble.domain.board.PremiumTileTypeFiller;
 import org.junit.Test;
 import scrabble.stubs.BoardViewStub;

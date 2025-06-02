@@ -1,10 +1,11 @@
 package edu.upc.prop.scrabble.data.pieces;
+
 import edu.upc.prop.scrabble.persistence.runtime.data.PersistentArray;
 import edu.upc.prop.scrabble.persistence.runtime.data.PersistentDictionary;
-import edu.upc.prop.scrabble.persistence.runtime.data.PersistentObject;
 import edu.upc.prop.scrabble.persistence.runtime.interfaces.IPersistableObject;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /***
  * Representa una bossa de peces del joc de taula Scrabble.

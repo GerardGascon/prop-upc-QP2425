@@ -1,15 +1,9 @@
 package edu.upc.prop.scrabble.presenter.swing.screens.menu;
 
 import edu.upc.prop.scrabble.data.leaderboard.Leaderboard;
-import edu.upc.prop.scrabble.domain.leaderboard.GamesPlayedLeaderboard;
-import edu.upc.prop.scrabble.domain.leaderboard.GamesWonLeaderboard;
-import edu.upc.prop.scrabble.domain.leaderboard.WinRateLeaderboard;
-import edu.upc.prop.scrabble.domain.leaderboard.MaxScoreLeaderboard;
-import edu.upc.prop.scrabble.domain.leaderboard.TotalScoreLeaderboard;
-import edu.upc.prop.scrabble.domain.leaderboard.PlayerValuePair;
+import edu.upc.prop.scrabble.domain.leaderboard.*;
 
 import javax.swing.*;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
