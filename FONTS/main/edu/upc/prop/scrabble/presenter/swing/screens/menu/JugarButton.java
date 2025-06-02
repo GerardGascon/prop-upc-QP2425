@@ -389,7 +389,7 @@ public class JugarButton extends MenuButton {
 
 // Add Cancel button
 
-        JButton cancelButton = new JButton("Cancelar");
+        JButton cancelButton = new JButton("Tancar");
 
         cancelButton.setBounds((int) (width * 0.7), (int) (height * 0.85), (int) (width * 0.2), componentHeight);
 
