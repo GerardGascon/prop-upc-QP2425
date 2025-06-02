@@ -201,7 +201,7 @@ public class ContinueButton extends MenuButton {
         settingsPanel.add(loadGameButton);
 
         // Cancel Button
-        JButton cancelButton = new JButton("Cancelar");
+        JButton cancelButton = new JButton("Tancar");
 
         cancelButton.setBounds((int) (width * 0.55), (int) (height * 0.45), componentWidth, componentHeight);
 
