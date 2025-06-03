@@ -66,4 +66,9 @@ El projecte està estructurat seguint una arquitectura en 3 capes. En aquest cas
 
 Per a facilitar la gestió de dependències, utilitzem **injecció de dependències**. Durant la construcció de les
 diferents escenes presents al joc, hi ha un mètode encarregat de resoldre les dependències de tots els objectes
+
+## DEMO
+
+https://github.com/user-attachments/assets/11902c2a-801e-4493-b779-4fcb2e0d78c3
+
 presents a l'escena per a la posterior injecció que es realitza a les constructores d'aquests objectes.
