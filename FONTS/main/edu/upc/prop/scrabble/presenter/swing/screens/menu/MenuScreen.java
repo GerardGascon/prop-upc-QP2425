@@ -124,11 +124,13 @@ public class MenuScreen extends JPanel {
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
+        // Side panel
         int width = getWidth();
         int height = getHeight();
         g2.setColor(new Color(52, 58, 64));
         g2.fillRect(0, 0, (int)(width * SIDE_PANEL_WIDTH_PERCENT), height);
 
+        // Title
         g2.setColor(Color.WHITE);
         g2.setFont(new Font("SansSerif", Font.BOLD, height / 9));
         FontMetrics fm = g2.getFontMetrics();
@@ -202,6 +204,7 @@ public class MenuScreen extends JPanel {
                 tile.move(delta);
             }
 
+            // Check collisions
             for (int i = 0; i < floatingTiles.size(); i++) {
                 for (int j = i + 1; j < floatingTiles.size(); j++) {
                     floatingTiles.get(i).checkCollision(floatingTiles.get(j));
@@ -340,6 +343,7 @@ public class MenuScreen extends JPanel {
                                 }
                             }
 
+                            // Set collided tile direction + scaled speed
                             tile.speed = Math.max(tile.prevSpeed, Math.min(1250f, dragSpeed));
                             tile.horizontalDir = nx;
                             tile.verticalDir = ny;
