@@ -208,7 +208,6 @@ public class MenuScreen extends JPanel {
                 }
             }
             if(selectedTile != null) {
-                selectedTile.prevSpeed = selectedTile.speed;
                 selectedTile.speed = 0;
             }
             repaint();
@@ -233,7 +232,6 @@ public class MenuScreen extends JPanel {
                     if (tile.contains(e.getX(), e.getY())) {
                         selectedTile = tile;
                         lastMousePos = e.getPoint();
-                        tile.prevSpeed = tile.speed;
                         tile.speed = 0;
                         break;
                     }
