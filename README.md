@@ -8,6 +8,7 @@
   * [Estructura](#estructura)
     * [Arquitectura](#arquitectura)
     * [Gestió de dependències](#gestió-de-dependències)
+  * [Demo](#demo)
 <!-- TOC -->
 
 ## Autors
@@ -68,6 +69,6 @@ Per a facilitar la gestió de dependències, utilitzem **injecció de dependènc
 diferents escenes presents al joc, hi ha un mètode encarregat de resoldre les dependències de tots els objectes
 presents a l'escena per a la posterior injecció que es realitza a les constructores d'aquests objectes.
 
-## DEMO
+## Demo
 
-https://github.com/user-attachments/assets/11902c2a-801e-4493-b779-4fcb2e0d78c3
+https://github.com/user-attachments/assets/87e1b369-3d39-4a04-9370-8647238ca465
