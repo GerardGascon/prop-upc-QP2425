@@ -49,7 +49,7 @@ Per executar els tests, es pot fer utilitzant la següent comanda:
 
 ### Arquitectura
 
-El projecte està estructurat seguint una arquitectura en 3 capes. En aquest cas hem seguit el model **MVP**.
+El projecte està estructurat seguint una arquitectura en 3 capes. En aquest cas hem seguit el model **MVP**. 
 
 - Capa de persistència: Conté els codis que implementen la gestió dels arxius de persistència. Les implementacions dels
   mètodes de serialització i desserialització de les dades es duen a terme dins les classes del model.
