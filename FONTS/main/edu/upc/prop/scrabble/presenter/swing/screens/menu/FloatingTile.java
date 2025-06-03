@@ -215,9 +215,9 @@ public class FloatingTile {
     static public String getRandomString() {
         String[] names = {
                 "GERARD", "BIELGINA", "ALBERT", "FELIPE",
-                "LAKESCHAN", "SCRABBLE", "WORDPLAY", "SKIBIDI", "TOILET"
+                "LAKESCHAN", "SCRABBLE", "WORDPLAY", "SKIBIDI", "TOILET",
                 "TRUDELS", "CHIPY", "CASPER", "BOLITA", "CHIPICHOP",
-                "FUNKYPUNKY", "PICHI", "ROSLI", "OG TRUDELS" "POMPA", "MAXMAX"
+                "FUNKYPUNKY", "PICHI", "ROSLI", "OGTRUDELS", "POMPA", "MAXMAX"
         };
         Random rand = new Random();
         int index = rand.nextInt(names.length);
